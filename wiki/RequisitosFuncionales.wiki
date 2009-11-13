@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Requisitos del comportamiento de nuestra aplicación
 #labels Phase-Requirements
 
 = Introducción =
