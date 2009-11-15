@@ -1,0 +1,14 @@
+package com.juego;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+
+public class VistaJuego1 extends View {
+
+	public VistaJuego1(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+	}
+
+}

@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+java.vm.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1250021530274
+java.vm.specification.version,sysinfo,,,"1.0",1250021530274
+java.vm.vendor,sysinfo,,,"Sun Microsystems Inc.",1250021530274
+java.vm.version,sysinfo,,,"11.3-b02",1250021530274
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021540800
+started,bundle,com.android.ide.eclipse.ddms,0.9.1.v200905011822-1621,"com.android.ide.eclipse.ddms",1250021544092
+started,bundle,com.android.ide.eclipse.adt,0.9.1.v200905011822-1621,"com.android.ide.eclipse.adt",1250021544351
+started,bundle,org.eclipse.core.filesystem,1.2.0.v20090507,"org.eclipse.core.filesystem",1250021544451
+started,bundle,org.eclipse.ltk.core.refactoring,3.5.0.v20090513-2000,"org.eclipse.ltk.core.refactoring",1250021544455
+started,bundle,org.eclipse.ltk.ui.refactoring,3.4.100.v20090604,"org.eclipse.ltk.ui.refactoring",1250021544456
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021585749
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021600874
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021617182
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021622608
+started,bundle,org.eclipse.debug.core,3.5.0.v20090526-1600,"org.eclipse.debug.core",1250022066896
+started,bundle,org.eclipse.jdt.launching,3.5.0.v20090527,"org.eclipse.jdt.launching",1250022066898
+started,bundle,org.eclipse.jdt.apt.core,3.3.200.v20090528-1135,"org.eclipse.jdt.apt.core",1250022067197
+started,bundle,org.eclipse.mtj.core.hooks,1.0.0.v200906121354,"org.eclipse.mtj.core.hooks",1250022067205
+started,bundle,org.eclipse.mtj.core,1.0.0.v200906121354,"org.eclipse.mtj.core",1250022067235
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022067314
+opened,view,org.eclipse.ui.ide,3.5.0.I20090525-2000,"org.eclipse.ui.views.ProblemView",1250022067488
+started,bundle,org.eclipse.search,3.5.0.v20090526-2000,"org.eclipse.search",1250022067590
+opened,view,org.eclipse.mylyn.tasks.ui,3.2.0.v20090617-0100-e3x,"org.eclipse.mylyn.tasks.ui.views.tasks",1250022067789
+activated,perspective,org.eclipse.jdt.ui,3.5.0.v20090604,"org.eclipse.jdt.ui.JavaPerspective",1250022067862
+error,log,,,"Invalid MTJ Project.",1250022069170

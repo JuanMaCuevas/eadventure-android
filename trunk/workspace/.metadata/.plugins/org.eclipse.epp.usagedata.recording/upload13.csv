@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+opened,view,org.eclipse.ui.console,3.4.0.v20090513,"org.eclipse.ui.console.ConsoleView",1250022069296
+activated,view,org.eclipse.jdt.ui,3.5.0.v20090604,"org.eclipse.jdt.ui.PackageExplorer",1250022070616
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022078410
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022445611
+started,bundle,org.eclipse.wst.sse.core,1.1.400.v200905141750,"org.eclipse.wst.sse.core",1250022450620
+activated,view,org.eclipse.ui.ide,3.5.0.I20090525-2000,"org.eclipse.ui.views.ProblemView",1250022458487
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022469019
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022478659
+activated,view,org.eclipse.jdt.ui,3.5.0.v20090604,"org.eclipse.jdt.ui.PackageExplorer",1250022488452
+error,log,,,"Could not create action delegate for id: com.android.ide.eclipse.adt.project.NewXmlFileWizardAction",1250022488534
+error,log,,,"Plug-in com.android.ide.eclipse.adt was unable to load class com.android.ide.eclipse.adt.project.NewXmlFileWizardAction.",1250022488536
+started,bundle,org.eclipse.compare,3.5.0.I20090514-0808,"org.eclipse.compare",1250022488601
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022496763
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022527861
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022533355
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022536535
+executed,command,org.eclipse.ltk.ui.refactoring,3.4.100.v20090604,"org.eclipse.ltk.ui.refactoring.commands.deleteResources",1250022536541
+executed,command,org.eclipse.ui,3.5.0.I20090604-2000,"org.eclipse.ui.edit.delete",1250022536542
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022545880
+error,log,,,"Invalid MTJ Project.",1250022583156
+error,log,,,"Internal Error",1250022583171
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250022583201
+error,log,,,"Invalid MTJ Project.",1250022583767
+activated,view,org.eclipse.ui.console,3.4.0.v20090513,"org.eclipse.ui.console.ConsoleView",1250022586495
+executed,command,org.eclipse.ui,3.5.0.I20090604-2000,"org.eclipse.ui.edit.copy",1250022590616

@@ -1,0 +1,3575 @@
+From: "Guardado por Microsoft Internet Explorer 7"
+Subject: =?Windows-1252?Q?Playing_with_graphics_in_Android_=96_Part_III_on_Android?=
+	=?Windows-1252?Q?_Development?=
+Date: Tue, 25 Aug 2009 19:31:25 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0040_01CA25BA.A25A1D80"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6001.18049
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.droidnova.com/playing-with-graphics-in-android-part-iii,176.html
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML lang=3Den xml:lang=3D"en" =
+xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>Playing with =
+graphics in Android =E2=80=93 Part III on Android Development</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3DUTF-8">
+<META content=3D"MSHTML 6.00.6001.18294" name=3DGENERATOR>
+<META content=3D"follow, all" name=3Drobots><LINK media=3Dscreen=20
+href=3D"http://www.droidnova.com/blog/wp-content/themes/pixeled/style.css=
+"=20
+type=3Dtext/css rel=3Dstylesheet><LINK title=3D"Android Development RSS =
+Feed"=20
+href=3D"http://www.droidnova.com/feed" type=3Dapplication/rss+xml=20
+rel=3Dalternate><LINK href=3D"http://www.droidnova.com/blog/xmlrpc.php"=20
+rel=3Dpingback><LINK=20
+title=3D"Android Development =C2=BB Playing with graphics in Android =
+=E2=80=93 Part III Comments Feed"=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html/feed"=20
+type=3Dapplication/rss+xml rel=3Dalternate><LINK title=3DRSD=20
+href=3D"http://www.droidnova.com/blog/xmlrpc.php?rsd" =
+type=3Dapplication/rsd+xml=20
+rel=3DEditURI><LINK=20
+href=3D"http://www.droidnova.com/blog/wp-includes/wlwmanifest.xml"=20
+type=3Dapplication/wlwmanifest+xml rel=3Dwlwmanifest><LINK=20
+title=3D"Android Development" href=3D"http://www.droidnova.com" =
+rel=3Dindex><LINK=20
+title=3D"Welcome to droidnova.com"=20
+href=3D"http://www.droidnova.com/welcome-to-droidnovacom,3.html" =
+rel=3Dstart><LINK=20
+title=3D"Playing with graphics in Android =E2=80=93 Part II"=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+,160.html"=20
+rel=3Dprev><LINK title=3D"Playing with graphics in Android =E2=80=93 =
+Part IV"=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-iv=
+,182.html"=20
+rel=3Dnext>
+<META content=3D"WordPress 2.8.4" name=3Dgenerator>
+<STYLE type=3Dtext/css>.addtoany_share_save_container {
+	MARGIN: 16px 0px
+}
+UL.addtoany_list {
+	PADDING-RIGHT: 0px! important; DISPLAY: inline; PADDING-LEFT: 0px! =
+important; PADDING-BOTTOM: 0px! important; MARGIN: 0px; TEXT-INDENT: =
+0px! important; PADDING-TOP: 0px! important; LIST-STYLE-TYPE: none
+}
+UL.addtoany_list LI {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px! important; DISPLAY: inline! =
+important; PADDING-LEFT: 0px! important; BORDER-LEFT-WIDTH: 0px; =
+BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-BOTTOM-WIDTH: =
+0px; PADDING-BOTTOM: 0px! important; MARGIN: 0px; LINE-HEIGHT: 32px; =
+PADDING-TOP: 0px! important; LIST-STYLE-TYPE: none; BORDER-RIGHT-WIDTH: =
+0px
+}
+UL.addtoany_list LI:unknown {
+	content: ""
+}
+UL.addtoany_list LI A {
+	PADDING-RIGHT: 9px; PADDING-LEFT: 9px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+UL.addtoany_list IMG {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; FLOAT: none; BORDER-BOTTOM-WIDTH: 0px; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; VERTICAL-ALIGN: middle; WIDTH: 16px; =
+PADDING-TOP: 0px; HEIGHT: 16px; BORDER-RIGHT-WIDTH: 0px
+}
+UL.addtoany_list A IMG {
+	FILTER: alpha(opacity=3D60); opacity: .6; -moz-opacity: .6
+}
+UL.addtoany_list A:hover IMG {
+	FILTER: alpha(opacity=3D100); opacity: 1; -moz-opacity: 1
+}
+UL.addtoany_list A.addtoany_share_save IMG {
+	FILTER: alpha(opacity=3D100); opacity: 1; -moz-opacity: 1
+}
+A.addtoany_share_save IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: =
+0px; WIDTH: auto; HEIGHT: auto; BORDER-RIGHT-WIDTH: 0px
+}
+</STYLE>
+<!-- platinum seo pack 1.2.6 -->
+<META content=3Dindex,follow,noodp,noydir name=3Drobots>
+<META=20
+content=3D"The third part of this series will add some interactivity to =
+our little application. We will add the possibility the icon appears at =
+the point you touch the screen."=20
+name=3Ddescription>
+<META content=3Dtutorial name=3Dkeywords><LINK=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html"=20
+rel=3Dcanonical><!-- /platinum one seo pack --><LINK media=3Dscreen=20
+href=3D"http://www.droidnova.com/blog/wp-content/plugins/wp-syntax/wp-syn=
+tax.css"=20
+type=3Dtext/css rel=3Dstylesheet>
+<STYLE type=3Dtext/css>.recentcomments A {
+	PADDING-RIGHT: 0px! important; DISPLAY: inline! important; =
+PADDING-LEFT: 0px! important; PADDING-BOTTOM: 0px! important; MARGIN: =
+0px; PADDING-TOP: 0px! important
+}
+</STYLE>
+<!-- this product is released under General Public License. Please see =
+the attached file for details. You can also find details about the =
+license at http://www.opensource.org/licenses/gpl-license.php -->
+<SCRIPT type=3Dtext/javascript><!--//--><![CDATA[//><!--
+sfHover =3D function() {
+	if (!document.getElementsByTagName) return false;
+	var sfEls =3D =
+document.getElementById("nav").getElementsByTagName("li");
+
+	for (var i=3D0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=3Dfunction() {
+			this.className+=3D" sfhover";
+		}
+		sfEls[i].onmouseout=3Dfunction() {
+			this.className=3Dthis.className.replace(new RegExp(" sfhover\\b"), =
+"");
+		}
+	}
+
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+//--><!]]></SCRIPT>
+
+<SCRIPT type=3Dtext/javascript>
+  a2a_onclick =3D 1;
+</SCRIPT>
+<!--[if lt IE 8]><LINK=20
+href=3D"http://www.droidnova.com/blog/wp-content/themes/pixeled/ie.css"=20
+type=3Dtext/css rel=3Dstylesheet><![endif]--><!--[if lt IE 7]>
+<link =
+href=3D"http://www.droidnova.com/blog/wp-content/themes/pixeled/ie6.css" =
+rel=3D"stylesheet" type=3D"text/css" />
+<script =
+src=3D"http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" =
+type=3D"text/javascript"></script>
+<![endif]--></HEAD>
+<BODY>
+<DIV id=3Dwrapper>
+<DIV id=3Dheader>
+<DIV id=3Dlogo>
+<H1><A href=3D"http://www.droidnova.com/">Android =
+Development</A></H1><SPAN>Rapid=20
+android development from Berlin</SPAN> </DIV>
+<DIV id=3Dtopright>
+<UL>
+  <LI class=3D"page_item page-item-11"><A title=3D"Legal notice =
+(Impressum)"=20
+  href=3D"http://www.droidnova.com/legal-notice-impressum">Legal notice=20
+  (Impressum)</A>=20
+  <LI><A=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#searchform">search</A>=20
+
+  <LI><A=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#main">skip=20
+  to content =E2=86=93</A> </LI></UL></DIV></DIV><!-- Closes header -->
+<DIV id=3Dcatnav>
+<DIV id=3Dtoprss><A =
+href=3D"http://feeds2.feedburner.com/droidnova?format=3Dxml"><IMG=20
+height=3D24 alt=3D"Android Development"=20
+src=3D"http://www.droidnova.com/blog/wp-content/themes/pixeled/images/rss=
+-trans.png"=20
+width=3D65></A></DIV><!-- Closes toprss -->
+<UL id=3Dnav>
+  <LI><A href=3D"http://www.droidnova.com/">Home</A> </LI>
+  <LI class=3D"cat-item cat-item-17"><A=20
+  title=3D"View all posts filed under emulator"=20
+  href=3D"http://www.droidnova.com/category/emulator">emulator</A> </LI>
+  <LI class=3D"cat-item cat-item-10"><A title=3D"View all posts filed =
+under how to"=20
+  href=3D"http://www.droidnova.com/category/how-to">how to</A> </LI>
+  <LI class=3D"cat-item cat-item-27"><A=20
+  title=3D"View all posts filed under layout technique"=20
+  href=3D"http://www.droidnova.com/category/layout-techniques">layout=20
+  technique</A> </LI>
+  <LI class=3D"cat-item cat-item-6"><A title=3D"View all posts filed =
+under news"=20
+  href=3D"http://www.droidnova.com/category/news">news</A> </LI>
+  <LI class=3D"cat-item cat-item-30"><A=20
+  title=3D"View all posts filed under security"=20
+  href=3D"http://www.droidnova.com/category/security">security</A> </LI>
+  <LI class=3D"cat-item cat-item-3"><A title=3D"View all posts filed =
+under tutorial"=20
+  href=3D"http://www.droidnova.com/category/tutorial">tutorial</A> =
+</LI></UL></DIV><!-- Closes catnav -->
+<DIV class=3Dcleared></DIV>
+<DIV id=3Dmain>
+<DIV id=3Dcontentwrapper>
+<DIV class=3DtopPost>
+<H2 class=3DtopTitle><A=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html">Playing=20
+with graphics in Android =E2=80=93 Part III</A></H2>
+<P class=3DtopMeta>by <A title=3D"Posts by Martin"=20
+href=3D"http://www.droidnova.com/author/warrenfaith/">Martin</A> on =
+May.18, 2009,=20
+under <A title=3D"View all posts in tutorial"=20
+href=3D"http://www.droidnova.com/category/tutorial"=20
+rel=3D"category tag">tutorial</A></P>
+<DIV class=3DtopContent>
+<P><EM>You are new to this series? Please start with the <A=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-i,=
+147.html">first=20
+part</A>.</EM></P>
+<P>The third part of this series will add some interactivity to our =
+little=20
+application. We will add the possibility the icon appears at the point =
+you touch=20
+the screen.</P>
+<P>Just to remember, we have 3 classes: Tutorial2D (our Activity class), =
+Panel=20
+(our SurfaceView class) and TutorialThread (our Thread class).<BR>Our=20
+interaction will be handled in our Panel class, so we must be sure, that =
+the=20
+touch events will processed by the Panel class. To ensure that, we =
+simply have=20
+to set the focus to our panel (line 5).</P>
+<DIV class=3Dwp_syntax>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=3Dline_numbers><PRE>1
+2
+3
+4
+5
+6
+</PRE></TD>
+    <TD class=3Dcode><PRE class=3Djava style=3D"FONT-FAMILY: =
+monospace"><SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000000">public</SPAN> <SPAN style=3D"COLOR: #003399">Panel</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Context</SPAN> context<SPAN style=3D"COLOR: #009900">)</SPAN> =
+<SPAN style=3D"COLOR: #009900">{</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">super</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>context<SPAN style=3D"COLOR: =
+#009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    getHolder<SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN>.<SPAN style=3D"COLOR: =
+#006633">addCallback</SPAN><SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">this</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    _thread <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">new</SPAN> =
+TutorialThread<SPAN style=3D"COLOR: #009900">(</SPAN>getHolder<SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#009900">)</SPAN>, <SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000000">this</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+    setFocusable<SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">true</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+<SPAN style=3D"COLOR: =
+#009900">}</SPAN></PRE></TD></TR></TBODY></TABLE></DIV>
+<P>To show the bitmap on different locations, we have to add 2 variables =
+for the=20
+x and y coordinates and we have to modify the onDraw() method.</P>
+<DIV class=3Dwp_syntax>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=3Dline_numbers><PRE>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</PRE></TD>
+    <TD class=3Dcode><PRE class=3Djava style=3D"FONT-FAMILY: =
+monospace"><SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000000">class</SPAN> <SPAN style=3D"COLOR: #003399">Panel</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">extends</SPAN> SurfaceView =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">implements</SPAN> =
+SurfaceHolder.<SPAN style=3D"COLOR: #006633">Callback</SPAN> <SPAN =
+style=3D"COLOR: #009900">{</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">private</SPAN> =
+TutorialThread _thread<SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">private</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> _x <SPAN =
+style=3D"COLOR: #339933">=3D</SPAN> <SPAN style=3D"COLOR: =
+#cc66cc">20</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">private</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> _y <SPAN =
+style=3D"COLOR: #339933">=3D</SPAN> <SPAN style=3D"COLOR: =
+#cc66cc">20</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+&nbsp;
+    <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// code =
+snipped</SPAN>
+&nbsp;
+    @Override
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">void</SPAN> =
+onDraw<SPAN style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Canvas</SPAN> canvas<SPAN style=3D"COLOR: #009900">)</SPAN> =
+<SPAN style=3D"COLOR: #009900">{</SPAN>
+        Bitmap _scratch <SPAN style=3D"COLOR: #339933">=3D</SPAN> =
+BitmapFactory.<SPAN style=3D"COLOR: #006633">decodeResource</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>getResources<SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN>, R.<SPAN =
+style=3D"COLOR: #006633">drawable</SPAN>.<SPAN style=3D"COLOR: =
+#006633">icon</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        canvas.<SPAN style=3D"COLOR: #006633">drawColor</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Color</SPAN>.<SPAN style=3D"COLOR: #006633">BLACK</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+        canvas.<SPAN style=3D"COLOR: #006633">drawBitmap</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>_scratch, _x, _y, <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">null</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+    <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// code =
+snipped</SPAN>
+<SPAN style=3D"COLOR: =
+#009900">}</SPAN></PRE></TD></TR></TBODY></TABLE></DIV>
+<P>Finally we need to override the onTouchEvent() where we get the =
+coordinates=20
+of the touch and set our variables.</P>
+<DIV class=3Dwp_syntax>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=3Dline_numbers><PRE>1
+2
+3
+4
+5
+6
+</PRE></TD>
+    <TD class=3Dcode><PRE class=3Djava style=3D"FONT-FAMILY: =
+monospace">@Override
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">boolean</SPAN> =
+onTouchEvent<SPAN style=3D"COLOR: #009900">(</SPAN>MotionEvent =
+event<SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#009900">{</SPAN>
+    _x <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000066">int</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN> event.<SPAN =
+style=3D"COLOR: #006633">getX</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+    _y <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000066">int</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN> event.<SPAN =
+style=3D"COLOR: #006633">getY</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">return</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">true</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+<SPAN style=3D"COLOR: =
+#009900">}</SPAN></PRE></TD></TR></TBODY></TABLE></DIV>
+<P>Now we can compile and start our application.<BR>You will see, that =
+the=20
+application will draw the bitmap not exactly where you touch the screen. =
+The=20
+reason is that the coordinates are for the upper left corner of the =
+bitmap. To=20
+change that, we have to use a little bit math.</P>
+<DIV class=3Dwp_syntax>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=3Dline_numbers><PRE>1
+2
+3
+4
+5
+6
+</PRE></TD>
+    <TD class=3Dcode><PRE class=3Djava style=3D"FONT-FAMILY: =
+monospace">@Override
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">void</SPAN> onDraw<SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Canvas</SPAN> canvas<SPAN style=3D"COLOR: #009900">)</SPAN> =
+<SPAN style=3D"COLOR: #009900">{</SPAN>
+    Bitmap _scratch <SPAN style=3D"COLOR: #339933">=3D</SPAN> =
+BitmapFactory.<SPAN style=3D"COLOR: #006633">decodeResource</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>getResources<SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN>, R.<SPAN =
+style=3D"COLOR: #006633">drawable</SPAN>.<SPAN style=3D"COLOR: =
+#006633">icon</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+    canvas.<SPAN style=3D"COLOR: #006633">drawColor</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Color</SPAN>.<SPAN style=3D"COLOR: #006633">BLACK</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    canvas.<SPAN style=3D"COLOR: #006633">drawBitmap</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>_scratch, _x <SPAN style=3D"COLOR: =
+#339933">-</SPAN> <SPAN style=3D"COLOR: #009900">(</SPAN>_scratch.<SPAN =
+style=3D"COLOR: #006633">getWidth</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN =
+style=3D"COLOR: #339933">/</SPAN> <SPAN style=3D"COLOR: =
+#cc66cc">2</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN>, _y <SPAN =
+style=3D"COLOR: #339933">-</SPAN> <SPAN style=3D"COLOR: =
+#009900">(</SPAN>_scratch.<SPAN style=3D"COLOR: =
+#006633">getHeight</SPAN><SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#339933">/</SPAN> <SPAN style=3D"COLOR: #cc66cc">2</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN>, <SPAN style=3D"FONT-WEIGHT: bold; =
+COLOR: #000066">null</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+<SPAN style=3D"COLOR: =
+#009900">}</SPAN></PRE></TD></TR></TBODY></TABLE></DIV>
+<P>As you see, we have to subtract half of the bitmap width from x and =
+half of=20
+bitmap height from y to get the middle of the bitmap on the point we =
+touched the=20
+screen. </P>
+<P>Finally our Panel class looks like this:</P>
+<DIV class=3Dwp_syntax>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=3Dline_numbers><PRE>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+</PRE></TD>
+    <TD class=3Dcode><PRE class=3Djava style=3D"FONT-FAMILY: =
+monospace"><SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000000">class</SPAN> <SPAN style=3D"COLOR: #003399">Panel</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">extends</SPAN> SurfaceView =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">implements</SPAN> =
+SurfaceHolder.<SPAN style=3D"COLOR: #006633">Callback</SPAN> <SPAN =
+style=3D"COLOR: #009900">{</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">private</SPAN> =
+TutorialThread _thread<SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">private</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> _x <SPAN =
+style=3D"COLOR: #339933">=3D</SPAN> <SPAN style=3D"COLOR: =
+#cc66cc">20</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">private</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> _y <SPAN =
+style=3D"COLOR: #339933">=3D</SPAN> <SPAN style=3D"COLOR: =
+#cc66cc">20</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+&nbsp;
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"COLOR: #003399">Panel</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #003399">Context</SPAN> =
+context<SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#009900">{</SPAN>
+        <SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000000">super</SPAN><SPAN style=3D"COLOR: #009900">(</SPAN>context<SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+        getHolder<SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN>.<SPAN style=3D"COLOR: =
+#006633">addCallback</SPAN><SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">this</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+        _thread <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">new</SPAN> =
+TutorialThread<SPAN style=3D"COLOR: #009900">(</SPAN>getHolder<SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#009900">)</SPAN>, <SPAN style=3D"FONT-WEIGHT: bold; COLOR: =
+#000000">this</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        setFocusable<SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">true</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+&nbsp;
+    @Override
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">boolean</SPAN> =
+onTouchEvent<SPAN style=3D"COLOR: #009900">(</SPAN>MotionEvent =
+event<SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#009900">{</SPAN>
+        _x <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"FONT-WEIGHT: bold; =
+COLOR: #000066">int</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN> =
+event.<SPAN style=3D"COLOR: #006633">getX</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        _y <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"FONT-WEIGHT: bold; =
+COLOR: #000066">int</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN> =
+event.<SPAN style=3D"COLOR: #006633">getY</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">return</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">true</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+&nbsp;
+    @Override
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">void</SPAN> =
+onDraw<SPAN style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Canvas</SPAN> canvas<SPAN style=3D"COLOR: #009900">)</SPAN> =
+<SPAN style=3D"COLOR: #009900">{</SPAN>
+        Bitmap _scratch <SPAN style=3D"COLOR: #339933">=3D</SPAN> =
+BitmapFactory.<SPAN style=3D"COLOR: #006633">decodeResource</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>getResources<SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN>, R.<SPAN =
+style=3D"COLOR: #006633">drawable</SPAN>.<SPAN style=3D"COLOR: =
+#006633">icon</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        canvas.<SPAN style=3D"COLOR: #006633">drawColor</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">Color</SPAN>.<SPAN style=3D"COLOR: #006633">BLACK</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+        canvas.<SPAN style=3D"COLOR: #006633">drawBitmap</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN>_scratch, _x <SPAN style=3D"COLOR: =
+#339933">-</SPAN> <SPAN style=3D"COLOR: #009900">(</SPAN>_scratch.<SPAN =
+style=3D"COLOR: #006633">getWidth</SPAN><SPAN style=3D"COLOR: =
+#009900">(</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN =
+style=3D"COLOR: #339933">/</SPAN> <SPAN style=3D"COLOR: =
+#cc66cc">2</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN>, _y <SPAN =
+style=3D"COLOR: #339933">-</SPAN> <SPAN style=3D"COLOR: =
+#009900">(</SPAN>_scratch.<SPAN style=3D"COLOR: =
+#006633">getHeight</SPAN><SPAN style=3D"COLOR: #009900">(</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#339933">/</SPAN> <SPAN style=3D"COLOR: #cc66cc">2</SPAN><SPAN =
+style=3D"COLOR: #009900">)</SPAN>, <SPAN style=3D"FONT-WEIGHT: bold; =
+COLOR: #000066">null</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+&nbsp;
+    @Override
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">void</SPAN> =
+surfaceChanged<SPAN style=3D"COLOR: #009900">(</SPAN>SurfaceHolder =
+holder, <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> =
+format, <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> =
+width, <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">int</SPAN> =
+height<SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#009900">{</SPAN>
+        <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// TODO =
+Auto-generated method stub</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+&nbsp;
+    @Override
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">void</SPAN> =
+surfaceCreated<SPAN style=3D"COLOR: #009900">(</SPAN>SurfaceHolder =
+holder<SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#009900">{</SPAN>
+        _thread.<SPAN style=3D"COLOR: #006633">setRunning</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"FONT-WEIGHT: bold; =
+COLOR: #000066">true</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        _thread.<SPAN style=3D"COLOR: #006633">start</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+&nbsp;
+    @Override
+    <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">public</SPAN> =
+<SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">void</SPAN> =
+surfaceDestroyed<SPAN style=3D"COLOR: #009900">(</SPAN>SurfaceHolder =
+holder<SPAN style=3D"COLOR: #009900">)</SPAN> <SPAN style=3D"COLOR: =
+#009900">{</SPAN>
+        <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// simply =
+copied from sample application LunarLander:</SPAN>
+        <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// we have to =
+tell thread to shut down &amp; wait for it to finish, or else</SPAN>
+        <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// it might =
+touch the Surface after we return and explode</SPAN>
+        <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000066">boolean</SPAN> =
+retry <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">true</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        _thread.<SPAN style=3D"COLOR: #006633">setRunning</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"FONT-WEIGHT: bold; =
+COLOR: #000066">false</SPAN><SPAN style=3D"COLOR: #009900">)</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+        <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">while</SPAN> =
+<SPAN style=3D"COLOR: #009900">(</SPAN>retry<SPAN style=3D"COLOR: =
+#009900">)</SPAN> <SPAN style=3D"COLOR: #009900">{</SPAN>
+            <SPAN style=3D"FONT-WEIGHT: bold; COLOR: #000000">try</SPAN> =
+<SPAN style=3D"COLOR: #009900">{</SPAN>
+                _thread.<SPAN style=3D"COLOR: #006633">join</SPAN><SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#009900">)</SPAN><SPAN style=3D"COLOR: #339933">;</SPAN>
+                retry <SPAN style=3D"COLOR: #339933">=3D</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000066">false</SPAN><SPAN =
+style=3D"COLOR: #339933">;</SPAN>
+            <SPAN style=3D"COLOR: #009900">}</SPAN> <SPAN =
+style=3D"FONT-WEIGHT: bold; COLOR: #000000">catch</SPAN> <SPAN =
+style=3D"COLOR: #009900">(</SPAN><SPAN style=3D"COLOR: =
+#003399">InterruptedException</SPAN> e<SPAN style=3D"COLOR: =
+#009900">)</SPAN> <SPAN style=3D"COLOR: #009900">{</SPAN>
+                <SPAN style=3D"COLOR: #666666; FONT-STYLE: italic">// we =
+will try it again and again...</SPAN>
+            <SPAN style=3D"COLOR: #009900">}</SPAN>
+        <SPAN style=3D"COLOR: #009900">}</SPAN>
+    <SPAN style=3D"COLOR: #009900">}</SPAN>
+<SPAN style=3D"COLOR: =
+#009900">}</SPAN></PRE></TD></TR></TBODY></TABLE></DIV>
+<P>Go to <A=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-iv=
+,182.html">Playing=20
+with graphics in Android =E2=80=93 Part IV</A></P>
+<DIV class=3Daddtoany_share_save_container>
+<UL class=3Daddtoany_list>
+  <LI><A class=3D"a2a_dd addtoany_share_save"=20
+  =
+href=3D"http://www.addtoany.com/share_save?linkurl=3Dhttp%3A%2F%2Fwww.dro=
+idnova.com%2Fplaying-with-graphics-in-android-part-iii%2C176.html&amp;lin=
+kname=3DPlaying%20with%20graphics%20in%20Android%20%26%238211%3B%20Part%2=
+0III"><IMG=20
+  height=3D16 alt=3DShare/Bookmark=20
+  =
+src=3D"http://www.droidnova.com/blog/wp-content/plugins/add-to-any/share_=
+save_171_16.png"=20
+  width=3D171></A></LI></UL></DIV></DIV>
+<DIV class=3Dcleared></DIV><SPAN class=3Dlinkpages></SPAN>
+<DIV class=3Dcleared></DIV><SPAN class=3DtopTags><EM>:</EM><A=20
+href=3D"http://www.droidnova.com/tag/android" rel=3Dtag>android</A>, <A=20
+href=3D"http://www.droidnova.com/tag/application" =
+rel=3Dtag>application</A>, <A=20
+href=3D"http://www.droidnova.com/tag/emulator" rel=3Dtag>emulator</A>, =
+<A=20
+href=3D"http://www.droidnova.com/tag/graphic" rel=3Dtag>graphic</A>, <A=20
+href=3D"http://www.droidnova.com/tag/tutorial" =
+rel=3Dtag>tutorial</A></SPAN>
+<DIV class=3Dcleared></DIV></DIV><!-- Closes topPost =
+--><BR><SMALL></SMALL>
+<DIV id=3Dcomment><!-- WP 2.7 and above -->
+<H3 id=3Dcomments>8 Comments for this entry</H3>
+<UL class=3Dcommentlist>
+  <LI class=3D"comment even thread-even depth-1" id=3Dli-comment-81>
+  <DIV id=3Dcomment-81><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/697f58fbb75b6b885c3c5546d0cbc833?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE><A class=3Durl =
+href=3D"http://leoromanovsky.com/"=20
+  rel=3D"external nofollow">Leo Romanovsky</A></CITE> <BR><SMALL=20
+  class=3Dcommentmetadata><A title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-81">June=20
+  23rd, 2009 on 3:55 pm</A> </SMALL>
+  <P>Thanks for the good post.</P>
+  <P>What are your thoughts on placing the onTouchListener in the thread =
+instead=20
+  of the panel?</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI=20
+  class=3D"comment byuser comment-author-warrenfaith bypostauthor odd =
+alt thread-odd thread-alt depth-1"=20
+  id=3Dli-comment-83>
+  <DIV id=3Dcomment-83><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/241aa8bb2a154108277e22ed03508ab0?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE><A class=3Durl =
+href=3D"http://www.droidnova.com/"=20
+  rel=3D"external nofollow">Martin</A></CITE> <BR><SMALL =
+class=3Dcommentmetadata><A=20
+  title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-83">June=20
+  23rd, 2009 on 7:15 pm</A> </SMALL>
+  <P>I always think about the fact, who is responsible for what. In this =
+case I=20
+  ask you: What does the game loop have to do with touch events?<BR>I =
+don=E2=80=99t=20
+  touch the game loop, but I touch the view which means the =
+panel=E2=80=A6 also the=20
+  focus is on the view.</P>
+  <P>To handle touch events in the thread is possible, but I =
+wouldn=E2=80=99t recommend=20
+  that.</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI class=3D"comment even thread-even depth-1" id=3Dli-comment-110>
+  <DIV id=3Dcomment-110><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/fae6eed2bb6170c165a1541ee801499a?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE>Udai</CITE> <BR><SMALL =
+class=3Dcommentmetadata><A=20
+  title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-110">July=20
+  7th, 2009 on 6:00 am</A> </SMALL>
+  <P>Hey Martin,<BR>Hello, i am a beginner in Android field. I just saw =
+your=20
+  post and i just liked it. I wanted to know that who calls he onDraw()=20
+  method.</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI=20
+  class=3D"comment byuser comment-author-warrenfaith bypostauthor odd =
+alt thread-odd thread-alt depth-1"=20
+  id=3Dli-comment-114>
+  <DIV id=3Dcomment-114><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/241aa8bb2a154108277e22ed03508ab0?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE><A class=3Durl =
+href=3D"http://www.droidnova.com/"=20
+  rel=3D"external nofollow">Martin</A></CITE> <BR><SMALL =
+class=3Dcommentmetadata><A=20
+  title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-114">July=20
+  8th, 2009 on 8:20 am</A> </SMALL>
+  <P>Hey Udai,<BR>as I mentioned in the <A=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+,160.html"=20
+  rel=3Dnofollow>second part</A>, we have a thread class called =
+TutorialThread. In=20
+  this class, we call the onDraw() method.</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI class=3D"comment even thread-even depth-1" id=3Dli-comment-148>
+  <DIV id=3Dcomment-148><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/fae6eed2bb6170c165a1541ee801499a?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE>Udai</CITE> <BR><SMALL =
+class=3Dcommentmetadata><A=20
+  title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-148">July=20
+  14th, 2009 on 10:10 am</A> </SMALL>
+  <P>Thanks Martin,<BR>But i meant that how onDraw() method is called=20
+  internally=E2=80=A6and if possible can we call it by our own as per =
+our=20
+  requirement..</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI=20
+  class=3D"comment byuser comment-author-warrenfaith bypostauthor odd =
+alt thread-odd thread-alt depth-1"=20
+  id=3Dli-comment-150>
+  <DIV id=3Dcomment-150><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/241aa8bb2a154108277e22ed03508ab0?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE><A class=3Durl =
+href=3D"http://www.droidnova.com/"=20
+  rel=3D"external nofollow">Martin</A></CITE> <BR><SMALL =
+class=3Dcommentmetadata><A=20
+  title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-150">July=20
+  14th, 2009 on 12:48 pm</A> </SMALL>
+  <P><QUOTE>and if possible can we call it by our own as per our=20
+  requirement</QUOTE><BR>Of course we can call it by ourself.</P>
+  <P>How Android use the View is explained on <A=20
+  =
+href=3D"http://developer.android.com/guide/topics/ui/how-android-draws.ht=
+ml"=20
+  rel=3Dnofollow>How Android Draws Views</A>.</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI class=3D"comment even thread-even depth-1" id=3Dli-comment-182>
+  <DIV id=3Dcomment-182><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/b9fccf4b2b79abe45febd9a970a8be7e?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE>Michael</CITE> <BR><SMALL=20
+  class=3Dcommentmetadata><A title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-182">July=20
+  26th, 2009 on 6:56 pm</A> </SMALL>
+  <P>Fantastic post and I agree with you on the on touch event being =
+associated=20
+  with the view. Extremely well done article and I am happy to see that =
+you=20
+  follow good design principles.</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV>
+  <LI class=3D"comment odd alt thread-odd thread-alt depth-1" =
+id=3Dli-comment-196>
+  <DIV id=3Dcomment-196><A class=3Dgravatar><IMG class=3D"avatar =
+avatar-60 photo"=20
+  height=3D60 alt=3D""=20
+  =
+src=3D"http://www.gravatar.com/avatar/166e0b975c36bbe15caa65209940035c?s=3D=
+60&amp;d=3D%3Cpath_to_url%3E&amp;r=3DG"=20
+  width=3D60> </A>
+  <DIV class=3Dcommentbody><CITE>Tom</CITE> <BR><SMALL =
+class=3Dcommentmetadata><A=20
+  title=3D""=20
+  =
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#comment-196">July=20
+  29th, 2009 on 7:12 pm</A> </SMALL>
+  <P>Great series Martin,</P>
+  <P>keep up the tutorials!</P></DIV>
+  <DIV class=3Dcleared></DIV>
+  <DIV class=3Dreply></DIV></DIV></LI></UL>
+<DIV class=3Dnavigation>
+<DIV class=3Dalignleft></DIV>
+<DIV class=3Dalignright></DIV>
+<DIV class=3Dcleared></DIV></DIV>
+<DIV class=3Dcleared></DIV>
+<DIV id=3Drespond>
+<H3>Leave a Reply</H3>
+<DIV id=3Dcancel-comment-reply><SMALL><A id=3Dcancel-comment-reply-link=20
+style=3D"DISPLAY: none"=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#respond"=20
+rel=3Dnofollow>Click here to cancel reply.</A></SMALL> </DIV>
+<FORM id=3Dcommentform =
+action=3Dhttp://www.droidnova.com/blog/wp-comments-post.php=20
+method=3Dpost>
+<P><INPUT id=3Dauthor tabIndex=3D1 size=3D22 name=3Dauthor> <LABEL=20
+for=3Dauthor><SMALL>Name (required)</SMALL></LABEL></P>
+<P><INPUT id=3Demail tabIndex=3D2 size=3D22 name=3Demail> <LABEL =
+for=3Demail><SMALL>Mail=20
+(will not be published) (required)</SMALL></LABEL></P>
+<P><INPUT id=3Durl tabIndex=3D3 size=3D22 name=3Durl> <LABEL=20
+for=3Durl><SMALL>Website</SMALL></LABEL></P><INPUT id=3Dcomment_post_ID =
+type=3Dhidden=20
+value=3D176 name=3Dcomment_post_ID> <INPUT id=3Dcomment_parent =
+type=3Dhidden value=3D0=20
+name=3Dcomment_parent> <!--<p><small><strong>XHTML:</strong> You can use =
+these tags: &lt;a href=3D&quot;&quot; title=3D&quot;&quot;&gt; &lt;abbr =
+title=3D&quot;&quot;&gt; &lt;acronym title=3D&quot;&quot;&gt; &lt;b&gt; =
+&lt;blockquote cite=3D&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del =
+datetime=3D&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q =
+cite=3D&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; &lt;pre =
+lang=3D&quot;&quot; line=3D&quot;&quot; escaped=3D&quot;&quot;&gt; =
+</small></p>-->
+<P><TEXTAREA id=3Dcomment tabIndex=3D4 name=3Dcomment rows=3D10 =
+cols=3D100></TEXTAREA></P>
+<P><INPUT class=3Dsubmitbutton id=3Dsubmit tabIndex=3D5 type=3Dsubmit =
+value=3D"Leave comment" name=3Dsubmit>=20
+<INPUT type=3Dhidden value=3D176 name=3Dcomment_post_ID> =
+</P></FORM></DIV></DIV><!-- Closes Comment -->
+<DIV id=3Dextrastuff><SPAN id=3Drssleft><A=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html/feed"><ABBR=20
+title=3D"Really Simple Syndication">RSS</ABBR> feed for this post=20
+(comments)</A></SPAN> <SPAN id=3Dtrackright>=C2=B7 <A=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html/trackback"=20
+rel=3Dtrackback>TrackBack <ABBR=20
+title=3D"Uniform Resource Identifier">URI</ABBR></A></SPAN>=20
+<DIV class=3Dcleared></DIV></DIV></DIV><!-- Closes contentwrapper-->
+<DIV id=3Dsidebars>
+<DIV id=3Dsidebar_full>
+<UL>
+  <LI>
+  <DIV id=3Dwelcome>
+  <H2>Howdy. Welcome to Android Development!</H2>
+  <P>Thanks for dropping by! Feel free to join the discussion by leaving =
+
+  comments, and stay updated by subscribing to the <A=20
+  href=3D"http://feeds2.feedburner.com/droidnova?format=3Dxml">RSS =
+feed</A>. See ya=20
+  around!</P></DIV><!-- Closes welcome -->
+  <LI class=3D"sidebaritem widget_search" id=3Dsearch-2>
+  <DIV class=3Dsidebarbox>
+  <FORM id=3Dsearchform action=3Dhttp://www.droidnova.com/ method=3Dget>
+  <P><INPUT id=3Dsearchbox onfocus=3D"this.value=3D''" value=3D"Search =
+keywords" name=3Ds>=20
+<INPUT class=3Dsubmitbutton type=3Dsubmit value=3D"Find it"> =
+</P></FORM></DIV>
+  <LI class=3D"sidebaritem widget_recent_entries" id=3Drecent-posts-2>
+  <DIV class=3Dsidebarbox>
+  <H2 class=3Dwidgettitle>Recent Posts</H2>
+  <UL>
+    <LI><A title=3D"Android 3D game tutorial =E2=80=93 Part V"=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-v,376.html=
+">Android=20
+    3D game tutorial =E2=80=93 Part V </A>
+    <LI><A title=3D"Android 3D game tutorial =E2=80=93 Part IV"=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-iv,358.htm=
+l">Android=20
+    3D game tutorial =E2=80=93 Part IV </A>
+    <LI><A title=3D"Android 3D game tutorial =E2=80=93 Part III"=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-iii,348.ht=
+ml">Android=20
+    3D game tutorial =E2=80=93 Part III </A>
+    <LI><A title=3D"Android 3D game tutorial =E2=80=93 Part II"=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-ii,328.htm=
+l">Android=20
+    3D game tutorial =E2=80=93 Part II </A>
+    <LI><A title=3D"Android 3D game tutorial =E2=80=93 Part I"=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-i,312.html=
+">Android=20
+    3D game tutorial =E2=80=93 Part I </A></LI></UL></DIV>
+  <LI class=3D"sidebaritem widget_recent_comments" =
+id=3Drecent-comments-3>
+  <DIV class=3Dsidebarbox>
+  <H2 class=3Dwidgettitle>Recent Comments</H2>
+  <UL id=3Drecentcomments>
+    <LI class=3Drecentcomments><A class=3Durl =
+href=3D"http://www.gamesin5years.com/"=20
+    rel=3D"external nofollow">Mark Buchholz</A> on <A=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-i,312.html=
+/comment-page-1#comment-243">Android=20
+    3D game tutorial =E2=80=93 Part I</A>
+    <LI class=3Drecentcomments><A class=3Durl =
+href=3D"http://www.droidnova.com/"=20
+    rel=3D"external nofollow">Martin</A> on <A=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-v,376.html=
+/comment-page-1#comment-239">Android=20
+    3D game tutorial =E2=80=93 Part V</A>
+    <LI class=3Drecentcomments>Nick on <A=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-v,376.html=
+/comment-page-1#comment-238">Android=20
+    3D game tutorial =E2=80=93 Part V</A>
+    <LI class=3Drecentcomments>Nick on <A=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-i,312.html=
+/comment-page-1#comment-237">Android=20
+    3D game tutorial =E2=80=93 Part I</A>
+    <LI class=3Drecentcomments><A class=3Durl =
+href=3D"http://landout.blog.tut.by/"=20
+    rel=3D"external nofollow">gargo</A> on <A=20
+    =
+href=3D"http://www.droidnova.com/android-3d-game-tutorial-part-v,376.html=
+/comment-page-1#comment-236">Android=20
+    3D game tutorial =E2=80=93 Part V</A></LI></UL></DIV>
+  <LI class=3D"sidebaritem widget_meta" id=3Dmeta-2>
+  <DIV class=3Dsidebarbox>
+  <H2 class=3Dwidgettitle>Community</H2>
+  <UL>
+    <LI><A =
+href=3D"http://www.droidnova.com/blog/wp-login.php?action=3Dregister"=20
+    rel=3Dnofollow>Register</A>=20
+    <LI><A href=3D"http://www.droidnova.com/blog/wp-login.php" =
+rel=3Dnofollow>Log=20
+    in</A>=20
+    <LI><A title=3D"Syndicate this site using RSS 2.0"=20
+    href=3D"http://www.droidnova.com/feed">Entries <ABBR=20
+    title=3D"Really Simple Syndication">RSS</ABBR></A>=20
+    <LI><A title=3D"The latest comments to all posts in RSS"=20
+    href=3D"http://www.droidnova.com/comments/feed">Comments <ABBR=20
+    title=3D"Really Simple Syndication">RSS</ABBR></A>=20
+    <LI><A=20
+    title=3D"Powered by WordPress, state-of-the-art semantic personal =
+publishing platform."=20
+    href=3D"http://wordpress.org/">WordPress.org</A> </LI></UL></DIV>
+  <LI class=3D"sidebaritem widget_tag_cloud" id=3Dtag_cloud-2>
+  <DIV class=3Dsidebarbox>
+  <H2 class=3Dwidgettitle>Tags</H2>
+  <DIV><A class=3Dtag-link-34 title=3D"5 topics" style=3D"FONT-SIZE: =
+9.866pt"=20
+  href=3D"http://www.droidnova.com/tag/3d" rel=3Dtag>3D</A> <A =
+class=3Dtag-link-14=20
+  title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/activity" rel=3Dtag>activity</A> =
+<A=20
+  class=3Dtag-link-18 title=3D"31 topics" style=3D"FONT-SIZE: 22pt"=20
+  href=3D"http://www.droidnova.com/tag/android" rel=3Dtag>android</A> <A =
+
+  class=3Dtag-link-31 title=3D"15 topics" style=3D"FONT-SIZE: 14.533pt"=20
+  href=3D"http://www.droidnova.com/tag/application" =
+rel=3Dtag>application</A> <A=20
+  class=3Dtag-link-26 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/berlin" rel=3Dtag>berlin</A> <A=20
+  class=3Dtag-link-20 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/browser" rel=3Dtag>browser</A> <A =
+
+  class=3Dtag-link-17 title=3D"10 topics" style=3D"FONT-SIZE: 12.2pt"=20
+  href=3D"http://www.droidnova.com/tag/emulator" rel=3Dtag>emulator</A> =
+<A=20
+  class=3Dtag-link-35 title=3D"5 topics" style=3D"FONT-SIZE: 9.866pt"=20
+  href=3D"http://www.droidnova.com/tag/game" rel=3Dtag>game</A> <A =
+class=3Dtag-link-29=20
+  title=3D"12 topics" style=3D"FONT-SIZE: 13.133pt"=20
+  href=3D"http://www.droidnova.com/tag/graphic" rel=3Dtag>graphic</A> <A =
+
+  class=3Dtag-link-10 title=3D"5 topics" style=3D"FONT-SIZE: 9.866pt"=20
+  href=3D"http://www.droidnova.com/tag/how-to" rel=3Dtag>how to</A> <A=20
+  class=3Dtag-link-13 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/intent" rel=3Dtag>intent</A> <A=20
+  class=3Dtag-link-33 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/ip" rel=3Dtag>ip</A> <A =
+class=3Dtag-link-28=20
+  title=3D"4 topics" style=3D"FONT-SIZE: 9.4pt"=20
+  href=3D"http://www.droidnova.com/tag/layout-technique" =
+rel=3Dtag>layout=20
+  technique</A> <A class=3Dtag-link-9 title=3D"3 topics" =
+style=3D"FONT-SIZE: 8.933pt"=20
+  href=3D"http://www.droidnova.com/tag/listactivity" =
+rel=3Dtag>ListActivity</A> <A=20
+  class=3Dtag-link-19 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/localhost" =
+rel=3Dtag>localhost</A> <A=20
+  class=3Dtag-link-24 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/meet-up" rel=3Dtag>meet-up</A> <A =
+
+  class=3Dtag-link-25 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/meeting" rel=3Dtag>meeting</A> <A =
+
+  class=3Dtag-link-16 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/multilingual" =
+rel=3Dtag>multilingual</A> <A=20
+  class=3Dtag-link-32 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/network" rel=3Dtag>network</A> <A =
+
+  class=3Dtag-link-6 title=3D"8 topics" style=3D"FONT-SIZE: 11.266pt"=20
+  href=3D"http://www.droidnova.com/tag/news" rel=3Dtag>news</A> <A =
+class=3Dtag-link-5=20
+  title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/paid-application" rel=3Dtag>paid=20
+  application</A> <A class=3Dtag-link-15 title=3D"1 topic" =
+style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/pick" rel=3Dtag>pick</A> <A =
+class=3Dtag-link-7=20
+  title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/restriction" =
+rel=3Dtag>restriction</A> <A=20
+  class=3Dtag-link-8 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/sd-card" rel=3Dtag>sd card</A> <A =
+
+  class=3Dtag-link-12 title=3D"4 topics" style=3D"FONT-SIZE: 9.4pt"=20
+  href=3D"http://www.droidnova.com/tag/sdk" rel=3Dtag>sdk</A> <A =
+class=3Dtag-link-30=20
+  title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/security" rel=3Dtag>security</A> =
+<A=20
+  class=3Dtag-link-11 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/sources" rel=3Dtag>sources</A> <A =
+
+  class=3Dtag-link-23 title=3D"3 topics" style=3D"FONT-SIZE: 8.933pt"=20
+  href=3D"http://www.droidnova.com/tag/stammtisch" =
+rel=3Dtag>stammtisch</A> <A=20
+  class=3Dtag-link-22 title=3D"2 topics" style=3D"FONT-SIZE: 8.466pt"=20
+  href=3D"http://www.droidnova.com/tag/tablelayout" =
+rel=3Dtag>TableLayout</A> <A=20
+  class=3Dtag-link-3 title=3D"17 topics" style=3D"FONT-SIZE: 15.466pt"=20
+  href=3D"http://www.droidnova.com/tag/tutorial" rel=3Dtag>tutorial</A> =
+<A=20
+  class=3Dtag-link-21 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/webkit" rel=3Dtag>webkit</A> <A=20
+  class=3Dtag-link-4 title=3D"1 topic" style=3D"FONT-SIZE: 8pt"=20
+  href=3D"http://www.droidnova.com/tag/welcome" =
+rel=3Dtag>welcome</A></DIV></DIV>
+  <LI class=3D"sidebaritem widget_archive" id=3Darchives-3>
+  <DIV class=3Dsidebarbox>
+  <H2 class=3Dwidgettitle>Archives</H2>
+  <UL>
+    <LI><A title=3D"August 2009"=20
+    href=3D"http://www.droidnova.com/date/2009/08">August =
+2009</A>&nbsp;(6)=20
+    <LI><A title=3D"July 2009" =
+href=3D"http://www.droidnova.com/date/2009/07">July=20
+    2009</A>&nbsp;(2)=20
+    <LI><A title=3D"June 2009" =
+href=3D"http://www.droidnova.com/date/2009/06">June=20
+    2009</A>&nbsp;(2)=20
+    <LI><A title=3D"May 2009" =
+href=3D"http://www.droidnova.com/date/2009/05">May=20
+    2009</A>&nbsp;(8)=20
+    <LI><A title=3D"April 2009" =
+href=3D"http://www.droidnova.com/date/2009/04">April=20
+    2009</A>&nbsp;(4)=20
+    <LI><A title=3D"March 2009" =
+href=3D"http://www.droidnova.com/date/2009/03">March=20
+    2009</A>&nbsp;(8)=20
+    <LI><A title=3D"February 2009"=20
+    href=3D"http://www.droidnova.com/date/2009/02">February =
+2009</A>&nbsp;(4)=20
+  </LI></UL></DIV></LI></UL></DIV><!-- Closes Sidebar_full -->
+<DIV class=3Dcleared></DIV></DIV><!-- Closes Sidebars -->
+<DIV class=3Dcleared></DIV></DIV><!-- Closes Main -->
+<DIV id=3Dfooter>
+<DIV id=3Dfooterleft>
+<P>Design by <A title=3D"WordPress theme" =
+href=3D"http://samk.ca/freebies/"=20
+rel=3Dnofollow>pixeled</A>. Sweet icons by <A =
+href=3D"http://famfamfam.com/"=20
+rel=3Dnofollow>famfamfam</A>. <A=20
+href=3D"http://www.droidnova.com/playing-with-graphics-in-android-part-ii=
+i,176.html#main"=20
+rel=3Dnofollow>Back to top =E2=86=91</A></P><!-- Please don't remove my =
+credits! I worked hard to create this theme and distribute it freely. =
+Thanks! --></DIV>
+<DIV class=3Dcleared></DIV>
+<SCRIPT type=3Dtext/javascript>=0A=
+a2a_localize =3D {
+	Share: "Share",
+	Save: "Save",
+	Subscribe: "Subscribe",
+	Email: "E-mail",
+    Bookmark: "Bookmark",
+	ShowAll: "Show all",
+	ShowLess: "Show less",
+	FindServices: "Find service(s)",
+	FindAnyServiceToAddTo: "Instantly find any service to add to",
+	PoweredBy: "Powered by",
+	ShareViaEmail: "Share via e-mail",
+	SubscribeViaEmail: "Subscribe via e-mail",
+	BookmarkInYourBrowser: "Bookmark in your browser",
+	BookmarkInstructions: "Press Ctrl+D or &#8984;+D to bookmark this =
+page",
+	AddToYourFavorites: "Add to your favorites",
+	SendFromWebOrProgram: "Send from any e-mail address or e-mail program",
+    EmailProgram: "E-mail program"
+};
+a2a_linkname=3D"Playing with graphics in Android &#8211; Part III";=0A=
+a2a_linkurl=3D"http://www.droidnova.com/playing-with-graphics-in-android-=
+part-iii,176.html";=0A=
+a2a_color_main=3D"000";a2a_color_border=3D"333";a2a_color_link_text=3D"ff=
+f";a2a_color_link_text_hover=3D"f80";a2a_color_bg=3D"000";a2a_color_arrow=
+=3D"fff";a2a_color_arrow_hover=3D"f80";=0A=
+</SCRIPT>
+
+<SCRIPT src=3D"http://static.addtoany.com/menu/page.js"=20
+type=3Dtext/javascript></SCRIPT>
+</DIV><!-- Closes footer --></DIV><!-- Closes wrapper --><!-- BEGINN =
+anormal-tracker.de V2.5 CODE -->
+<SCRIPT type=3Dtext/javascript>
+var user=3D47437;
+var zusatz=3D"";
+</SCRIPT>
+
+<SCRIPT src=3D"http://www.droidnova.com/tracker.js" =
+type=3Dtext/javascript></SCRIPT>
+<NOSCRIPT><A =
+href=3D"http://anormal-tracker.de/openstat.php?userid=3D47437"=20
+target=3D_blank rel=3Dnofollow><IMG alt=3D""=20
+src=3D"http://anormal-tracker.de/countv2.php?user=3D47437" =
+border=3D0></A></NOSCRIPT> <!-- ENDE anormal-tracker.de V2.5 CODE -->
+<SCRIPT type=3Dtext/javascript>
+var gaJsHost =3D (("https:" =3D=3D document.location.protocol) ? =
+"https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src=3D'" + gaJsHost + =
+"google-analytics.com/ga.js' =
+type=3D'text/javascript'%3E%3C/script%3E"));
+</SCRIPT>
+
+<SCRIPT type=3Dtext/javascript>
+try {
+var pageTracker =3D _gat._getTracker("UA-166746-38");
+pageTracker._trackPageview();
+} catch(err) {}</SCRIPT>
+<!-- Dynamic page generated in 1.567 seconds. --><!-- Cached page =
+generated by WP-Super-Cache on 2009-08-25 18:31:24 --></BODY></HTML>
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://www.droidnova.com/blog/wp-content/themes/pixeled/images/rss-trans.png
+
+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
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-Location: http://www.droidnova.com/blog/wp-content/plugins/add-to-any/share_save_171_16.png
+
+iVBORw0KGgoAAAANSUhEUgAAAKsAAAAQCAMAAABeO3+dAAABgFBMVEUUR98jVu4xdNCOjo5YcajE
+xMS/v7+sudNFoklBoUWVpsmRzJwjoEB4jLjv7++enp44V5ZeXl45eNHj4+P19fXJyMlFsmd/f39j
+fK/N1+dPT09HdvwNDA1ubm5So1M6qVlRqFMZT80/Pz/U1NRlsmlIpEsjnkKvr69ttnMvLi9CoUjN
+zc0wY/yKiYrU09MfHx/6/f8mn0N6enojm0A8nkCNwI5pgLHW1dWt0q5bploUFBRWplhHeerz+fOy
+2bSOwZDt9u3V4NW93r82qUYmX7w/okrLysoeV7NFgdRgrGFAeM7Pz8/2+P3f39/T0tI/b/8IO9RL
+eP+1tbWmpqba3+xFYp65uLn3+v0AM8zr6+u8vLzNztJziLY/c+nY19jo5+gqYN6qqaozaefP0NQm
+m0OnxOtBn0fk8OTm5uaZ0KIvctDGx8rU3/HZ5PVAfdMgVtReqFxwhrR3jLju8fQyoU/+/v739vf7
++/s7WZjy8vLu7e7r6uvAwMAAAAD///////8fh1hCAAAAgHRSTlP/////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////ADgFS2cA
+AAOwSURBVEjH1Zb7V9NIFMfDBkLqpolpZFPCVN2UUtNWZkEEBRVf+KANjxZcEV+r7qr7cJ99ub3j
+v773TtJQrC6/eQ7fc+Zx534n/WS4c4LyoXdc9EHplbviOKhb7im91hf7udf3DWNuZmbOMO6/Tha/
+f5fJZO79SNOddCdWemd496meMiYnv61PTU1tVkZu/xpnTNf3VBxD9wgA15J21fNU8wjr6VsFPVUq
+pfTCrZUD1sxXqHs0jVFH0+lO+hPb+6zr29vbiKps3Y0TnNseeEJocAQA06gPmOex4AirUUj9dOn6
+9Wt6STc+Ys3QNEbdoVmShyHWK4haqylbD7+N1jWo4pFBSKxFSWNqRVwS1TAatPgBVSZ7KAph0R6h
+FTUTzXjG4SEj6kKqdFFc/kOcS/0f619i/M8DVgAYZt2s1GpbD7d+j9ZD8IrCDAmac7BxgTEOWA8+
+g0BUfWA8glA9+SIQYCmgXfgQoMFkWD+BLaoBbqv2f+yf1YuicHZlrVTS5xLW7zI/H2ZNy1o4QE1g
+E1Y8VZLyPE5YDJhXJVZVqOhWuRC2jywc38Djpulx6fNVORQ5ANmrWBJFPF8bXwgHMvpJaZwR4uZZ
+Ic4txKynSH/T3cq8S1hrxD9QA8P1+qQSsY68SFJajjGqATOqWSvnA7HSOQLzfQ7RgYb9YnA51YDm
+YkbDLWEOXwZ430h6VdAXpoWYvinENxQvM9TyLy/39/dfJqzjk2Jy/HOsTdILvFZ4qiOVJzJsqjZ2
+70FtatCULQe2ZfvNpu9iAgIXRb4il3bLIzt30eq7KmjNJs9xddBIeoWXam16ek2srp6hmMm/cHlp
+dnZ2ieKoBhbFY+zjLdIRz5G1TXqO1wpPtbJ5RYZtC1Tqyu1H0JbN99p7PMDRxazH97CRz85Jexly
+ZLPaKuy1c/CojRMI0Z0YSRf01Ip4+7VY1RcMiiUru5Pf2NjIU9w5ieo8lvXa34OO/hRZW6TbeK3w
+VDe311uRbHqO3Wo9gKidh4AFOPrzmJwIgMMDsvEfIvu8tD9rPcWryAEXn4J3yEgyCiX92tWrlwqp
+gkHxAOssxZ3dbDY7ekKcGN3t9Pe0IJkha5c0eVcZQdSp9clurHy9kcfBqUetm2+MOXWnO5aPsg1H
+jvN9u1O35JOcRt2pkyc2jjW6iQa+BacpXj5gXaI4vbu4uJhF1uxuujss/MY+e/+ldOOyMUPf2Blj
+5QbF5+lyLd/Bel1yKB78xg7vfoOsE86/x0HORE85Rv8T/gfKAUGbrwDccQAAAABJRU5ErkJggg==
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://www.gravatar.com/avatar/697f58fbb75b6b885c3c5546d0cbc833?s=60&d=%3Cpath_to_url%3E&r=G
+
+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
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://www.gravatar.com/avatar/241aa8bb2a154108277e22ed03508ab0?s=60&d=%3Cpath_to_url%3E&r=G
+
+/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcg
+SlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwK
+DAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQU
+FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAPAA8
+AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMF
+BQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkq
+NDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqi
+o6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/E
+AB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMR
+BAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVG
+R0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz
+tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A
++ZP2YJ2svj74LlAz/wATFFx9eP61+7GnsW06IkYOwH9K/BH4O+NdL+HHxU8OeIdXilnsbC5Ezxwj
+LHAOP1r9hfhD+198PPivDBDpV9JDM6KPLuE2846daMVH37hTfuW8z1jUQqq24V5v4sijEMkh5yah
++M/xls/BUCtEvn5QtuB447V8C/Er9urxzqOp3Fjp+m6dZW27aszNwB7kmvNS5nY9Hm5Uro988d6s
+tlI+D618zeP/ABRGbiVy/wAwPQViz/ELxt4otvtDeJNEN0R/x7pOrhh6YBrxfxnrXi2DXfM1G0WQ
+AfMLcHaw9a6OToJ1U0dF4xsbbW7K5luOZHQlDnnjpXg9zCIZ2TsDxXqV5r/9paZviVo2RcMrDkV5
+rqNxHc3TOFxwAeeprpp7M5altLHaeHtcl8PeIrPUEjimMDE7J0DqQRg5B+tfU/wL/Zy8WX3jOy8T
+6jfLa2VxieRrXMUi/ewiIMLg5U5Pp718v+F7KC88V6RBcn/R5buJJP8AdLgH9M1+wek2dvpunWYh
+VILZY12kHjaBn+lXjKns7ablYWkqlzgPj7cre6Jp3hwwqZnQb5/4jnGc159oXwF8MWuiwme3juLw
+yb3WWIMpX+6M+vc+lS/ETxsl744ZmbegfaMnI4Fd34a1aHUdHGzbIy8gg5xXnQdkejOKjoeSXP7M
+HhSFr6eDTI3+1AgJK5YQAsWxH/cGSelc3qPwq0zQ7OO1uGMyRcB35bb6E96961jUFtULHsOgrxD4
+ieKFWOcu4XIPU1rJ3iZRiluj5p+MlpYaPPILNURGyMLxXz/McyHFdx8UPEEmpa9NGJi6qxrhiCTx
+XTSjaJwVGm9DvFd7W4ilQ4dGDAg9CK/TzwN8WX8Y/A6w1rTrNtSvFtTHNaxH95vAwwUdzkdK/NB7
+HeoIwTXvP7K/xPuvCOoahoLsXguUM9vH1/eD7ygdyR/KurF0ueF1uicNU9nO3cxNZ/aav7fxddaa
+vhiaWcTFRG6sk4z/ALBGa9y/Z91PxZe+ItduNV0i60zSDFG1ubobNz85wPpiug1DX/ADanPq9zo2
+oTa/EAJlg0qQySFgMDdt9x1rH1/4yT2cTQab4X8QRkfcE1sI1+nzEV5iatoj0Gp/aZ3fjXVfJjYN
+kMR618p/G7xC1tbsu/ax6kdce1e5pe6xqvh2HUNYspbGWTkQyOrkD6qa+Y/ipepqfiS8QyZihXv0
+yf8AP6VC3SInLQ8H1KC4kka5kUhXOQT6VRDcV2fiu5s00i2hjffcHOQOgriip9a9BXOBns9pZiVR
+6/SrlhHdaHqdtqFo/lXNu4kRx2INWLBQowK2GhR1YEdq9xw01PO5ne6PqXwOl38Z9BtdU07UJNLv
+2xDceUAQrgc5B7f4iuhf4O3mi7rnUdR/tS4UHG84BPavJ/2XPEF5pOranZW7gWzxiUowz83TP5V7
+h458WX9jpTyxshfH8Qz/AFr5utTcKjinoe9SrOpTTZ5z4xvpo9MkF1IsCImCFOQpx2r4R+JPieO4
+169ispfMQsQz56mu5/aE+KHiHUNUfTHvPLtGzuWMbS31rwrOSSevWinSs+ZmNWd3YcWZjliWIq7Z
+aHf6jCZreznmjzjdHGWGfqKueDNJg13xRplhc7vIuZ1jfYcHBPavrzxpr6fCS70/QNB0rTxYLZRz
+D7REzPuJYHJDD0FdD0MErn//2Q==
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://www.gravatar.com/avatar/fae6eed2bb6170c165a1541ee801499a?s=60&d=%3Cpath_to_url%3E&r=G
+
+/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcg
+SlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwK
+DAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQU
+FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAUABQ
+AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMF
+BQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkq
+NDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqi
+o6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/E
+AB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMR
+BAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVG
+R0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz
+tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A
+8hooor+iD+YQo/CiigAo9a+h/wBmn9ku4+OOmXOvapqkmjeH4pjbxGCMPNcyAAttzwqjIGSDk5GO
+DXsOuf8ABOPSHt2OkeM763mA4F7aJMp/75KYrwa+eYHDVXRqT1W+jdvuPosPw/mOKoqvSp+69tUr
+/ez4Xor2T4qfsoePvhZDNeT2Met6RHlmvtLJkEa+roQGX3OCB6142DkZr1aGJo4qHPRkpLyPHxOF
+r4Sfs68HF+Yd6PSiiuk5Qoor2v8AZF+FUPxU+MNjFfQibR9JQ6jeIwysm0gRxn1DOVyO6hq5sTXh
+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
+4uftK83J+YUUUV0nKf/Z
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://www.gravatar.com/avatar/b9fccf4b2b79abe45febd9a970a8be7e?s=60&d=%3Cpath_to_url%3E&r=G
+
+/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcg
+SlBFRyB2NjIpLCBxdWFsaXR5ID0gOTAK/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwK
+DAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/9sAQwEDBAQFBAUJBQUJFA0LDRQU
+FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU/8AAEQgAUABQ
+AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMF
+BQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkq
+NDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqi
+o6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/E
+AB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMR
+BAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVG
+R0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz
+tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A
+8hooor+iD+YQo/CiigAo9a+h/wBmn9ku4+OOmXOvapqkmjeH4pjbxGCMPNcyAAttzwqjIGSDk5GO
+DXsOuf8ABOPSHt2OkeM763mA4F7aJMp/75KYrwa+eYHDVXRqT1W+jdvuPosPw/mOKoqvSp+69tUr
+/ez4Xor2T4qfsoePvhZDNeT2Met6RHlmvtLJkEa+roQGX3OCB6142DkZr1aGJo4qHPRkpLyPHxOF
+r4Sfs68HF+Yd6PSiiuk5Qoor2v8AZF+FUPxU+MNjFfQibR9JQ6jeIwysm0gRxn1DOVyO6hq5sTXh
+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
+4uftK83J+YUUUV0nKf/Z
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://www.gravatar.com/avatar/166e0b975c36bbe15caa65209940035c?s=60&d=%3Cpath_to_url%3E&r=G
+
+iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAUJklEQVRogd1be3BUVZ7+zrm3+97u
+9CPpzqM7dB4dkqiRSBLCw0Fga9UhMjqjM44ywlLoKFu+KB2tnSrUmqkadaxSamSFcXemahlGp2aV
+UplVQGQUEIFINmKA8AgEQwIhj+70K+n049772z+6O3RCJySA5e5+VSfJfZxzz3d+j/Odc2/wox/9
+iNfX1/Nnn332sTlz5rw0b968XAD6Bx54gLe3t3MA/JNPPuH19fUcwP/9sn79+n/485//bLFYLGcB
+kNPpfKOioqIuKytrR35+/ofLly8vLi4ulktLS7/7zl6LYrFYehctWlSXlZXVBYDMZvOR6dOnvwGA
+GGNUXFz8POe8DIDxO+/sNSg8FArld3R0PGm324MAYLFYKpcuXXovABARGGOLNE2rYYyZ8P8AAoBf
+q6paJctyJBgMZquqKly4cMHk8XggCAI4557h4eEuAO0AQgDou+3y1UEQBOHX0WhUCIVC2QAQj8fh
+8XgAAHa7Pez3+08T0XHG2AmMQ3jNmjUwGAy44447+OLFi6mrqwu333473nvvPV5XV0cmkwl5eXl4
++OGH+YoVK5hOp6Ply5fz+++/nwWDQXr99ddRVFSE/fv3f+uEWXFx8Qfnz5+/W1XVURdsNltkaGio
+LRqNHgXwHoDPAfgBaGMbeeaZZ+ByufjWrVu1BQsWiOFwuOyLL764yePxzBoYGLDl5eVdD8BERBwA
+iGhgcHDwTGFh4TlBEA7cfPPNX3R0dETef//9S9q+5oQlSZrjdDofD4fDd/p8Pls8HofD4VACgcCx
+4eHhDgB7AHwM4AyAGAC8+uqrMJlM2LBhA37+85/D7/cbDx06dMvJkyfv8vl8DX6/vzAej8tEl/d+
+zjlsNlunzWZ7d8aMGW91dXWdKCgo0G666SbtwIED2LVr17UlDMAmCEKVXq9fWFdX99y+ffuMJpNJ
+0TTt83A4vCtJtg3AYKrSzp074Xa7+csvvyx/9dVXv+js7PynQCBQPtZLZFmGwWCA1WqFJElgjAEA
+hoeH4ff7MTQ0BEVRRu43Go0xp9O5xeVy/dZoNLY1NDTEXn75Za23t/eakhYBZIuieFNZWdlbAEgQ
+BHI6nTsB3AcgN3kPB8DnzZvH33zzTb569WrbtGnTdiIR0wSAJEmiuro6evbZZ+n999+n48eP0+Dg
+ICmKQvF4fKQoikJer5eam5tpw4YNtHDhQtLr9SPtGI3G0I033vjbOXPm5APQc84nNeUIgsAlSbrc
+feAAREEQjPPmzfsh55yQECCtjLHlAPLTK1RXV/MtW7aY3G73h6kOlpWV0QsvvEBff/01RaNRUlV1
+pGiaNuo4U4lGo9TY2EhLly4dIS4IApWWlu6prKy86cYbbzTOnj17QqJ3330337Rpk9je3i6uXbuW
+L168eELCHACvqKjItdvt3wAgq9U6ZDAY1gAoT7fwI488wuvr63+TGphFixbRhQsXSFEUUhTlsuQy
+lVTdeDxOu3fvppqamhFrZ2dnt5aUlHxPkiRTej/Sy7Jly8SZM2e+5XK5zi5evHih0Wg0SpKU8V4B
+iTgGAFitVtVgMJT5fL7ZsVhMV1hY6AsEAq2yLPfNnz9fAQC73X79vn37Nsbjcd306dPxt7/9DQ6H
+AwBGYnSqSNXjnKOkpAQ//elP0dXVhdbWVkQikTyTyTTbYDDsj8fj/jVr1qh79uwZlQ2feuop59tv
+v/2vXq83H0BOX1/fUZ1ON/irX/3KeOedd6KhoUFZsmSJWFhYeNsoC1dVVYmLFi26xWAwxAHQtGnT
+unQ63XJBEPLvuececdu2baLb7f4LANLpdLRjxw6KRCIUDAZHYjPdjTVNy+jSmc6nzqXODw0N0bJl
+ywhJiet2u9/T6/VVRqPxEon70ksvVWZlZQ0nw+sQY2xVbW3t0sLCQl95efmeBQsWOOrq6laKoqjy
+9JHy+XzaqVOnjmZnZ38OAP39/S6HwzFXVdX8lpYWccuWLaW9vb0/BoAf/OAHcDgcuP3221FdXY0H
+H3wQfr8fQEKSppCUp1O2uiRJWL9+PebNmwciQk9Pzw/z8/MbotFoKomOQNO0HlVVgwDg9/sdjLES
+j8fzYHd3d/aFCxfqfT7fnWfPnn1JUZTRMQyAM8b0tbW1D+h0OhUAORyOdlEU79bpdLaamppfMMZI
+EAT69NNP6dZbb6XUMQB68cUXryiGJ0pyBw8eJIPBQADI5XK1MMZuA5Cd3mebzaYvKiraA4BkWVbL
+ysreys7ODiTr9Lvd7pOMMQJAoyyctIjS39//mc1mawQAj8dTVlZWdocgCIU9PT2LiQhlZWWor69H
+an50Op0AAK/XO6otxlhG62Y6P/Zc6u/a2lrce++9AICBgYEqh8MxD4mZY8TKAwMDmsvl2iQIAiKR
+CPd4PPcGg0FL0vq5Z8+erSQimM3m2CUWThZ55syZ9+r1+jgAys3N9TqdzuU2my0EgFasWEGKotCG
+DRtIp9NR8h5qamq6bKxONobTM/hnn31GnHNijFFhYeFWAP8IwJTqr9Fo5CaTKb+8vHx7ypJjiyzL
+qtVqPZKRsNvtFm02W35paelmxhgxxmju3Lkn9Xq9CoDWrl07Mo1s376dXn31VTp8+HDGaWkqhNN/
+K4pCgUCAfD4feb1eKigoSA3sSQAPAXCk+rtu3TrudruNdXV1t7jd7n1jyVqt1qjdbj8JYOclLg0A
+r7/+umY2m4M6nW6tzWbrISI0NTVVxuNxDgDFxcUjbvf9738fTz/9NKqqqjK6biY9TUSXnE8dp353
+d3ejtrYWFRUV+MMf/oAZM2YAAGRZdgAoxMU4RlNTE1asWBFra2s7oarqOSAxxTU0NETsdntnOBw+
+7PV6zwD4KqOFJUnigiBwALaKiorHJEmKp4/Yjh07Rk1B6RZLt9zVuHRLS8uI6nK5XPTQQw8RABJF
+MSpJ0huCIMxjjMkA+NNPP817enrEn/zkJ5UGgyGQ9IRhWZabAWwHsAHAEwBuyWjhaDSK5EJgsKOj
+4yO73f6nhJxNQNMuXcWNtdDY81OFoigjz7HZbCgpKQEA6PV60Waz5aqqauKciwDgdrvR09PDDx06
+9NLw8LCFcw5RFDui0WgPgL1ILG+3ATg8SmllgAYgxhg7k5eXNyMYDBYDwN69e1FWVoaKioormmPH
+c/X0axaLBd3d3bjhhhuwfv16nD9/Hh9//DFkWWZGo7EjGAy2cs47W1tbo4qi4Lnnnrvz2LFjv9Y0
+jdlsNr/P52vTNO0wY+wTznkLEXkBRIDJbX5Z5s+fvyKVkQGQXq+nRx55hLq7u69KR4/n6ukrK1VV
+6bXXXiMAlJWVpTocjq0AlprN5tyOjg7xySefrMzJybmQ7Jeak5PTBOAdAA8gEe8jujqjS2dAuLq6
++gRjTAEAzgTEYnH88Y9/xJy5c7Fx40ZEIpFJqarUfJtpHk6BiMA5R3oY9fT0AABisZgWDAYVxhgX
+RREvvPCC7YMPPvhrUmEhJyenw+fzDQBoBXAMwADSdmkmS1grLy/vVFU1xgA8IWbhKUGCgYno7urC
+P69ahVtvvRVbt24dIZ5e0jGZmE4fEMYYNE3D0aNHAQB5eXlKOByOAYiUlZXZ9uzZ8+G5c+fqiAgF
+BQUDXq+3E4ndmYMAOpHcpUnHpBbXFotFL0lSAAC9CIEiEOhzJtFCLpOAxFKRc06zZ8+mjRs3ktfr
+ndDVx1snj114KIpCPp+PnE4nASCbzdbPGHursrJytd1ub8XFZWRAkqQ9AP4KYCWAYgD6DFwmR7i6
+ulrvcrl6AdC/MJFi4KSAUQgi/YlJdD3TkcAYcTDijNE05zR68oknaO/evRQOh0fExGRjOL3s2LFj
+RGlNmzatvbi4uDm1OmKMkd1u90mSlMrGqwHMwPgvDiZHuKGhQSwqKvoSAD3AZIoBpCRLHIxCTKD/
+4DqayWQSIRBPWl0QBJpeVkarVq2izZs307lz5ygUCo2QH+sF6UorVZYvXz7iQU6nM56Sj4IgUEFB
+wXlZlvckyf4CQB3SZOfYwlKsL4ef/exn/KOPPvpLKBS6bzYM2I8IGAgs5VNgYCCEuYCDxPFvXI/d
+agweqEjf2dXpdCh0OlFTW4uamTWovK4S01wu5Nrs4IIAIBHnAz4vvjnzDRobG7Fp0yYMDQ2NtMEY
+g9Vqjeh0urb+/v4+AH0ADgD4Aon4HdlwHItJE16wYAGCweAbLS0tj7m5hBYQjFpsZBIfm4oIQDc3
+4FOm4L80A75kw+jXFKggEACWHCqWGg42tpFk0kqepCTRnJwcRa/Xd+fk5PQdP368L0nwSyRkYyeA
+8EQ8xIkupsNqteL06dNHAKBfi2MABOMl3RvdYSdFsFwDlrEQwsTQziQ0cglHtGF8ySSc0QgxFkOc
+4omMPlIzYQcJDHGmQiWCJEuK2WTu9Pv9HkVRBnp6eroBHAfwNYATADzIkJGvmHB1dTXi8XhfX18f
+IqoGH9fDpUWT1sr0wonAKWFDTgQzCDWIoEaNAAAUUhBjAvoEAZ0KQzytBQJBBxV5YhZ+DMJpZRg5
+2Tnh3t7ec0lyRzjnpzVN6wDQg4QLT+qtxaQJ19bWoqamxr9r1y4trhI/RAKqcdGy48kNlmEoAEAH
+DTrS4FbicI+5lsgJHAEtgh5SwcAQjgwHiagDwKcA/lvTtAEkpOJlrZqOyQoP3Hfffejo6DidnZ09
+SCCc5GMEBUZbmcacn+h6JhDTcBQSwgQQIxhlYxAJa7YB6AYQxBTJAlMgDADvvvuuJxqJHGMgHFPj
+o64xjLYyG3N+ouuZwAC0MAUagCxjFgIBvx9APxJElXGqXRZTItzc3BwrKCjoYGBoZzrEJqg+lUVh
+pgwPYvhaS7yrIqKYoihBJHRxGJOM10yYNOFf/vKXePPNNxGNxw4RCGcRg4eJ43b4covGdJcem/QY
+AIUxtCbbN5vNkXg8niIcSd42QloURTz++OPGgoKC1SUlJaseffRR4z333JOR26ST1nXXXYfq6mrt
++htu+LrzbCciBLQwFc4MHUaG40wYG8fpdYJMh5OUCJsk2RThVNyOEOrv78fChQtX9vf3/45zjs2b
+N3cPDAw0IvE+e5T7T5ow5xzffPMNwkP+NqvVqvj9frGNdGgYGehEd9OFSEpaKGAgEDSk5tjxBoDA
+k3m9FUA41SZjKbJBp9OpEBHWrVuHwcFB7N69G9u2bdNfuHDhUU3TIElSTNO0uUTkR2KOHqW6Jk14
+5cqVAIC5c+f2aZp2AsCM3UyHJ6GACFAZhx9AM7JwWhBwiiLwahEMEcMRnoMQCYhSDCrUcZ8hQITM
+9BAgII5hKBQD5xxut7tYFMW6oqKiroKCAn99fX13fn6+JsuytmHDBixZsmSJz+erAgCz2dzX19dX
+iouveS/BpBYPqWK1WsXS0tK/AKBpXKD9PIteYXqq52YyJ1dLwMW9YQaMOp64XKzLwIglFyBIrooY
+Y5SVlRV1OBz7qqqqHrvtttscr7zyilxQULADyV0Ym83WDODfMWbvOlkmr6XTMWvWrNXNzc2/S4yW
+CA0qcNH9YDabAaJYXFGU3NxcTVXUWCAYiA0NDU04nYiiCLvdrmcAJFnW+wZ8YiweE7OysvR+v5+r
+Y74wyM7O7ikpKfnP48ePPxGLxcT8/Hx/f3//QSL6FMAWJHT2qIw+aZdOBxE1SpKkRaNRrkGBXq+H
+1WoNx2IxvyRJwWAwOEhE4Wg0Gu7q6oohkThSqkgZ24kUFEVBb28vT/ZLTIyBKA8PD+tNJpNJkiSb
+qqr58Xg8NxQKcb/f7/D7/U8BiRxDROeIqA8JceLJ9JwrIpybm9smy/K5aDRanJOTo3HOT3u9Xk9S
+7vUlH+ZFIkuGk2RTJTYe4SQ4AD1jTCQivaIosqIoMhLuaQGQl5WVVThr1qw6n89X2d7eDgCwWCxh
+n8/nQcKqZzDOqumKCDc2Ng5mZ2d/EggEHg6Hw9xgMPg1TTsMoBlAR5LwYPKh6VbVcHmVxAEg+YnT
+KGsjsYuRPTQ0lB8Khb50u91zg8HgQgCFnPMev9/vAXASCQk6VnZqAPgVEb7rrru0tra2refPn384
+Go3CYrGIAFoA7E57WIrgtQQXRVE0Go3yqVOnjp06deqowWA4YrPZZvb19emRWEmN+uIove7Ij6kg
+FovB4XBomqbtt1gsfQBARIWMMc45jyHhtuPG6VVCUxQlNn/+/KCmaeeI6KuhoaEtXV1dm6LR6AdI
+fFOWcacyHVOalgDwpqYmnpeXJxcVFf0VABmNxnhOTs7vGGM1yLxT+G0WPRIv1hwAbJd7/pQtfP/9
+9+P3v/89+vv7lfz8/K2cc4TDYVGW5RlE5OCcy1Nt8yqhICE7+5BBSo7FlGP4nXfeSf2p6XS6zy0W
+S9Dv91sURakUBMGlaZoJE2yifde43Mu0CaHT6WKCIHwvFAqVi6KYxTk/oSjKaQA+XH0Ma1fRt3Hr
+TsWlLyFgt9tj2dnZHwJAKBQSLRbLDCLKRyKOrgbaFPs2FpnqauNdmHQjoihqBQUFn5nN5jARQVXV
+6wG4kBAJV4OrITthm1fc8MyZM7Fz505uMpkGZFnuBoB4PO4yGAylSPsc4X8bphzDTqcTu3fvRiwW
+4+vWrbvl4MGDb3u93ioA4JxznU53JhqNnkIia17x3tO3hUln6c7OTmzfvh3l5eVYv359fmNj42/a
+29tXKooiAoDVag1LktSRVDypD0GvBlcbxxkx6U79/e9/h9FoxPPPP3/3sWPH1gUCARcAyLKsWa3W
+M8Fg8FwgEBhE4p9BBnD11uX4FkhP2qWbmpqg1+tNBw4c2DMwMJDHGIPNZvMIgtDi9Xp7FUU5zxjb
+D2AfgFMAhjC1zctMuOIpczxM2sLd3d3w+XwRRVGeAXCzyWQqCwaDMUVRBpEQ7E2CIBxTFKUbE2+l
+TsVq19zC/wNcCBrLfeaEKgAAAABJRU5ErkJggg==
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://anormal-tracker.de/countv2.php?user=47437
+
+/9j/4AAQSkZJRgABAQAAAQABAAD//gA8Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcg
+SlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAwCv/bAEMAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/bAEMBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/AABEIABQA
+RgMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQD
+BQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygp
+KjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJma
+oqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/
+xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQID
+EQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RF
+RkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqy
+s7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/
+APzM8EfA/wAA6h+zja/E/wAQ6f8AF/xP45+I/i/9o7wj8PLX4XWmi6npvw8/4Za+EHwm+M/i3xP8
+QPBt9pNzrHj/AMIeMtH+LMGm6/rWh+Nfhl/wz/4T8FeKvi7qdt8aLVE+HVr6PD/wTe+N8njGPwm/
+ij4ceRpOseMfA/xK8SaYvxS8VWXwm+Mnw88c/CL4WeOPgZ4h8J+C/hb4k+KnxA+I+gfFT9oP4D/D
+uC5+APw9+Mnw88Va/wDFbQ77wP498UeF/D3xC8ReDOQ+FPwG/aI8S/sy+PPHHw6+Kuj6F8K/iLrH
+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
+GMYpL//Z
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.droidnova.com/blog/wp-content/themes/pixeled/style.css
+
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+H1 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+H4 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+H5 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+H6 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; MARGIN: =
+0px; PADDING-TOP: 10px
+}
+H1 {
+	FONT-FAMILY: Verdana
+}
+H2 {
+	FONT-FAMILY: Verdana
+}
+H3 {
+	FONT-FAMILY: Verdana
+}
+H4 {
+	FONT-FAMILY: Verdana
+}
+H5 {
+	FONT-FAMILY: Verdana
+}
+H6 {
+	FONT-FAMILY: Verdana
+}
+HR {
+	BORDER-RIGHT: #121212 1px solid; BORDER-TOP: #121212 1px solid; =
+BORDER-LEFT: #121212 1px solid; COLOR: #333; BORDER-BOTTOM: #121212 1px =
+solid
+}
+PRE {
+	OVERFLOW-X: scroll; HEIGHT: auto
+}
+FIELDSET {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; =
+MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+DD {
+	PADDING-LEFT: 15px
+}
+P {
+	FONT-SIZE: 9pt
+}
+A {
+	COLOR: #6598b8; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #222; TEXT-DECORATION: underline
+}
+A IMG {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: =
+none; BORDER-BOTTOM-STYLE: none
+}
+BLOCKQUOTE {
+	BORDER-RIGHT: #060606 1px solid; PADDING-RIGHT: 15px; BORDER-TOP: =
+#060606 1px solid; PADDING-LEFT: 15px; BACKGROUND: #070707; =
+PADDING-BOTTOM: 5px; MARGIN: 10px 10px 5px 15px; BORDER-LEFT: #060606 =
+1px solid; COLOR: #fff; PADDING-TOP: 5px; BORDER-BOTTOM: #060606 1px =
+solid; FONT-STYLE: italic
+}
+CODE {
+	COLOR: #3366cc; FONT-STYLE: italic
+}
+STRONG {
+	FONT-SIZE: 110%
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: =
+url(images/bgbody.jpg) #000 no-repeat center top; PADDING-BOTTOM: 15px; =
+MARGIN: 0px; PADDING-TOP: 0px; FONT-FAMILY: trebuchet ms, arial, =
+helvetica, sans-serif; TEXT-ALIGN: center
+}
+#wrapper {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+auto; WIDTH: 960px; PADDING-TOP: 0px; TEXT-ALIGN: left
+}
+#header {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; HEIGHT: 80px
+}
+#header #topright {
+	FLOAT: right; MARGIN: 5px 0px 0px; WIDTH: 600px; TEXT-ALIGN: right
+}
+#header #topright UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#header #topright LI {
+	DISPLAY: inline
+}
+#header #topright LI A {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 25px; FONT-SIZE: 9pt; PADDING-BOTTOM: =
+0px; TEXT-TRANSFORM: lowercase; COLOR: #fff; PADDING-TOP: 0px
+}
+#header #topright LI A:hover {
+	COLOR: #000; TEXT-DECORATION: none
+}
+#header #logo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; MARGIN: 25px 0px 0px; WIDTH: 350px; PADDING-TOP: 0px
+}
+#header H1 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#header H1 A {
+	FONT-SIZE: 17pt; COLOR: #fff; TEXT-DECORATION: none
+}
+#header H1 A:hover {
+	COLOR: #eee; TEXT-DECORATION: none
+}
+#header SPAN {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 11pt; PADDING-BOTTOM: =
+0px; COLOR: #111; PADDING-TOP: 0px
+}
+#catnav {
+	CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 20px 0px 0px; WIDTH: 960px; PADDING-TOP: 0px; HEIGHT: 44px
+}
+#nav {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#nav UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#nav LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#nav A {
+	PADDING-RIGHT: 20px; DISPLAY: block; PADDING-LEFT: 15px; FONT-SIZE: =
+10pt; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #fff; LINE-HEIGHT: 44px; =
+PADDING-TOP: 0px; LETTER-SPACING: -1px
+}
+#nav LI A:hover {
+	DISPLAY: block; COLOR: #6598b8; TEXT-DECORATION: none
+}
+#nav LI UL {
+	LEFT: -999em; WIDTH: 150px; LIST-STYLE-TYPE: none; POSITION: absolute
+}
+#nav LI:hover UL {
+	LEFT: auto
+}
+#nav LI.sfhover UL {
+	LEFT: auto
+}
+#nav LI LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; MARGIN: 0px; WIDTH: 150px; PADDING-TOP: 0px
+}
+#nav LI LI A {
+	PADDING-RIGHT: 20px; BORDER-TOP: #131f27 1px solid; PADDING-LEFT: 15px; =
+BACKGROUND: #040404; PADDING-BOTTOM: 5px; MARGIN: 0px; WIDTH: 150px; =
+COLOR: #fff; LINE-HEIGHT: 24px; PADDING-TOP: 5px; HEIGHT: 24px
+}
+#nav LI LI A:hover {
+	PADDING-RIGHT: 20px; BORDER-TOP: #131f27 1px solid; PADDING-LEFT: 15px; =
+BACKGROUND: #000; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+}
+#nav LI:hover {
+	POSITION: static
+}
+#nav LI.sfhover {
+	POSITION: static
+}
+#toprss {
+	DISPLAY: inline; FLOAT: right; MARGIN: 10px 15px 0px 0px; WIDTH: 65px; =
+LINE-HEIGHT: 41px
+}
+#main {
+	CLEAR: both; PADDING-BOTTOM: 5px; MARGIN: 5px 15px 0px; WIDTH: 930px
+}
+#contentwrapper {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; MARGIN: 0px 0px 15px; WIDTH: 560px; PADDING-TOP: 0px
+}
+#contentwrapper2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: =
+0px; MARGIN: 0px 0px 15px; WIDTH: 900px; PADDING-TOP: 0px
+}
+#contentwrapper .pageTitle {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: normal; FONT-SIZE: =
+14pt; BACKGROUND: url(images/bg-trans.png); PADDING-BOTTOM: 5px; MARGIN: =
+15px 0px 10px; COLOR: #fff; PADDING-TOP: 5px; LETTER-SPACING: -1px
+}
+#contentwrapper2 .pageTitle {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: normal; FONT-SIZE: =
+14pt; BACKGROUND: url(images/bg-trans.png); PADDING-BOTTOM: 5px; MARGIN: =
+15px 0px 10px; COLOR: #fff; PADDING-TOP: 5px; LETTER-SPACING: -1px
+}
+.topPost {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 9pt; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.topPost H2.topTitle A {
+	FONT-WEIGHT: normal; FONT-SIZE: 15pt; COLOR: #fff; LETTER-SPACING: -2px
+}
+.topPost H2.topTitle A:hover {
+	COLOR: #abd1ea; TEXT-DECORATION: none
+}
+.topPost P.topMeta {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 9pt; PADDING-BOTTOM: =
+0px; MARGIN: -10px 0px 0px; COLOR: #cdcdcd; PADDING-TOP: 0px
+}
+.topPost P.topMeta A {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+.topPost P.topMeta A:hover {
+	COLOR: #ccc
+}
+.topPost DIV.topContent {
+	FONT-SIZE: 9pt; MARGIN: 8px 0px; COLOR: #efefef
+}
+.topPost DIV.topContent A {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+.topPost DIV.topContent A:hover {
+	COLOR: #ff9933; TEXT-DECORATION: underline
+}
+.topPost DIV.topContent UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 30px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+.topPost DIV.topContent OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 30px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+.topPost DIV.topContent UL LI {
+	COLOR: #eee
+}
+.topPost DIV.topContent OL LI {
+	COLOR: #eee
+}
+.topPost SPAN.topComments {
+	BORDER-RIGHT: #111 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #111 1px =
+solid; PADDING-LEFT: 10px; FONT-SIZE: 9pt; BACKGROUND: =
+url(images/bg-trans.png); PADDING-BOTTOM: 8px; BORDER-LEFT: #111 1px =
+solid; COLOR: #fff; LINE-HEIGHT: 27pt; MARGIN-RIGHT: 5px; PADDING-TOP: =
+8px; BORDER-BOTTOM: #111 1px solid; FONT-STYLE: italic
+}
+.topPost SPAN.topMore {
+	BORDER-RIGHT: #111 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #111 1px =
+solid; PADDING-LEFT: 10px; FONT-SIZE: 9pt; BACKGROUND: =
+url(images/bg-trans.png); PADDING-BOTTOM: 8px; BORDER-LEFT: #111 1px =
+solid; COLOR: #fff; LINE-HEIGHT: 27pt; MARGIN-RIGHT: 5px; PADDING-TOP: =
+8px; BORDER-BOTTOM: #111 1px solid; FONT-STYLE: italic
+}
+.topPost SPAN.topTags {
+	BORDER-RIGHT: #111 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #111 1px =
+solid; PADDING-LEFT: 10px; FONT-SIZE: 9pt; BACKGROUND: =
+url(images/bg-trans.png); PADDING-BOTTOM: 8px; BORDER-LEFT: #111 1px =
+solid; COLOR: #fff; LINE-HEIGHT: 27pt; MARGIN-RIGHT: 5px; PADDING-TOP: =
+8px; BORDER-BOTTOM: #111 1px solid; FONT-STYLE: italic
+}
+.topPost SPAN.linkpages {
+	DISPLAY: block; FONT-SIZE: 9pt; MARGIN-BOTTOM: 10px; COLOR: #fff; =
+FONT-STYLE: italic
+}
+.topPost SPAN.linkpages A:hover {
+	COLOR: #ddd
+}
+.topPost SPAN.topComments:hover {
+	BACKGROUND: #040404
+}
+.topPost SPAN.topMore:hover {
+	BACKGROUND: #040404
+}
+.topPost SPAN.topTags:hover {
+	BACKGROUND: #040404
+}
+.topPost SPAN.topComments A {
+	PADDING-LEFT: 20px; BACKGROUND: url(images/comments.gif) no-repeat left =
+50%; VERTICAL-ALIGN: middle; COLOR: #fff; LINE-HEIGHT: 27pt
+}
+.topPost SPAN.topMore A {
+	PADDING-LEFT: 20px; BACKGROUND: url(images/more.gif) no-repeat left =
+50%; VERTICAL-ALIGN: middle; COLOR: #fff; LINE-HEIGHT: 27pt
+}
+.topPost SPAN.topTags EM {
+	PADDING-LEFT: 20px; BACKGROUND: url(images/tags.gif) no-repeat left =
+50%; VERTICAL-ALIGN: middle; COLOR: #0a0a0a; LINE-HEIGHT: 27pt
+}
+.topPost SPAN.topTags A {
+	VERTICAL-ALIGN: middle; COLOR: #fff; LINE-HEIGHT: 27pt
+}
+.topPost SPAN.topComments A:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+.topPost SPAN.topMore A:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+.topPost SPAN.topTags A:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+#nextprevious {
+	MARGIN: 10px 0px 5px
+}
+#nextprevious A {
+	TEXT-TRANSFORM: lowercase; COLOR: #83adc8; TEXT-DECORATION: underline
+}
+#nextprevious A:hover {
+	COLOR: #fff
+}
+#comment {
+	BORDER-RIGHT: #090909 1px solid; PADDING-RIGHT: 15px; BORDER-TOP: =
+#090909 1px solid; MARGIN-TOP: 15px; PADDING-LEFT: 15px; BACKGROUND: =
+#040404; MARGIN-BOTTOM: 10px; PADDING-BOTTOM: 10px; BORDER-LEFT: #090909 =
+1px solid; WIDTH: 530px; COLOR: #fff; PADDING-TOP: 0px; BORDER-BOTTOM: =
+#090909 1px solid
+}
+#comment H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: =
+10pt; PADDING-BOTTOM: 0px; MARGIN: 15px 0px; COLOR: #fff; PADDING-TOP: =
+0px
+}
+#comment P A {
+	COLOR: #6598b8
+}
+#comment P A:hover {
+	COLOR: #fff
+}
+#comment P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 7px =
+0px; PADDING-TOP: 0px
+}
+UL.commentlist {
+	FONT-SIZE: 9pt; MARGIN: 10px 0px; LIST-STYLE-TYPE: none
+}
+UL.trackback {
+	FONT-SIZE: 9pt; MARGIN: 10px 0px; LIST-STYLE-TYPE: none
+}
+.commentlist LI {
+	BORDER-RIGHT: #040404 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: =
+#040404 1px solid; PADDING-LEFT: 10px; BACKGROUND: #080808; =
+PADDING-BOTTOM: 10px; MARGIN: 10px 0px 15px; BORDER-LEFT: #040404 1px =
+solid; PADDING-TOP: 10px; BORDER-BOTTOM: #040404 1px solid; =
+LIST-STYLE-TYPE: none
+}
+.trackback LI {
+	BORDER-RIGHT: #040404 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: =
+#040404 1px solid; PADDING-LEFT: 10px; BACKGROUND: #080808; =
+PADDING-BOTTOM: 10px; MARGIN: 10px 0px 15px; BORDER-LEFT: #040404 1px =
+solid; PADDING-TOP: 10px; BORDER-BOTTOM: #040404 1px solid; =
+LIST-STYLE-TYPE: none
+}
+.commentlist LI.alt {
+	BORDER-RIGHT: #020202 1px; BORDER-TOP: #020202 1px; MARGIN-TOP: 10px; =
+BACKGROUND: #000; BORDER-LEFT: #020202 1px; BORDER-BOTTOM: #020202 1px
+}
+.commentlist LI.cleared {
+	BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP-STYLE: =
+none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; =
+BORDER-BOTTOM-STYLE: none
+}
+.commentlist A:hover {
+	COLOR: #eee
+}
+.commentlist A.gravatar {
+	FLOAT: left; MARGIN: 0px 15px 10px 0px; WIDTH: 60px
+}
+.commentlist .commentbody {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.commentlist .commentbody P A {
+	TEXT-DECORATION: underline
+}
+.commentlist CITE {
+	FONT-SIZE: 10pt; COLOR: #ddd; FONT-STYLE: normal
+}
+.commentlist SMALL.commentmetadata A {
+	COLOR: #666
+}
+.commentlist P {
+	COLOR: #dedede
+}
+#respond {
+	CLEAR: both; MARGIN-TOP: 15px
+}
+TEXTAREA#comment {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: #fff; =
+PADDING-BOTTOM: 10px; WIDTH: 450px; COLOR: #111; PADDING-TOP: 10px
+}
+#comment #submit {
+	MARGIN: 0px
+}
+#extrastuff A {
+	FONT-SIZE: 0.8em; COLOR: #222
+}
+#extrastuff A:hover {
+	COLOR: #6598b8; TEXT-DECORATION: none
+}
+#extrastuff #rssleft {
+	FLOAT: left; WIDTH: 250px
+}
+#extrastuff #trackright {
+	FLOAT: right; WIDTH: 180px; TEXT-ALIGN: right
+}
+#main #welcome {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: =
+url(images/bg-trans.png); PADDING-BOTTOM: 5px; MARGIN: 0px 0px 20px; =
+PADDING-TOP: 0px
+}
+#main #welcome H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: =
+14pt; PADDING-BOTTOM: 3px; MARGIN: 0px 10px; COLOR: #fff; PADDING-TOP: =
+10px; LETTER-SPACING: -2px
+}
+#main #welcome P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 9pt; PADDING-BOTTOM: =
+6px; MARGIN: 0px 10px; COLOR: #eee; PADDING-TOP: 6px
+}
+#main #welcome A {
+	COLOR: #ff9933; TEXT-DECORATION: underline
+}
+#main #welcome A:hover {
+	COLOR: #6598b8
+}
+#main #welcome FORM {
+	BACKGROUND: none transparent scroll repeat 0% 0%; MARGIN: -5px 0px 0px
+}
+#main #welcome #feedbox {
+	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #ccc 1px =
+solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 2px; BORDER-LEFT: #ccc 1px =
+solid; WIDTH: 180px; PADDING-TOP: 2px; BORDER-BOTTOM: #ccc 1px solid
+}
+.submitbutton {
+	BORDER-RIGHT: #111 1px solid; PADDING-RIGHT: 6px; BORDER-TOP: #111 1px =
+solid; PADDING-LEFT: 6px; FONT-SIZE: 8pt; BACKGROUND: #010101; =
+PADDING-BOTTOM: 3px; MARGIN: -5px 0px 0px 5px; VERTICAL-ALIGN: middle; =
+BORDER-LEFT: #111 1px solid; COLOR: #fff; PADDING-TOP: 3px; =
+BORDER-BOTTOM: #111 1px solid
+}
+.submitbutton:hover {
+	BACKGROUND: #050505; CURSOR: pointer
+}
+#sidebars {
+	FLOAT: right; MARGIN: 15px 0px 0px; WIDTH: 340px; COLOR: #eee
+}
+#sidebars .sidebarbox {
+	PADDING-RIGHT: 15px; PADDING-LEFT: 15px; BACKGROUND: =
+url(images/bg-trans.png); PADDING-BOTTOM: 8px; PADDING-TOP: 8px
+}
+#sidebar_full {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#sidebar_left {
+	FLOAT: left; WIDTH: 160px
+}
+#sidebar_right {
+	FLOAT: right; WIDTH: 160px
+}
+#sidebars H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: =
+11pt; PADDING-BOTTOM: 8px; MARGIN: 0px; COLOR: #fff; PADDING-TOP: 0px; =
+LETTER-SPACING: -1px
+}
+#sidebars TABLE {
+	WIDTH: 130px
+}
+#sidebars UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 5px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#sidebars LI {
+	FONT-SIZE: 9pt; MARGIN-BOTTOM: 20px; LIST-STYLE-TYPE: none
+}
+#sidebars LI UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+#sidebars UL UL LI {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 16px; BACKGROUND: =
+url(images/bullet.gif) no-repeat left 8px; PADDING-BOTTOM: 2px; MARGIN: =
+0px; COLOR: #eee; LINE-HEIGHT: 17px; PADDING-TOP: 2px
+}
+#sidebars A {
+	DISPLAY: inline; COLOR: #eee
+}
+#sidebars A:hover {
+	COLOR: #6598b8; TEXT-DECORATION: underline
+}
+#sidebars P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 9pt; PADDING-BOTTOM: =
+2px; COLOR: #eee; PADDING-TOP: 2px
+}
+#tag_cloud A {
+	DISPLAY: inline
+}
+#sidebars UL.children LI {
+	BORDER-BOTTOM-STYLE: none
+}
+#sidebars UL.children {
+	MARGIN-BOTTOM: 0px
+}
+#morefoot {
+	BORDER-RIGHT: #070707 1px solid; PADDING-RIGHT: 15px; BORDER-TOP: =
+#070707 1px solid; PADDING-LEFT: 15px; BACKGROUND: =
+url(images/bggrad.jpg) #000 repeat-x left top; PADDING-BOTTOM: 15px; =
+MARGIN: 0px 0px 10px; BORDER-LEFT: #070707 1px solid; COLOR: #dfdfdf; =
+PADDING-TOP: 15px; BORDER-BOTTOM: #070707 1px solid
+}
+#morefoot P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 5px; MARGIN: 5px =
+0px; PADDING-TOP: 5px
+}
+#morefoot UL {
+	MARGIN-TOP: 5px; LIST-STYLE-TYPE: none
+}
+#morefoot UL LI {
+	FONT-SIZE: 9pt
+}
+#morefoot P {
+	FONT-SIZE: 9pt
+}
+#morefoot A {
+	COLOR: #ddd; TEXT-DECORATION: underline
+}
+#morefoot A:hover {
+	COLOR: #6598b8; TEXT-DECORATION: underline
+}
+#morefoot H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: =
+12pt; PADDING-BOTTOM: 2px; MARGIN: 0px; COLOR: #dfdfdf; PADDING-TOP: =
+0px; BORDER-BOTTOM: #444 1px dotted; LETTER-SPACING: -1px
+}
+#morefoot #searchbox {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; WIDTH: =
+180px; PADDING-TOP: 1px
+}
+#morefoot .col1 {
+	FLOAT: left; WIDTH: 340px
+}
+#morefoot .col2 {
+	MARGIN: 0px 25px
+}
+#morefoot .col2 {
+	FLOAT: left; WIDTH: 260px
+}
+#morefoot .col3 {
+	FLOAT: left; WIDTH: 260px
+}
+#morefoot LI {
+	PADDING-LEFT: 20px; BACKGROUND: url(images/more.gif) no-repeat left =
+2px; MARGIN-BOTTOM: 5px; LINE-HEIGHT: 17px
+}
+#footer {
+	CLEAR: both; BORDER-RIGHT: #070707 1px solid; PADDING-RIGHT: 15px; =
+BORDER-TOP: #070707 1px solid; PADDING-LEFT: 15px; BACKGROUND: #000; =
+PADDING-BOTTOM: 10px; BORDER-LEFT: #070707 1px solid; PADDING-TOP: 15px; =
+BORDER-BOTTOM: #070707 1px solid
+}
+#footer P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 9pt; PADDING-BOTTOM: =
+0px; COLOR: #bbb; PADDING-TOP: 0px
+}
+#footer A {
+	COLOR: #bbb; TEXT-DECORATION: underline
+}
+#footer A:hover {
+	COLOR: #fff
+}
+#footerleft {
+	FLOAT: left; WIDTH: 500px
+}
+#footerright {
+	FLOAT: right; WIDTH: 300px; TEXT-ALIGN: right
+}
+.highlight {
+	FONT-WEIGHT: bold; COLOR: #222
+}
+.cleared {
+	CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.alignleft {
+	FLOAT: left; MARGIN: 5px 10px 5px 0px
+}
+.alignright {
+	FLOAT: right; MARGIN: 5px 0px 5px 10px
+}
+.aligncenter {
+	DISPLAY: block; MARGIN: 10px auto; TEXT-ALIGN: center
+}
+DIV.aligncenter {
+	DISPLAY: block; MARGIN: 10px auto; TEXT-ALIGN: center
+}
+IMG.alignleft {
+	FLOAT: left; MARGIN: 5px 10px 5px 0px
+}
+IMG.alignright {
+	FLOAT: right; MARGIN: 5px 0px 5px 10px
+}
+IMG.aligncenter {
+	DISPLAY: block; MARGIN: 10px auto; TEXT-ALIGN: center
+}
+.wp-caption {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; BORDER-LEFT: =
+#ddd 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #ddd 1px solid; =
+BACKGROUND-COLOR: #f3f3f3; TEXT-ALIGN: center; -moz-border-radius: 3px; =
+-khtml-border-radius: 3px; -webkit-border-radius: 3px; border-radius: =
+3px
+}
+.wp-caption IMG {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; BORDER-TOP-STYLE: none; PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; =
+BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.wp-caption P.wp-caption-text {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; FONT-SIZE: 11px; PADDING-BOTTOM: =
+5px; MARGIN: 0px; COLOR: #111; LINE-HEIGHT: 17px; PADDING-TOP: 0px
+}
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.droidnova.com/blog/wp-content/plugins/wp-syntax/wp-syntax.css
+
+.wp_syntax {
+	BORDER-RIGHT: silver 1px solid; BORDER-TOP: silver 1px solid; MARGIN: =
+0px 0px 1.5em; OVERFLOW: auto; BORDER-LEFT: silver 1px solid; COLOR: =
+#100; BORDER-BOTTOM: silver 1px solid; BACKGROUND-COLOR: #f9f9f9
+}
+.wp_syntax {
+	OVERFLOW-Y: hidden; OVERFLOW-X: auto; ; PADDING-BOTTOM: =
+expression(this.scrollWidth > this.offsetWidth ? 15 : 0); WIDTH: 100%
+}
+.wp_syntax TABLE {
+	BORDER-COLLAPSE: collapse
+}
+.wp_syntax DIV {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 2px; =
+VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+.wp_syntax TD {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 2px; =
+VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+.wp_syntax .line_numbers {
+	OVERFLOW: visible; COLOR: gray; BACKGROUND-COLOR: #def; TEXT-ALIGN: =
+right
+}
+.wp_syntax PRE {
+	CLEAR: none; FONT-SIZE: 12px; FLOAT: none; MARGIN: 0px; OVERFLOW: =
+visible; WIDTH: auto; LINE-HEIGHT: 1.333; WHITE-SPACE: pre
+}
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.droidnova.com/blog/wp-content/themes/pixeled/ie.css
+
+#toprss {
+	MARGIN: 9px 15px 0px 0px
+}
+#main {
+	MARGIN-TOP: 10px
+}
+#main #welcome {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+.submitbutton {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; =
+PADDING-TOP: 2px
+}
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://static.addtoany.com/menu/page.js
+
+var =
+a2a=3Da2a||{},a2a_menu_type,a2a_linkname=3Da2a_linkname||document.title||=
+" =
+",a2a_linkurl,a2a_linkname_escape,a2a_ssl=3D("https:"=3D=3Ddocument.locat=
+ion.protocol)?"https://e1.simplecdn.net/addtoanystatic/menu":false,a2a_st=
+atic_server=3Da2a_static_server||((a2a_ssl)?a2a_ssl:"http://static.addtoa=
+ny.com/menu"),a2a_transparent_img_url=3Da2a_static_server+"/transparent.g=
+if",a2a_icons_img_url=3Da2a_static_server+"/icons_17.png",a2a_dd_css,a2a_=
+email_menu=3D(a2a_menu_type=3D=3D"mail")?1:false,a2a_show_title,a2a_oncli=
+ck,a2a_num_services,a2a_hide_embeds,a2a_prioritize,a2a_show_services,a2a_=
+custom_services,a2a_orientation,a2a_track_links=3Da2a_track_links||false,=
+a2a_track_links_key=3Da2a_track_links_key||"",a2a_awesm,a2a_tracking_url,=
+a2a_api_script,a2a_color_main,a2a_color_bg,a2a_color_border,a2a_color_lin=
+k_text,a2a_color_link_text_hover,a2a_color_arrow,a2a_color_arrow_hover,a2=
+a_border_size=3Da2a_border_size||8,a2a_find_text_color,a2a_find_text_colo=
+r_focused,a2a_localize=3Da2a_localize||"";a2a.type=3Da2a_menu_type||"page=
+";if(typeof =
+window["a2a"+a2a.type+"_init"]=3D=3D"undefined"){a2a[a2a.type]=3D{};a2a[a=
+2a.type].find_focused=3Dfalse;a2a[a2a.type].show_all=3Dfalse;a2a[a2a.type=
+].inFocus=3Dfalse;a2a[a2a.type].prev_keydown=3Ddocument.onkeydown||false;=
+a2a[a2a.type].tab=3D"DEFAULT";a2a[a2a.type].onclick=3Da2a_onclick||false;=
+a2a[a2a.type].show_title=3Da2a_show_title||false;a2a[a2a.type].num_servic=
+es=3Da2a_num_services||12;a2a[a2a.type].custom_services=3Da2a_custom_serv=
+ices||false;function =
+a2a_init(g){if(g){a2a.type=3Dg}window["a2a"+a2a.type+"_init"]=3D1;var =
+i=3Da2a_get_all_a2a_dd();a2a.n=3Da2a_next_index_num(i);a2a["n"+a2a.n]=3D{=
+};var =
+f=3Di[a2a.n];a2a_set_this_index(i);a2a["n"+a2a.n].type=3Da2a.type;if(f){i=
+f((!f.getAttribute("onclick")||(f.getAttribute("onclick")+"").indexOf("a2=
+a_")=3D=3D-1)&&(!f.getAttribute("onmouseover")||(f.getAttribute("onmouseo=
+ver")+"").indexOf("a2a_")=3D=3D-1)){if(a2a[a2a.type].onclick){f.onclick=3D=
+function(a){a2a_show_dropdown(f);return =
+false}}else{f.onmouseover=3Dfunction(){a2a_show_dropdown(f)};f.onmouseout=
+=3Dfunction(){a2a_onMouseOut_delay()}}}}if(a2a_linkname_escape=3D=3D1){va=
+r d=3Da2a_get_all_a2a_dd();var =
+c=3Da2a_getByClass("a2a_linkname_escape",d[d.length-1])[0];if(c){a2a_link=
+name=3Dc.innerHTML}}var =
+h=3Ddocument.createElement("div");h.innerHTML=3Da2a_linkname;a2a_linkname=
+=3Dh.childNodes[0].nodeValue;h.removeChild(h.firstChild);a2a["n"+a2a.n].l=
+inkname=3Da2a_linkname;a2a["n"+a2a.n].linkurl=3Da2a_linkurl||location.hre=
+f;a2a["n"+a2a.n].orientation=3Da2a_orientation||false;a2a["n"+a2a.n].hide=
+_embeds=3D(a2a_hide_embeds=3D=3D0||a2a_hide_embeds=3D=3Dfalse)?false:true=
+;a2a[a2a.type].show_services=3Da2a_show_services||false;a2a_show_srvcs();=
+a2a_no_brdr(i);a2a_onclick=3Dfalse;a2a_linkname_escape=3Dfalse;a2a_show_t=
+itle=3Dfalse;a2a_show_services=3Dfalse;a2a_custom_services=3Dfalse;a2a_hi=
+de_embeds=3Dtrue;a2a_orientation=3Dfalse;a2a_num_services=3Dfalse;if(!a2a=
+_locale){a2a_menu_type=3Dfalse;a2a_email_menu=3Dfalse}}function =
+a2a_get_all_a2a_dd(){return =
+a2a_HTMLcollToArray(document.getElementsByName("a2a_dd")).concat(a2a_getB=
+yClass("a2a_dd",document))}function a2a_next_index_num(g){var =
+d=3Dg,c=3Dnew Array(),b=3D0;for(var f=3D0;f<d.length;f++){if(typeof =
+d[f].a2a_index!=3D=3D"undefined"){c[b]=3DparseInt(d[f].a2a_index);b++}}if=
+(c.length>0){return c.sort(function(i,h){return h-i})[0]+1}else{return =
+0}}function a2a_set_this_index(d){var b=3Dd,f=3Da2a.n;for(var =
+c=3D0;c<b.length;c++){if(typeof =
+b[c].a2a_index=3D=3D=3D"undefined"||b[c].a2a_index=3D=3D=3D""){b[c].a2a_i=
+ndex=3Df;break}}}function a2a_get_this_index(d){var =
+b=3Da2a_get_all_a2a_dd();for(var =
+c=3D0;c<b.length;c++){if(d.a2a_index=3D=3Db[c].a2a_index){return =
+b[c].a2a_index}}}function a2a_gEl(a){return =
+document.getElementById(a)}function a2a_getByClass(l,k){var f=3Dnew =
+Array();var =
+h=3D((k)?k:a2a_gEl("a2a"+a2a.type+"_dropdown")).getElementsByTagName("*")=
+;var g=3Dnew RegExp("\\b"+l+"\\b");for(var =
+b=3D0,a=3D0;b<h.length;b++){if(g.test(h[b].className)){f[a]=3Dh[b];a++}}r=
+eturn f}function a2a_HTMLcollToArray(f){var b=3Dnew Array();for(var =
+d=3D0;d<f.length;d++){b[b.length]=3Df[d]}return b}function =
+a2a_add_event(a,b){var c=3D(a)?a:function(){};return =
+function(){c();b()}}function a2a_onLoad(a){var =
+b=3Dwindow.onload;if(typeof =
+window.onload!=3D"function"){window.onload=3Da}else{window.onload=3Dfunct=
+ion(){if(b){b()}a()}}}function a2a_in_array(f,a,b){if(typeof =
+a=3D=3D"object"){f=3Df.toLowerCase();var c=3Da.length;for(var =
+d=3D0;d<c;d++){if(b){if(f=3D=3Da[d].toLowerCase()){return =
+a[d]}}else{if(f.indexOf(a[d].toLowerCase())!=3D-1&&a[d]!=3D=3D""){return =
+a[d]}}}}return false}function =
+a2a_onMouseOut_delay(){if(!a2a[a2a.type].find_focused&&!a2a[a2a.type].inF=
+ocus){a2a[a2a.type].delay=3DsetTimeout("a2a_toggle_dropdown('none', =
+'"+a2a.type+"')",501)}}function a2a_onMouseOver_stay(){if(typeof =
+a2a[a2a.type].delay!=3D"undefined"){clearTimeout(a2a[a2a.type].delay)}}fu=
+nction =
+a2a_toggle_dropdown(b,a){a2a_gEl("a2a"+a+"_dropdown").style.display=3Db;a=
+2a_gEl("a2a"+a+"_border").style.display=3Db;a2a_onMouseOver_stay();if(b=3D=
+=3D"none"){a2a_embeds_visibility(true);if(!window.addEventListener){docum=
+ent.detachEvent("onmousedown",a2a.doc_mousedown_check_scroll);document.de=
+tachEvent("onmouseup",a2a[a].doc_mouseup_toggle_dropdown)}else{document.r=
+emoveEventListener("mousedown",a2a.doc_mousedown_check_scroll,false);docu=
+ment.removeEventListener("mouseup",a2a[a].doc_mouseup_toggle_dropdown,fal=
+se)}delete =
+a2a[a].doc_mouseup_toggle_dropdown}if(a2a[a].prev_keydown){document.onkey=
+down=3Da2a[a].prev_keydown}else{document.onkeydown=3D""}}function =
+a2a_getPos(b){var =
+a=3D0,c=3D0;do{a+=3Db.offsetLeft||0;c+=3Db.offsetTop||0;b=3Db.offsetParen=
+t}while(b);return[a,c]}function a2a_getDocDims(c){var =
+a=3D0,b=3D0;if(typeof(window.innerWidth)=3D=3D"number"){a=3Dwindow.innerW=
+idth;b=3Dwindow.innerHeight}else{if(document.documentElement&&(document.d=
+ocumentElement.clientWidth||document.documentElement.clientHeight)){a=3Dd=
+ocument.documentElement.clientWidth;b=3Ddocument.documentElement.clientHe=
+ight}else{if(document.body&&(document.body.clientWidth||document.body.cli=
+entHeight)){a=3Ddocument.body.clientWidth;b=3Ddocument.body.clientHeight}=
+}}if(c=3D=3D"w"){return a}else{return b}}function =
+a2a_getScrollDocDims(c){var =
+a=3D0,b=3D0;if(typeof(window.pageYOffset)=3D=3D"number"){a=3Dwindow.pageX=
+Offset;b=3Dwindow.pageYOffset}else{if(document.body&&(document.body.scrol=
+lLeft||document.body.scrollTop)){a=3Ddocument.body.scrollLeft;b=3Ddocumen=
+t.body.scrollTop}else{if(document.documentElement&&(document.documentElem=
+ent.scrollLeft||document.documentElement.scrollTop)){a=3Ddocument.documen=
+tElement.scrollLeft;b=3Ddocument.documentElement.scrollTop}}}if(c=3D=3D"w=
+"){return a}else{return b}}function =
+a2a_show_more_less(c){a2a_onMouseOver_stay();var =
+f=3Da2a_gEl("a2a"+a2a.type+"_show_more_less"),g=3Da2a.type;if(a2a[g].show=
+_all||c=3D=3D1){a2a[g].show_all=3Dfalse;var =
+a=3D(a2a_color_arrow=3D=3D"fff")?"_wt":"";f.firstChild.className=3D"a2a_i=
+_darr"+a;f.title=3Da2a_localize.ShowAll;a2a_statusbar(f,a2a_localize.Show=
+All);if(c=3D=3D0){a2a_default();a2a_fluids();a2a_focus_find()}}else{a2a[g=
+].show_all=3Dtrue;var b=3Da2a[g].main_services;for(var =
+d=3D0;d<b.length;d++){b[d].style.display=3D""}var =
+a=3D(a2a_color_arrow=3D=3D"fff")?"_wt":"";f.firstChild.className=3D"a2a_i=
+_uarr"+a;f.title=3Da2a_localize.ShowLess;a2a_statusbar(f,a2a_localize.Sho=
+wLess);a2a_fluids();a2a_focus_find()}a2a_embeds_visibility(false);if(c=3D=
+=3D0){return false}}function a2a_focus_find(){var =
+b=3Da2a_gEl("a2a"+a2a.type+"_find");if(b.parentNode.style.display!=3D"non=
+e"){b.focus()}b.style.color=3D"#"+a2a_find_text_color_focused}function =
+a2a_blur_find(){var =
+b=3Da2a_gEl("a2a"+a2a.type+"_find");if(b.value=3D=3D=3D""){b.style.color=3D=
+"#"+a2a_find_text_color}a2a[a2a.type].find_focused=3Dfalse;if(!a2a[a2a.ty=
+pe].onclick){a2a_onMouseOut_delay()}}function a2a_fluids(){var =
+f=3Da2a.type,b=3Da2a_gEl("a2a"+f+"_dropdown");b.style.width=3D"";a2a_gEl(=
+"a2a"+f+"_cols_container").style.width=3D"";a2a_gEl("a2a"+f+"_title_conta=
+iner").style.display=3D"none";var =
+c=3D(b.clientWidth||b.offsetWidth);b.style.width=3Dc+"px";if(a2a[f].show_=
+title){a2a_gEl("a2a"+f+"_title_container").style.display=3D"block"}else{a=
+2a_gEl("a2a"+f+"_title_container").style.display=3D"none"}a2a_gEl("a2a"+f=
++"_cols_container").style.width=3D"100%";var =
+a=3Da2a_gEl("a2a"+f+"_border"),d=3Da2a_border_size;if(b.style.left){a.sty=
+le.left=3DparseInt(b.style.left)-d+"px";a.style.top=3DparseInt(b.style.to=
+p)-d+"px"}a2a_gEl("a2a"+f+"_border").style.display=3D"block";a.style.widt=
+h=3D(b.clientWidth||b.offsetWidth)+(d*2)+"px";a.style.height=3D(b.clientH=
+eight||b.offsetHeight)+(d*2)+"px"}function a2a_default(){var =
+b=3Da2a.type,d=3Da2a[b].main_services_col_1,c=3Da2a[b].main_services_col_=
+2;for(var =
+a=3D0;a<d.length;a++){if(a<parseInt(a2a[b].num_services/2)){d[a].style.di=
+splay=3D""}else{d[a].style.display=3D"none"}}for(var =
+a=3D0;a<c.length;a++){if(a<parseInt(a2a[b].num_services/2)){c[a].style.di=
+splay=3D""}else{c[a].style.display=3D"none"}}}function =
+a2a_do_reset(){a2a[a2a.type].inFocus=3Dfalse;a2a_show_more_less(1);a2a_fl=
+uids();a2a_focus_find();a2a_embeds_visibility(false)}function =
+a2a_do_find(){var g=3Da2a.type,d=3Da2a[g].main_services,c=3Dd.length;var =
+b=3Da2a_gEl("a2a"+g+"_find").value;if(b!=3D=3D""){var h=3Db.split(" =
+"),a=3Da2a_in_array;for(var f=3D0;f<c;f++){var =
+j=3Dd[f].serviceNameLowerCase;if(a(j,h,false)){d[f].style.display=3D""}el=
+se{d[f].style.display=3D"none"}}}else{if(a2a[g].tab!=3D"DEFAULT"){a2a_tab=
+s(a2a[g].tab)}else{a2a_default()}}a2a_do_reset()}function =
+a2a_tabs(a,b){var =
+c=3Da2a_getByClass("a2a_tab_selected")[0];if(c.id=3D=3D"a2afeed_DEFAULT"&=
+&a=3D=3D"DEFAULT"){return =
+true}c.className=3Dc.className.replace(/a2a_tab_selected/,"");a2a_gEl("a2=
+a"+a2a.type+"_"+a).className+=3D" =
+a2a_tab_selected";if(a!=3D"DEFAULT"){a2a_gEl("a2a"+a2a.type+"_show_more_l=
+ess").style.display=3D"none";a2a_gEl("a2a"+a2a.type+"_find_container").st=
+yle.display=3D"none";a2a_gEl("a2a"+a2a.type+"_col1").style.display=3D"non=
+e";a2a_gEl("a2a"+a2a.type+"_col2").style.display=3D"none"}else{a2a_gEl("a=
+2a"+a2a.type+"_show_more_less").style.display=3D"block";a2a_gEl("a2a"+a2a=
+.type+"_find_container").style.display=3D"block";a2a_gEl("a2a"+a2a.type+"=
+_col1").style.display=3D"block";a2a_gEl("a2a"+a2a.type+"_col2").style.dis=
+play=3D"block";a2a_default()}if(a!=3D"EMAIL"){a2a_gEl("a2a"+a2a.type+"_2_=
+col1").style.display=3D"none";a2a_gEl("a2a"+a2a.type+"_2_col2").style.dis=
+play=3D"none"}else{a2a_gEl("a2a"+a2a.type+"_2_col1").style.display=3D"blo=
+ck";a2a_gEl("a2a"+a2a.type+"_2_col2").style.display=3D"block"}a2a_gEl("a2=
+a"+a2a.type+"_note_BROWSER").style.display=3D"none";a2a_gEl("a2a"+a2a.typ=
+e+"_note_EMAIL").style.display=3D"none";if(b){a2a_gEl("a2a"+a2a.type+"_no=
+te_"+a).style.display=3D"block"}a2a_do_reset();return false}function =
+a2a_statusbar(a,c){if(window.opera){return}var =
+b=3Da2a_gEl("a2a"+a2a.type+"_powered_by");if(!b.orig){b.orig=3Db.innerHTM=
+L}a.onmouseover=3Dfunction(){clearTimeout(a2a[a2a.type].statusbar_delay);=
+b.innerHTML=3Dc;b.style.textAlign=3D"left"};a.onmouseout=3Dfunction(){a2a=
+[a2a.type].statusbar_delay=3DsetTimeout(function(){b.innerHTML=3Db.orig;b=
+.style.textAlign=3D"center"},300)}}function a2a_selection(){var =
+a;if(window.getSelection){a=3Dwindow.getSelection()}else{if(document.sele=
+ction){a=3Ddocument.selection.createRange();a=3D(a.text)?a.text:""}}if(a&=
+&a!=3D""){return a}if(a2a["n"+a2a.n].linkurl=3D=3Dlocation.href){var =
+f=3Ddocument.getElementsByTagName("meta");for(var =
+b=3D0;b<f.length;b++){var =
+c=3Df[b].getAttribute("name");if(c){if(c.toLowerCase()=3D=3D"description"=
+){var =
+d=3Df[b].getAttribute("content");break}}}}return(d)?d.substring(0,1200):"=
+"}function a2a_linker(f){var =
+d=3Da2a.type,h=3DencodeURIComponent(a2a["n"+a2a.n].linkurl).replace(/'/g,=
+"%27"),a=3DencodeURIComponent(a2a["n"+a2a.n].linkname).replace(/'/g,"%27"=
+),c=3DencodeURIComponent(a2a_selection()).replace(/'/g,"%27"),g=3D(a2a_tr=
+ack_links&&(d=3D=3D"page"||d=3D=3D"mail"))?"&linktrack=3D"+a2a_track_link=
+s+"&linktrackkey=3D"+a2a_track_links_key:"";var =
+b=3Df.getAttribute("customserviceuri")||f.customserviceuri||false;if(b){f=
+.href=3Db.replace(/A2A_LINKNAME_ENC/,a).replace(/A2A_LINKURL_ENC/,h).repl=
+ace(/A2A_LINKNOTE_ENC/,c)}else{f.href=3D"http://www.addtoany.com/add_to/"=
++f.safename+"?linkurl=3D"+h+"&linkname=3D"+a+g+((a2a_awesm)?"&linktrack_p=
+arent=3D"+a2a_awesm:"")+((d=3D=3D"feed")?"&type=3Dfeed":"")+"&linknote=3D=
+"+c}setTimeout(function(){f.href=3D"/"},500);return true}function =
+a2a_show_dropdown(a){a2a.n=3Da2a_get_this_index(a);a2a.type=3Da2a["n"+a2a=
+.n].type;a2a_gEl("a2a"+a2a.type+"_title").value=3Da2a["n"+a2a.n].linkname=
+;a2a_toggle_dropdown("block",a2a.type);var =
+l=3Da2a_gEl("a2a"+a2a.type+"_dropdown"),k=3Da2a_border_size,j=3D[l.client=
+Width+(k*2),l.clientHeight+(k*2)],d=3Da.getElementsByTagName("img")[0];if=
+(d){var g=3Da2a_getPos(d),h=3Dd.clientWidth,c=3Dd.clientHeight}else{var =
+g=3Da2a_getPos(a),h=3Da.offsetWidth,c=3Da.offsetHeight}var =
+f=3Da2a_getDocDims("w"),m=3Da2a_getDocDims("h"),i=3Da2a_getScrollDocDims(=
+"w"),b=3Da2a_getScrollDocDims("h");if(g[0]-i+j[0]+h>f){g[0]=3Dg[0]-j[0]+h=
+-8}if(a2a["n"+a2a.n].orientation=3D=3D"up"||a2a["n"+a2a.n].orientation!=3D=
+"down"&&g[1]-b+j[1]+c>m&&g[1]>j[1]){g[1]=3Dg[1]-j[1]-c}l.style.left=3Dk+g=
+[0]+2+"px";l.style.top=3Dk+g[1]+c+"px";a2a_fluids();if(!a2a[a2a.type].doc=
+_mouseup_toggle_dropdown){a2a.doc_mousedown_check_scroll=3Dfunction(){a2a=
+.last_scroll_pos=3Da2a_getScrollDocDims("h")};a2a[a2a.type].doc_mouseup_t=
+oggle_dropdown=3D(function(n){return =
+function(){if(a2a.last_scroll_pos=3D=3Da2a_getScrollDocDims("h")){a2a_tog=
+gle_dropdown("none",n)}}})(a2a.type);if(!window.addEventListener){documen=
+t.attachEvent("onmousedown",a2a.doc_mousedown_check_scroll);document.atta=
+chEvent("onmouseup",a2a[a2a.type].doc_mouseup_toggle_dropdown)}else{docum=
+ent.addEventListener("mousedown",a2a.doc_mousedown_check_scroll,false);do=
+cument.addEventListener("mouseup",a2a[a2a.type].doc_mouseup_toggle_dropdo=
+wn,false)}}a2a_embeds_visibility(false);document.onkeydown=3Da2a_checkKey=
+;if(a2a.type=3D=3D"page"&&!a2a_ssl){a2a_digg_diggs_comments("init");a2a_d=
+elicious_saves("init")}else{if(a2a.type=3D=3D"feed"){a2a_gEl("a2a"+a2a.ty=
+pe+"_DEFAULT").href=3Da2a["n"+a2a.n].linkurl;if(a2a_fb_feedcount&&!a2a_ss=
+l){a2a_feedburner_feedcount("init")}}}a2a_a2a_track("test3")}function =
+a2a_embeds_visibility(d){if(!a2a["n"+a2a.n].hide_embeds){return}if(!d){va=
+r =
+b=3Da2a_gEl("a2a"+a2a.type+"_dropdown"),j=3D[parseInt(b.style.left),parse=
+Int(b.style.top)],h=3D[b.clientWidth,b.clientHeight]}if(!a2a.embeds){a2a.=
+embeds=3Da2a_HTMLcollToArray(document.getElementsByTagName("object")).con=
+cat(a2a_HTMLcollToArray(document.getElementsByTagName("embed"))).concat(a=
+2a_HTMLcollToArray(document.getElementsByTagName("applet")))}var =
+c=3Da2a.embeds,g;for(var =
+f=3D0;f<c.length;f++){g=3D"visible";if(!d){aPos=3Da2a_getPos(c[f]);aDim=3D=
+[c[f].clientWidth,c[f].clientHeight];if(j[0]<aPos[0]+aDim[0]&&j[1]<aPos[1=
+]+aDim[1]&&j[0]+h[0]>aPos[0]&&j[1]+h[1]>aPos[1]){g=3D"hidden"}}c[f].style=
+.visibility=3Dg}}function a2a_no_brdr(g){var c=3Dg,b=3Dc.length;for(var =
+d=3D0;d<b;d++){var f=3Dc[d];if(f.hasChildNodes()&&typeof =
+f.firstChild.style!=3D"undefined"){f.firstChild.style.borderWidth=3D0}}}f=
+unction a2a_bmBrowser(a){var =
+b=3Da2a_localize.Bookmark;if(document.all){if(a=3D=3D1){b=3Da2a_localize.=
+AddToYourFavorites}else{window.external.AddFavorite(a2a["n"+a2a.n].linkur=
+l,a2a["n"+a2a.n].linkname)}}else{if(a!=3D1){a2a_gEl("a2apage_note_BROWSER=
+").innerHTML=3D'<div =
+class=3D"a2a_note_note">'+a2a_localize.BookmarkInstructions+"</div>";a2a_=
+tabs("BROWSER",true)}}if(a=3D=3D1){return b}}function =
+a2a_loadExtScript(c,f,d){var =
+b=3Ddocument.createElement("script");b.charset=3D"UTF-8";b.src=3Dc;docume=
+nt.getElementsByTagName("head")[0].appendChild(b);if(typeof =
+f=3D=3D"function"){var a=3DsetInterval(function(){var =
+g=3Dfalse;try{g=3Df.call()}catch(h){}if(g){clearInterval(a);d.call()}},10=
+0)}}function a2a_show_count(c,d,g){d[0]=3D""+d[0];if(d[0]!=3D""){var =
+f=3Dd[0],b=3Dd[0];if(d[0].length>3){var =
+f=3Df.substr(0,d[0].length-3)+"K"}var =
+a=3D/(\d+)(\d{3})/;while(a.test(b)){var =
+b=3Db.replace(a,"$1,$2")}if((""+c.lastChild.tagName).toLowerCase()=3D=3D"=
+span"){c.lastChild.innerHTML=3D"("+f+")"}else{c.innerHTML=3Dc.innerHTML+"=
+ <span>("+f+")</span>"}c.title=3Db+" "+g[0];if(d[1]){c.title+=3D", =
+"+d[1]+" =
+"+g[1]}a2a_statusbar(c,c.title)}else{if((""+c.lastChild.tagName).toLowerC=
+ase()=3D=3D"span"){c.lastChild.innerHTML=3D""}c.title=3D""}}function =
+a2a_digg_diggs_comments(a){if(a=3D=3D"init"){if(typeof =
+a2a["n"+a2a.n].digg_diggs=3D=3D"undefined"){a2a_loadExtScript("http://ser=
+vices.digg.com/stories?link=3D"+encodeURIComponent(a2a["n"+a2a.n].linkurl=
+)+"&appkey=3Dhttp%3A%2F%2Fwww.addtoany.com&type=3Djavascript&callback=3Da=
+2a_digg_diggs_comments")}else{if(a2a["n"+a2a.n].digg_diggs){a2a_show_coun=
+t(a2a_gEl("a2apage_digg"),[a2a["n"+a2a.n].digg_diggs,a2a["n"+a2a.n].digg_=
+comments],["diggs","comments"])}else{a2a_show_count(a2a_gEl("a2apage_digg=
+"),[""],[""])}}}if(a!=3D"init"){a2a["n"+a2a.n].digg_diggs=3D(typeof =
+a.stories!=3D"undefined"&&typeof a.stories[0]!=3D"undefined"&&typeof =
+a.stories[0].diggs!=3D"undefined")?a.stories[0].diggs:false;a2a["n"+a2a.n=
+].digg_comments=3D(typeof a.stories!=3D"undefined"&&typeof =
+a.stories[0]!=3D"undefined"&&typeof =
+a.stories[0].comments!=3D"undefined")?a.stories[0].comments:false;if(a2a[=
+"n"+a2a.n].digg_diggs){a2a_show_count(a2a_gEl("a2apage_digg"),[a2a["n"+a2=
+a.n].digg_diggs,a2a["n"+a2a.n].digg_comments],["diggs","comments"])}else{=
+a2a_show_count(a2a_gEl("a2apage_digg"),[""],[""])}}}function =
+a2a_delicious_saves(a){if(a=3D=3D"init"){if(typeof =
+a2a["n"+a2a.n].delicious_saves=3D=3D"undefined"){a2a_loadExtScript("http:=
+//feeds.delicious.com/v2/json/urlinfo/data?url=3D"+encodeURIComponent(a2a=
+["n"+a2a.n].linkurl)+"&callback=3Da2a_delicious_saves")}else{if(a2a["n"+a=
+2a.n].delicious_saves){a2a_show_count(a2a_gEl("a2apage_delicious"),[a2a["=
+n"+a2a.n].delicious_saves],["saves"])}else{a2a_show_count(a2a_gEl("a2apag=
+e_delicious"),[""],[""])}}}if(a!=3D"init"){a2a["n"+a2a.n].delicious_saves=
+=3D(typeof a[0]!=3D"undefined"&&typeof =
+a[0].total_posts!=3D"undefined")?a[0].total_posts:false;if(a2a["n"+a2a.n]=
+.delicious_saves){a2a_show_count(a2a_gEl("a2apage_delicious"),[a2a["n"+a2=
+a.n].delicious_saves],["saves"])}else{a2a_show_count(a2a_gEl("a2apage_del=
+icious"),[""],[""])}}}function a2a_track(b){var a=3Dnew =
+Image(1,1);a.src=3D(b)?b:"http://www.shareaholic.com/api/share/?v=3D1&api=
+type=3D3&apikey=3D4aeb47485a0ed83ae7436f95e59f79b2&service=3D51&link=3D"+=
+a2a["n"+a2a.n].linkurl+"&title=3D"+a2a["n"+a2a.n].linkname+"&notes=3D"+a2=
+a_selection();a.width=3D1;a.height=3D1}function =
+a2a_a2a_track(g,l){if(a2a.type=3D=3D"page"){if(document.cookie.length>0){=
+var =
+m=3D"__utma_a2a",i=3Ddocument.cookie.indexOf(m+"=3D");if(i!=3D-1){i=3Di+m=
+.length+1;var =
+h=3Ddocument.cookie.indexOf(";",i);if(h=3D=3D-1){h=3Ddocument.cookie.leng=
+th}var c=3Dunescape(document.cookie.substring(i,h))}}var j=3Dnew =
+Date(),k=3DMath.round(j.getTime()/1000),p=3DMath.floor(Math.random()*9999=
+999999),r=3D(c)?c.split("."):new =
+Array(),n=3Dr[1]||p,f=3Dr[2]||k,o=3Dr[4]||k,b=3Dk,a=3D(r[5])?parseInt(r[5=
+])+1:1,q=3D"1."+n+"."+f+"."+o+"."+b+"."+a;j.setDate(j.getDate()+730);docu=
+ment.cookie=3D"__utma_a2a=3D"+escape(q)+"; =
+expires=3D"+j.toGMTString()+"; path=3D/";var =
+d=3D"http"+((a2a_ssl)?"s":"")+"://www.google-analytics.com/__utm.gif?&utm=
+wv=3D4.3utmn=3D"+p+"&utmhn=3D"+window.location.hostname+"&utmt=3Devent&ut=
+me=3D5(Share%20menu*"+encodeURIComponent(g)+((l)?"*"+encodeURIComponent(l=
+):"")+")&utmcs=3D"+((document.characterSet)?document.characterSet:documen=
+t.charset)+"&utmsr=3D"+screen.width+"x"+screen.height+"&utmsc=3D"+screen.=
+colorDepth+"-bit&utmul=3D"+(navigator.browserLanguage||navigator.language=
+).toLowerCase()+"&utmdt=3D"+document.title+"&utmhid=3D"+p+"&utmr=3D"+((do=
+cument.referrer)?document.referrer:"-")+"&utmp=3D"+window.location.pathna=
+me+"&utmac=3DUA-1244922-3&utmcc=3D__utma%3D"+q+"%3B";a2a_track(d)}}functi=
+on a2a_GA(){var =
+a=3Da2a.type,b=3DString(a).length;a2a_onLoad(function(){if(typeof =
+urchinTracker=3D=3D"function"){var l=3D"old"}else{if(typeof =
+pageTracker=3D=3D"object"){var l=3D"new"}else{return}}var =
+c=3Da2a[a].all_services;if(a=3D=3D"page"){c.push(a2a_gEl("a2apage_any_ema=
+il"),a2a_gEl("a2apage_email_client"))}var =
+g,k,j,f=3D(a=3D=3D"feed")?"subscriptions":"pages";for(var =
+d=3D0;d<c.length;d++){g=3Dc[d];j=3Dg.getAttribute("safename")||g.safename=
+;if(l=3D=3D"old"){var h=3D(function(m,i){return =
+function(){urchinTracker("/addtoany.com/"+i);urchinTracker("/addtoany.com=
+/"+i+"/"+a2a["n"+a2a.n].linkurl);urchinTracker("/addtoany.com/services/"+=
+m)}})(j,f)}else{k=3Dg.getAttribute("servicename")||g.servicename;var =
+h=3D(function(n,m,i){return =
+function(){pageTracker._trackPageview("/addtoany.com/"+i);pageTracker._tr=
+ackPageview("/addtoany.com/"+i+"/"+a2a["n"+a2a.n].linkurl);pageTracker._t=
+rackPageview("/addtoany.com/services/"+m);pageTracker._trackEvent("AddToA=
+ny Share/Save =
+Button",n,a2a["n"+a2a.n].linkurl)}})(k,j,f)}g.onmouseup=3Da2a_add_event(g=
+.onmouseup,h)}})}function a2a_show_srvcs(){var =
+f=3Da2a.type,d=3Da2a[f].show_services;if(d){var =
+j,h=3Da2a_get_all_a2a_dd(),b=3Dh[a2a.n];for(var =
+c=3D0;c<d.length;c++){j=3Da2a_gEl("a2a"+f+"_"+d[c].toLowerCase());if(j){v=
+ar a=3Dj.id.substr(4+(String(f).length));var =
+g=3Ddocument.createElement("a");g.rel=3D"nofollow";g.className=3D"a2a_i =
+a2a_ind";g.href=3D"http://www.addtoany.com/add_to/"+a+"?linkurl=3D"+encod=
+eURIComponent(a2a["n"+a2a.n].linkurl).replace(/'/g,"%27")+"&type=3D"+f+"&=
+linkname=3D"+encodeURIComponent(a2a["n"+a2a.n].linkname).replace(/'/g,"%2=
+7")+"&linknote=3D";g.target=3D"_blank";g.appendChild(a2a_transparent_img.=
+cloneNode(true));g.firstChild.className=3Dj.firstChild.className;b.parent=
+Node.insertBefore(g,b)}}}}function a2a_custom_srvcs(){var =
+b=3Da2a.type;if(a2a[b].custom_services){var =
+c=3Da2a[b].custom_services,d=3Da2a_mk_srvc;s_count=3D0;c.reverse();for(va=
+r =
+a=3D0;a<c.length;a++){if(c[a]){s_count+=3D1;srvc=3Dd(c[a][0],c[a][0].repl=
+ace(" =
+","_"),false,c[a][2],false,c[a][1]);if(s_count%2!=3D0){a2a_gEl("a2a"+b+"_=
+col1").insertBefore(srvc,a2a_gEl("a2a"+b+"_col1").firstChild)}else{a2a_gE=
+l("a2a"+b+"_col2").insertBefore(srvc,a2a_gEl("a2a"+b+"_col2").firstChild)=
+}}}}}function =
+a2a_prioritize_services(){if(a2a_prioritize){a2a_prioritize.reverse();var=
+ c,b=3D0;for(var =
+a=3D0;a<a2a_prioritize.length;a++){c=3Da2a_gEl("a2a"+a2a.type+"_"+a2a_pri=
+oritize[a].toLowerCase());if(c){b+=3D1;if(b%2!=3D0){a2a_gEl("a2a"+a2a.typ=
+e+"_col1").insertBefore(c,a2a_gEl("a2a"+a2a.type+"_col1").firstChild)}els=
+e{a2a_gEl("a2a"+a2a.type+"_col2").insertBefore(c,a2a_gEl("a2a"+a2a.type+"=
+_col2").firstChild)}}}}}function a2a_history(){var o=3Da2a.type;var =
+p=3Da2a_getByClass("a2a_i",a2a_gEl("a2a"+o+"_col1")),n=3Da2a_getByClass("=
+a2a_i",a2a_gEl("a2a"+o+"_col2")),f=3Dnew =
+Array(),g=3Dp.length+n.length,l=3DMath.abs(p.length-n.length);for(var =
+d=3D0,m=3Dp.length-1,k=3Dn.length-1;d<g+l;d++){if(d%2&&d!=3D0&&n[k]){f[f.=
+length]=3Dn[k];k--}else{if(p[m]){f[f.length]=3Dp[m];m--}}}var =
+b=3Ddocument.createElement("div");b.id=3D"a2a_hist_list";b.style.width=3D=
+"1px";b.style.height=3D"1px";b.style.overflow=3D"hidden";document.body.in=
+sertBefore(b,document.body.firstChild);for(var =
+d=3D0,c=3D0;d<f.length;d++){var =
+q=3Df[d],a=3Dq.homepage,h=3Ddocument.createElement("a");h.href=3Da;h.inne=
+rHTML=3Da;b.appendChild(h);if(h.currentStyle){var =
+j=3Dh.currentStyle.clear}else{if(document.defaultView.getComputedStyle(h,=
+null)){var =
+j=3Ddocument.defaultView.getComputedStyle(h,null).getPropertyValue("clear=
+")}}h.parentNode.removeChild(h);if(j=3D=3D"right"&&a!=3D""){q.className=3D=
+q.className+" =
+a2a_sss";if(c%2&&c!=3D0){a2a_gEl("a2a"+o+"_col2").insertBefore(q,a2a_gEl(=
+"a2a"+o+"_col2").firstChild)}else{a2a_gEl("a2a"+o+"_col1").insertBefore(q=
+,a2a_gEl("a2a"+o+"_col1").firstChild)}c++}}b.parentNode.removeChild(b)}fu=
+nction a2a_visOnly(d){var b=3Dnew Array();for(var =
+c=3D0,f=3D0;c<d.length;c++){if(d[c].style.display!=3D"none"&&d[c].parentN=
+ode.style.display!=3D"none"){b[f]=3Dd[c];f++}}return b}function =
+a2a_moveFocus(a,d){var =
+c=3Da2a[a2a.type].inFocus,b=3Da2a_getByClass("a2a_cols");presently_focuse=
+d=3Da2a_visOnly(b[c[0]].getElementsByTagName("a"))[c[1]];presently_focuse=
+d.blur();a2a[a2a.type].inFocus=3D[c[0]+a,c[1]+d];c=3Da2a[a2a.type].inFocu=
+s;to_focus=3Da2a_visOnly(b[c[0]].getElementsByTagName("a"))[c[1]];to_focu=
+s.focus();to_focus.onblur=3Dfunction(){if(this!=3Dpresently_focused){a2a[=
+a2a.type].inFocus=3Dfalse;a2a_onMouseOut_delay()}}}function =
+a2a_checkKey(h){var =
+h=3Dh||window.event,f=3Dh.which||h.keyCode,g=3Da2a[a2a.type].inFocus,a=3D=
+false,d=3Da2a_getByClass("a2a_cols"),c=3Da2a_visOnly;if(f=3D=3D13&&!g){fo=
+r(var =
+b=3D0;b<d.length;b++){if(c(d[b].getElementsByTagName("a")).length>0){a=3D=
+b;break}}if(a=3D=3D=3Dfalse){return =
+false}a2a[a2a.type].inFocus=3D[a,0];a2a_moveFocus(0,0);return =
+false}if(g){var =
+j=3Dc(d[g[0]].getElementsByTagName("a"));if(f=3D=3D38){if(g[1]<1){if(type=
+of =
+j[j.length-1]!=3D"undefined"){a2a_moveFocus(0,j.length-1)}}else{if(typeof=
+ j[g[1]-1]!=3D"undefined"){a2a_moveFocus(0,-1)}}return =
+false}else{if(f=3D=3D40){if(g[1]>j.length-2){a2a_moveFocus(0,-(g[1]))}els=
+e{a2a_moveFocus(0,1)}return =
+false}else{if(f=3D=3D37){if(g[0]<1){if(typeof =
+c(d[d.length-1].getElementsByTagName("a"))[g[1]]!=3D"undefined"){a2a_move=
+Focus(d.length-1,0)}}else{if(typeof =
+c(d[g[0]-1].getElementsByTagName("a"))[g[1]]!=3D"undefined"){a2a_moveFocu=
+s(-1,0)}}}else{if(f=3D=3D39){if(g[0]>d.length-2){if(typeof =
+c(d[0].getElementsByTagName("a"))[g[1]]!=3D"undefined"){a2a_moveFocus(-(d=
+.length-1),0)}}else{if(typeof =
+c(d[g[0]+1].getElementsByTagName("a"))[g[1]]!=3D"undefined"){a2a_moveFocu=
+s(1,0)}}}}}}}if(f=3D=3D27&&a2a[a2a.type].tab=3D=3D"DEFAULT"){a2a_gEl("a2a=
+"+a2a.type+"_find").value=3D"";a2a_do_find();a2a_focus_find()}else{if(f>4=
+0||f=3D=3D32){a2a_focus_find()}}}function a2a_css(){var =
+f=3Da2a_color_main||"EEE",h=3Da2a_color_bg||"FFF",d=3Da2a_color_border||"=
+CCC",a=3Da2a_color_link_text||"00F",g=3Da2a_color_link_text_hover||"000",=
+k=3Da2a_color_link_text_hover||"999",b=3Da2a_color_link_text||"000",i=3D(=
+f.toLowerCase()=3D=3D"ffffff")?"EEE":f;a2a_find_text_color=3Da2a_color_li=
+nk_text||"CCC";a2a_find_text_color_focused=3Da2a_color_link_text||"000";v=
+ar c=3D".a2a_menu =
+*{margin:0;padding:0}.a2a_menu,.a2a_menu_border{display:none;z-index:9999=
+999;position:absolute;margin:0;padding:0;-webkit-border-radius:16px;-moz-=
+border-radius:16px}.a2a_menu{display:none;min-width:200px;background-colo=
+r:#"+h+";font:12px =
+Arial,Helvetica,sans-serif;color:#000;line-height:12px;border:1px solid =
+#"+d+";vertical-align:baseline;padding:8px;overflow:hidden}.a2a_menu_bord=
+er{border:1px solid =
+#"+f+";background-color:#"+f+";opacity:.6;filter:alpha(opacity=3D60)}.a2a=
+_menu a,#a2a_hist_list a,.a2a_tabs =
+div{color:#"+a+";text-decoration:none;font:12px =
+Arial,Helvetica,sans-serif;line-height:12px;height:auto;width:auto;clear:=
+none;outline:none;-moz-outline:none;-webkit-border-radius:8px;-moz-border=
+-radius:8px}";c+=3D".a2a_menu a:visited,#a2a_hist_list =
+a:visited{color:#"+a+";clear:right}";c+=3D".a2a_menu a:hover,.a2a_menu =
+a:active,.a2a_menu a.a2a_i:focus,.a2a_tabs =
+div:hover{color:#"+g+";border:1px solid =
+#"+d+";background-color:#"+f+";text-decoration:none}.a2a_menu =
+img,.a2a_menu a img, a.a2a_ind =
+img{width:16px;height:16px;border:0;padding:0;background:url("+a2a_icons_=
+img_url+") no-repeat}.a2a_menu =
+img{display:inline;vertical-align:middle;margin:0 4px 2px 0}.a2a_menu =
+img.a2a_i_find{position:absolute;left:5px;top:2px}.a2a_menu_title_contain=
+er{display:none;margin-bottom:2px;padding:6px}.a2a_menu_find_container{po=
+sition:relative;text-align:left;margin:4px 1px;padding:1px 24px 1px =
+0;border:1px solid =
+#"+a2a_find_text_color+";-webkit-border-radius:8px;-moz-border-radius:8px=
+}input.a2a_menu_title{display:block;color:#"+a2a_find_text_color_focused+=
+";background-color:#"+h+";border:0;margin:0;padding:0;width:100%}input.a2=
+a_menu_find{display:block;position:relative;left:24px;color:#"+a2a_find_t=
+ext_color+";font-size:12px;padding:2px =
+0;outline:0;border:0;background-color:transparent;_background-color:#"+h+=
+";width:250px}.a2a_cols{width:50%;vertical-align:top;margin:0;padding:0;b=
+order:0;background-color:transparent;_background-color:#"+h+"}.a2a_cols_c=
+ontainer =
+tbody{border:0}.a2a_cols_container{border-collapse:collapse;border-spacin=
+g:0;border:0;width:auto;margin:0;padding:0}"+((typeof =
+document.body.style.maxHeight!=3D"undefined")?".a2a_clear{clear:both}":".=
+a2a_clear{clear:both;height:0;width:0;line-height:0;font-size:0}")+".a2a_=
+hr{margin:0 12px =
+12px;padding:1px;background:none;background-color:#"+f+"}.a2a_nowrap{whit=
+e-space:nowrap}.a2a_note{margin:0 =
+auto;padding:9px;font-size:11px;text-align:center}.a2a_note =
+.a2a_note_note{margin:0 0 9px;color:#"+b+"}.a2a_wide =
+a{display:block;margin-top:3px;border:1px solid =
+#"+i+";padding:3px;text-align:center}.a2a_tabs{float:left;margin:0 0 =
+3px}.a2a_tabs a,.a2a_tabs =
+div{margin:1px;background-color:#"+f+";border:1px solid =
+#"+f+";font-size:11px;padding:6px 12px 2px;white-space:nowrap}.a2a_tabs =
+a img, .a2a_tabs div img{margin-bottom:4px}.a2a_tabs a, .a2a_tabs =
+a:visited, .a2a_tabs a:hover, .a2a_tabs div, .a2a_tabs =
+div:hover{cursor:pointer;border-bottom:1px solid =
+#"+f+";color:#"+g+";-webkit-border-bottom-left-radius:0;-moz-border-radiu=
+s-bottomleft:0;-webkit-border-bottom-right-radius:0;-moz-border-radius-bo=
+ttomright:0}a.a2a_tab_selected,a.a2a_tab_selected:visited,a.a2a_tab_selec=
+ted:hover,a.a2a_tab_selected:active,a.a2a_tab_selected:focus, =
+div.a2a_tab_selected,div.a2a_tab_selected:hover{color:#"+a+";background-c=
+olor:#"+h+";border:1px solid #"+d+";border-bottom:1px solid =
+#"+h+"}a.a2a_i{display:block;padding:4px 6px 2px;border:1px solid =
+#"+h+";text-align:left;white-space:nowrap}a.a2a_sss{font-weight:700}a.a2a=
+_ind{display:inline;margin:0;padding:0}a.a2a_emailer{display:inline-block=
+;border:1px solid #EEE;margin:0 =
+9px;text-align:center}a.a2a_menu_show_more_less{margin:4px 0 =
+8px;padding:0}a.a2a_menu_show_more_less =
+img{vertical-align:baseline;height:12px}";c+=3D"a.a2a_menu_powered_by,a.a=
+2a_menu_powered_by:visited{background-color:#"+f+";font-size:9px;color:#"=
++k+"}";c+=3D".a2a_i_agregator{background-position:0 0 =
+!important}.a2a_i_aiderss{background-position:0 -17px =
+!important}.a2a_i_aim{background-position:0 -34px =
+!important}.a2a_i_allvoices{background-position:0 -51px =
+!important}.a2a_i_amazon{background-position:0 -68px =
+!important}.a2a_i_aol{background-position:0 -85px =
+!important}.a2a_i_apple_mail{background-position:0 -102px =
+!important}.a2a_i_arto{background-position:0 -119px =
+!important}.a2a_i_ask{background-position:0 -136px =
+!important}.a2a_i_avantgo{background-position:0 -153px =
+!important}.a2a_i_backflip{background-position:0 -170px =
+!important}.a2a_i_bebo{background-position:0 -187px =
+!important}.a2a_i_bibsonomy{background-position:0 -204px =
+!important}.a2a_i_bitty{background-position:0 -221px =
+!important}.a2a_i_blinklist{background-position:0 -238px =
+!important}.a2a_i_blogger{background-position:0 -255px =
+!important}.a2a_i_bloglines{background-position:0 -272px =
+!important}.a2a_i_blogmarks{background-position:0 -289px =
+!important}.a2a_i_blogrovr{background-position:0 -306px =
+!important}.a2a_i_bookmark{background-position:0 -323px =
+!important}.a2a_i_bookmarks_fr{background-position:0 -340px =
+!important}.a2a_i_buddymarks{background-position:0 -357px =
+!important}.a2a_i_buzmob{background-position:0 -374px =
+!important}.a2a_i_buzz{background-position:0 -391px =
+!important}.a2a_i_bzzster{background-position:0 -408px =
+!important}.a2a_i_care2{background-position:0 -425px =
+!important}.a2a_i_citeulike{background-position:0 -442px =
+!important}.a2a_i_clear{background-position:0 -459px =
+!important}.a2a_i_connotea{background-position:0 -476px =
+!important}.a2a_i_current{background-position:0 -493px =
+!important}.a2a_i_dailyme{background-position:0 -510px =
+!important}.a2a_i_dailyrotation{background-position:0 -527px =
+!important}.a2a_i_darr{background-position:0 -544px =
+!important}.a2a_i_darr_wt{background-position:0 -561px =
+!important}.a2a_i_default{background-position:0 -578px =
+!important}.a2a_i_delicious{background-position:0 -595px =
+!important}.a2a_i_designfloat{background-position:0 -612px =
+!important}.a2a_i_digg{background-position:0 -629px =
+!important}.a2a_i_diglog{background-position:0 -646px =
+!important}.a2a_i_diigo{background-position:0 -663px =
+!important}.a2a_i_dzone{background-position:0 -680px =
+!important}.a2a_i_email{background-position:0 -697px =
+!important}.a2a_i_eskobo{background-position:0 -714px =
+!important}.a2a_i_evernote{background-position:0 -731px =
+!important}.a2a_i_excitemix{background-position:0 -748px =
+!important}.a2a_i_expression{background-position:0 -765px =
+!important}.a2a_i_facebook{background-position:0 -782px =
+!important}.a2a_i_fark{background-position:0 -799px =
+!important}.a2a_i_faves{background-position:0 -816px =
+!important}.a2a_i_feed{background-position:0 -833px =
+!important}.a2a_i_feedblitz{background-position:0 -850px =
+!important}.a2a_i_feedbucket{background-position:0 -867px =
+!important}.a2a_i_feedlounge{background-position:0 -884px =
+!important}.a2a_i_feedm8{background-position:0 -901px =
+!important}.a2a_i_feedmailer{background-position:0 -918px =
+!important}.a2a_i_feedreader_net{background-position:0 -935px =
+!important}.a2a_i_feedshow{background-position:0 -952px =
+!important}.a2a_i_fevote{background-position:0 -969px =
+!important}.a2a_i_find{background-position:0 -986px =
+!important}.a2a_i_fireant{background-position:0 -1003px =
+!important}.a2a_i_flurry{background-position:0 -1020px =
+!important}.a2a_i_folkd{background-position:0 -1037px =
+!important}.a2a_i_foxiewire{background-position:0 -1054px =
+!important}.a2a_i_friendfeed{background-position:0 -1071px =
+!important}.a2a_i_friendster{background-position:0 -1088px =
+!important}.a2a_i_funp{background-position:0 -1105px =
+!important}.a2a_i_furl{background-position:0 -1122px =
+!important}.a2a_i_fwicki{background-position:0 -1138px =
+!important}.a2a_i_gabbr{background-position:0 -1155px =
+!important}.a2a_i_global_grind{background-position:0 -1172px =
+!important}.a2a_i_gmail{background-position:0 -1189px =
+!important}.a2a_i_google{background-position:0 -1206px =
+!important}.a2a_i_healthranker{background-position:0 -1223px =
+!important}.a2a_i_hellotxt{background-position:0 -1240px =
+!important}.a2a_i_hemidemi{background-position:0 -1257px =
+!important}.a2a_i_hi5{background-position:0 -1274px =
+!important}.a2a_i_hubdog{background-position:0 -1291px =
+!important}.a2a_i_hugg{background-position:0 -1308px =
+!important}.a2a_i_hyves{background-position:0 -1325px =
+!important}.a2a_i_identica{background-position:0 -1342px =
+!important}.a2a_i_im{background-position:0 -1359px =
+!important}.a2a_i_imera{background-position:0 -1376px =
+!important}.a2a_i_instapaper{background-position:0 -1393px =
+!important}.a2a_i_iterasi{background-position:0 -1410px =
+!important}.a2a_i_itunes{background-position:0 -1427px =
+!important}.a2a_i_jamespot{background-position:0 -1444px =
+!important}.a2a_i_jots{background-position:0 -1461px =
+!important}.a2a_i_jumptags{background-position:0 -1478px =
+!important}.a2a_i_khabbr{background-position:0 -1495px =
+!important}.a2a_i_kledy{background-position:0 -1512px =
+!important}.a2a_i_klipfolio{background-position:0 -1529px =
+!important}.a2a_i_linkagogo{background-position:0 -1546px =
+!important}.a2a_i_linkatopia{background-position:0 -1563px =
+!important}.a2a_i_linkedin{background-position:0 -1580px =
+!important}.a2a_i_live{background-position:0 -1597px =
+!important}.a2a_i_livejournal{background-position:0 -1614px =
+!important}.a2a_i_ma_gnolia{background-position:0 -1631px =
+!important}.a2a_i_maple{background-position:0 -1648px =
+!important}.a2a_i_meneame{background-position:0 -1665px =
+!important}.a2a_i_mindbodygreen{background-position:0 -1682px =
+!important}.a2a_i_miro{background-position:0 -1699px =
+!important}.a2a_i_mister-wong{background-position:0 -1716px =
+!important}.a2a_i_mixx{background-position:0 -1733px =
+!important}.a2a_i_mobile{background-position:0 -1750px =
+!important}.a2a_i_mozillaca{background-position:0 -1767px =
+!important}.a2a_i_msdn{background-position:0 -1784px =
+!important}.a2a_i_multiply{background-position:0 -1801px =
+!important}.a2a_i_my_msn{background-position:0 -1818px =
+!important}.a2a_i_mylinkvault{background-position:0 -1835px =
+!important}.a2a_i_myspace{background-position:0 -1852px =
+!important}.a2a_i_netimechannel{background-position:0 -1869px =
+!important}.a2a_i_netlog{background-position:0 -1886px =
+!important}.a2a_i_netomat{background-position:0 -1903px =
+!important}.a2a_i_netvibes{background-position:0 -1920px =
+!important}.a2a_i_netvouz{background-position:0 -1937px =
+!important}.a2a_i_newgie{background-position:0 -1954px =
+!important}.a2a_i_newsalloy{background-position:0 -1971px =
+!important}.a2a_i_newscabby{background-position:0 -1988px =
+!important}.a2a_i_newsgator{background-position:0 -2005px =
+!important}.a2a_i_newshutch{background-position:0 -2022px =
+!important}.a2a_i_newsisfree{background-position:0 -2039px =
+!important}.a2a_i_newstrust{background-position:0 -2056px =
+!important}.a2a_i_newsvine{background-position:0 -2073px =
+!important}.a2a_i_nowpublic{background-position:0 -2090px =
+!important}.a2a_i_odeo{background-position:0 -2107px =
+!important}.a2a_i_oneview{background-position:0 -2124px =
+!important}.a2a_i_openbm{background-position:0 -2141px =
+!important}.a2a_i_outlook{background-position:0 -2158px =
+!important}.a2a_i_pageflakes{background-position:0 -2175px =
+!important}.a2a_i_pdf{background-position:0 -2192px =
+!important}.a2a_i_phonefavs{background-position:0 -2209px =
+!important}.a2a_i_ping{background-position:0 -2226px =
+!important}.a2a_i_plaxo{background-position:0 -2243px =
+!important}.a2a_i_plurk{background-position:0 -2260px =
+!important}.a2a_i_plusmo{background-position:0 -2277px =
+!important}.a2a_i_podnova{background-position:0 -2294px =
+!important}.a2a_i_posterous{background-position:0 -2311px =
+!important}.a2a_i_printfriendly{background-position:0 -2328px =
+!important}.a2a_i_propeller{background-position:0 -2345px =
+!important}.a2a_i_protopage{background-position:0 -2362px =
+!important}.a2a_i_pusha{background-position:0 -2379px =
+!important}.a2a_i_rapidfeeds{background-position:0 -2396px =
+!important}.a2a_i_rasasa{background-position:0 -2413px =
+!important}.a2a_i_reader{background-position:0 -2430px =
+!important}.a2a_i_reddit{background-position:0 -2447px =
+!important}.a2a_i_rssfwd{background-position:0 -2464px =
+!important}.a2a_i_segnalo{background-position:0 -2481px =
+!important}.a2a_i_share{background-position:0 -2498px =
+!important}.a2a_i_shoutwire{background-position:0 -2515px =
+!important}.a2a_i_shyftr{background-position:0 -2532px =
+!important}.a2a_i_simpy{background-position:0 -2549px =
+!important}.a2a_i_sitejot{background-position:0 -2566px =
+!important}.a2a_i_skimbit{background-position:0 -2583px =
+!important}.a2a_i_slashdot{background-position:0 -2600px =
+!important}.a2a_i_smaknews{background-position:0 -2617px =
+!important}.a2a_i_sodahead{background-position:0 -2634px =
+!important}.a2a_i_sofomo{background-position:0 -2651px =
+!important}.a2a_i_spaces{background-position:0 -2668px =
+!important}.a2a_i_sphere{background-position:0 -2685px =
+!important}.a2a_i_sphinn{background-position:0 -2701px =
+!important}.a2a_i_spurl{background-position:0 -2718px =
+!important}.a2a_i_squidoo{background-position:0 -2735px =
+!important}.a2a_i_startaid{background-position:0 -2752px =
+!important}.a2a_i_strands{background-position:0 -2769px =
+!important}.a2a_i_stumbleupon{background-position:0 -2786px =
+!important}.a2a_i_stumpedia{background-position:0 -2803px =
+!important}.a2a_i_symbaloo{background-position:0 -2820px =
+!important}.a2a_i_taggly{background-position:0 -2837px =
+!important}.a2a_i_tagza{background-position:0 -2854px =
+!important}.a2a_i_tailrank{background-position:0 -2871px =
+!important}.a2a_i_technet{background-position:0 -2888px =
+!important}.a2a_i_technorati{background-position:0 -2905px =
+!important}.a2a_i_technotizie{background-position:0 -2922px =
+!important}.a2a_i_thefreedictionary{background-position:0 -2939px =
+!important}.a2a_i_thefreelibrary{background-position:0 -2956px =
+!important}.a2a_i_thunderbird{background-position:0 -2973px =
+!important}.a2a_i_tipd{background-position:0 -2990px =
+!important}.a2a_i_toolbar_google{background-position:0 -3007px =
+!important}.a2a_i_tumblr{background-position:0 -3024px =
+!important}.a2a_i_twiddla{background-position:0 -3041px =
+!important}.a2a_i_twine{background-position:0 -3058px =
+!important}.a2a_i_twitter{background-position:0 -3075px =
+!important}.a2a_i_txtvox{background-position:0 -3092px =
+!important}.a2a_i_typepad{background-position:0 -3109px =
+!important}.a2a_i_uarr{background-position:0 -3126px =
+!important}.a2a_i_uarr_wt{background-position:0 -3143px =
+!important}.a2a_i_unalog{background-position:0 -3160px =
+!important}.a2a_i_viadeo{background-position:0 -3177px =
+!important}.a2a_i_webnews{background-position:0 -3194px =
+!important}.a2a_i_webwag{background-position:0 -3212px =
+!important}.a2a_i_wikio{background-position:0 -3229px =
+!important}.a2a_i_windows_mail{background-position:0 -3246px =
+!important}.a2a_i_wink{background-position:0 -3263px =
+!important}.a2a_i_winksite{background-position:0 -3280px =
+!important}.a2a_i_wists{background-position:0 -3297px =
+!important}.a2a_i_wordpress{background-position:0 -3314px =
+!important}.a2a_i_xanga{background-position:0 -3331px =
+!important}.a2a_i_xerpi{background-position:0 -3348px =
+!important}.a2a_i_xianguo{background-position:0 -3365px =
+!important}.a2a_i_yahoo{background-position:0 -3382px =
+!important}.a2a_i_yample{background-position:0 -3399px =
+!important}.a2a_i_yigg{background-position:0 -3416px =
+!important}.a2a_i_yim{background-position:0 -3433px =
+!important}.a2a_i_yoolink{background-position:0 -3450px =
+!important}.a2a_i_youmob{background-position:0 -3467px =
+!important}.a2a_i_yourminis{background-position:0 -3484px =
+!important}.a2a_i_zaptxt{background-position:0 -3501px =
+!important}.a2a_i_zhuaxia{background-position:0 -3518px =
+!important}.a2a_i_zune{background-position:0 -3535px =
+!important}";a2a_dd_css=3Ddocument.createElement("style");a2a_dd_css.setA=
+ttribute("type","text/css");if(a2a_dd_css.styleSheet){a2a_dd_css.styleShe=
+et.cssText=3Dc}else{a2a_dd_css_tn=3Ddocument.createTextNode(c);a2a_dd_css=
+.appendChild(a2a_dd_css_tn)}var =
+j=3Ddocument.getElementsByTagName("head")[0];j.appendChild(a2a_dd_css)}fu=
+nction a2a_mk_srvc(a,b,d,g,f,i){var =
+j=3Ddocument.createElement("a"),c=3Dfunction(){a2a_linker(this,this.safen=
+ame)},h=3Dfunction(){a2a_track(a2a_tracking_url.replace(/A2A_SERVICENAME/=
+,b))};j.id=3D"a2a"+a2a.type+"_"+b;j.rel=3D"nofollow";j.className=3D"a2a_i=
+";j.href=3D"/";j.target=3D"_blank";j.onmousedown=3Dc;j.onkeydown=3Dc;j.ho=
+mepage=3Dd;j.safename=3Db;j.servicename=3Da;j.serviceNameLowerCase=3Da.to=
+LowerCase();j.appendChild(a2a_transparent_img.cloneNode(true));j.appendCh=
+ild(document.createTextNode(a));j.onmouseup=3Da2a_add_event(j.onmouseup,f=
+unction(){a2a_a2a_track("testShare1",a)});if(f){j.stype=3Df}if(a2a_tracki=
+ng_url){j.onmouseup=3Da2a_add_event(j.onmouseup,h)}if(i){j.customserviceu=
+ri=3Di;if(g){j.firstChild.style.backgroundImage=3D"url("+g+")"}else{j.fir=
+stChild.className=3D"a2a_i_default"}}else{j.firstChild.className=3D"a2a_i=
+_"+g}return j}function =
+a2a_create_page_dropdown(){a2a.type=3D(a2a_email_menu)?"mail":"page";var =
+k=3Da2a.type;a2a_css();a2a_localize=3D{Share:a2a_localize.Share||"Share",=
+Save:a2a_localize.Save||"Save",Subscribe:a2a_localize.Subscribe||"Subscri=
+be",Email:a2a_localize.Email||"E-mail",Bookmark:a2a_localize.Bookmark||"B=
+ookmark",ShowAll:a2a_localize.ShowAll||"Show =
+all",ShowLess:a2a_localize.ShowLess||"Show =
+less",FindServices:a2a_localize.FindServices||"Find =
+service(s)...",FindAnyServiceToAddTo:a2a_localize.FindAnyServiceToAddTo||=
+"Instantly find any service to add =
+to",PoweredBy:a2a_localize.PoweredBy||"Powered by",AnyEmail:"Any =
+e-mail",ShareViaEmail:a2a_localize.ShareViaEmail||"Share via =
+e-mail",SubscribeViaEmail:a2a_localize.SubscribeViaEmail||"Subscribe via =
+email",BookmarkInYourBrowser:a2a_localize.BookmarkInYourBrowser||"Bookmar=
+k in your =
+browser",BookmarkInstructions:a2a_localize.BookmarkInstructions||"Press =
+Ctrl+D or &#8984;+D to bookmark this =
+page",AddToYourFavorites:a2a_localize.AddToYourFavorites||"Add to =
+Favorites",SendFromWebOrProgram:a2a_localize.SendFromWebOrProgram||"Send =
+from any other e-mail address or e-mail =
+program",EmailProgram:a2a_localize.EmailProgram||"E-mail program"};var =
+a=3D'<div id=3D"a2a'+k+'_border" class=3D"a2a_menu_border" =
+onmouseover=3D"a2a_onMouseOver_stay()"'+((a2a[a2a.type].onclick)?"":' =
+onmouseout=3D"a2a_onMouseOut_delay()"')+"></div>";a+=3D'<div =
+id=3D"a2a'+k+'_dropdown" class=3D"a2a_menu" =
+onmouseover=3D"a2a_onMouseOver_stay()"'+((a2a[a2a.type].onclick)?"":' =
+onmouseout=3D"a2a_onMouseOut_delay()"')+">";a+=3D'<div =
+id=3D"a2a'+k+'_title_container" =
+class=3D"a2a_menu_title_container"><input id=3D"a2a'+k+'_title" =
+class=3D"a2a_menu_title"/></div>';if(k=3D=3D"page"){a+=3D'<div =
+class=3D"a2a'+k+'_wide a2a_wide">';a+=3D'<div class=3D"a2a_tabs"><div =
+id=3D"a2a'+k+'_DEFAULT" class=3D"a2a_tab_selected" =
+style=3D"margin-right:1px" onclick=3D"return a2a_tabs(\'DEFAULT\')"><img =
+class=3D"a2a_i_share" =
+src=3D"'+a2a_transparent_img_url+'"/>'+a2a_localize.Share+" / =
+"+a2a_localize.Save+"</div></div>";a+=3D'<div class=3D"a2a_tabs"><div =
+title=3D"'+a2a_localize.ShareViaEmail+'" id=3D"a2a'+k+'_EMAIL" =
+style=3D"margin-right:1px" onclick=3D"return =
+a2a_tabs(\'EMAIL\',true)"><img class=3D"a2a_i_email" =
+src=3D"'+a2a_transparent_img_url+'"/>'+a2a_localize.Email+"</div></div>";=
+a+=3D'<div class=3D"a2a_tabs"><div onclick=3D"a2a_bmBrowser()" =
+title=3D"'+a2a_localize.BookmarkInYourBrowser+'" id=3D"a2a'+k+'_BROWSER" =
+style=3D"margin-left:1px"><img class=3D"a2a_i_bookmark" =
+src=3D"'+a2a_transparent_img_url+'"/>'+a2a_bmBrowser(1)+"</div></div>";a+=
+=3D'</div><div class=3D"a2a_clear"></div>'}if(k=3D=3D"page"){a+=3D'<div =
+id=3D"a2a'+k+'_find_container" class=3D"a2a_menu_find_container"><input =
+id=3D"a2a'+k+'_find" class=3D"a2a_menu_find" type=3D"text" =
+onclick=3D"a2a_focus_find()" onkeyup=3D"a2a_do_find()" =
+autocomplete=3D"off" =
+onfocus=3D"a2a[\''+k+'\'].find_focused=3Dtrue;a2a_onMouseOver_stay()" =
+onblur=3D"a2a_blur_find()" =
+title=3D"'+a2a_localize.FindAnyServiceToAddTo+'"><img =
+id=3D"a2a'+k+'_find_icon" class=3D"a2a_i_find" =
+src=3D"'+a2a_transparent_img_url+'" =
+onclick=3D"a2a_focus_find()"/></div>'}a+=3D'<table =
+id=3D"a2a'+k+'_cols_container" =
+class=3D"a2a_cols_container"><tr>';a+=3D'<td =
+class=3D"a2a_cols">';a+=3D'<div id=3D"a2a'+k+'_col1"'+((k=3D=3D"mail")?' =
+style=3D"display:none"':"")+"></div>";a+=3D'<div =
+id=3D"a2a'+k+'_2_col1"'+((k!=3D"mail")?' =
+style=3D"display:none"':"")+"></div></td>";a+=3D'<td =
+class=3D"a2a_cols">';a+=3D'<div id=3D"a2a'+k+'_col2"'+((k=3D=3D"mail")?' =
+style=3D"display:none"':"")+"></div>";a+=3D'<div =
+id=3D"a2a'+k+'_2_col2"'+((k!=3D"mail")?' =
+style=3D"display:none"':"")+"></div></td>";a+=3D"</tr></table>";a+=3D'<di=
+v id=3D"a2a'+k+'_note_BROWSER" class=3D"a2a_note" =
+style=3D"display:none"></div>';a+=3D'<div id=3D"a2a'+k+'_note_EMAIL" =
+class=3D"a2a_note"'+((k!=3D"mail")?' =
+style=3D"display:none"':"")+">";a+=3D'<div class=3D"a2a_hr"></div><div =
+class=3D"a2a_note_note">'+a2a_localize.SendFromWebOrProgram+":</div>";a+=3D=
+'<div class=3D"a2a_nowrap">';a+=3D'<a href=3D"/" =
+id=3D"a2a'+k+'_any_email" class=3D"a2a_i a2a_emailer" target=3D"_blank" =
+servicename=3D"Email (form)" safename=3D"email_form" =
+customserviceuri=3D"http://www.addtoany.com/email?linkurl=3DA2A_LINKURL_E=
+NC&amp;linkname=3DA2A_LINKNAME_ENC" onkeydown=3D"a2a_linker(this)" =
+onmousedown=3D"a2a_linker(this)" =
+onmouseup=3D"a2a_a2a_track(\'testShare1\', \'Email\')" =
+style=3D"margin-right:9px"><img class=3D"a2a_i_email" =
+src=3D"'+a2a_transparent_img_url+'"/>'+a2a_localize.AnyEmail+"</a>";a+=3D=
+'<a href=3D"/" class=3D"a2a_i a2a_emailer" id=3D"a2a'+k+'_email_client" =
+servicename=3D"Email (mailto)" safename=3D"email_mailto" =
+customserviceuri=3D"mailto:?subject=3DA2A_LINKNAME_ENC&amp;body=3DA2A_LIN=
+KURL_ENC" onkeydown=3D"a2a_linker(this)" =
+onmousedown=3D"a2a_linker(this)" =
+onmouseup=3D"a2a_a2a_track(\'testShare1\', \'Email\')" =
+onclick=3D"a2a_track()" style=3D"margin-left:9px"><img =
+class=3D"a2a_i_outlook" src=3D"'+a2a_transparent_img_url+'"/><img =
+class=3D"a2a_i_windows_mail" src=3D"'+a2a_transparent_img_url+'"/><img =
+class=3D"a2a_i_apple_mail" src=3D"'+a2a_transparent_img_url+'"/><img =
+class=3D"a2a_i_thunderbird" =
+src=3D"'+a2a_transparent_img_url+'"/></a>';a+=3D"</div>";a+=3D"</div>";if=
+(k!=3D"mail"){a+=3D'<div class=3D"a2a'+k+'_wide a2a_wide"><a =
+href=3D"javascript:void(0)" id=3D"a2a'+k+"_show_more_less\" =
+class=3D\"a2a_menu_show_more_less\" onClick=3D\"return =
+a2a_show_more_less(0)\" =
+onmouseover=3D\"img=3Dthis.firstChild;if(a2a_color_arrow_hover=3D=3D'fff'=
+){if(img.className.indexOf('_wt')=3D=3D-1)img.className+=3D'_wt'}else =
+img.className=3Dimg.className.replace(/_wt/,'')\" =
+onmouseout=3D\"img=3Dthis.firstChild;if(a2a_color_arrow=3D=3D'fff'){if(im=
+g.className.indexOf('_wt')=3D=3D-1)img.className+=3D'_wt'}else =
+img.className=3Dimg.className.replace(/_wt/,'')\" =
+title=3D\""+a2a_localize.ShowAll+'"><img 	=
+class=3D"a2a_i_darr'+((a2a_color_arrow=3D=3D"fff")?"_wt":"")+'" =
+src=3D"'+a2a_transparent_img_url+'"/></a></div>'}a+=3D'<div =
+class=3D"a2a'+k+'_wide a2a_wide"><a href=3D"http://www.addtoany.com/" =
+id=3D"a2a'+k+'_powered_by" class=3D"a2a_menu_powered_by" =
+target=3D"_blank" title=3D"Share &amp; Subscribe buttons" =
+onmouseover=3D"if(!window.opera)this.innerHTML=3Dthis.orig;this.style.tex=
+tAlign=3D\'center\'">'+a2a_localize.PoweredBy+" =
+AddToAny</a></div>";a+=3D"</div>";var =
+c=3Ddocument.createElement("div"),h=3Dfunction(i){if(!i){i=3Dwindow.event=
+}i.cancelBubble=3Dtrue;if(i.stopPropagation){i.stopPropagation()}};c.onmo=
+useup=3Dh;c.onmousedown=3Dh;c.style.position=3D"static";c.innerHTML=3Da;d=
+ocument.body.insertBefore(c,document.body.firstChild);a2a_transparent_img=
+=3Dnew =
+Image();a2a_transparent_img.src=3Da2a_transparent_img_url;a2a_transparent=
+_img.width=3D16;a2a_transparent_img.height=3D16;var l=3Dnew =
+RegExp("[\\?&]awesm=3D([^&#]*)"),m=3Dl.exec(window.location.href);if(m!=3D=
+null){a2a_awesm=3Dm[1]}else{a2a_awesm=3Dfalse}var f,b=3Da2a_mk_srvc;var =
+j=3Dnew =
+Array(["Facebook","facebook","http://www.facebook.com/","facebook"],["Del=
+icious","delicious","http://delicious.com/","delicious"],["Yahoo =
+Buzz","yahoo_buzz","http://buzz.yahoo.com/","buzz"],["MySpace","myspace",=
+"http://www.myspace.com/","myspace"],["Windows Live =
+Favorites","windows_live_favorites","http://favorites.live.com/","live"],=
+["Yahoo =
+Bookmarks","yahoo_bookmarks","http://bookmarks.yahoo.com/","yahoo"],["Mis=
+ter-Wong","mister-wong","http://www.mister-wong.com/","mister-wong"],["Go=
+ogle =
+Reader","google_reader","http://www.google.com/reader/","reader"],["Netvi=
+bes =
+Share","netvibes_share","http://www.netvibes.com/","netvibes"],["DailyMe"=
+,"dailyme","http://dailyme.com/","dailyme"],["TechNet","technet","http://=
+social.technet.microsoft.com/","technet"],["Arto","arto","http://www.arto=
+.com/","arto"],["SmakNews","smaknews","http://smaknews.com/","smaknews"],=
+["AIM","aim","http://www.aim.com/","aim","IM"],["Identi.ca","identi.ca","=
+http://identi.ca/","identica"],["Blogger =
+Post","blogger_post","http://www.blogger.com/","blogger"],["Mixx","mixx",=
+"http://mixx.com/","mixx"],["Technorati =
+Favorites","technorati_favorites","http://technorati.com/","technorati"],=
+["Shoutwire","shoutwire","http://www.shoutwire.com/","shoutwire"],["Jumpt=
+ags","jumptags","http://www.jumptags.com/","jumptags"],["Hemidemi","hemid=
+emi","http://www.hemidemi.com/","hemidemi"],["Instapaper","instapaper","h=
+ttp://www.instapaper.com/","instapaper"],["Xerpi","xerpi","http://www.xer=
+pi.com/","xerpi"],["Wink","wink","http://www.wink.com/","wink"],["BibSono=
+my","bibsonomy","http://www.bibsonomy.org/","bibsonomy"],["BlogMarks","bl=
+ogmarks","http://blogmarks.net/","blogmarks"],["StartAid","startaid","htt=
+p://www.startaid.com/","startaid"],["Khabbr","khabbr","http://www.khabbr.=
+com/","khabbr"],["Yoolink","yoolink","http://www.yoolink.fr/","yoolink"],=
+["Technotizie","technotizie","http://www.technotizie.it/","technotizie"],=
+["Multiply","multiply","http://multiply.com/","multiply"],["Plaxo =
+Pulse","plaxo_pulse","http://pulse.plaxo.com/pulse/","plaxo"],["Squidoo",=
+"squidoo","http://www.squidoo.com/","squidoo"],["Blinklist","blinklist","=
+http://www.blinklist.com/","blinklist"],["YiGG","yigg","http://www.yigg.d=
+e/","yigg"],["Segnalo","segnalo","http://segnalo.alice.it/","segnalo"],["=
+YouMob","youmob","http://youmob.com/","youmob"],["Fark","fark","http://ww=
+w.fark.com/","fark"],["Jamespot","jamespot","http://www.jamespot.com/","j=
+amespot"],["Twiddla","twiddla","http://www.twiddla.com/","twiddla"],["Min=
+dBodyGreen","mindbodygreen","http://www.mindbodygreen.com/","mindbodygree=
+n"],["Hugg","hugg","http://www.hugg.com/","hugg"],["NowPublic","nowpublic=
+","http://www.nowpublic.com/","nowpublic"],["Tumblr","tumblr","http://www=
+.tumblr.com/","tumblr"],["Current","current","http://current.com/","curre=
+nt"],["Spurl","spurl","http://www.spurl.net/","spurl"],["Oneview","onevie=
+w","http://www.oneview.de/","oneview"],["Simpy","simpy","http://www.simpy=
+.com/","simpy"],["Global =
+Grind","global_grind","http://globalgrind.com/","global_grind"],["Ask.com=
+ =
+MyStuff","ask.com_mystuff","http://mystuff.ask.com/","ask"],["Maple","map=
+le","http://www.maple.nu/","maple"],["Connotea","connotea","http://www.co=
+nnotea.org/","connotea"],["MyLinkVault","mylinkvault","http://www.mylinkv=
+ault.com/","mylinkvault"],["Sphinn","sphinn","http://sphinn.com/","sphinn=
+"],["DZone","dzone","http://www.dzone.com/","dzone"],["Hyves","hyves","ht=
+tp://www.hyves.nl/","hyves"],["Bitty =
+Browser","bitty_browser","http://www.bitty.com/","bitty"],["Symbaloo =
+Feeds","symbaloo_feeds","http://www.symbaloo.com/","symbaloo"],["Foxiewir=
+e","foxiewire","http://www.foxiewire.com/","foxiewire"],["VodPod","vodpod=
+","http://vodpod.com/","default"],["Amazon Wish =
+List","amazon_wish_list","http://www.amazon.com/","amazon"]);var g=3Dnew =
+Array(["Gmail","gmail","","gmail","EMAIL"],["Hotmail","hotmail","","live"=
+,"EMAIL"],["Buzzster","buzzster","","bzzster","EMAIL"]);if(k!=3D"mail"){f=
+or(var =
+d=3D0;d<j.length;d++){f=3Db(j[d][0],j[d][1],j[d][2],j[d][3],j[d][4]);a2a_=
+gEl("a2a"+k+"_col1").appendChild(f)}}for(var =
+d=3D0;d<g.length;d++){f=3Db(g[d][0],g[d][1],g[d][2],g[d][3],g[d][4]);a2a_=
+gEl("a2a"+k+"_2_col1").appendChild(f)}var j=3Dnew =
+Array(["Twitter","twitter","http://twitter.com/","twitter"],["Digg","digg=
+","http://digg.com/","digg"],["Google =
+Bookmarks","google_bookmarks","http://www.google.com/bookmarks","google"]=
+,["Reddit","reddit","http://www.reddit.com/","reddit"],["StumbleUpon","st=
+umbleupon","http://www.stumbleupon.com/","stumbleupon"],["Bebo","bebo","h=
+ttp://www.bebo.com/","bebo"],["WordPress","wordpress","http://wordpress.c=
+om/","wordpress"],["Evernote","evernote","http://www.evernote.com/","ever=
+note"],["Stumpedia","stumpedia","http://www.stumpedia.com/","stumpedia"],=
+["Strands","strands","http://www.strands.com/","strands"],["MSDN","msdn",=
+"http://social.msdn.microsoft.com/","msdn"],["Expression","expression","h=
+ttp://social.expression.microsoft.com/","expression"],["Tipd","tipd","htt=
+p://tipd.com/","tipd"],["Plurk","plurk","http://www.plurk.com/","plurk"],=
+["Yahoo =
+Messenger","yahoo_messenger","http://messenger.yahoo.com/","yim","IM"],["=
+Mozillaca","mozillaca","http://www.mozillaca.com/","mozillaca"],["TypePad=
+ =
+Post","typepad_post","http://www.typepad.com/","typepad"],["Netlog","netl=
+og","http://www.netlog.com/","netlog"],["Furl","furl","http://www.furl.ne=
+t/","furl"],["CiteULike","citeulike","http://www.citeulike.org/","citeuli=
+ke"],["Windows Live =
+Spaces","windows_live_spaces","http://spaces.live.com/","spaces"],["FunP"=
+,"funp","http://funp.com/","funp"],["PhoneFavs","phonefavs","http://phone=
+favs.com/","phonefavs"],["Netvouz","netvouz","http://www.netvouz.com/","n=
+etvouz"],["Diigo","diigo","http://www.diigo.com/","diigo"],["Taggly","tag=
+gly","http://www.taggly.com/","taggly"],["Tailrank","tailrank","http://ww=
+w.tailrank.com/","tailrank"],["Kledy","kledy","http://www.kledy.de/","kle=
+dy"],["Meneame","meneame","http://meneame.net/","meneame"],["Bookmarks.fr=
+","bookmarks.fr","http://www.bookmarks.fr/","bookmarks_fr"],["NewsVine","=
+newsvine","http://www.newsvine.com/","newsvine"],["FriendFeed","friendfee=
+d","http://friendfeed.com/","friendfeed"],["Ping","ping","http://ping.fm/=
+","ping"],["Protopage =
+Bookmarks","protopage_bookmarks","http://www.protopage.com/","protopage"]=
+,["Faves","faves","http://faves.com/","faves"],["Webnews","webnews","http=
+://www.webnews.de/","webnews"],["Pusha","pusha","http://www.pusha.se/","p=
+usha"],["Slashdot","slashdot","http://slashdot.org/","slashdot"],["Allvoi=
+ces","allvoices","http://www.allvoices.com/","allvoices"],["Imera =
+Brazil","imera_brazil","http://imera.com.br/","imera"],["LinkaGoGo","link=
+agogo","http://www.linkagogo.com/","linkagogo"],["unalog","unalog","http:=
+//unalog.com/","unalog"],["Diglog","diglog","http://www.diglog.com/","dig=
+log"],["Propeller","propeller","http://www.propeller.com/","propeller"],[=
+"LiveJournal","livejournal","http://www.livejournal.com/","livejournal"],=
+["HelloTxt","hellotxt","http://hellotxt.com","hellotxt"],["Yample","yampl=
+e","http://yample.com/","yample"],["Linkatopia","linkatopia","http://www.=
+linkatopia.com/","linkatopia"],["LinkedIn","linkedin","http://www.linkedi=
+n.com/","linkedin"],["BuddyMarks","buddymarks","http://www.buddymarks.com=
+/","buddymarks"],["Viadeo","viadeo","http://www.viadeo.com/","viadeo"],["=
+Wists","wists","http://www.wists.com/","wists"],["Backflip","backflip","h=
+ttp://www.backflip.com/","backflip"],["SiteJot","sitejot","http://www.sit=
+ejot.com/","sitejot"],["Health =
+Ranker","health_ranker","http://www.healthranker.com/","healthranker"],["=
+Care2 =
+News","care2_news","http://www.care2.com/news/","care2"],["Sphere","spher=
+e","http://www.sphere.com/","sphere"],["Gabbr","gabbr","http://www.gabbr.=
+com/","gabbr"],["Tagza","tagza","http://www.tagza.com/","tagza"],["Folkd"=
+,"folkd","http://www.folkd.com/","folkd"],["NewsTrust","newstrust","http:=
+//newstrust.net/","newstrust"],["PrintFriendly","printfriendly","http://w=
+ww.printfriendly.com","printfriendly"]);var g=3Dnew Array(["Yahoo =
+Mail","yahoo_mail","","yahoo","EMAIL"],["AOL =
+Mail","aol_mail","","aol","EMAIL"]);if(k!=3D"mail"){for(var =
+d=3D0;d<j.length;d++){f=3Db(j[d][0],j[d][1],j[d][2],j[d][3],j[d][4]);a2a_=
+gEl("a2a"+k+"_col2").appendChild(f)}}for(var =
+d=3D0;d<g.length;d++){f=3Db(g[d][0],g[d][1],g[d][2],g[d][3],g[d][4]);a2a_=
+gEl("a2a"+k+"_2_col2").appendChild(f)}if(k=3D=3D"page"){a2a_statusbar(a2a=
+_gEl("a2a"+k+"_DEFAULT"),a2a_localize.Share+" / =
+"+a2a_localize.Save);a2a_statusbar(a2a_gEl("a2a"+k+"_EMAIL"),a2a_localize=
+.ShareViaEmail);a2a_statusbar(a2a_gEl("a2a"+k+"_BROWSER"),a2a_localize.Bo=
+okmarkInYourBrowser)}a2a_statusbar(a2a_gEl("a2a"+k+"_email_client"),a2a_l=
+ocalize.EmailProgram);if(k=3D=3D"page"){a2a_statusbar(a2a_gEl("a2a"+k+"_s=
+how_more_less"),a2a_localize.ShowAll);a2a_statusbar(a2a_gEl("a2a"+k+"_fin=
+d"),a2a_localize.FindAnyServiceToAddTo)}a2a_prioritize_services();a2a_cus=
+tom_srvcs();a2a[k].main_services=3Da2a_getByClass("a2a_i",a2a_gEl("a2a"+k=
++"_col1")).concat(a2a_getByClass("a2a_i",a2a_gEl("a2a"+k+"_col2")));a2a_h=
+istory();a2a[k].main_services_col_1=3Da2a_getByClass("a2a_i",a2a_gEl("a2a=
+"+k+"_col1"));a2a[k].main_services_col_2=3Da2a_getByClass("a2a_i",a2a_gEl=
+("a2a"+k+"_col2"));a2a[k].main_services=3Da2a[k].main_services_col_1.conc=
+at(a2a[k].main_services_col_2);a2a[k].email_services=3Da2a_getByClass("a2=
+a_i",a2a_gEl("a2a"+k+"_2_col1")).concat(a2a_getByClass("a2a_i",a2a_gEl("a=
+2a"+k+"_2_col2")));a2a[k].all_services=3Da2a[k].main_services.concat(a2a[=
+k].email_services);a2a_default();a2a_GA()}function a2a_i18n(){var =
+b=3D["ar","id","bg","ca-ES","cs","da","de","el","et","es","es-AR","es-VE"=
+,"eo","en-US","fa","fr","fr-CA","he-IL","hr","is","it","ja","ko-KR","lv",=
+"lt","hu","mk","nl","no","pl-PL","pt","pt-BR","pt-PT","ro","ru","sr","fi"=
+,"sk","sl","sv-SE","ta","tr-TR","uk","vi","zh-CN","zh-TW"],c=3D(navigator=
+.browserLanguage||navigator.language).toLowerCase(),a=3Da2a_in_array(c,b,=
+true);if(c!=3D"en-us"&&a){return a}else{return false}}var =
+a2a_locale=3Da2a_i18n();if(a2a_locale&&a2a_static_server=3D=3D((a2a_ssl)?=
+a2a_ssl:"http://static.addtoany.com/menu")){a2a_loadExtScript(a2a_static_=
+server+"/locale/"+a2a_locale+".js",function(){return(a2a_localize!=3D"")}=
+,function(){a2a_create_page_dropdown();a2a_menu_type=3Dfalse;a2a_email_me=
+nu=3Dfalse})}else{a2a_create_page_dropdown()}try{document.execCommand("Ba=
+ckgroundImageCache",false,true)}catch(e){}}a2a_init((a2a_email_menu)?"mai=
+l":false);
+------=_NextPart_000_0040_01CA25BA.A25A1D80
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.droidnova.com/tracker.js
+
+function getCookie(name) {=0A=
+  var dc =3D document.cookie;=0A=
+  var prefix =3D name + "=3D";=0A=
+  var begin =3D dc.indexOf("; " + prefix);=0A=
+  if (begin =3D=3D -1) {=0A=
+    begin =3D dc.indexOf(prefix);=0A=
+    if (begin !=3D 0) return null;=0A=
+  } else=0A=
+    begin +=3D 2;=0A=
+  var end =3D document.cookie.indexOf(";", begin);=0A=
+  if (end =3D=3D -1)=0A=
+    end =3D dc.length;=0A=
+  return unescape(dc.substring(begin + prefix.length, end));=0A=
+}=0A=
+=0A=
+=0A=
+function SetCookie (name, value) { =0A=
+	var argv =3D SetCookie.arguments; =0A=
+	var argc =3D SetCookie.arguments.length; =0A=
+	var expires =3D (argc > 2) ? argv[2] : null; =0A=
+	var path =3D (argc > 3) ? argv[3] : null; =0A=
+	var domain =3D (argc > 4) ? argv[4] : null; =0A=
+	var secure =3D (argc > 5) ? argv[5] : false; =0A=
+	document.cookie =3D name + "=3D" + escape (value) + =0A=
+	((expires =3D=3D null) ? "" : ("; expires=3D" + expires.toGMTString())) =
++ =0A=
+	((path =3D=3D null) ? "" : ("; path=3D" + path)) + =0A=
+	((domain =3D=3D null) ? "" : ("; domain=3D" + domain)) + =0A=
+	((secure =3D=3D true) ? "; secure" : "");=0A=
+}=0A=
+=0A=
+var expDays =3D 365;=0A=
+var exp =3D new Date(); =0A=
+exp.setTime(exp.getTime() + (expDays*24*60*60*1000));=0A=
+=0A=
+var parentref =3D "";=0A=
+try {=0A=
+	if ( typeof(parent.atrackerparentref) !=3D "undefined") {=0A=
+		parentref =3D parent.atrackerparentref;=0A=
+	}=0A=
+}catch (Exception)=0A=
+{}=0A=
+=0A=
+parameter=3D"?user=3D"+user+zusatz;parameter+=3D"&p1=3D"+escape(document.=
+defaultCharset);parameter+=3D"&p2=3D"+escape(window.location.host);=0A=
+parameter+=3D"&p3=3D"+escape(screen.width);parameter+=3D"&p4=3D"+escape(s=
+creen.height);parameter+=3D"&p5=3D"+escape(screen.colorDepth);=0A=
+parameter+=3D"&p6=3D"+escape(navigator.appName);parameter+=3D"&p7=3D"+esc=
+ape(navigator.appVersion.substring(0,3));parameter+=3D"&p8=3D"+escape(nav=
+igator.platform);=0A=
+parameter+=3D"&p9=3D"+escape(navigator.appName=3D=3D"Netscape"?navigator.=
+language:navigator.userLanguage);parameter+=3D"&p10=3D"+escape(navigator.=
+cookieEnabled);=0A=
+parameter+=3D"&p11=3D"+escape(navigator.javaEnabled());parameter+=3D"&p12=
+=3D"+escape(document.URL);parameter+=3D"&p13=3D"+escape(document.referrer=
+);=0A=
+parameter+=3D"&p14=3D"+escape(getCookie("trackerreturned"+user));paramete=
+r+=3D"&p15=3D"+parentref;=0A=
+//document.cookie=3D"trackerreturned"+user+"=3D"+user;=0A=
+SetCookie ("trackerreturned"+user, user, exp);=0A=
+document.write("<a =
+href=3D'http://anormal-tracker.de/openstat.php?userid=3D"+user+"' =
+target=3D'_blank' rel=3D'nofollow'><img border=3D'0' alt=3D'' =
+src=3D'http://anormal-tracker.de/countv2.php"+parameter+"'><\/a>");=0A=
+//document.write("http://88.198.66.103/countv2.php"+parameter+");=0A=
+
+------=_NextPart_000_0040_01CA25BA.A25A1D80--

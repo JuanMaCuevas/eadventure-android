@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+java.vm.info,sysinfo,,,"mixed mode",1250020365378
+java.vm.name,sysinfo,,,"Java HotSpot(TM) Client VM",1250020365378
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1250020365378
+java.vm.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1250020365378
+java.vm.specification.version,sysinfo,,,"1.0",1250020365378
+java.vm.vendor,sysinfo,,,"Sun Microsystems Inc.",1250020365378
+java.vm.version,sysinfo,,,"11.3-b02",1250020365378
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250020387757
+activated,view,org.eclipse.jdt.ui,3.5.0.v20090604,"org.eclipse.jdt.ui.PackageExplorer",1250020389647
+activated,view,org.eclipse.jdt.ui,3.5.0.v20090604,"org.eclipse.jdt.ui.PackageExplorer",1250020389656
+closed,view,org.eclipse.ui,3.5.0.I20090604-2000,"org.eclipse.ui.internal.introview",1250020389677
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250020411763
+executed,command,org.eclipse.ui,3.5.0.I20090604-2000,"org.eclipse.ui.edit.paste",1250021283042
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021314098
+executed,command,org.eclipse.equinox.p2.ui.sdk,1.0.100.v20090520-1905,"org.eclipse.equinox.p2.ui.sdk.install",1250021314113
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021314400
+error,log,,,"Transfer Exception",1250021343016
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021351451
+error,log,,,"Transfer Exception",1250021357319
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021357336
+error,log,,,"An error occurred while collecting items to be installed",1250021357346
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021365961
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021370500
+activated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021372838
+deactivated,workbench,org.eclipse.ui.workbench,3.5.0.I20090603-2000,"",1250021378436
