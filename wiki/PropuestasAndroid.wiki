@@ -1,7 +1,5 @@
-#summary Aqui introducimos las propuestas de pruebas de android con documentación que hayamos encontrado sobre ello.
+#summary Aquí introducimos las propuestas que tengamos sobre Android con documentación que hayamos encontrado sobre ello.
 
 = Propuestas =
-
-
 
 
