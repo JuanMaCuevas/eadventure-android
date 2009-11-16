@@ -1,0 +1,31 @@
+#summary One-sentence summary of this page.
+
+= Enlaces =
+
+== Transparencias en imagenes y ficheros de audio OGG ==
+
+<wiki:video url="http://www.youtube.com/watch?v=2StxDbxV8gQ&feature=player_embedded">
+
+
+== Google IO Sessions ==
+
+
+
+
+
+=== Supporting multiple devices with one binary ===
+
+<wiki:video url="http://www.youtube.com/watch?v=PAMtKVO2ch8&feature=player_embedded">
+
+
+*[http://dl.google.com/io/2009/pres/Th_0345_Supporting_Multiple_Devices_Onorato.pdf Aqui]* se puede descargar la presentacion en pdf
+
+=== Text-to-Speach ===
+
+<wiki:video url="http://www.youtube.com/watch?v=xS-ju61vOQw&feature=player_embedded">
+
+
+=== Debugeando en Android ===
+
+<wiki:video url="http://www.youtube.com/watch?v=Dgnx0E7m1GQ&feature=player_embedded">
+
