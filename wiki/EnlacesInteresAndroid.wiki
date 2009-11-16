@@ -2,16 +2,41 @@
 
 = Enlaces =
 
+----
+
 == Transparencias en imagenes y ficheros de audio OGG ==
 
 <wiki:video url="http://www.youtube.com/watch?v=2StxDbxV8gQ&feature=player_embedded">
 
+----
 
 == Google IO Sessions ==
 
 
+=== Writing Real-Time Games for Android ===
+
+<wiki:video url="http://www.youtube.com/watch?v=U4Bk5rmIpic&feature=player_embedded">
+
+*[http://dl.google.com/io/2009/pres/WritingRealTimeGamesforAndroid.pdf Aqui]* se puede descargar la presentacion en pdf
 
 
+----
+
+=== Make your Android UI Fast and Efficient ===
+
+<wiki:video url="http://www.youtube.com/watch?v=N6YdwzAvwOA&feature=player_embedded">
+
+*[http://dl.google.com/io/2009/pres/Th_0230_TurboChargeYourUI-HowtomakeyourAndroidUIfastandefficient.pdf Aqui]* se puede descargar la presentacion en pdf
+
+----
+
+=== Android Media Framework ===
+
+<wiki:video url="http://www.youtube.com/watch?v=-0UmSQeWsJc&feature=player_embedded">
+
+*[http://dl.google.com/io/2009/pres/Mastering_the_Android_Media_Framework.pdf Aqui]* se puede descargar la presentacion en pdf
+
+----
 
 === Supporting multiple devices with one binary ===
 
@@ -20,12 +45,21 @@
 
 *[http://dl.google.com/io/2009/pres/Th_0345_Supporting_Multiple_Devices_Onorato.pdf Aqui]* se puede descargar la presentacion en pdf
 
+
+----
+
 === Text-to-Speach ===
 
 <wiki:video url="http://www.youtube.com/watch?v=xS-ju61vOQw&feature=player_embedded">
 
 
+*[http://dl.google.com/io/2009/pres/Th_0115_EyesFreeUserInteraction.pdf Aqui]* se puede descargar la presentacion en pdf
+
+----
+
 === Debugeando en Android ===
 
 <wiki:video url="http://www.youtube.com/watch?v=Dgnx0E7m1GQ&feature=player_embedded">
 
+*[http://dl.google.com/io/2009/pres/Th_1200_DebuggingArtsoftheNinjaMasters.pdf Aqui]* se puede descargar la presentacion en pdf
+----
