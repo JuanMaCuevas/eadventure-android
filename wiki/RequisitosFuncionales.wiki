@@ -2,6 +2,24 @@
 #labels Phase-Requirements
 
 
+
+==Condiciones== 
+
+ * Las condiciones son fórmulas lógicas (operadores AND y OR) en las que los elementos pueden ser (“Flag”) , (“Variables”) y (“Estados Globales”) del capitulo.
+ * Los (“Flag”) se puede comprobar si estan activados o no
+ * Las (“Variables”) se puede comprobar si son > >= < <= = que un valor numerico comprendido entre [0,inf]
+ * Los estados globales se pueden combrobar si se estan cumpliendo o no (“Estados Globalos”)
+
+==Flags==
+
+ * Es un dato en el que se guarda un valor : ACTIVADO o DESACTIVADO
+ * Cada flag tiene su nombre de flag asociado.
+
+==Variables==
+
+ * Es un dato en el que se guarda un valor numerico comprendido entre [0,inf]
+ * Cada variable tiene un nombre de variable asociado 
+
 ==Efectos==
 
  * Activar flag (“Flags” ) : de entre todos creados en el capitulo . De X → 1
