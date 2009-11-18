@@ -1,10 +1,6 @@
 #summary Requisitos del comportamiento de nuestra aplicación
 #labels Phase-Requirements
 
-= Lista de requisitos =
-
-Esta página contiene los requisitos funcionales que establecerán los comportamientos de nuestra aplicación. 
-
 
 ==Escenas Intermedias==
  * contienen nombre y descripción???
