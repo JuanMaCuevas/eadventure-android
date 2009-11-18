@@ -2,6 +2,88 @@
 #labels Phase-Requirements
 
 
+==Personajes==
+
+1.Apariencia :  
+
+El personaje puede tener de 0..N apariencias distintas  - > Bloque de Recursos #1 ..#N  
+Estas apariencias cambian según unas condiciones establecidas. ( Vease condiciones)
+De todas las apariencias en las que se cumplan las condiciones se usara la que se haya definido antes. 
+Cada apariencia cuenta con un grupo de recursos de animaciones (conjunto de animaciones) :
+
+Los recursos de animaciones son :
+Animaciones Hablando
+Animaciones Parado
+Animaciones Caminando
+Animaciones Usando
+
+Cada recurso de animaciones cuenta con 4 tipos de animacion excepto “Usando” que admite 2 tipos de animacion. Estas son :
+Hacia Arriba
+Hacia Abajo 
+Hacia Derecha (usando)
+Hacia Izquierda (usando)
+
+Cada animación es   un conjunto de imagenes “soportadas por el motor” que sigen el siguiente formato : * _01.png …. *_DD.png . Se unen para conseguir la animacion con un frame-rate de : ?¿?¿?¿¿?¿??¿?¿
+Las imagenes de las animaciones se guardan en /assets/images 
+Mirar caracteristicas de edicion de animaciones ?¿?¿??¿
+
+2.Informacion del personaje :  
+
+El nombre del personaje es texto con variables y flags que se mostrara ? Se usa para algo en el motor en teoria.?¿?
+Descripcion breve del personaje es texto con variables o flags que se mostrara al mirar el personaje.
+Descripcion detallada del personaje es texto con variables o  que se mostrara al examinar el personaje.
+
+
+3.Configuracion Dialogo : 
+
+El dialogo del personaje tiene las siguientes caracteristicas :
+
+Puede mostrarse el dialogo CON o SIN Bocadillo . El bocadillo es un area rectangular con los bordes redondeados que contiene el texto del dialogo.
+La letra del dialogo tiene asociado un color de relleno y de borde en RGB o Hexadecimal ?¿?¿?
+El bocadillo tambien tiene asociado un color de relleno y de borde en RGB o Hexadecimal ?¿?¿
+La voz puede ser sintetizada usando el sintetizador de voz XXX
+El sintetizador de voz cuenta con 2 voces : Kevin y Kevin16
+Puede elegirse SI sintetizar todas las conversaciones del personaje o NO .
+
+4.Interacciones del personaje con el protagonista o jugador ( Acciones): 
+
+Pueden tener de 0..N acciones 
+Las acciones pueden ser de distintos tipos :
+Examinar
+Hablar Con..
+Usar
+Accion personalizada
+Para cada accion se puede definir si el protagonista o jugador necesita alcanzar el personaje para realizar la acción.
+Si se necesita alcanzar el personaje se especifica a que distancia en pixeles?¿ se considera alcanzado .
+La accion puede tener unas condiciones asociadas para que se cumplan ( vease condiciones)
+Si el personaje tiene varias acciones del mismo tipo , se empleara de las acciones que cumplen las condiciones asociadas , la que se definio antes.
+Las acciones tendran asociadas una representacion en forma de animacion ya definida en las Animacinoes del personaje .
+
+Cada tipo de accion tienen caracteristicas distintas :
+
+Accion Examinar :
+				
+Puede tener asociado de 0..N “Efectos” (Vease Efectos) que se realizan cuando el personaje se examine . Los efectos pueden tener “condiciones” asociadas . Si se ponen efectos repetidos se emplea el efecto que cumpla las condiciones y que primero se definio.
+Salida Activa cuando condiciones Inactivas?¿?¿?¿?¿
+Si salida Activa cuando condiciones Inactivas → No Efectos .
+				       Puede tener de 0..N no efectos . Los no efectos pueden tener 					       “condiciones” asociadas . Si se ponen no efectos repetidos se 					       emplea el efecto que cumpla las condiciones y que primero se 					       definio.
+
+
+
+
+Accion Usar :  
+
+Las caracteristicas de la accion USAR son exactamente las mismas que las de EXAMINAR . 
+
+					
+Accion Hablar Con..
+
+La accion tiene que tener asociada una “Efecto” que es una  “Conversacion” ?? pregunta importante 
+Las demas caracteristicas son iguales que las de USAR y EXAMINAR puede tener mas efectos .		
+
+Accion Personalizable : 
+
+
 
 ==Condiciones== 
 
