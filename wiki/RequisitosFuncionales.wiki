@@ -1,14 +1,61 @@
 #summary Requisitos del comportamiento de nuestra aplicación
 #labels Phase-Requirements
 
-= Introducción =
+= Lista de requisitos =
 
 Esta página contiene los requisitos funcionales que establecerán los comportamientos de nuestra aplicación. 
 
 
-= Detalles =
+==Escenas Intermedias==
+ * contienen nombre y descripción???
+ * pueden ser de diapositivas o de video
+ * ocupan toda la pantalla al mostrarse
+ * las de diapositivas:
+   * muestran una animacion en formato jpg slides o eaa ("Animaciones")
+   * reproducen un sonido en formato mp3, mid o midi ("Reproduccion Audio")
+ * las de video muestran un video en formato mov,avi,mpg ("Reproducción de Video")
+ * Al finalizar pueden: volver a la escena anterior, ir a nueva escena ("Transicion Escenas") o terminar el capítulo.
+ * durante la escena el usuario no puede interactuar ( solo con Menu)
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+==Conversaciones==
+ * muestran conversación entre dos o más personajes (incluido el protagonista???)
+ * compuestas por nodos de opciones y nodos de diálogo unidos entre enlaces 
+ * los nodos de dialogo están compuestos por líneas de texto (bocadillo). 
+ * cada línea de texto pertenece a un solo personaje que participa en la conversación.
+ * en cada momento de un diálogo se muestra una sola línea de texto
+ * cada línea se mostrará con tiempo proporcional a su longitud
+ * nodos de opciones muestran en lineas de texto las opciones que el jugador puede responder
+ * cuando el jugador selecciona una respuesta la conversación continúa (enlaza) con el nodo correspondiente
+ * las líneas pueden tener audio asociado ("Reproduccion Audio")
+ * las lineas pueden contener condiciones que decidirán si se muestran o no. ("Condiciones")
+ * las líneas pueden ser reproducidas por un ("sintetizador de voz") ("Accesibilidad")
+ * los nodos pueden tener efectos
+
+
+
+==Caracteristicas Avanzadas== 
+===Temporizadores===
+ * cada uno tiene un tiempo asociado entre 1 y 356.400 segundos
+ * un temp. se puede mostrar o no
+ * si se muestra:
+   * se muestra su nombre
+   * se muestra avanzando ó retrocediendo
+   * cuando está parado se muestran ó no
+ * un temp. puede tener una o más ("condiciones") iniciales
+   * un temp se activa cuando se cumplen sus condiciones iniciales.
+   * si un temp. no tiene condiciones iniciales se activa automaticamente.
+ * un temp. puede tener una o más ("condiciones") finales
+   * un temp. se desactiva cuando se cumplen sus condiciones finales
+   * si un temp. no tiene condiciones finales se desactiva cuando NO se cumplen sus condiciones iniciales
+ * un temp. puede tener uno o más efectos a ejecutar cuando expire
+ * un temp. puede tener uno o más efectos a ejecutar cuando se desactive
+ * un temp. parado puede iniciarse nuevamente (multiples inicios) si se cumplen las condiciones de entrada
+ * un temp. puede funcionar en bucle o detenerse cuando llega a su fin.
+
+ 
+===Estados globales===
+ * un EG Tiene identificador, descripción y una lista de condiciones
+ * EG estará activo si no tiene condiciones ó si se cumplen todas sus condiciones
+
+===Macros===
+ * un macro tiene identificador, descripción y una lista de efectos
