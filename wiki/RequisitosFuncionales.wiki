@@ -2,6 +2,47 @@
 #labels Phase-Requirements
 
 
+==Efectos==
+
+ * Activar flag (“Flags” ) : de entre todos creados en el capitulo . De X → 1
+ * Desactivar flag ( “Flags” ) de entre todos creados en el capitulo . De X → 0
+ * Cambiar valor variable (“Variables”)  por un valor numerico , de entre todas creados en el capitulo
+ * Incrementa el valor de una variable (“Variables”) con un valor numerico ,  de entre todos creadas en el capitulo
+ * Decrementar variable (“Variables”) con valor numerico de entre todos las creadas en el capitulo 
+ * Lanzar (“Reproduccion de Audio”) .
+  * Puede hacerse en segundo plano o en primer plano.
+  * En primer plano el juego se bloquea hasta que termine la reproduccion y no deja lanzar efectos , mover el protagonista etc...)
+  * En segundo plano el juego continua mientras se reproduce el audio .
+ * Lanzar una animacion (“Animaciones”) en unas coordenadas  XY de destino , de entre todas las del capitulo.
+ * Lanzar (“Escena Intermedia”) de entre todas las del capitulo . 
+  * Terminada la escena intermedia se continuara ejecutando los efectos que tenga asociada dicha escena intermedia . Se debe producir la cadena de efectos.
+ * Lanzar dialogo protagonista :
+  * El texto saldra con los colores asociados a las (“Conversaciones”) para el protagonista si tiene activada la opcion sintetizar siempre , la frase introducida se 	sitetizara (“Sintetizador de Voz”) El texto se muestra al lado del protagonista .
+ * Lanzar dialogo personaje : 
+  * El texto saldra con los colores asociados a las (“Conversaciones”) para el personaje si tiene activada la opcion sintetizar siempre , la frase introducida se sitetizara 	(“Sintetizador de Voz”) El texto se muestra al lado del personaje .
+ * Lanzar (“Libro”) : 
+  * Se produce una transicion al (“Libro”) especificado , de entre los libros del capitulo.
+ * Lanzar (“Conversacion”) . Solo las del capitulo l.
+ * Lanzar (“Transicion de Escena”) --> No esta hecho asi pero interesaria , esta hecho directamente la escena a pelo y se elige donde debe aparecer el protagonista … )
+ * Lanzar ir a la ultima escena  → Se produce una transicion a la ultima escena.
+ * Consumir un objeto : el (“Objeto”) desaparece de la (“Escena”)
+ * Generar objeto :  el (“Objeto”) se añade al (“Inventario”)
+ * Lanzar Mover protagonista : se produce un (“Movimiento ”) del (“Personaje”) a una pos XY→ no tira en el motor
+ * Lanzar Mover personaje : se produce un (“Movimiento ”) del (“Personaje”) a una pos XY → supongo que esto tampoco tirara
+ * Lanzar (“Macro”) → se lanza la (“Macro”) ->se ejecutan los (“Efectos”) de la macro uno seguido de otro
+ * Lanzar Cancelar Accion → Se cancelan todas los (“Efectos”) que tienen las (“Acciones”) por defecto  ( No entiendorrr ) Ejemplo : se desactiva que se consuma automáticamente el objeto de la escena al realizar la (“Accion”) de coger un objeto .
+ * Lanzar Efecto con probabilidad 
+  * Se tienen dos (“Efectos”) .  
+  * Se sabe la probabilidad que tienen de ser escogidos los dos efectos . 	
+  * Se realiza el calculo de ser elegido con esa probabilidad y se lanza el (“Efecto”) .
+  * La probabilidad esta en % y entre las dos suman 100%.
+ * Lanzar espera de tiempo : el juego se bloquea y no se permite interaccion con el usuario , se define en segundos .
+
+
+
+
+
+
 ==Escenas Intermedias==
  * contienen nombre y descripción???
  * pueden ser de diapositivas o de video
