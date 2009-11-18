@@ -1,6 +1,116 @@
 #summary Requisitos del comportamiento de nuestra aplicación
 #labels Phase-Requirements
 
+==Escenas:==
+===(Escenas conectadas por salidas , Dibujo por el que puedes realizar acciones)===
+ * Se muestra en el fondo de la pantalla (“imagenes.background”) 
+ *  (“imagenes.mascara”) 
+ * Se ejecuta una musica de fondo : duracion(“reporduccion audio”)
+ * contiene(“Informacion.documentacion”) (“informacion.nombre”) ???
+ *   Se muestran los (“Objetos”) asociados a la escena si se cumplen las (“condiciones”) asociadas
+ * Barreras: sitios por los que el personaje no puede pasar con (“condiciones”) 
+ * Zonas activas: poseen nombre se activaran dependiendo de unas(“condiciones”) y podran ejecutar (“acciones”) puede hacer estas acciones (examinar,usar,coger y personalizar) no todas las posibilidades
+ * hay (“salidas”)
+ * movimientos del protagonista
+ * mostrara posicion inicial del jugador(x,y)
+ * mostrara tamaño del protagonista
+ * condicionara trayecctorias del protagonista
+
+==imagenes==
+ * Backgroung – imagen JPG etc.. obligatorio, 800x600 al menos
+ * Mascara – imagen png blanco y negro se guarda en /assets/background
+ * objeto para repersentarlo /assets/image/**
+ * Icono para representarlo en inventario tamaño 80x46 /assets/icon/****
+
+==informacion==
+ * documentacion
+ * nombre
+ * Descripcion breve
+ * Descripcion detallada
+
+
+==Salidas==
+===: (enlace entre dos escenas)===
+ * Siguiente escena 
+ * Posicion protagonista en siguiente escena (x,y)
+ * Tipos de transiciones ( sin transicion , arriba, abajo... transparencia)
+ * tiempo de transicion (milisegundos)
+ * icono de transicion
+ * posicion, tamaño de la salida – rectangular (x,yancho alto )
+ * irregular????
+ * Una transicions tiene (“condiciones)” y puede crear (“Efectos”) y (“postefectos”)??
+
+== Objetos ==
+ * contiene (“imagenes.objeto”) (“imagenes.icono”)
+ * contiene (“informacion.nombre”) y (“informacion.breve”)(“informacion.detallada”)
+ * (“informacion.breve”): se muestra al mirar el objeto
+ * (“informacion.detallada”) se muestra cuando se examina 
+ * Pueden hacer (“acciones”) con (“condiciones”) con la posibilidad de alcanzar el objeto para hacer la accion o no
+ ==Acciones==
+*apunte Por defecto, el jugador solo puede realizar acciones predefinidas sobre los objetos (básicamente coger, examinar y usar), sobre los personajes (examinar, hablar y usar  con) y sobre las zonas activas (coger, examinar, usar y usar * con)
+. 
+ * coger: 
+	 * documentacion de accion
+	 * puede crear (“efectos”)
+	 * inventario
+	 * contiene (“imagen.icono”)
+ * Examina:
+	 * puede crear (“Efectos”)
+	 * contiene (“imagen.icono”)
+	 * documentacion de la accion(se mostrara a no ser que la descripcion detallada este activa)
+ * Usar:
+	 * puede crear(“efecto”)
+	 * contiene (“imagen.icono”)
+	  * documentacion de la accion
+
+ * Personalizable  accion sobre el objeto
+		 * Nombre de la acccion:(se llamara asi en la gui)
+		 * puede utilizar  imagenes
+		 * contiene imagen estado norma(“imagen.icono”)
+		 * contiene imagen cuando el boton esta encima(“imagen.icono”)
+		 * contiene imagen para el boton cuando se presiona(“imagen.icono”)
+		 * puede utilizar (“animaciones”)
+		 * documentacion de la accion
+		 * crear (“efectos”)
+
+ * Personalizable: accion que interactua con otro objeto:
+		 * Nombre de la acccion:(se llamara asi en la gui)
+		 * interactua con otro objeto mirar (“condiciones”)
+		 * utiliza imanenes
+		 * contiene imagen estado norma(“imagen.icono”)
+		 * contiene imagen cuando el boton esta encima(“imagen.icono”)
+		 * contiene imagen para el boton cuando se presiona(“imagen.icono”)
+		 * puede utilizar (“animaciones”)
+		 * documentacion de la accion
+		 * crear (“efectos”)
+ * Usar con: 
+		 * puede crear efectos
+		 * contiene imagen (imagen.icono)
+		 * interactua con otro objeto mirar (“condiciones”)
+		 * documentacion de la accion
+ * Entregar a: 
+		 * puede generar Efectos
+		 * interactua con otro personaje mirar condiciones
+		 * contiene image(“imagen.icono”) 
+
+
+ * Varias acciones pueden estar activas en el mismo objeto ????
+
+ ==Objetos de atrezo==
+ * no permiten interaccion
+ * apariencia (imagenes.objeto)
+ * nombre del objeto(“informacion.nombre”)
+ * documentacion del objeto(“informacion.documentacion”)
+
+==libros==
+ * contiene imagen de backgroung(“imagen.background”)
+ * contiene documentacion (“informacion.descripcion”)
+ * se podra mostrar
+	 * parrafo del titulo con su contenido
+	 * parrafo de texto con su contenido 
+	 * parrafo de lista con su contenido punto por punto
+	 * añadir imagen contendra (“imagen.objeto”)
+
 
 ==Personajes==
 
