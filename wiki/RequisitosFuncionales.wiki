@@ -19,7 +19,7 @@
 ==imagenes==
  * Backgroung – imagen JPG etc.. obligatorio, 800x600 al menos
  * Mascara – imagen png blanco y negro se guarda en /assets/background
- * objeto para repersentarlo /assets/image/**
+ * objeto para repersentarlo /assets/image/** (no hay restricciones)
  * Icono para representarlo en inventario tamaño 80x46 /assets/icon/****
 
 ==informacion==
