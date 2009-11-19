@@ -1,5 +1,12 @@
 #summary Aquí introducimos las propuestas que tengamos sobre Android con documentación que hayamos encontrado sobre ello.
+#labels Phase-Requirements
 
 = Propuestas =
 
+programas que verifiquen requisitos
 
+    * (primera idea)
+    * cargar imagenes distintos tamaños(correcta visualizacion)
+    * reproduccion video
+    * reproduccion audio
+    * descarcar algun juego y ver interaccion entre el jugador y la aplicacion 
