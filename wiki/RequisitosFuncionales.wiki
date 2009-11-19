@@ -23,10 +23,10 @@
  * Icono para representarlo en inventario tamaño 80x46 /assets/icon/****
 
 ==informacion==
- * documentacion
+ * documentacion(texto amplio no saldra por pantalla)
  * nombre
- * Descripcion breve
- * Descripcion detallada
+ * Descripcion breve(puede salir por pantalla)
+ * Descripcion detallada(puede salir por pantalla)
 
 
 ==Salidas==
