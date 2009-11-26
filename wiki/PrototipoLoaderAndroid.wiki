@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Introduccion =
+
+Aquí voy a anotar los cambios y decisiones que voy tomando para realizar la integración del loader en Android . 
+
+= Apuntes =
+
+ * Añado clase Polygon sacada de URL : .......  y añado metodo addPoint ...
+ * Cambio clases Point por las de Android , falta metodo Clone -> hago cambio me creo un nuevo objeto y lo construyo con copia del point a clonar .
+ * Me cargo el parser y toda la informacion necesaria para la carga de animaciones
+ * Quito cosas que no se usan , dejo en el paquete es.eucm.eadventure.common.auxiliar solo la clase assetsConstants
+ * Al no tener JOptionPane para mostrar mensajes ( se usa en varias partes ) he creado una clase que en el fondo reimplementa los metodos con Alerts de Android.
