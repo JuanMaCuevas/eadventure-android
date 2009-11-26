@@ -16,3 +16,12 @@
   * Determinar formatos de imagen compatibles.
   * Mecanismos de tratamiento de imágenes (Por ejemplo, cómo se realiza un fade out?)
   * Configuraciones de resolución en ANDROID. ¿Qué configuraciones de resolución permite ANDROID? (E.g. 800x600, 1024x768...) ¿Puedes poner resoluciones "libres" como tú harías en una aplicación de escritorio (X ej en java puedes darle a una ventana el tamaño que quieras).
+
+== Otras cosas ==
+  * text-to-speach, speach-to-text
+  * Prototipo funcional de SAX
+  * Determinar diferencias de tener ficheros en resources, tenerlo en el sistema de ficheros, bajar de internet, descomprimir zip
+  * Formatos de video, audio (mp3? midi? ect)
+  * Formas de interactuar con el sistema.
+  * Plantear posibles porblemas de resolución de la pantalla (escribir un documento)
+
