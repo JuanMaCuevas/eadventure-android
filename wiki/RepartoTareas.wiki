@@ -1,0 +1,58 @@
+#Reparto inicial de roles y responsabilidades. (Esto variará :) )
+
+= Investigación <e-Adventure>
+
+= JUANMA = 
+
+Para la semana que viene :
+
+Carga y tratamiento de imagenes :
+
+ * Analizar pre-procesado de imágenes. ¿Se cargan las imágenes directamente del sistema de ficheros tal cual? ¿Hay que pre-procesarlas o compilarlas?
+ * Averiguar cómo se cargan imágenes en ANDROID. Analizar distintas opciones.
+ * Averiguar cómo se usan imágenes en ANDROID, una vez cargadas. Analizar distintas opciones. Analizar rendimiento (es necesario usar una caché? pueden cargarse imágenes al vuelo según se necesitan? hay que cargarlas todas a la vez? cuántas imágenes pueden cargarse a la vez?)
+  * Averiguar cómo se pueden escalar imágenes en ANDROID. Analizar distintas opciones. Analizar rendimiento.
+  * Analizar el tratamiento de transparencias en imágenes ANDROID (rendimiento).
+  * Analizar el sistema de pintado de ANDROID. ¿Permite backbuffer? ¿Quién controla el pintado? ¿Cada cuánto se repinta la pantalla? 
+  * Determinar formatos de imagen compatibles.
+  * Mecanismos de tratamiento de imágenes (Por ejemplo, cómo se realiza un fade out?)
+  * Configuraciones de resolución en ANDROID. ¿Qué configuraciones de resolución permite ANDROID? (E.g. 800x600, 1024x768...) ¿Puedes poner resoluciones "libres" como tú harías en una aplicación de escritorio (X ej en java puedes darle a una ventana el tamaño que quieras).
+  * Plantear posibles porblemas de resolución de la pantalla (escribir un documento)
+  * Generacion de un documento analizando los puntos anteriores y prototipos para ellas.
+ 
+
+= WIXI =
+
+Para la semana que viene :
+
+  * Gestion de los recursos del motor , diferencias entre  :
+     * Ficheros en resources de Android
+     * Ficheros en el sistema de ficheros (SD o almacenamiento del dispositivo)
+     * Descarga e instalacion desde un repositorio 
+     * Como tratar los ead , zip ..etc 
+     * Generar documentacion sobre las opciones.
+     * Prototipo de la opcion escogida.
+
+ 
+
+Si queda tiempo ... :
+
+  * Formatos de video, audio (mp3? midi? ect) . 
+  * Text-to-speach
+  * Speach-to-text
+
+
+= ALVARO = 
+
+Para la semana que viene :
+
+   * Cargador datos del motor en android :
+    * Prototipo funcional de SAX que cargue el actual modelo del motor . LOADER
+    * Documentación sobre la implementacion y los ajustes realizados.
+
+Si queda tiempo ... :
+
+  * Formas de interactuar con el sistema :
+    * Interacciones de tipo touch
+    * Analisis del monkeyisland para iphone
+    * Prototipos e implementacion 
