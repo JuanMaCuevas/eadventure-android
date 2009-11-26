@@ -1,4 +1,4 @@
-#Reparto inicial de roles y responsabilidades. (Esto variará :) )
+#summary Reparto inicial de roles y responsabilidades. (Esto variará :)
 
 = Investigación <e-Adventure> =
 
