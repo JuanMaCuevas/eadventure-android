@@ -1,0 +1,18 @@
+#Reparto inicial de roles y responsabilidades. (Esto variará :) )
+
+= Investigación <e-Adventure>
+
+
+= Investigación ANDROID =
+
+== Carga de imágenes, animaciones y sistema de pintado ==
+  Objetivos:
+  * Analizar pre-procesado de imágenes. ¿Se cargan las imágenes directamente del sistema de ficheros tal cual? ¿Hay que pre-procesarlas o compilarlas?
+  * Averiguar cómo se cargan imágenes en ANDROID. Analizar distintas opciones.
+  * Averiguar cómo se usan imágenes en ANDROID, una vez cargadas. Analizar distintas opciones. Analizar rendimiento (es necesario usar una caché? pueden cargarse imágenes al vuelo según se necesitan? hay que cargarlas todas a la vez? cuántas imágenes pueden cargarse a la vez?)
+  * Averiguar cómo se pueden escalar imágenes en ANDROID. Analizar distintas opciones. Analizar rendimiento.
+  * Analizar el tratamiento de transparencias en imágenes ANDROID (rendimiento).
+  * Analizar el sistema de pintado de ANDROID. ¿Permite backbuffer? ¿Quién controla el pintado? ¿Cada cuánto se repinta la pantalla? 
+  * Determinar formatos de imagen compatibles.
+  * Mecanismos de tratamiento de imágenes (Por ejemplo, cómo se realiza un fade out?)
+  * Configuraciones de resolución en ANDROID. ¿Qué configuraciones de resolución permite ANDROID? (E.g. 800x600, 1024x768...) ¿Puedes poner resoluciones "libres" como tú harías en una aplicación de escritorio (X ej en java puedes darle a una ventana el tamaño que quieras).
