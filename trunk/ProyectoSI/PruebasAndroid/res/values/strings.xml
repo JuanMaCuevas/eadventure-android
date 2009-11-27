@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Prueba1!</string>
-    <string name="app_name">PruebasAndroid</string>
+    <string name="no_games">No games to load</string>
+    <string name="app_name">SAX Loader Prototype</string>
+
+<string name="menu_insert">Insert game</string>
+<string name="menu_delete">Delete game</string>
 </resources>
