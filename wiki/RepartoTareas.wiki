@@ -1,8 +1,12 @@
-#summary Reparto inicial de roles y responsabilidades. (Esto variará :)
+#summary Reparto semanal de roles y responsabilidades.
 
-= Investigación <e-Adventure> =
+= Planificación Semanal =
 
-= JUANMA = 
+----
+
+== Semana 26Nov-03Dic 09 ==
+
+=== Juanma ===
 
 Para la semana que viene :
 
@@ -21,7 +25,7 @@ Carga y tratamiento de imagenes :
   * Generacion de un documento analizando los puntos anteriores y prototipos para ellas.
  
 
-= WIXI =
+=== Willy ===
 
 Para la semana que viene :
 
@@ -42,7 +46,7 @@ Si queda tiempo ... :
   * Speach-to-text
 
 
-= ALVARO = 
+=== Alvaro ===
 
 Para la semana que viene :
 
@@ -56,3 +60,6 @@ Si queda tiempo ... :
     * Interacciones de tipo touch
     * Analisis del monkeyisland para iphone
     * Prototipos e implementacion 
+
+
+-----
