@@ -1,15 +1,34 @@
-#summary Indice de la documentacíon
+#summary Indice de la documentación
 
+= INDICE =
 
-= Planificación =
+----
 
- * RepartoTareas
+== Planificación ==
 
+ # RepartoTareas 
+ # PropuestasAndroid
 
-= E-Adventure =
+----
 
+== Android ==
 
-= Android =
+ # EnlacesInteresAndroid 
 
+ ===Prototipos===
+ 
+      # PrototipoLoaderAndroid 
 
-= Memoria Proyecto Sistemas Informaticos =
+----
+
+== E-Adventure ==
+
+ # RequisitosFuncionales
+
+----
+
+== Memoria Proyecto Sistemas Informaticos ==
+
+ # IndiceMemoria 
+
+----
