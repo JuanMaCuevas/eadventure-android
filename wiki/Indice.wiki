@@ -1,4 +1,5 @@
 #summary Indice de la documentación
+#labels Featured
 
 = INDICE =
 
