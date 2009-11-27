@@ -1,4 +1,4 @@
-#summary Aquí introducimos las propuestas que tengamos sobre Android con documentación que hayamos encontrado sobre ello.
+#summary Aquí introducimos las propuestas de prototipos sobre funcionalidades de Android.
 #labels Phase-Requirements
 
 = Propuestas =
