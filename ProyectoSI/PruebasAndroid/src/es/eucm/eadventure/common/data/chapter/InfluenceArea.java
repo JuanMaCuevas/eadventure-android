@@ -214,7 +214,6 @@ public class InfluenceArea implements Cloneable, Rectangle {
 
     }
 
-	@Override
 	public List<Point> getPoints() {
 		// TODO Auto-generated method stub
 		return null;
