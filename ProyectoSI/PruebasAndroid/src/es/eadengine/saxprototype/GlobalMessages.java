@@ -2,6 +2,6 @@ package es.eadengine.saxprototype;
 
 public class GlobalMessages {
 	
-	public static final int HANDLER_RESULT = 0;
+	public static final int GAMES_LOADED = 0;
 
 }
