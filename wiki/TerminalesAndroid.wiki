@@ -1,0 +1,16 @@
+#summary Aqui vamos a poner las carácteristicas de todos los terminales Android
+
+= Terminales =
+
+La lista tiene como objetivo el hacernos una idea de los dispositivos en los que debera correr la aplicacíon ( que tipo de pantallas , de que memoria y potencia disponen , que componentes HW tienen ) 
+
+
+ * T-Mobile G1 ( HTC Dream )
+  * Procesador: Qualcomm a 528MHz
+  * Pantalla: 3,17 pulgadas, táctil, 65.000 colores, resolución HVGA (480×320).
+  * Batería: 5 horas de conversación, 130 horas de standby.
+  * Cámara: 3,1 megapíxeles.
+  * Bandas: GSM/GPRS/EDGE/Wi-Fi802.11b/g UMTS/HSDPA (850/900/1700/1800/1900/2100 Mhz).hasta 7.2 Mbps de descarga y 2Mbps de subida
+  * Almacenamiento:Tarjeta MicroSD de 1 Gbyte preinstalada. Soporta MicroSD de 8 Gbytes.
+
+ 
