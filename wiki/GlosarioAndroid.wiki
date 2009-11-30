@@ -1,0 +1,3 @@
+=Glossary=
+
+http://code.google.com/android/reference/glossary.html
