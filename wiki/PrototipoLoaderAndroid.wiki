@@ -11,3 +11,13 @@ Aquí voy a anotar los cambios y decisiones que voy tomando para realizar la int
  * Me cargo el parser y toda la informacion necesaria para la carga de animaciones
  * Quito cosas que no se usan , dejo en el paquete es.eucm.eadventure.common.auxiliar solo la clase assetsConstants
  * Al no tener JOptionPane para mostrar mensajes ( se usa en varias partes ) he creado una clase que en el fondo reimplementa los metodos con Alerts de Android.
+ * Problemilla :  The default Android implementation of SAXParser supports only the following three features:
+
+http://xml.org/sax/features/namespaces
+    Queries the state of namespace-awareness.
+http://xml.org/sax/features/namespace-prefixes
+    Queries the state of namespace prefix processing
+http://xml.org/sax/features/validation
+    Queries the state of validation.
+
+Note that despite the ability to query the validation feature, there is currently no validating parser available. Also note that currently either namespaces or namespace prefixes can be enabled, but not both at the same time.
