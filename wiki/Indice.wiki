@@ -15,7 +15,7 @@
 == Android ==
 
  # EnlacesInteresAndroid 
- # GlosarioAndroid
+ # [http://developer.android.com/guide/appendix/glossary.html GlosarioAndroid]
 
 ===Prototipos===
  
