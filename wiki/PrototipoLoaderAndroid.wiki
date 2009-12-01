@@ -21,3 +21,5 @@ http://xml.org/sax/features/validation
     Queries the state of validation.
 
 Note that despite the ability to query the validation feature, there is currently no validating parser available. Also note that currently either namespaces or namespace prefixes can be enabled, but not both at the same time.
+
+ ISSUE 990: http://code.google.com/p/android/issues/detail?id=990 No referencia bien sin namespaces los qname 
