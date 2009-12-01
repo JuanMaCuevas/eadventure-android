@@ -25,8 +25,8 @@ Note that despite the ability to query the validation feature, there is currentl
  ISSUE 990: http://code.google.com/p/android/issues/detail?id=990 No referencia bien sin namespaces los qname 
 
 
- -> para solucionar cambio los qName por sName de la clase Loader
- -> cambio todos los getQName por getLocalName
+ -> para solucionar cambio los qName por sName de los Handler ( ChapterHandler y DescriptorHandler)
+ -> cambio todos los getQName por getLocalName de los Handler ( ChapterHandler y DescriptorHandler)
 
  * Pasar datos a SD -> bug en DDMS utilizar comando consola :
   * Meter datos : adb push foo.txt /sdcard/foo.txt
