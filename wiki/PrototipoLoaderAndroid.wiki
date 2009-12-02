@@ -37,3 +37,6 @@ Basicamente lo de arriba lo tengo que hacer para todos los Handler .. se van a a
 
  * Metodos del editor que no usa el motor ( Proxima iteracion del prototipo , limpio las clases ) :
   * Clase Loader : loadAdaptationProfile(InputStreamCreator, String, List<Incidence>) loadAdventureData(InputStreamCreator, List<Incidence>, boolean)
+
+
+ * Null pointer exception en : AssesmentSubParser debido a una declaracion doble de currentString , la que se declara localmente y la que se declara en la clase padre SubParser...
