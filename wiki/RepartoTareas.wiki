@@ -1,5 +1,5 @@
 #summary Reparto semanal de roles y responsabilidades.
-
+#sidebar BarraNavegacion
 = Planificación Semanal =
 
 ----
