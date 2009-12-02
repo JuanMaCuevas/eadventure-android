@@ -1,4 +1,5 @@
 #summary Enlaces de interes relacionados con el proyecto
+#sidebar BarraNavegacion
 
 = Enlaces =
 
