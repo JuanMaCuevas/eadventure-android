@@ -29,7 +29,7 @@ Note that despite the ability to query the validation feature, there is currentl
  -> para solucionar cambio los qName por sName de los Handler ( ChapterHandler y DescriptorHandler)
  -> cambio todos los getQName por getLocalName de los Handler ( ChapterHandler y DescriptorHandler)
 
-Basicamente lo de arriba lo tengo que hacer para todos los Handler .. se van a acabar usando casi todos...
+Basicamente lo de arriba lo tengo que hacer para todos los Handler .. se van a acabar usando casi todos... asi que lo cambio en todos los parsers del paquete Loader.parser y loader.subparsers
 
  * Pasar datos a SD -> bug en DDMS utilizar comando consola :
   * Meter datos : adb push foo.txt /sdcard/foo.txt
