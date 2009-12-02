@@ -1,5 +1,6 @@
 #summary Requisitos del comportamiento de nuestra aplicación
 #labels Phase-Requirements
+#sidebar BarraNavegacion
 
 ==Escenas:==
 ===(Escenas conectadas por salidas , Dibujo por el que puedes realizar acciones)===
