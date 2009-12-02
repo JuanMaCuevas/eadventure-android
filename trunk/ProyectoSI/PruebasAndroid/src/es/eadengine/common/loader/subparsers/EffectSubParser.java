@@ -168,39 +168,39 @@ public class EffectSubParser extends SubParser {
         newEffect = null;
 
         // If it is a cancel-action tag
-        if( qName.equals( "cancel-action" ) ) {
+        if( sName.equals( "cancel-action" ) ) {
             newEffect = new CancelActionEffect( );
         }
 
         // If it is a activate tag
-        else if( qName.equals( "activate" ) ) {
+        else if( sName.equals( "activate" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
                     newEffect = new ActivateEffect( attrs.getValue( i ) );
                     chapter.addFlag( attrs.getValue( i ) );
                 }
         }
 
         // If it is a deactivate tag
-        else if( qName.equals( "deactivate" ) ) {
+        else if( sName.equals( "deactivate" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
                     newEffect = new DeactivateEffect( attrs.getValue( i ) );
                     chapter.addFlag( attrs.getValue( i ) );
                 }
         }
 
         // If it is a set-value tag
-        else if( qName.equals( "set-value" ) ) {
+        else if( sName.equals( "set-value" ) ) {
             String var = null;
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
 
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -209,16 +209,16 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a set-value tag
-        else if( qName.equals( "increment" ) ) {
+        else if( sName.equals( "increment" ) ) {
             String var = null;
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
 
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -227,16 +227,16 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a decrement tag
-        else if( qName.equals( "decrement" ) ) {
+        else if( sName.equals( "decrement" ) ) {
             String var = null;
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
 
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -245,11 +245,11 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a macro-reference tag
-        else if( qName.equals( "macro-ref" ) ) {
+        else if( sName.equals( "macro-ref" ) ) {
             // Id
             String id = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) ) {
+                if( attrs.getLocalName( i ).equals( "id" ) ) {
                     id = attrs.getValue( i );
                 }
             }
@@ -258,51 +258,51 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a consume-object tag
-        else if( qName.equals( "consume-object" ) ) {
+        else if( sName.equals( "consume-object" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     newEffect = new ConsumeObjectEffect( attrs.getValue( i ) );
         }
 
         // If it is a generate-object tag
-        else if( qName.equals( "generate-object" ) ) {
+        else if( sName.equals( "generate-object" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     newEffect = new GenerateObjectEffect( attrs.getValue( i ) );
         }
 
         // If it is a speak-char tag
-        else if( qName.equals( "speak-char" ) ) {
+        else if( sName.equals( "speak-char" ) ) {
 
             // Store the idTarget, to store the effect when the tag is closed
             currentCharIdTarget = null;
 
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     currentCharIdTarget = attrs.getValue( i );
         }
 
         // If it is a trigger-book tag
-        else if( qName.equals( "trigger-book" ) ) {
+        else if( sName.equals( "trigger-book" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     newEffect = new TriggerBookEffect( attrs.getValue( i ) );
         }
 
         // If it is a trigger-last-scene tag
-        else if( qName.equals( "trigger-last-scene" ) ) {
+        else if( sName.equals( "trigger-last-scene" ) ) {
             newEffect = new TriggerLastSceneEffect( );
         }
 
         // If it is a play-sound tag
-        else if( qName.equals( "play-sound" ) ) {
+        else if( sName.equals( "play-sound" ) ) {
             // Store the path and background
             String path = "";
             boolean background = true;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "background" ) )
+                if( attrs.getLocalName( i ).equals( "background" ) )
                     background = attrs.getValue( i ).equals( "yes" );
-                else if( attrs.getQName( i ).equals( "uri" ) )
+                else if( attrs.getLocalName( i ).equals( "uri" ) )
                     path = attrs.getValue( i );
             }
 
@@ -311,46 +311,46 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a trigger-conversation tag
-        else if( qName.equals( "trigger-conversation" ) ) {
+        else if( sName.equals( "trigger-conversation" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     newEffect = new TriggerConversationEffect( attrs.getValue( i ) );
         }
 
         // If it is a trigger-cutscene tag
-        else if( qName.equals( "trigger-cutscene" ) ) {
+        else if( sName.equals( "trigger-cutscene" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     newEffect = new TriggerCutsceneEffect( attrs.getValue( i ) );
         }
 
         // If it is a trigger-scene tag
-        else if( qName.equals( "trigger-scene" ) ) {
+        else if( sName.equals( "trigger-scene" ) ) {
             String scene = "";
             int x = 0;
             int y = 0;
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     scene = attrs.getValue( i );
-                else if( attrs.getQName( i ).equals( "x" ) )
+                else if( attrs.getLocalName( i ).equals( "x" ) )
                     x = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "y" ) )
+                else if( attrs.getLocalName( i ).equals( "y" ) )
                     y = Integer.parseInt( attrs.getValue( i ) );
 
             newEffect = new TriggerSceneEffect( scene, x, y );
         }
 
         // If it is a play-animation tag
-        else if( qName.equals( "play-animation" ) ) {
+        else if( sName.equals( "play-animation" ) ) {
             String path = "";
             int x = 0;
             int y = 0;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "uri" ) )
+                if( attrs.getLocalName( i ).equals( "uri" ) )
                     path = attrs.getValue( i );
-                else if( attrs.getQName( i ).equals( "x" ) )
+                else if( attrs.getLocalName( i ).equals( "x" ) )
                     x = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "y" ) )
+                else if( attrs.getLocalName( i ).equals( "y" ) )
                     y = Integer.parseInt( attrs.getValue( i ) );
             }
 
@@ -359,13 +359,13 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a move-player tag
-        else if( qName.equals( "move-player" ) ) {
+        else if( sName.equals( "move-player" ) ) {
             int x = 0;
             int y = 0;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "x" ) )
+                if( attrs.getLocalName( i ).equals( "x" ) )
                     x = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "y" ) )
+                else if( attrs.getLocalName( i ).equals( "y" ) )
                     y = Integer.parseInt( attrs.getValue( i ) );
             }
 
@@ -374,16 +374,16 @@ public class EffectSubParser extends SubParser {
         }
 
         // If it is a move-npc tag
-        else if( qName.equals( "move-npc" ) ) {
+        else if( sName.equals( "move-npc" ) ) {
             String npcTarget = "";
             int x = 0;
             int y = 0;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "idTarget" ) )
+                if( attrs.getLocalName( i ).equals( "idTarget" ) )
                     npcTarget = attrs.getValue( i );
-                else if( attrs.getQName( i ).equals( "x" ) )
+                else if( attrs.getLocalName( i ).equals( "x" ) )
                     x = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "y" ) )
+                else if( attrs.getLocalName( i ).equals( "y" ) )
                     y = Integer.parseInt( attrs.getValue( i ) );
             }
 
@@ -392,10 +392,10 @@ public class EffectSubParser extends SubParser {
         }
 
         // Random effect tag
-        else if( qName.equals( "random-effect" ) ) {
+        else if( sName.equals( "random-effect" ) ) {
             int probability = 0;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "probability" ) )
+                if( attrs.getLocalName( i ).equals( "probability" ) )
                     probability = Integer.parseInt( attrs.getValue( i ) );
             }
 
@@ -406,10 +406,10 @@ public class EffectSubParser extends SubParser {
             positiveBlockRead = false;
         }
         // wait-time effect
-        else if( qName.equals( "wait-time" ) ) {
+        else if( sName.equals( "wait-time" ) ) {
             int time = 0;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "time" ) )
+                if( attrs.getLocalName( i ).equals( "time" ) )
                     time = Integer.parseInt( attrs.getValue( i ) );
             }
 
@@ -418,34 +418,34 @@ public class EffectSubParser extends SubParser {
         }
 
         // show-text effect
-        else if( qName.equals( "show-text" ) ) {
+        else if( sName.equals( "show-text" ) ) {
             x = 0;
             y = 0;
             frontColor = 0;
             borderColor = 0;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "x" ) )
+                if( attrs.getLocalName( i ).equals( "x" ) )
                     x = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "y" ) )
+                else if( attrs.getLocalName( i ).equals( "y" ) )
                     y = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "frontColor" ) )
+                else if( attrs.getLocalName( i ).equals( "frontColor" ) )
                     frontColor = Integer.parseInt( attrs.getValue( i ) );
-                else if( attrs.getQName( i ).equals( "borderColor" ) )
+                else if( attrs.getLocalName( i ).equals( "borderColor" ) )
                     borderColor = Integer.parseInt( attrs.getValue( i ) );
             }
 
         }
         
-        else if (qName.equals( "highlight-item" )) {
+        else if (sName.equals( "highlight-item" )) {
             int type = 0;
             boolean animated = false;
             String id = "";
             for (int i = 0; i < attrs.getLength(); i++) {
-                if (attrs.getQName( i ).equals( "idTarget" ))
+                if (attrs.getLocalName( i ).equals( "idTarget" ))
                     id = attrs.getValue( i );
-                if (attrs.getQName( i ).equals( "animated" ))
+                if (attrs.getLocalName( i ).equals( "animated" ))
                     animated = (attrs.getValue( i ).equals( "yes" ) ? true : false);
-                if (attrs.getQName( i ).equals( "type" )) {
+                if (attrs.getLocalName( i ).equals( "type" )) {
                     if (attrs.getValue( i ).equals( "none" ))
                         type = HighlightItemEffect.NO_HIGHLIGHT;
                     if (attrs.getValue( i ).equals( "green" ))
@@ -460,7 +460,7 @@ public class EffectSubParser extends SubParser {
             }
             newEffect = new HighlightItemEffect(id, type, animated);
         }
-        else if (qName.equals( "move-object" )) {
+        else if (sName.equals( "move-object" )) {
             boolean animated = false;
             String id = "";
             int x = 0;
@@ -469,25 +469,25 @@ public class EffectSubParser extends SubParser {
             int translateSpeed = 20;
             int scaleSpeed = 20;
             for (int i = 0; i < attrs.getLength( ); i++) {
-                if (attrs.getQName( i ).equals( "idTarget" ))
+                if (attrs.getLocalName( i ).equals( "idTarget" ))
                     id = attrs.getValue( i );
-                if (attrs.getQName( i ).equals( "animated" ))
+                if (attrs.getLocalName( i ).equals( "animated" ))
                     animated = (attrs.getValue( i ).equals( "yes" ) ? true : false);
-                if (attrs.getQName( i ).equals( "x" ))
+                if (attrs.getLocalName( i ).equals( "x" ))
                     x = Integer.parseInt( attrs.getValue( i ) );
-                if (attrs.getQName( i ).equals( "y" ))
+                if (attrs.getLocalName( i ).equals( "y" ))
                     y = Integer.parseInt( attrs.getValue( i ) );
-                if (attrs.getQName( i ).equals( "scale" ))
+                if (attrs.getLocalName( i ).equals( "scale" ))
                     scale = Float.parseFloat( attrs.getValue( i ));
-                if (attrs.getQName( i ).equals( "translateSpeed" ))
+                if (attrs.getLocalName( i ).equals( "translateSpeed" ))
                     translateSpeed = Integer.parseInt( attrs.getValue( i ) );
-                if (attrs.getQName( i ).equals( "scaleSpeed" ))
+                if (attrs.getLocalName( i ).equals( "scaleSpeed" ))
                     scaleSpeed = Integer.parseInt( attrs.getValue( i ) );
             }
             newEffect = new MoveObjectEffect(id, x, y, scale, animated, translateSpeed, scaleSpeed);
         }
         // If it is a condition tag, create new conditions and switch the state
-        else if( qName.equals( "condition" ) ) {
+        else if( sName.equals( "condition" ) ) {
             currentConditions = new Conditions( );
             subParser = new ConditionSubParser( currentConditions, chapter );
             subParsing = SUBPARSING_CONDITION;
@@ -526,7 +526,7 @@ public class EffectSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
 
     }
@@ -545,17 +545,17 @@ public class EffectSubParser extends SubParser {
             newEffect = null;
 
             // If it is a speak-player
-            if( qName.equals( "speak-player" ) ) {
+            if( sName.equals( "speak-player" ) ) {
                 // Add the effect and clear the current string
                 newEffect = new SpeakPlayerEffect( currentString.toString( ).trim( ) );
             }
 
             // If it is a speak-char
-            else if( qName.equals( "speak-char" ) ) {
+            else if( sName.equals( "speak-char" ) ) {
                 // Add the effect and clear the current string
                 newEffect = new SpeakCharEffect( currentCharIdTarget, currentString.toString( ).trim( ) );
             }// If it is a show-text
-            else if( qName.equals( "show-text" ) ) {
+            else if( sName.equals( "show-text" ) ) {
                 // Add the new ShowTextEffect
                 newEffect = new ShowTextEffect( currentString.toString( ).trim( ), x, y, frontColor, borderColor );
             }
@@ -597,10 +597,10 @@ public class EffectSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 // Store the conditions in the effect
                 currentEffect.setConditions( currentConditions );
 

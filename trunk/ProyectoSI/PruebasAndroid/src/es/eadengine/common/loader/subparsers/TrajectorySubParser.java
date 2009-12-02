@@ -99,7 +99,7 @@ public class TrajectorySubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If it is a object tag, create the new object (with its id)
-            if( qName.equals( "node" ) ) {
+            if( sName.equals( "node" ) ) {
 
                 int x = 0, y = 0;
                 float scale = 1.0f;
@@ -107,13 +107,13 @@ public class TrajectorySubParser extends SubParser {
                 String id = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         id = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "scale" ) ) {
+                    if( attrs.getLocalName( i ).equals( "scale" ) ) {
                         scale = Float.parseFloat( attrs.getValue( i ) );
                     }
                 }
@@ -123,28 +123,28 @@ public class TrajectorySubParser extends SubParser {
             }
 
             // If it is a condition tag, create new conditions and switch the state
-            else if( qName.equals( "side" ) ) {
+            else if( sName.equals( "side" ) ) {
                 String idStart = "";
                 String idEnd = "";
                 int length = -1;
                 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "idStart" ) )
+                    if( attrs.getLocalName( i ).equals( "idStart" ) )
                         idStart = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "idEnd" ) )
+                    if( attrs.getLocalName( i ).equals( "idEnd" ) )
                         idEnd = attrs.getValue( i );
-                    if ( attrs.getQName( i ).equals( "length"))
+                    if ( attrs.getLocalName( i ).equals( "length"))
                         length = Integer.parseInt( attrs.getValue( i ) );
                 }
 
                 trajectory.addSide( idStart, idEnd, length );
             }
 
-            else if( qName.equals( "initialnode" ) ) {
+            else if( sName.equals( "initialnode" ) ) {
                 String id = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         id = attrs.getValue( i );
                 }
 
@@ -155,7 +155,7 @@ public class TrajectorySubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -175,7 +175,7 @@ public class TrajectorySubParser extends SubParser {
             currentString = new StringBuffer( );
         }
 
-        if( qName.equals( "trajectory" ) ) {
+        if( sName.equals( "trajectory" ) ) {
             if( trajectory.getNodes( ).size( ) != 0 ) {
                 trajectory.deleteUnconnectedNodes( );
                 scene.setTrajectory( trajectory );

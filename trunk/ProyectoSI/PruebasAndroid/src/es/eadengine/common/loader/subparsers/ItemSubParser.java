@@ -135,14 +135,14 @@ public class ItemSubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If it is a object tag, create the new object (with its id)
-            if( qName.equals( "object" ) ) {
+            if( sName.equals( "object" ) ) {
                 String objectId = "";
                 boolean returnsWhenDragged = true;
                 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         objectId = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "returnsWhenDragged" ))
+                    if( attrs.getLocalName( i ).equals( "returnsWhenDragged" ))
                         returnsWhenDragged = (attrs.getValue( i ).equals( "yes" ) ? true : false);
                 }
 
@@ -151,10 +151,10 @@ public class ItemSubParser extends SubParser {
             }
 
             // If it is a resources tag, create the new resources and switch the state
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
                 
@@ -162,14 +162,14 @@ public class ItemSubParser extends SubParser {
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -178,20 +178,20 @@ public class ItemSubParser extends SubParser {
                 currentResources.addAsset( type, path );
             }
 
-            else if( qName.equals( "actions" ) ) {
+            else if( sName.equals( "actions" ) ) {
                 subParser = new ActionsSubParser( chapter, object );
                 subParsing = SUBPARSING_ACTIONS;
             }
 
             // If it is a condition tag, create new conditions and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is a effect tag, create new effects and switch the state
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
@@ -199,7 +199,7 @@ public class ItemSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -216,34 +216,34 @@ public class ItemSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is an object tag, store the object in the game data
-            if( qName.equals( "object" ) ) {
+            if( sName.equals( "object" ) ) {
                 chapter.addItem( object );
             }
 
             // If it is a resources tag, add it to the object
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 object.addResources( currentResources );
                 reading = READING_NONE;
             }
 
             // If it is a name tag, store the name in the object
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 object.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a documentation tag, hold the documentation in the current element
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 if( reading == READING_NONE )
                     object.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // If it is a brief tag, store the brief description in the object
-            else if( qName.equals( "brief" ) ) {
+            else if( sName.equals( "brief" ) ) {
                 object.setDescription( currentString.toString( ).trim( ) );
             }
 
             // If it is a detailed tag, store the detailed description in the object
-            else if( qName.equals( "detailed" ) ) {
+            else if( sName.equals( "detailed" ) ) {
                 object.setDetailedDescription( currentString.toString( ).trim( ) );
             }
 
@@ -254,10 +254,10 @@ public class ItemSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 // Store the conditions in the resources
                 if( reading == READING_RESOURCES )
                     currentResources.setConditions( currentConditions );
@@ -270,17 +270,17 @@ public class ItemSubParser extends SubParser {
         // If an effect is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect tag is being closed, switch the state
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }
 
         else if( subParsing == SUBPARSING_ACTIONS ) {
-            subParser.endElement( namespaceURI, sName, qName );
-            if( qName.equals( "actions" ) ) {
+            subParser.endElement( namespaceURI, sName, sName );
+            if( sName.equals( "actions" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }

@@ -112,7 +112,7 @@ public class TimerSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a timer tag, create a new timer with its time
-            if( qName.equals( "timer" ) ) {
+            if( sName.equals( "timer" ) ) {
                 String time = "";
                 boolean usesEndCondition = true;
                 boolean runsInLoop = true;
@@ -121,21 +121,21 @@ public class TimerSubParser extends SubParser {
                 String displayName = "timer";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "time" ) )
+                    if( attrs.getLocalName( i ).equals( "time" ) )
                         time = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "usesEndCondition" ) )
+                    if( attrs.getLocalName( i ).equals( "usesEndCondition" ) )
                         usesEndCondition = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "runsInLoop" ) )
+                    if( attrs.getLocalName( i ).equals( "runsInLoop" ) )
                         runsInLoop = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "multipleStarts" ) )
+                    if( attrs.getLocalName( i ).equals( "multipleStarts" ) )
                         multipleStarts = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "showTime" ) )
+                    if( attrs.getLocalName( i ).equals( "showTime" ) )
                         showTime = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "displayName" ) )
+                    if( attrs.getLocalName( i ).equals( "displayName" ) )
                         displayName = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "countDown" ) )
+                    if( attrs.getLocalName( i ).equals( "countDown" ) )
                         countDown = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "showWhenStopped" ) )
+                    if( attrs.getLocalName( i ).equals( "showWhenStopped" ) )
                         showWhenStopped = attrs.getValue( i ).equals( "yes" );
                 }
 
@@ -150,14 +150,14 @@ public class TimerSubParser extends SubParser {
             }
 
             // If it is a condition tag, create the new condition, the subparser and switch the state
-            else if( qName.equals( "init-condition" ) || qName.equals( "end-condition" ) ) {
+            else if( sName.equals( "init-condition" ) || sName.equals( "end-condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is a effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "effect" ) || qName.equals( "post-effect" ) ) {
+            else if( sName.equals( "effect" ) || sName.equals( "post-effect" ) ) {
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
@@ -167,7 +167,7 @@ public class TimerSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -184,12 +184,12 @@ public class TimerSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a timer tag, add it to the game data
-            if( qName.equals( "timer" ) ) {
+            if( sName.equals( "timer" ) ) {
                 chapter.addTimer( timer );
             }
 
             // If it is a documentation tag, hold the documentation in the slidescene
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 timer.setDocumentation( currentString.toString( ).trim( ) );
             }
 
@@ -200,10 +200,10 @@ public class TimerSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "init-condition" ) ) {
+            if( sName.equals( "init-condition" ) ) {
                 timer.setInitCond( currentConditions );
 
                 // Switch the state
@@ -211,7 +211,7 @@ public class TimerSubParser extends SubParser {
             }
 
             // If the condition tag is being closed
-            if( qName.equals( "end-condition" ) ) {
+            if( sName.equals( "end-condition" ) ) {
                 timer.setEndCond( currentConditions );
 
                 // Switch the state
@@ -222,16 +222,16 @@ public class TimerSubParser extends SubParser {
         // If an effect is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect tag is being closed, store the effect in the next scene and switch the state
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
                 timer.setEffects( currentEffects );
                 subParsing = SUBPARSING_NONE;
             }
 
             // If the effect tag is being closed, add the post-effects to the current next scene and switch the state
-            if( qName.equals( "post-effect" ) ) {
+            if( sName.equals( "post-effect" ) ) {
                 timer.setPostEffects( currentEffects );
                 subParsing = SUBPARSING_NONE;
             }

@@ -144,7 +144,7 @@ public class ActiveAreaSubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If it is a object tag, create the new object (with its id)
-            if( qName.equals( "active-area" ) ) {
+            if( sName.equals( "active-area" ) ) {
 
                 int x = 0, y = 0, width = 0, height = 0;
                 String id = null;
@@ -153,27 +153,27 @@ public class ActiveAreaSubParser extends SubParser {
                 boolean hasInfluence = false;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "rectangular" ) )
+                    if( attrs.getLocalName( i ).equals( "rectangular" ) )
                         rectangular = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "width" ) )
+                    if( attrs.getLocalName( i ).equals( "width" ) )
                         width = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "height" ) )
+                    if( attrs.getLocalName( i ).equals( "height" ) )
                         height = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         id = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "hasInfluenceArea" ) )
+                    if( attrs.getLocalName( i ).equals( "hasInfluenceArea" ) )
                         hasInfluence = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "influenceX" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceX" ) )
                         influenceX = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceY" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceY" ) )
                         influenceY = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceWidth" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceWidth" ) )
                         influenceWidth = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceHeight" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceHeight" ) )
                         influenceHeight = Integer.parseInt( attrs.getValue( i ) );
 
                 }
@@ -185,14 +185,14 @@ public class ActiveAreaSubParser extends SubParser {
                 }
             }
 
-            else if( qName.equals( "point" ) ) {
+            else if( sName.equals( "point" ) ) {
                 if( activeArea != null ) {
                     int x = 0, y = 0;
 
                     for( int i = 0; i < attrs.getLength( ); i++ ) {
-                        if( attrs.getQName( i ).equals( "x" ) )
+                        if( attrs.getLocalName( i ).equals( "x" ) )
                             x = Integer.parseInt( attrs.getValue( i ) );
-                        if( attrs.getQName( i ).equals( "y" ) )
+                        if( attrs.getLocalName( i ).equals( "y" ) )
                             y = Integer.parseInt( attrs.getValue( i ) );
                     }
 
@@ -201,20 +201,20 @@ public class ActiveAreaSubParser extends SubParser {
                 }
             }
 
-            else if( qName.equals( "actions" ) ) {
+            else if( sName.equals( "actions" ) ) {
                 subParser = new ActionsSubParser( chapter, activeArea );
                 subParsing = SUBPARSING_ACTIONS;
             }
 
             // If it is a condition tag, create new conditions and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is a effect tag, create new effects and switch the state
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
@@ -222,7 +222,7 @@ public class ActiveAreaSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -239,27 +239,27 @@ public class ActiveAreaSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is an object tag, store the object in the game data
-            if( qName.equals( "active-area" ) ) {
+            if( sName.equals( "active-area" ) ) {
                 scene.addActiveArea( activeArea );
             }
 
             // If it is a name tag, store the name in the object
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 activeArea.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a documentation tag, hold the documentation in the current element
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 activeArea.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // If it is a brief tag, store the brief description in the object
-            else if( qName.equals( "brief" ) ) {
+            else if( sName.equals( "brief" ) ) {
                 activeArea.setDescription( currentString.toString( ).trim( ) );
             }
 
             // If it is a detailed tag, store the detailed description in the object
-            else if( qName.equals( "detailed" ) ) {
+            else if( sName.equals( "detailed" ) ) {
                 activeArea.setDetailedDescription( currentString.toString( ).trim( ) );
             }
 
@@ -270,10 +270,10 @@ public class ActiveAreaSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 if( reading == READING_NONE ) {
                     this.activeArea.setConditions( currentConditions );
                 }
@@ -285,17 +285,17 @@ public class ActiveAreaSubParser extends SubParser {
         // If an effect is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect tag is being closed, switch the state
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }
 
         else if( subParsing == SUBPARSING_ACTIONS ) {
-            subParser.endElement( namespaceURI, sName, qName );
-            if( qName.equals( "actions" ) ) {
+            subParser.endElement( namespaceURI, sName, sName );
+            if( sName.equals( "actions" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }

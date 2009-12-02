@@ -255,39 +255,39 @@ public class AdventureHandler extends DefaultHandler {
 	@Override
 	public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) throws SAXException {
 
-		if (qName.equals( "game-descriptor" )){
+		if (sName.equals( "game-descriptor" )){
 		    for( int i = 0; i < attrs.getLength( ); i++ )
-			if( attrs.getQName( i ).equals( "versionNumber" ) ){
+			if( attrs.getLocalName( i ).equals( "versionNumber" ) ){
 			    adventureData.setVersionNumber(attrs.getValue(i));
 			}
 		}
 		    
 	    
 	    	// If reading a title, empty the current string
-		if( qName.equals( "title" ) || qName.equals( "description" ) ) {
+		if( sName.equals( "title" ) || sName.equals( "description" ) ) {
 			currentString = new StringBuffer( );
 		}
 
-		if (qName.endsWith("automatic-commentaries")) {
+		if (sName.endsWith("automatic-commentaries")) {
 			adventureData.setCommentaries(true);
 		}
 		
 		// If reading the GUI tag, store the settings
-		if( qName.equals( "gui" ) ) {
+		if( sName.equals( "gui" ) ) {
 			for( int i = 0; i < attrs.getLength( ); i++ ) {
-				if( attrs.getQName( i ).equals( "type" ) ) {
+				if( attrs.getLocalName( i ).equals( "type" ) ) {
 					if( attrs.getValue( i ).equals( "traditional" ) )
 						adventureData.setGUIType( DescriptorData.GUI_TRADITIONAL );
 					else if( attrs.getValue( "type" ).equals( "contextual" ) )
 						adventureData.setGUIType( DescriptorData.GUI_CONTEXTUAL );
 				}
-				if (attrs.getQName( i ).equals( "customized" )) {
+				if (attrs.getLocalName( i ).equals( "customized" )) {
 					if (attrs.getValue(i).equals("yes"))
 						adventureData.setGUI(adventureData.getGUIType(), true);
 					else
 						adventureData.setGUI(adventureData.getGUIType(), false);
 				}
-				if (attrs.getQName( i ).equals( "inventoryPosition" )) {
+				if (attrs.getLocalName( i ).equals( "inventoryPosition" )) {
 					if (attrs.getValue(i).equals("none"))
 						adventureData.setInventoryPosition(DescriptorData.INVENTORY_NONE);
 					else if (attrs.getValue(i).equals("top_bottom"))
@@ -301,12 +301,12 @@ public class AdventureHandler extends DefaultHandler {
 		}
 		
 	       //Cursor
-        if (qName.equals( "cursor" )){
+        if (sName.equals( "cursor" )){
             String type="";String uri="";
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if (attrs.getQName( i ).equals( "type" )){
+                if (attrs.getLocalName( i ).equals( "type" )){
                     type=attrs.getValue( i );
-                }else if (attrs.getQName( i ).equals( "uri" )){
+                }else if (attrs.getLocalName( i ).equals( "uri" )){
                     uri=attrs.getValue( i );
                 }
             }
@@ -314,26 +314,26 @@ public class AdventureHandler extends DefaultHandler {
         }		
 
         //Button
-        if (qName.equals( "button" )){
+        if (sName.equals( "button" )){
             String type="";String uri=""; String action ="";
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if (attrs.getQName( i ).equals( "type" )){
+                if (attrs.getLocalName( i ).equals( "type" )){
                     type=attrs.getValue( i );
-                }else if (attrs.getQName( i ).equals( "uri" )){
+                }else if (attrs.getLocalName( i ).equals( "uri" )){
                     uri=attrs.getValue( i );
-                }else if (attrs.getQName( i ).equals( "action" )){
+                }else if (attrs.getLocalName( i ).equals( "action" )){
                     action=attrs.getValue( i );
                 }
             }
             adventureData.addButton( action, type, uri );
         }
         
-        if (qName.equals( "arrow" )) {
+        if (sName.equals( "arrow" )) {
         	String type="";String uri="";
         	for (int i = 0; i < attrs.getLength(); i++) {
-               if (attrs.getQName( i ).equals( "type" )){
+               if (attrs.getLocalName( i ).equals( "type" )){
                   type=attrs.getValue( i );
-               }else if (attrs.getQName( i ).equals( "uri" )){
+               }else if (attrs.getLocalName( i ).equals( "uri" )){
                   uri=attrs.getValue( i );
                }
         	}
@@ -341,18 +341,18 @@ public class AdventureHandler extends DefaultHandler {
         }
         
 		// If reading the mode tag:
-		if( qName.equals( "mode" ) ) {
+		if( sName.equals( "mode" ) ) {
 			for( int i = 0; i < attrs.getLength( ); i++ )
-				if( attrs.getQName( i ).equals( "playerTransparent" ) )
+				if( attrs.getLocalName( i ).equals( "playerTransparent" ) )
 					if( attrs.getValue( i ).equals( "yes" ) )
 						adventureData.setPlayerMode( DescriptorData.MODE_PLAYER_1STPERSON );
 					else if( attrs.getValue( i ).equals( "no" ) )
 						adventureData.setPlayerMode( DescriptorData.MODE_PLAYER_3RDPERSON );
 		}
 		
-        if (qName.equals("graphics")){
+        if (sName.equals("graphics")){
         	for( int i = 0; i < attrs.getLength(); i++) {
-        		if (attrs.getQName( i ).equals("mode")) {
+        		if (attrs.getLocalName( i ).equals("mode")) {
         			if (attrs.getValue( i ).equals( "windowed")) {
         				adventureData.setGraphicConfig(DescriptorData.GRAPHICS_WINDOWED);
         			}
@@ -368,19 +368,19 @@ public class AdventureHandler extends DefaultHandler {
 
 
 		// If reading the contents tag, switch to the chapters mode
-		else if( qName.equals( "contents" ) ) {
+		else if( sName.equals( "contents" ) ) {
 			reading = READING_CHAPTER;
 		}
 
 		// If reading the contents of a chapter, create a new one to store the data
-		else if( qName.equals( "chapter" ) ) {
+		else if( sName.equals( "chapter" ) ) {
 			// Create the chapter
 			currentChapter = new Chapter( );
 
 			// Search and store the path of the file
 			String chapterPath = null;
 			for( int i = 0; i < attrs.getLength( ); i++ )
-				if( attrs.getQName( i ).equals( "path" ) )
+				if( attrs.getLocalName( i ).equals( "path" ) )
 					chapterPath = attrs.getValue( i );
 			
 			if (chapterPath!=null){
@@ -418,9 +418,9 @@ public class AdventureHandler extends DefaultHandler {
 		// With last profile modifications, only old games includes that information in its descriptor file.
         	// For that reason, the next "path" info is the name of the profile, and it is necessary to eliminate the path's characteristic
         	// such as / and .xml
-		else if( qName.equals( "adaptation-configuration" ) ) {
+		else if( sName.equals( "adaptation-configuration" ) ) {
 			for( int i = 0; i < attrs.getLength( ); i++ )
-				if( attrs.getQName( i ).equals( "path" ) ){
+				if( attrs.getLocalName( i ).equals( "path" ) ){
 					String adaptationName = attrs.getValue( i );
 					// delete the path's characteristics
 					adaptationName = adaptationName.substring(adaptationName.indexOf("/")+1);
@@ -441,9 +441,9 @@ public class AdventureHandler extends DefaultHandler {
         	// With last profile modifications, only old games includes that information in its descriptor file.
 		// For that reason, the next "path" info is the name of the profile, and it is necessary to eliminate the path's characteristic
 		// such as / and .xml
-		else if( qName.equals( "assessment-configuration" ) ) {
+		else if( sName.equals( "assessment-configuration" ) ) {
 			for( int i = 0; i < attrs.getLength( ); i++ )
-				if( attrs.getQName( i ).equals( "path" ) ){
+				if( attrs.getLocalName( i ).equals( "path" ) ){
 					String assessmentName = attrs.getValue( i );
 					// delete the path's characteristics
 					assessmentName = assessmentName.substring(assessmentName.indexOf("/")+1);
@@ -467,7 +467,7 @@ public class AdventureHandler extends DefaultHandler {
 	public void endElement( String namespaceURI, String sName, String qName ) throws SAXException {
 
 		// If the title is complete, store it
-		if( qName.equals( "title" ) ) {
+		if( sName.equals( "title" ) ) {
 			// Store it in the adventure data
 			if( reading == READING_NONE )
 				adventureData.setTitle( currentString.toString( ).trim( ) );
@@ -478,7 +478,7 @@ public class AdventureHandler extends DefaultHandler {
 		}
 
 		// If the description is complete, store it
-		else if( qName.equals( "description" ) ) {
+		else if( sName.equals( "description" ) ) {
 			// Store it in the adventure data
 			if( reading == READING_NONE )
 				adventureData.setDescription( currentString.toString( ).trim( ) );
@@ -489,12 +489,12 @@ public class AdventureHandler extends DefaultHandler {
 		}
 
 		// If the list of chapters is closing, store it
-		else if( qName.equals( "contents" ) ) {
+		else if( sName.equals( "contents" ) ) {
 			adventureData.setChapters( chapters );
 		}
 
 		// If a chapter is closing, store it in the list
-		else if( qName.equals( "chapter" ) ) {
+		else if( sName.equals( "chapter" ) ) {
 			chapters.add( currentChapter );
 		}
 	}

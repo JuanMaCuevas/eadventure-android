@@ -141,22 +141,22 @@ public class CharacterSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a character tag, store the id of the character
-            if( qName.equals( "character" ) ) {
+            if( sName.equals( "character" ) ) {
                 String characterId = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         characterId = attrs.getValue( i );
 
                 npc = new NPC( characterId );
             }
 
             // If it is a resources tag, create the new resources, and switch the element being parsed
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
 
@@ -164,14 +164,14 @@ public class CharacterSubParser extends SubParser {
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -181,38 +181,38 @@ public class CharacterSubParser extends SubParser {
             }
 
             // If it is a frontcolor or bordercolor tag, pick the color
-            else if( qName.equals( "frontcolor" ) || qName.equals( "bordercolor" ) ) {
+            else if( sName.equals( "frontcolor" ) || sName.equals( "bordercolor" ) ) {
                 String color = "";
 
                 // Pick the color
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "color" ) )
+                    if( attrs.getLocalName( i ).equals( "color" ) )
                         color = attrs.getValue( i );
 
                 // Set the color in the npc
-                if( qName.equals( "frontcolor" ) )
+                if( sName.equals( "frontcolor" ) )
                     npc.setTextFrontColor( color );
-                if( qName.equals( "bordercolor" ) )
+                if( sName.equals( "bordercolor" ) )
                     npc.setTextBorderColor( color );
             }
 
-            else if( qName.equals( "textcolor" ) ) {
+            else if( sName.equals( "textcolor" ) ) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "showsSpeechBubble" ) )
+                    if( attrs.getLocalName( i ).equals( "showsSpeechBubble" ) )
                         npc.setShowsSpeechBubbles( attrs.getValue( i ).equals( "yes" ) );
-                    if( attrs.getQName( i ).equals( "bubbleBkgColor" ) )
+                    if( attrs.getLocalName( i ).equals( "bubbleBkgColor" ) )
                         npc.setBubbleBkgColor( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "bubbleBorderColor" ) )
+                    if( attrs.getLocalName( i ).equals( "bubbleBorderColor" ) )
                         npc.setBubbleBorderColor( attrs.getValue( i ) );
                 }
             }
 
             // If it is a conversation reference tag, store the destination id, and switch the element being parsed
-            else if( qName.equals( "conversation-ref" ) ) {
+            else if( sName.equals( "conversation-ref" ) ) {
                 String idTarget = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         idTarget = attrs.getValue( i );
 
                 conversationReference = new ConversationReference( idTarget );
@@ -220,22 +220,22 @@ public class CharacterSubParser extends SubParser {
             }
 
             // If it is a condition tag, create a new subparser
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
             // If it is a voice tag, take the voice and the always synthesizer option
-            else if( qName.equals( "voice" ) ) {
+            else if( sName.equals( "voice" ) ) {
                 String voice = new String( "" );
                 String response;
                 boolean alwaysSynthesizer = false;
 
                 // Pick the voice and synthesizer option
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "name" ) )
+                    if( attrs.getLocalName( i ).equals( "name" ) )
                         voice = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "synthesizeAlways" ) ) {
+                    if( attrs.getLocalName( i ).equals( "synthesizeAlways" ) ) {
                         response = attrs.getValue( i );
                         if( response.equals( "yes" ) )
                             alwaysSynthesizer = true;
@@ -246,7 +246,7 @@ public class CharacterSubParser extends SubParser {
                 npc.setVoice( voice );
             }
 
-            else if( qName.equals( "actions" ) ) {
+            else if( sName.equals( "actions" ) ) {
                 subParser = new ActionsSubParser( chapter, npc );
                 subParsing = SUBPARSING_ACTIONS;
             }
@@ -254,7 +254,7 @@ public class CharacterSubParser extends SubParser {
 
         // If a condition or action is being subparsed, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -271,12 +271,12 @@ public class CharacterSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a character tag, store the character in the game data
-            if( qName.equals( "character" ) ) {
+            if( sName.equals( "character" ) ) {
                 chapter.addCharacter( npc );
             }
 
             // If it is a documentation tag, hold the documentation in the character
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 if( reading == READING_NONE )
                     npc.setDocumentation( currentString.toString( ).trim( ) );
                 else if( reading == READING_CONVERSATION_REFERENCE )
@@ -284,28 +284,28 @@ public class CharacterSubParser extends SubParser {
             }
 
             // If it is a resources tag, add the resources in the character
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 npc.addResources( currentResources );
                 reading = READING_NONE;
             }
 
             // If it is a name tag, store the name
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 npc.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a brief tag, store the brief description
-            else if( qName.equals( "brief" ) ) {
+            else if( sName.equals( "brief" ) ) {
                 npc.setDescription( currentString.toString( ).trim( ) );
             }
 
             // If it is a detailed tag, store the detailed description
-            else if( qName.equals( "detailed" ) ) {
+            else if( sName.equals( "detailed" ) ) {
                 npc.setDetailedDescription( currentString.toString( ).trim( ) );
             }
 
             // If it is a conversation reference tag, add the reference to the character
-            else if( qName.equals( "conversation-ref" ) ) {
+            else if( sName.equals( "conversation-ref" ) ) {
 
                 //npc.addConversationReference( conversationReference );
                 Action action = new Action( Action.TALK_TO );
@@ -325,10 +325,10 @@ public class CharacterSubParser extends SubParser {
         else if( subParsing == SUBPARSING_CONDITION ) {
 
             // Spread the end element call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 // Add the condition to the resources
                 if( reading == READING_RESOURCES )
                     currentResources.setConditions( currentConditions );
@@ -342,8 +342,8 @@ public class CharacterSubParser extends SubParser {
             }
         }
         else if( subParsing == SUBPARSING_ACTIONS ) {
-            subParser.endElement( namespaceURI, sName, qName );
-            if( qName.equals( "actions" ) ) {
+            subParser.endElement( namespaceURI, sName, sName );
+            if( sName.equals( "actions" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }

@@ -117,22 +117,22 @@ public class DescriptorHandler extends DefaultHandler {
     @Override
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) throws SAXException {
 
-        if( qName.equals( "game-descriptor" ) ) {
+        if( sName.equals( "game-descriptor" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "versionNumber" ) ) {
+                if( attrs.getLocalName( i ).equals( "versionNumber" ) ) {
                     gameDescriptor.setVersionNumber( attrs.getValue( i ) );
                 }
         }
 
         // If the element is the GUI configuration, store the values
-        if( qName.equals( "gui" ) ) {
+        if( sName.equals( "gui" ) ) {
             int guiType = DescriptorData.GUI_TRADITIONAL;
             boolean guiCustomized = false;
             int inventoryPosition = DescriptorData.INVENTORY_TOP_BOTTOM;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
                 // Type of the GUI
-                if( attrs.getQName( i ).equals( "type" ) ) {
+                if( attrs.getLocalName( i ).equals( "type" ) ) {
                     if( attrs.getValue( i ).equals( "traditional" ) )
                         guiType = DescriptorData.GUI_TRADITIONAL;
                     else if( attrs.getValue( i ).equals( "contextual" ) )
@@ -140,10 +140,10 @@ public class DescriptorHandler extends DefaultHandler {
                 }
 
                 // Customized GUI
-                else if( attrs.getQName( i ).equals( "customized" ) ) {
+                else if( attrs.getLocalName( i ).equals( "customized" ) ) {
                     guiCustomized = attrs.getValue( i ).equals( "yes" );
                 }
-                if( attrs.getQName( i ).equals( "inventoryPosition" ) ) {
+                if( attrs.getLocalName( i ).equals( "inventoryPosition" ) ) {
                     if( attrs.getValue( i ).equals( "none" ) )
                         inventoryPosition = DescriptorData.INVENTORY_NONE;
                     else if( attrs.getValue( i ).equals( "top_bottom" ) )
@@ -162,14 +162,14 @@ public class DescriptorHandler extends DefaultHandler {
         }
 
         //Cursor
-        if( qName.equals( "cursor" ) ) {
+        if( sName.equals( "cursor" ) ) {
             String type = "";
             String uri = "";
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "type" ) ) {
+                if( attrs.getLocalName( i ).equals( "type" ) ) {
                     type = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "uri" ) ) {
+                else if( attrs.getLocalName( i ).equals( "uri" ) ) {
                     uri = attrs.getValue( i );
                 }
             }
@@ -177,46 +177,46 @@ public class DescriptorHandler extends DefaultHandler {
         }
 
         //Button
-        if( qName.equals( "button" ) ) {
+        if( sName.equals( "button" ) ) {
             String type = "";
             String uri = "";
             String action = "";
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "type" ) ) {
+                if( attrs.getLocalName( i ).equals( "type" ) ) {
                     type = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "uri" ) ) {
+                else if( attrs.getLocalName( i ).equals( "uri" ) ) {
                     uri = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "action" ) ) {
+                else if( attrs.getLocalName( i ).equals( "action" ) ) {
                     action = attrs.getValue( i );
                 }
             }
             gameDescriptor.addButton( action, type, uri );
         }
 
-        if( qName.equals( "arrow" ) ) {
+        if( sName.equals( "arrow" ) ) {
             String type = "";
             String uri = "";
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "type" ) ) {
+                if( attrs.getLocalName( i ).equals( "type" ) ) {
                     type = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "uri" ) ) {
+                else if( attrs.getLocalName( i ).equals( "uri" ) ) {
                     uri = attrs.getValue( i );
                 }
             }
             gameDescriptor.addArrow( type, uri );
         }
 
-        if( qName.endsWith( "automatic-commentaries" ) ) {
+        if( sName.endsWith( "automatic-commentaries" ) ) {
             gameDescriptor.setCommentaries( true );
         }
 
         //If the element is the player mode, store value
-        if( qName.equals( "mode" ) ) {
+        if( sName.equals( "mode" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "playerTransparent" ) ) {
+                if( attrs.getLocalName( i ).equals( "playerTransparent" ) ) {
                     if( attrs.getValue( i ).equals( "yes" ) ) {
                         gameDescriptor.setPlayerMode( DescriptorData.MODE_PLAYER_1STPERSON );
                     }
@@ -227,9 +227,9 @@ public class DescriptorHandler extends DefaultHandler {
             }
         }
 
-        if( qName.equals( "graphics" ) ) {
+        if( sName.equals( "graphics" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "mode" ) ) {
+                if( attrs.getLocalName( i ).equals( "mode" ) ) {
                     if( attrs.getValue( i ).equals( "windowed" ) ) {
                         gameDescriptor.setGraphicConfig( DescriptorData.GRAPHICS_WINDOWED );
                     }
@@ -244,12 +244,12 @@ public class DescriptorHandler extends DefaultHandler {
         }
 
         // If it is a chapter, create it and store the path
-        else if( qName.equals( "chapter" ) ) {
+        else if( sName.equals( "chapter" ) ) {
             currentChapter = new ChapterSummary( );
 
             // Store the path of the chapter
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "path" ) )
+                if( attrs.getLocalName( i ).equals( "path" ) )
                     currentChapter.setChapterPath( attrs.getValue( i ) );
 
             // Change the state
@@ -261,10 +261,10 @@ public class DescriptorHandler extends DefaultHandler {
         // For that reason, the next "path" info is the name of the profile, and it is necessary to eliminate the path's characteristic
         // such as / and .xml
 
-        else if( qName.equals( "adaptation-configuration" ) ) {
+        else if( sName.equals( "adaptation-configuration" ) ) {
             // Store the path of the adaptation file
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "path" ) ) {
+                if( attrs.getLocalName( i ).equals( "path" ) ) {
                     String adaptationName = attrs.getValue( i );
                     // delete the path's characteristics
                     // adaptationName = adaptationName.substring(adaptationName.indexOf("/")+1);
@@ -278,10 +278,10 @@ public class DescriptorHandler extends DefaultHandler {
         // With last profile modifications, only old games includes that information in its descriptor file.
         // For that reason, the next "path" info is the name of the profile, and it is necessary to eliminate the path's characteristic
         // such as / and .xml
-        else if( qName.equals( "assessment-configuration" ) ) {
+        else if( sName.equals( "assessment-configuration" ) ) {
             // Store the path of the assessment file
             for( int i = 0; i < attrs.getLength( ); i++ )
-                if( attrs.getQName( i ).equals( "path" ) ) {
+                if( attrs.getLocalName( i ).equals( "path" ) ) {
                     String assessmentName = attrs.getValue( i );
                     // delete the path's characteristics
                     // assessmentName = assessmentName.substring(assessmentName.indexOf("/")+1);
@@ -299,7 +299,7 @@ public class DescriptorHandler extends DefaultHandler {
     public void endElement( String namespaceURI, String sName, String qName ) throws SAXException {
 
         // Stores the title
-        if( qName.equals( "title" ) ) {
+        if( sName.equals( "title" ) ) {
             if( reading == READING_NONE )
                 gameDescriptor.setTitle( currentString.toString( ).trim( ) );
             else if( reading == READING_CHAPTER )
@@ -307,7 +307,7 @@ public class DescriptorHandler extends DefaultHandler {
         }
 
         // Stores the description
-        else if( qName.equals( "description" ) ) {
+        else if( sName.equals( "description" ) ) {
             if( reading == READING_NONE )
                 gameDescriptor.setDescription( currentString.toString( ).trim( ) );
             else if( reading == READING_CHAPTER )
@@ -315,7 +315,7 @@ public class DescriptorHandler extends DefaultHandler {
         }
 
         // Change the state if ends reading a chapter
-        else if( qName.equals( "chapter" ) ) {
+        else if( sName.equals( "chapter" ) ) {
             // Add the new chapter and change the state
             gameDescriptor.addChapterSummary( currentChapter );
             reading = READING_NONE;

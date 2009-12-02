@@ -110,63 +110,63 @@ public class BookSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a book tag, store the id of the book
-            if( qName.equals( "book" ) ) {
+            if( sName.equals( "book" ) ) {
                 String bookId = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         bookId = attrs.getValue( i );
 
                 book = new Book( bookId );
             }
 
             // If it is a resources tag, create the new resources
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
 
             }
 
             // If it is a documentation tag, hold the documentation in the book
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 book.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // If it is a condition tag, create a new subparser
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 conditionSubParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
                 currentResources.addAsset( type, path );
             }
 
-            else if( qName.equals( "text" ) ) {
+            else if( sName.equals( "text" ) ) {
                 book.setType( Book.TYPE_PARAGRAPHS );
             }
 
-            else if( qName.equals( "pages" ) ) {
+            else if( sName.equals( "pages" ) ) {
                 book.setType( Book.TYPE_PAGES );
             }
 
-            else if( qName.equals( "page" ) ) {
+            else if( sName.equals( "page" ) ) {
                 String uri = "";
                 int type = BookPage.TYPE_URL;
                 int margin = 0;
@@ -176,21 +176,21 @@ public class BookSubParser extends SubParser {
                 boolean scrollable = false;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         uri = attrs.getValue( i );
 
-                    if( attrs.getQName( i ).equals( "type" ) ) {
+                    if( attrs.getLocalName( i ).equals( "type" ) ) {
                         if( attrs.getValue( i ).equals( "resource" ) )
                             type = BookPage.TYPE_RESOURCE;
                         if( attrs.getValue( i ).equals( "image" ) )
                             type = BookPage.TYPE_IMAGE;
                     }
 
-                    if( attrs.getQName( i ).equals( "scrollable" ) )
+                    if( attrs.getLocalName( i ).equals( "scrollable" ) )
                         if( attrs.getValue( i ).equals( "yes" ) )
                             scrollable = true;
 
-                    if( attrs.getQName( i ).equals( "margin" ) ) {
+                    if( attrs.getLocalName( i ).equals( "margin" ) ) {
                         try {
                             margin = Integer.parseInt( attrs.getValue( i ) );
                         }
@@ -198,7 +198,7 @@ public class BookSubParser extends SubParser {
                         }
                     }
 
-                    if( attrs.getQName( i ).equals( "marginEnd" ) ) {
+                    if( attrs.getLocalName( i ).equals( "marginEnd" ) ) {
                         try {
                             marginEnd = Integer.parseInt( attrs.getValue( i ) );
                         }
@@ -206,7 +206,7 @@ public class BookSubParser extends SubParser {
                         }
                     }
 
-                    if( attrs.getQName( i ).equals( "marginTop" ) ) {
+                    if( attrs.getLocalName( i ).equals( "marginTop" ) ) {
                         try {
                             marginTop = Integer.parseInt( attrs.getValue( i ) );
                         }
@@ -214,7 +214,7 @@ public class BookSubParser extends SubParser {
                         }
                     }
 
-                    if( attrs.getQName( i ).equals( "marginBottom" ) ) {
+                    if( attrs.getLocalName( i ).equals( "marginBottom" ) ) {
                         try {
                             marginBottom = Integer.parseInt( attrs.getValue( i ) );
                         }
@@ -228,7 +228,7 @@ public class BookSubParser extends SubParser {
             }
 
             // If it is a title or bullet tag, store the previous text in the book
-            else if( qName.equals( "title" ) || qName.equals( "bullet" ) ) {
+            else if( sName.equals( "title" ) || sName.equals( "bullet" ) ) {
                 // Add the new text paragraph
                 if( currentString != null && currentString.toString( ).trim( ).replace( "\t", "" ).replace( "\n", "" ).length( ) > 0 )
                     book.addParagraph( new BookParagraph( BookParagraph.TEXT, currentString.toString( ).trim( ).replace( "\t", "" ) ) );
@@ -236,7 +236,7 @@ public class BookSubParser extends SubParser {
             }
 
             // If it is an image tag, store the image in the book
-            else if( qName.equals( "img" ) ) {
+            else if( sName.equals( "img" ) ) {
 
                 // Add the new text paragraph
                 if( currentString.toString( ).trim( ).replace( "\t", "" ).replace( "\n", "" ).length( ) > 0 ) {
@@ -247,7 +247,7 @@ public class BookSubParser extends SubParser {
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "src" ) )
+                    if( attrs.getLocalName( i ).equals( "src" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -258,7 +258,7 @@ public class BookSubParser extends SubParser {
 
         // If a condition is being subparsed, spread the call
         if( subParsing == SUBPARSING_CONDITION ) {
-            conditionSubParser.startElement( namespaceURI, sName, qName, attrs );
+            conditionSubParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -275,30 +275,30 @@ public class BookSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a book tag, add the book to the game data
-            if( qName.equals( "book" ) ) {
+            if( sName.equals( "book" ) ) {
                 chapter.addBook( book );
             }
 
             // If it is a resources tag, add the resources to the book
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 book.addResources( currentResources );
             }
 
             // If it is a text tag, add the text to the book
-            else if( qName.equals( "text" ) ) {
+            else if( sName.equals( "text" ) ) {
                 // Add the new text paragraph
                 if( currentString != null && currentString.toString( ).trim( ).replace( "\t", "" ).replace( "\n", "" ).length( ) > 0 )
                     book.addParagraph( new BookParagraph( BookParagraph.TEXT, currentString.toString( ).trim( ).replace( "\t", "" ) ) );
             }
 
             // If it is a title tag, add the text to the book
-            else if( qName.equals( "title" ) ) {
+            else if( sName.equals( "title" ) ) {
                 // Add the new title paragraph
                 if( currentString != null )
                     book.addParagraph( new BookParagraph( BookParagraph.TITLE, currentString.toString( ).trim( ).replace( "\t", "" ) ) );
             }
 
-            else if( qName.equals( "bullet" ) ) {
+            else if( sName.equals( "bullet" ) ) {
                 // Add the new bullet paragraph
                 if( currentString != null )
                     book.addParagraph( new BookParagraph( BookParagraph.BULLET, currentString.toString( ).trim( ).replace( "\t", "" ) ) );
@@ -312,10 +312,10 @@ public class BookSubParser extends SubParser {
         else if( subParsing == SUBPARSING_CONDITION ) {
 
             // Spread the end element call
-            conditionSubParser.endElement( namespaceURI, sName, qName );
+            conditionSubParser.endElement( namespaceURI, sName, sName );
 
             // If the condition is being closed, add the conditions to the resources
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 currentResources.setConditions( currentConditions );
                 subParsing = SUBPARSING_NONE;
             }

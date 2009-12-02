@@ -78,7 +78,7 @@ public abstract class SubParser {
      * @param sName
      *            The local name (without prefix), or the empty string if
      *            Namespace processing is not being performed
-     * @param qName
+     * @param sName
      *            The qualified name (with prefix), or the empty string if
      *            qualified names are not available
      * @param attrs
@@ -97,7 +97,7 @@ public abstract class SubParser {
      * @param sName
      *            The local name (without prefix), or the empty string if
      *            Namespace processing is not being performed
-     * @param qName
+     * @param sName
      *            The qualified name (with prefix), or the empty string if
      *            qualified names are not available
      */

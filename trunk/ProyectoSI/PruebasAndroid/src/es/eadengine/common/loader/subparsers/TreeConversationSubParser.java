@@ -157,11 +157,11 @@ public class TreeConversationSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a "conversation" we pick the name, so we can build the tree later
-            if( qName.equals( "tree-conversation" ) ) {
+            if( sName.equals( "tree-conversation" ) ) {
                 // Store the name
                 String conversationName = "";
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         conversationName = attrs.getValue( i );
 
                 // Create a dialogue node (which will be the root node) and add it to a new tree
@@ -172,21 +172,21 @@ public class TreeConversationSubParser extends SubParser {
             }
 
             // If it is a non-player character line, store the character name and audio path (if present)
-            else if( qName.equals( "speak-char" ) ) {
+            else if( sName.equals( "speak-char" ) ) {
                 // Set default name to "NPC"
                 characterName = "NPC";
                 audioPath = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
                     // If there is a "idTarget" attribute, store it
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         characterName = attrs.getValue( i );
 
                     // If there is a "uri" attribute, store it as audio path
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         audioPath = attrs.getValue( i );
                     // If there is a "synthesize" attribute, store its value
-                    if( attrs.getQName( i ).equals( "synthesize" ) ) {
+                    if( attrs.getLocalName( i ).equals( "synthesize" ) ) {
                         String response = attrs.getValue( i );
                         if( response.equals( "yes" ) )
                             synthesizerVoice = true;
@@ -197,17 +197,17 @@ public class TreeConversationSubParser extends SubParser {
             }
 
             // If it is a player character line, store the audio path (if present)
-            else if( qName.equals( "speak-player" ) ) {
+            else if( sName.equals( "speak-player" ) ) {
                 audioPath = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
 
                     // If there is a "uri" attribute, store it as audio path
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         audioPath = attrs.getValue( i );
 
                     // If there is a "synthesize" attribute, store its value
-                    if( attrs.getQName( i ).equals( "synthesize" ) ) {
+                    if( attrs.getLocalName( i ).equals( "synthesize" ) ) {
                         String response = attrs.getValue( i );
                         if( response.equals( "yes" ) )
                             synthesizerVoice = true;
@@ -218,11 +218,11 @@ public class TreeConversationSubParser extends SubParser {
             }
 
             // If it is a point with a set of possible responses, create a new OptionNode
-            else if( qName.equals( "response" ) ) {
+            else if( sName.equals( "response" ) ) {
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
                     //If there is a "random" attribute, store is the options will be random
-                    if( attrs.getQName( i ).equals( "random" ) ) {
+                    if( attrs.getLocalName( i ).equals( "random" ) ) {
                         if( attrs.getValue( i ).equals( "yes" ) )
                             random = true;
                         else
@@ -240,13 +240,13 @@ public class TreeConversationSubParser extends SubParser {
 
             // If we are about to read an option, change the state of the recognizer, so we can read the line of the
             // option
-            else if( qName.equals( "option" ) ) {
+            else if( sName.equals( "option" ) ) {
                 state = STATE_WAITING_OPTION;
 
             }
 
             // If it is an effect tag, create new effect, new subparser and switch state
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 currentEffects = new Effects( );
                 effectSubParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
@@ -254,14 +254,14 @@ public class TreeConversationSubParser extends SubParser {
 
             // If there is a go back, link the current node (which will be a DialogueNode) with the last OptionNode
             // stored
-            else if( qName.equals( "go-back" ) ) {
+            else if( sName.equals( "go-back" ) ) {
                 currentNode.addChild( pastOptionNodes.get( pastOptionNodes.size( ) - 1 ) );
             }
         }
 
         // If an effect element is being subparsed, spread the call
         if( subParsing == SUBPARSING_EFFECT ) {
-            effectSubParser.startElement( namespaceURI, sName, qName, attrs );
+            effectSubParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -277,12 +277,12 @@ public class TreeConversationSubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If the conversation ends, store it in the game data
-            if( qName.equals( "tree-conversation" ) ) {
+            if( sName.equals( "tree-conversation" ) ) {
                 chapter.addConversation( new GraphConversation( (TreeConversation) conversation ) );
             }
 
             // If the tag is a line said by the player, add it to the current node
-            else if( qName.equals( "speak-player" ) ) {
+            else if( sName.equals( "speak-player" ) ) {
                 // Store the read string into the current node, and then delete the string. The trim is performed so we
                 // don't
                 // have to worry with indentations or leading/trailing spaces
@@ -312,7 +312,7 @@ public class TreeConversationSubParser extends SubParser {
             }
 
             // If the tag is a line said by a non-player character, add it to the current node
-            else if( qName.equals( "speak-char" ) ) {
+            else if( sName.equals( "speak-char" ) ) {
                 // Store the read string into the current node, and then delete the string. The trim is performed so we
                 // don't
                 // have to worry with indentations or leading/trailing spaces
@@ -328,7 +328,7 @@ public class TreeConversationSubParser extends SubParser {
             }
 
             // If an "option" tag ends, go back to keep working on the last OptionNode
-            else if( qName.equals( "option" ) ) {
+            else if( sName.equals( "option" ) ) {
                 // Se the current node to the last OptionNode stored
                 currentNode = pastOptionNodes.remove( pastOptionNodes.size( ) - 1 );
             }
@@ -340,10 +340,10 @@ public class TreeConversationSubParser extends SubParser {
         // If an effect tag is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            effectSubParser.endElement( namespaceURI, sName, qName );
+            effectSubParser.endElement( namespaceURI, sName, sName );
 
             // If the effect is being closed, insert the effect into the current node
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
 
                 currentNode.setEffects( currentEffects );
                 subParsing = SUBPARSING_NONE;

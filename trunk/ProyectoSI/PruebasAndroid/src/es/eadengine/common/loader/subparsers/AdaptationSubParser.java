@@ -91,7 +91,7 @@ public class AdaptationSubParser extends SubParser {
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) {
 
         // Check if it is an scorm adaptation profile
-        if( qName.equals( "adaptation" ) ) {
+        if( sName.equals( "adaptation" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
                 if( attrs.getQName( i ).equals( "scorm12" ) ) {
                     profile.setScorm12( attrs.getValue( i ).equals( "yes" ) );
@@ -99,28 +99,28 @@ public class AdaptationSubParser extends SubParser {
                 if( attrs.getQName( i ).equals( "scorm2004" ) ) {
                     profile.setScorm2004( attrs.getValue( i ).equals( "yes" ) );
                 }
-                if( attrs.getQName( i ).equals( "name" ) ) {
+                if( attrs.getLocalName( i ).equals( "name" ) ) {
                     profile.setName( attrs.getValue( i ) );
                 }
             }
         }
 
         //Start parsing the initial state
-        if( qName.equals( "initial-state" ) ) {
+        if( sName.equals( "initial-state" ) ) {
             parsing = INITIAL_STATE;
             initialState = new AdaptedState( );
         }
 
         //Start parsing an adaptation rule
-        else if( qName.equals( "adaptation-rule" ) ) {
+        else if( sName.equals( "adaptation-rule" ) ) {
             parsing = ADAPTATION_RULE;
             rule_temp = new AdaptationRule( );
         }
 
         //Initial scene
-        else if( qName.equals( "initial-scene" ) ) {
+        else if( sName.equals( "initial-scene" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "idTarget" ) ) {
+                if( attrs.getLocalName( i ).equals( "idTarget" ) ) {
                     if( parsing == INITIAL_STATE ) {
                         initialState.setTargetId( attrs.getValue( i ) );
                     }
@@ -132,9 +132,9 @@ public class AdaptationSubParser extends SubParser {
         }
 
         // If the tag activates a flag
-        else if( qName.equals( "activate" ) ) {
+        else if( sName.equals( "activate" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
                     if( parsing == INITIAL_STATE ) {
                         initialState.addActivatedFlag( attrs.getValue( i ) );
                     }
@@ -147,9 +147,9 @@ public class AdaptationSubParser extends SubParser {
         }
 
         // If the tag deactivates a flag
-        else if( qName.equals( "deactivate" ) ) {
+        else if( sName.equals( "deactivate" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
                     if( parsing == INITIAL_STATE ) {
                         initialState.addDeactivatedFlag( attrs.getValue( i ) );
                     }
@@ -162,14 +162,14 @@ public class AdaptationSubParser extends SubParser {
         }
 
         // If the tag set-value a var
-        else if( qName.equals( "set-value" ) ) {
+        else if( sName.equals( "set-value" ) ) {
             String var = null;
             String value = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = attrs.getValue( i );
                 }
             }
@@ -185,14 +185,14 @@ public class AdaptationSubParser extends SubParser {
         }
 
         // If the tag increment a var
-        else if( qName.equals( "increment" ) ) {
+        else if( sName.equals( "increment" ) ) {
             String var = null;
             String value = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = attrs.getValue( i );
                 }
 
@@ -209,14 +209,14 @@ public class AdaptationSubParser extends SubParser {
         }
 
         // If the tag decrement a var
-        else if( qName.equals( "decrement" ) ) {
+        else if( sName.equals( "decrement" ) ) {
             String var = null;
             String value = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = attrs.getValue( i );
                 }
 
@@ -233,18 +233,18 @@ public class AdaptationSubParser extends SubParser {
         }
 
         //Property from the UoL
-        else if( qName.equals( "property" ) ) {
+        else if( sName.equals( "property" ) ) {
             String id = null;
             String value = null;
             String op = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) ) {
+                if( attrs.getLocalName( i ).equals( "id" ) ) {
                     id = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "operation" ) ) {
+                else if( attrs.getLocalName( i ).equals( "operation" ) ) {
                     op = attrs.getValue( i );
                 }
             }
@@ -254,23 +254,23 @@ public class AdaptationSubParser extends SubParser {
     }
 
     @Override
-    public void endElement( String namespaceURI, String localName, String qName ) {
+    public void endElement( String namespaceURI, String localName, String sName ) {
 
         //Finish parsing the initial state
-        if( qName.equals( "adaptation" ) ) {
+        if( sName.equals( "adaptation" ) ) {
             chapter.addAdaptationProfile( profile );
         }
-        else if( qName.equals( "initial-state" ) ) {
+        else if( sName.equals( "initial-state" ) ) {
             parsing = NONE;
             profile.setInitialState( initialState );
         }
 
-        else if( qName.equals( "ruleDescription" ) ) {
+        else if( sName.equals( "ruleDescription" ) ) {
             this.rule_temp.setDescription( currentString.toString( ).trim( ) );
         }
 
         //Finish parsing an adaptation rule
-        else if( qName.equals( "adaptation-rule" ) ) {
+        else if( sName.equals( "adaptation-rule" ) ) {
             parsing = NONE;
             profile.addRule( rule_temp );
         }
