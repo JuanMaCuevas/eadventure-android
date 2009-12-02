@@ -1,5 +1,4 @@
 #summary Indice de la documentación
 #labels Featured
 #sidebar BarraNavegacion
-
-= e-Adventure engine for Android =
+http://e-adventure.e-ucm.es/img/Header.png
