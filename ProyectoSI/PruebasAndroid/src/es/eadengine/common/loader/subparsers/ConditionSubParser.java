@@ -99,15 +99,15 @@ public class ConditionSubParser extends SubParser {
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) {
 
         // If it is an either tag, create a new either conditions and switch the state
-        if( qName.equals( "either" ) ) {
+        if( sName.equals( "either" ) ) {
             currentEitherCondition = new Conditions( );
             reading = READING_EITHER;
         }
 
         // If it is an active tag
-        else if( qName.equals( "active" ) ) {
+        else if( sName.equals( "active" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
 
                     // Store the active flag in the conditions or either conditions
                     if( reading == READING_NONE )
@@ -121,9 +121,9 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is an inactive tag
-        else if( qName.equals( "inactive" ) ) {
+        else if( sName.equals( "inactive" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
 
                     // Store the inactive flag in the conditions or either conditions
                     if( reading == READING_NONE )
@@ -137,17 +137,17 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is a greater-than tag
-        else if( qName.equals( "greater-than" ) ) {
+        else if( sName.equals( "greater-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -160,17 +160,17 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is a greater-equals-than tag
-        else if( qName.equals( "greater-equals-than" ) ) {
+        else if( sName.equals( "greater-equals-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -183,17 +183,17 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is a less-than tag
-        else if( qName.equals( "less-than" ) ) {
+        else if( sName.equals( "less-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -206,17 +206,17 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is a less-equals-than tag
-        else if( qName.equals( "less-equals-than" ) ) {
+        else if( sName.equals( "less-equals-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -229,17 +229,17 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is a equals-than tag
-        else if( qName.equals( "equals" ) ) {
+        else if( sName.equals( "equals" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -252,11 +252,11 @@ public class ConditionSubParser extends SubParser {
         }
 
         // If it is a global-state-reference tag
-        else if( qName.equals( "global-state-ref" ) ) {
+        else if( sName.equals( "global-state-ref" ) ) {
             // Id
             String id = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) ) {
+                if( attrs.getLocalName( i ).equals( "id" ) ) {
                     id = attrs.getValue( i );
                 }
             }
@@ -279,7 +279,7 @@ public class ConditionSubParser extends SubParser {
     public void endElement( String namespaceURI, String sName, String qName ) {
 
         // If it is an either tag
-        if( qName.equals( "either" ) ) {
+        if( sName.equals( "either" ) ) {
             // Store the either condition in the condition, and switch the state back to normal
             conditions.add( currentEitherCondition );
             reading = READING_NONE;

@@ -185,13 +185,13 @@ public class ActionsSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is an examine, use or grab tag, create new conditions and effects
-            if( qName.equals( "examine" ) || qName.equals( "grab" ) || qName.equals( "use" ) || qName.equals( "talk-to" ) ) {
+            if( sName.equals( "examine" ) || sName.equals( "grab" ) || sName.equals( "use" ) || sName.equals( "talk-to" ) ) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "needsGoTo" ) )
+                    if( attrs.getLocalName( i ).equals( "needsGoTo" ) )
                         currentNeedsGoTo = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "keepDistance" ) )
+                    if( attrs.getLocalName( i ).equals( "keepDistance" ) )
                         currentKeepDistance = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "not-effects" ) )
+                    if( attrs.getLocalName( i ).equals( "not-effects" ) )
                         activateNotEffects = attrs.getValue( i ).equals( "yes" );
                 }
                 currentConditions = new Conditions( );
@@ -202,15 +202,15 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is an use-with or give-to tag, create new conditions and effects, and store the idTarget
-            else if( qName.equals( "use-with" ) || qName.equals( "give-to" ) || qName.equals( "drag-to" )) {
+            else if( sName.equals( "use-with" ) || sName.equals( "give-to" ) || sName.equals( "drag-to" )) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         currentIdTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "needsGoTo" ) )
+                    if( attrs.getLocalName( i ).equals( "needsGoTo" ) )
                         currentNeedsGoTo = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "keepDistance" ) )
+                    if( attrs.getLocalName( i ).equals( "keepDistance" ) )
                         currentKeepDistance = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "not-effects" ) )
+                    if( attrs.getLocalName( i ).equals( "not-effects" ) )
                         activateNotEffects = attrs.getValue( i ).equals( "yes" );
                 }
                 currentConditions = new Conditions( );
@@ -220,17 +220,17 @@ public class ActionsSubParser extends SubParser {
                 reading = READING_ACTION;
             }
 
-            else if( qName.equals( "custom" ) || qName.equals( "custom-interact" ) ) {
+            else if( sName.equals( "custom" ) || sName.equals( "custom-interact" ) ) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         currentIdTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "name" ) )
+                    if( attrs.getLocalName( i ).equals( "name" ) )
                         currentName = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "needsGoTo" ) )
+                    if( attrs.getLocalName( i ).equals( "needsGoTo" ) )
                         currentNeedsGoTo = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "keepDistance" ) )
+                    if( attrs.getLocalName( i ).equals( "keepDistance" ) )
                         currentKeepDistance = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "not-effects" ) )
+                    if( attrs.getLocalName( i ).equals( "not-effects" ) )
                         activateNotEffects = attrs.getValue( i ).equals( "yes" );
                 }
 
@@ -238,7 +238,7 @@ public class ActionsSubParser extends SubParser {
                 currentEffects = new Effects( );
                 currentNotEffects = new Effects( );
                 currentDocumentation = null;
-                if( qName.equals( "custom" ) )
+                if( sName.equals( "custom" ) )
                     currentCustomAction = new CustomAction( Action.CUSTOM );
                 else
                     currentCustomAction = new CustomAction( Action.CUSTOM_INTERACT );
@@ -246,10 +246,10 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a resources tag, create the new resources and switch the state
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
 
@@ -257,14 +257,14 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -274,19 +274,19 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a condition tag, create new conditions and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is a effect tag, create new effects and switch the state
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
             // If it is a not-effect tag, create new effects and switch the state
-            else if( qName.equals( "not-effect" ) ) {
+            else if( sName.equals( "not-effect" ) ) {
                 subParser = new EffectSubParser( currentNotEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
@@ -294,7 +294,7 @@ public class ActionsSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -311,7 +311,7 @@ public class ActionsSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a resources tag, add it to the object
-            if( qName.equals( "resources" ) ) {
+            if( sName.equals( "resources" ) ) {
                 if( reading == READING_RESOURCES ) {
                     currentCustomAction.addResources( currentResources );
                     reading = READING_NONE;
@@ -319,12 +319,12 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a documentation tag, hold the documentation in the current element
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 currentDocumentation = currentString.toString( ).trim( );
             }
 
             // If it is a examine tag, store the new action in the object
-            else if( qName.equals( "examine" ) ) {
+            else if( sName.equals( "examine" ) ) {
                 Action examineAction = new Action( Action.EXAMINE, currentConditions, currentEffects, currentNotEffects );
                 examineAction.setDocumentation( currentDocumentation );
                 examineAction.setKeepDistance( currentKeepDistance );
@@ -335,7 +335,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a grab tag, store the new action in the object
-            else if( qName.equals( "grab" ) ) {
+            else if( sName.equals( "grab" ) ) {
                 Action grabAction = new Action( Action.GRAB, currentConditions, currentEffects, currentNotEffects );
                 grabAction.setDocumentation( currentDocumentation );
                 grabAction.setKeepDistance( currentKeepDistance );
@@ -346,7 +346,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is an use tag, store the new action in the object
-            else if( qName.equals( "use" ) ) {
+            else if( sName.equals( "use" ) ) {
                 Action useAction = new Action( Action.USE, currentConditions, currentEffects, currentNotEffects );
                 useAction.setDocumentation( currentDocumentation );
                 useAction.setNeedsGoTo( currentNeedsGoTo );
@@ -357,7 +357,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is an use tag, store the new action in the object
-            else if( qName.equals( "talk-to" ) ) {
+            else if( sName.equals( "talk-to" ) ) {
                 Action talkToAction = new Action( Action.TALK_TO, currentConditions, currentEffects, currentNotEffects );
                 talkToAction.setDocumentation( currentDocumentation );
                 talkToAction.setNeedsGoTo( currentNeedsGoTo );
@@ -368,7 +368,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is an use-with tag, store the new action in the object
-            else if( qName.equals( "use-with" ) ) {
+            else if( sName.equals( "use-with" ) ) {
                 Action useWithAction = new Action( Action.USE_WITH, currentIdTarget, currentConditions, currentEffects, currentNotEffects );
                 useWithAction.setDocumentation( currentDocumentation );
                 useWithAction.setKeepDistance( currentKeepDistance );
@@ -379,7 +379,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is an use-with tag, store the new action in the object
-            else if( qName.equals( "drag-to" ) ) {
+            else if( sName.equals( "drag-to" ) ) {
                 Action useWithAction = new Action( Action.DRAG_TO, currentIdTarget, currentConditions, currentEffects, currentNotEffects );
                 useWithAction.setDocumentation( currentDocumentation );
                 useWithAction.setKeepDistance( currentKeepDistance );
@@ -390,7 +390,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a give-to tag, store the new action in the object
-            else if( qName.equals( "give-to" ) ) {
+            else if( sName.equals( "give-to" ) ) {
                 Action giveToAction = new Action( Action.GIVE_TO, currentIdTarget, currentConditions, currentEffects, currentNotEffects );
                 giveToAction.setDocumentation( currentDocumentation );
                 giveToAction.setKeepDistance( currentKeepDistance );
@@ -401,7 +401,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a custom tag, store the new custom action in the object
-            else if( qName.equals( "custom" ) ) {
+            else if( sName.equals( "custom" ) ) {
                 currentCustomAction.setName( currentName );
                 currentCustomAction.setConditions( currentConditions );
                 currentCustomAction.setEffects( currentEffects );
@@ -417,7 +417,7 @@ public class ActionsSubParser extends SubParser {
             }
 
             // If it is a custom-interact tag, store the new custom interact action in the object
-            else if( qName.equals( "custom-interact" ) ) {
+            else if( sName.equals( "custom-interact" ) ) {
                 currentCustomAction.setConditions( currentConditions );
                 currentCustomAction.setEffects( currentEffects );
                 currentCustomAction.setNotEffects( currentNotEffects );
@@ -440,10 +440,10 @@ public class ActionsSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 // Store the conditions in the resources
                 if( reading == READING_RESOURCES )
                     currentResources.setConditions( currentConditions );
@@ -456,14 +456,14 @@ public class ActionsSubParser extends SubParser {
         // If an effect is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect tag is being closed, switch the state
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
             // If the not-effect tag is being closed, switch the state
-            else if( qName.equals( "not-effect" ) ) {
+            else if( sName.equals( "not-effect" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }

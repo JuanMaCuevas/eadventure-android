@@ -52,7 +52,7 @@ public class AssessmentSubParser extends SubParser {
     /**
      * String to store the current string in the XML file
      */
-    private StringBuffer currentString;
+   /* private StringBuffer currentString; Lo he comentado xq peta al juntarse con el del SubParser....*/
 
     /**
      * Constant for reading nothing
@@ -111,13 +111,13 @@ public class AssessmentSubParser extends SubParser {
     @Override
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) {
 
-        if( qName.equals( "assessment" ) ) {
+        if( sName.equals( "assessment" ) ) {
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "show-report-at-end" ) ) {
+                if( attrs.getLocalName( i ).equals( "show-report-at-end" ) ) {
                     profile.setShowReportAtEnd( attrs.getValue( i ).equals( "yes" ) );
                 }
-                if( attrs.getQName( i ).equals( "send-to-email" ) ) {
+                if( attrs.getLocalName( i ).equals( "send-to-email" ) ) {
                     if( attrs.getValue( i ) == null || attrs.getValue( i ).length( ) < 1 ) {
                         profile.setEmail( "" );
                         profile.setSendByEmail( false );
@@ -127,43 +127,43 @@ public class AssessmentSubParser extends SubParser {
                         profile.setSendByEmail( true );
                     }
                 }
-                if( attrs.getQName( i ).equals( "scorm12" ) ) {
+                if( attrs.getLocalName( i ).equals( "scorm12" ) ) {
                     profile.setScorm12( attrs.getValue( i ).equals( "yes" ) );
                 }
-                if( attrs.getQName( i ).equals( "scorm2004" ) ) {
+                if( attrs.getLocalName( i ).equals( "scorm2004" ) ) {
                     profile.setScorm2004( attrs.getValue( i ).equals( "yes" ) );
                 }
 
-                if( attrs.getQName( i ).equals( "name" ) ) {
+                if( attrs.getLocalName( i ).equals( "name" ) ) {
                     profile.setName( attrs.getValue( i ) );
                 }
             }
 
         }
-        else if( qName.equals( "smtp-config" ) ) {
+        else if( sName.equals( "smtp-config" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "smtp-ssl" ) )
+                if( attrs.getLocalName( i ).equals( "smtp-ssl" ) )
                     profile.setSmtpSSL( attrs.getValue( i ).equals( "yes" ) );
-                if( attrs.getQName( i ).equals( "smtp-server" ) )
+                if( attrs.getLocalName( i ).equals( "smtp-server" ) )
                     profile.setSmtpServer( attrs.getValue( i ) );
-                if( attrs.getQName( i ).equals( "smtp-port" ) )
+                if( attrs.getLocalName( i ).equals( "smtp-port" ) )
                     profile.setSmtpPort( attrs.getValue( i ) );
-                if( attrs.getQName( i ).equals( "smtp-user" ) )
+                if( attrs.getLocalName( i ).equals( "smtp-user" ) )
                     profile.setSmtpUser( attrs.getValue( i ) );
-                if( attrs.getQName( i ).equals( "smtp-pwd" ) )
+                if( attrs.getLocalName( i ).equals( "smtp-pwd" ) )
                     profile.setSmtpPwd( attrs.getValue( i ) );
             }
         }
 
-        else if( qName.equals( "assessment-rule" ) ) {
+        else if( sName.equals( "assessment-rule" ) ) {
 
             String id = null;
             int importance = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) )
+                if( attrs.getLocalName( i ).equals( "id" ) )
                     id = attrs.getValue( i );
-                if( attrs.getQName( i ).equals( "importance" ) ) {
+                if( attrs.getLocalName( i ).equals( "importance" ) ) {
                     for( int j = 0; j < AssessmentRule.N_IMPORTANCE_VALUES; j++ )
                         if( attrs.getValue( i ).equals( AssessmentRule.IMPORTANCE_VALUES[j] ) )
                             importance = j;
@@ -173,7 +173,7 @@ public class AssessmentSubParser extends SubParser {
             currentAssessmentRule = new AssessmentRule( id, importance );
         }
 
-        else if( qName.equals( "timed-assessment-rule" ) ) {
+        else if( sName.equals( "timed-assessment-rule" ) ) {
 
             String id = null;
             int importance = 0;
@@ -181,14 +181,14 @@ public class AssessmentSubParser extends SubParser {
             boolean has = false;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) )
+                if( attrs.getLocalName( i ).equals( "id" ) )
                     id = attrs.getValue( i );
-                if( attrs.getQName( i ).equals( "importance" ) ) {
+                if( attrs.getLocalName( i ).equals( "importance" ) ) {
                     for( int j = 0; j < AssessmentRule.N_IMPORTANCE_VALUES; j++ )
                         if( attrs.getValue( i ).equals( AssessmentRule.IMPORTANCE_VALUES[j] ) )
                             importance = j;
                 }
-                if( attrs.getQName( i ).equals( "usesEndConditions" ) ) {
+                if( attrs.getLocalName( i ).equals( "usesEndConditions" ) ) {
                     has = true;
                     usesEndConditions = attrs.getValue( i ).equals( "yes" );
                 }
@@ -199,20 +199,20 @@ public class AssessmentSubParser extends SubParser {
                 ( (TimedAssessmentRule) currentAssessmentRule ).setUsesEndConditions( usesEndConditions );
         }
 
-        else if( qName.equals( "condition" ) || qName.equals( "init-condition" ) || qName.equals( "end-condition" ) ) {
+        else if( sName.equals( "condition" ) || sName.equals( "init-condition" ) || sName.equals( "end-condition" ) ) {
             currentConditions = new Conditions( );
         }
 
         // If it is an either tag, create a new either conditions and switch the state
-        else if( qName.equals( "either" ) ) {
+        else if( sName.equals( "either" ) ) {
             currentEitherCondition = new Conditions( );
             reading = READING_EITHER;
         }
 
         // If it is an active tag
-        else if( qName.equals( "active" ) ) {
+        else if( sName.equals( "active" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
 
                     // Store the active flag in the conditions or either conditions
                     if( reading == READING_NONE )
@@ -225,9 +225,9 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is an inactive tag
-        else if( qName.equals( "inactive" ) ) {
+        else if( sName.equals( "inactive" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
 
                     // Store the inactive flag in the conditions or either conditions
                     if( reading == READING_NONE )
@@ -240,17 +240,17 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is a greater-than tag
-        else if( qName.equals( "greater-than" ) ) {
+        else if( sName.equals( "greater-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -263,17 +263,17 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is a greater-equals-than tag
-        else if( qName.equals( "greater-equals-than" ) ) {
+        else if( sName.equals( "greater-equals-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -286,17 +286,17 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is a less-than tag
-        else if( qName.equals( "less-than" ) ) {
+        else if( sName.equals( "less-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -309,17 +309,17 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is a less-equals-than tag
-        else if( qName.equals( "less-equals-than" ) ) {
+        else if( sName.equals( "less-equals-than" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -332,17 +332,17 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is a equals-than tag
-        else if( qName.equals( "equals" ) ) {
+        else if( sName.equals( "equals" ) ) {
             // The var
             String var = null;
             // The value
             int value = 0;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = Integer.parseInt( attrs.getValue( i ) );
                 }
             }
@@ -355,11 +355,11 @@ public class AssessmentSubParser extends SubParser {
         }
 
         // If it is a global-state-reference tag
-        else if( qName.equals( "global-state-ref" ) ) {
+        else if( sName.equals( "global-state-ref" ) ) {
             // Id
             String id = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) ) {
+                if( attrs.getLocalName( i ).equals( "id" ) ) {
                     id = attrs.getValue( i );
                 }
             }
@@ -370,14 +370,14 @@ public class AssessmentSubParser extends SubParser {
                 currentEitherCondition.add( new GlobalStateCondition( id ) );
         }
 
-        else if( qName.equals( "set-property" ) ) {
+        else if( sName.equals( "set-property" ) ) {
             String id = null;
             String value = null;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) )
+                if( attrs.getLocalName( i ).equals( "id" ) )
                     id = attrs.getValue( i );
-                if( attrs.getQName( i ).equals( "value" ) )
+                if( attrs.getLocalName( i ).equals( "value" ) )
                     value = attrs.getValue( i );
 
             }
@@ -385,15 +385,15 @@ public class AssessmentSubParser extends SubParser {
             currentAssessmentRule.addProperty( new AssessmentProperty( id, value ) );
         }
 
-        else if( qName.equals( "assessEffect" ) ) {
+        else if( sName.equals( "assessEffect" ) ) {
             if( currentAssessmentRule instanceof TimedAssessmentRule ) {
                 int timeMin = Integer.MIN_VALUE;
                 int timeMax = Integer.MIN_VALUE;
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
 
-                    if( attrs.getQName( i ).equals( "time-min" ) )
+                    if( attrs.getLocalName( i ).equals( "time-min" ) )
                         timeMin = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "time-max" ) )
+                    if( attrs.getLocalName( i ).equals( "time-max" ) )
                         timeMax = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -415,38 +415,38 @@ public class AssessmentSubParser extends SubParser {
     @Override
     public void endElement( String namespaceURI, String sName, String qName ) {
 
-        if( qName.equals( "assessment" ) ) {
+        if( sName.equals( "assessment" ) ) {
             chapter.addAssessmentProfile( profile );
         }
-        else if( qName.equals( "assessment-rule" ) || qName.equals( "timed-assessment-rule" ) ) {
+        else if( sName.equals( "assessment-rule" ) || sName.equals( "timed-assessment-rule" ) ) {
             //assessmentRules.add( currentAssessmentRule );
             profile.addRule( currentAssessmentRule );
         }
 
-        else if( qName.equals( "concept" ) ) {
+        else if( sName.equals( "concept" ) ) {
             currentAssessmentRule.setConcept( currentString.toString( ).trim( ) );
         }
 
-        else if( qName.equals( "condition" ) ) {
+        else if( sName.equals( "condition" ) ) {
             currentAssessmentRule.setConditions( currentConditions );
         }
 
-        else if( qName.equals( "init-condition" ) ) {
+        else if( sName.equals( "init-condition" ) ) {
             ( (TimedAssessmentRule) currentAssessmentRule ).setInitConditions( currentConditions );
         }
 
-        else if( qName.equals( "end-condition" ) ) {
+        else if( sName.equals( "end-condition" ) ) {
             ( (TimedAssessmentRule) currentAssessmentRule ).setEndConditions( currentConditions );
         }
 
         // If it is an either tag
-        else if( qName.equals( "either" ) ) {
+        else if( sName.equals( "either" ) ) {
             // Store the either condition in the condition, and switch the state back to normal
             currentConditions.add( currentEitherCondition );
             reading = READING_NONE;
         }
 
-        else if( qName.equals( "set-text" ) ) {
+        else if( sName.equals( "set-text" ) ) {
             currentAssessmentRule.setText( currentString.toString( ).trim( ) );
         }
 
@@ -463,6 +463,7 @@ public class AssessmentSubParser extends SubParser {
 
         // Append the new characters
         currentString.append( new String( buf, offset, len ) );
+
     }
 
 }

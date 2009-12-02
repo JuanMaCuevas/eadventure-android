@@ -166,32 +166,32 @@ public class AdaptationHandler extends DefaultHandler {
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) throws SAXException {
 
         // Check if it is an scorm adaptation profile
-        if( qName.equals( "adaptation" ) ) {
+        if( sName.equals( "adaptation" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "scorm12" ) ) {
+                if( attrs.getLocalName( i ).equals( "scorm12" ) ) {
                     scorm12 = attrs.getValue( i ).equals( "yes" );
                 }
-                if( attrs.getQName( i ).equals( "scorm2004" ) ) {
+                if( attrs.getLocalName( i ).equals( "scorm2004" ) ) {
                     scorm2004 = attrs.getValue( i ).equals( "yes" );
                 }
             }
         }
 
         //Start parsing the initial state
-        if( qName.equals( "initial-state" ) ) {
+        if( sName.equals( "initial-state" ) ) {
             parsing = INITIAL_STATE;
         }
 
         //Start parsing an adaptation rule
-        else if( qName.equals( "adaptation-rule" ) ) {
+        else if( sName.equals( "adaptation-rule" ) ) {
             parsing = ADAPTATION_RULE;
             rule_temp = new AdaptationRule( );
         }
 
         //Initial scene
-        else if( qName.equals( "initial-scene" ) ) {
+        else if( sName.equals( "initial-scene" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "idTarget" ) ) {
+                if( attrs.getLocalName( i ).equals( "idTarget" ) ) {
                     if( parsing == INITIAL_STATE ) {
                         initialState.setTargetId( attrs.getValue( i ) );
                     }
@@ -203,9 +203,9 @@ public class AdaptationHandler extends DefaultHandler {
         }
 
         // If the tag activates a flag
-        else if( qName.equals( "activate" ) ) {
+        else if( sName.equals( "activate" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
                     if( parsing == INITIAL_STATE ) {
                         initialState.addActivatedFlag( attrs.getValue( i ) );
                     }
@@ -218,9 +218,9 @@ public class AdaptationHandler extends DefaultHandler {
         }
 
         // If the tag deactivates a flag
-        else if( qName.equals( "deactivate" ) ) {
+        else if( sName.equals( "deactivate" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "flag" ) ) {
+                if( attrs.getLocalName( i ).equals( "flag" ) ) {
                     if( parsing == INITIAL_STATE ) {
                         initialState.addDeactivatedFlag( attrs.getValue( i ) );
                     }
@@ -233,14 +233,14 @@ public class AdaptationHandler extends DefaultHandler {
         }
 
         // If the tag set-value a var
-        else if( qName.equals( "set-value" ) ) {
+        else if( sName.equals( "set-value" ) ) {
             String var = null;
             String value = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = attrs.getValue( i );
                 }
             }
@@ -256,10 +256,10 @@ public class AdaptationHandler extends DefaultHandler {
         }
 
         // If the tag increment a var
-        else if( qName.equals( "increment" ) ) {
+        else if( sName.equals( "increment" ) ) {
             String var = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
 
@@ -276,10 +276,10 @@ public class AdaptationHandler extends DefaultHandler {
         }
 
         // If the tag decrement a var
-        else if( qName.equals( "decrement" ) ) {
+        else if( sName.equals( "decrement" ) ) {
             String var = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "var" ) ) {
+                if( attrs.getLocalName( i ).equals( "var" ) ) {
                     var = attrs.getValue( i );
                 }
 
@@ -296,18 +296,18 @@ public class AdaptationHandler extends DefaultHandler {
         }
 
         //Property from the UoL
-        else if( qName.equals( "property" ) ) {
+        else if( sName.equals( "property" ) ) {
             String id = null;
             String value = null;
             String op = null;
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "id" ) ) {
+                if( attrs.getLocalName( i ).equals( "id" ) ) {
                     id = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "value" ) ) {
+                else if( attrs.getLocalName( i ).equals( "value" ) ) {
                     value = attrs.getValue( i );
                 }
-                else if( attrs.getQName( i ).equals( "operation" ) ) {
+                else if( attrs.getLocalName( i ).equals( "operation" ) ) {
                     op = attrs.getValue( i );
                 }
             }
@@ -317,19 +317,19 @@ public class AdaptationHandler extends DefaultHandler {
     }
 
     @Override
-    public void endElement( String namespaceURI, String localName, String qName ) throws SAXException {
+    public void endElement( String namespaceURI, String localName, String sName ) throws SAXException {
 
         //Finish parsing the initial state
-        if( qName.equals( "initial-state" ) ) {
+        if( sName.equals( "initial-state" ) ) {
             parsing = NONE;
         }
 
-        else if( qName.equals( "description" ) ) {
+        else if( sName.equals( "description" ) ) {
             this.rule_temp.setDescription( currentString.toString( ).trim( ) );
         }
 
         //Finish parsing an adaptation rule
-        else if( qName.equals( "adaptation-rule" ) ) {
+        else if( sName.equals( "adaptation-rule" ) ) {
             parsing = NONE;
             externalRules.add( rule_temp );
         }

@@ -47,6 +47,8 @@ import java.net.URL;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import android.util.Log;
+
 import es.eadengine.resourcehandler.zipurl.ZipURL;
 
 /**
@@ -101,6 +103,9 @@ class ResourceHandlerUnrestricted extends ResourceHandler {
         try {
             ResourceHandler.zipPath = zipFilename;
             zipFile = new ZipFile( zipFilename );
+            
+            Log.d("ResourceHandlerUnrestricted","Nombre Zip"+zipFilename);
+            
             /*Enumeration entries = zipFile.entries( ); 
             int n =0;
             while (entries.hasMoreElements( )){

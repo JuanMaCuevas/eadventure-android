@@ -126,18 +126,18 @@ public class BarrierSubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If it is a object tag, create the new object (with its id)
-            if( qName.equals( "barrier" ) ) {
+            if( sName.equals( "barrier" ) ) {
 
                 int x = 0, y = 0, width = 0, height = 0;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "width" ) )
+                    if( attrs.getLocalName( i ).equals( "width" ) )
                         width = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "height" ) )
+                    if( attrs.getLocalName( i ).equals( "height" ) )
                         height = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -145,7 +145,7 @@ public class BarrierSubParser extends SubParser {
             }
 
             // If it is a condition tag, create new conditions and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
@@ -155,7 +155,7 @@ public class BarrierSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -172,28 +172,28 @@ public class BarrierSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is an object tag, store the object in the game data
-            if( qName.equals( "barrier" ) ) {
+            if( sName.equals( "barrier" ) ) {
                 scene.addBarrier( barrier );
             }
 
             // If it is a name tag, store the name in the object
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 barrier.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a documentation tag, hold the documentation in the current element
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 if( reading == READING_NONE )
                     barrier.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // If it is a brief tag, store the brief description in the object
-            else if( qName.equals( "brief" ) ) {
+            else if( sName.equals( "brief" ) ) {
                 barrier.setDescription( currentString.toString( ).trim( ) );
             }
 
             // If it is a detailed tag, store the detailed description in the object
-            else if( qName.equals( "detailed" ) ) {
+            else if( sName.equals( "detailed" ) ) {
                 barrier.setDetailedDescription( currentString.toString( ).trim( ) );
             }
 
@@ -204,10 +204,10 @@ public class BarrierSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 if( reading == READING_NONE ) {
                     this.barrier.setConditions( currentConditions );
                 }

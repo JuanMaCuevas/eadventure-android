@@ -165,11 +165,11 @@ public class GraphConversationSubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If it is a "graph-conversation" we pick the name, so we can build the conversation later
-            if( qName.equals( "graph-conversation" ) ) {
+            if( sName.equals( "graph-conversation" ) ) {
                 // Store the name
                 conversationName = "";
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         conversationName = attrs.getValue( i );
 
                 graphNodes = new ArrayList<ConversationNode>( );
@@ -177,15 +177,15 @@ public class GraphConversationSubParser extends SubParser {
             }
 
             // If it is a node, create a new node
-            else if( qName.equals( "dialogue-node" ) || qName.equals( "option-node" ) ) {
+            else if( sName.equals( "dialogue-node" ) || sName.equals( "option-node" ) ) {
                 // Create the node depending of the tag
-                if( qName.equals( "dialogue-node" ) )
+                if( sName.equals( "dialogue-node" ) )
                     currentNode = new DialogueConversationNode( );
 
-                if( qName.equals( "option-node" ) ) {
+                if( sName.equals( "option-node" ) ) {
                     for( int i = 0; i < attrs.getLength( ); i++ ) {
                         //If there is a "random" attribute, store is the options will be random
-                        if( attrs.getQName( i ).equals( "random" ) ) {
+                        if( attrs.getLocalName( i ).equals( "random" ) ) {
                             if( attrs.getValue( i ).equals( "yes" ) )
                                 random = true;
                             else
@@ -200,21 +200,21 @@ public class GraphConversationSubParser extends SubParser {
             }
 
             // If it is a non-player character line, store the character name and audio path (if present)
-            else if( qName.equals( "speak-char" ) ) {
+            else if( sName.equals( "speak-char" ) ) {
                 // Set default name to "NPC"
                 characterName = "NPC";
                 audioPath = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
                     // If there is a "idTarget" attribute, store it
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         characterName = attrs.getValue( i );
 
                     // If there is a "uri" attribute, store it as audio path
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         audioPath = attrs.getValue( i );
                     // If there is a "synthesize" attribute, store its value
-                    if( attrs.getQName( i ).equals( "synthesize" ) ) {
+                    if( attrs.getLocalName( i ).equals( "synthesize" ) ) {
                         String response = attrs.getValue( i );
                         if( response.equals( "yes" ) )
                             synthesizerVoice = true;
@@ -225,16 +225,16 @@ public class GraphConversationSubParser extends SubParser {
             }
 
             // If it is a player character line, store the audio path (if present)
-            else if( qName.equals( "speak-player" ) ) {
+            else if( sName.equals( "speak-player" ) ) {
                 audioPath = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
 
                     // If there is a "uri" attribute, store it as audio path
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         audioPath = attrs.getValue( i );
                     // If there is a "synthesize" attribute, store its value
-                    if( attrs.getQName( i ).equals( "synthesize" ) ) {
+                    if( attrs.getLocalName( i ).equals( "synthesize" ) ) {
                         String response = attrs.getValue( i );
                         if( response.equals( "yes" ) )
                             synthesizerVoice = true;
@@ -245,10 +245,10 @@ public class GraphConversationSubParser extends SubParser {
             }
 
             // If it is a node to a child, store the number of the child node
-            else if( qName.equals( "child" ) ) {
+            else if( sName.equals( "child" ) ) {
                 // Look for the index of the link, and add it
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "nodeindex" ) ) {
+                    if( attrs.getLocalName( i ).equals( "nodeindex" ) ) {
                         // Get the child node index, and store it
                         Integer childIndex = new Integer( attrs.getValue( i ) );
                         currentLinks.add( childIndex );
@@ -257,13 +257,13 @@ public class GraphConversationSubParser extends SubParser {
             }
 
             // If it is an effect tag
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 // Create the new effects, and the subparser
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }// If it is a condition tag, create new conditions and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
@@ -272,7 +272,7 @@ public class GraphConversationSubParser extends SubParser {
 
         // If we are subparsing an effect, spread the call
         if( subParsing == SUBPARSING_EFFECT || subParsing == SUBPARSING_CONDITION ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -288,20 +288,20 @@ public class GraphConversationSubParser extends SubParser {
         // If no element is being subparsed
         if( subParsing == SUBPARSING_NONE ) {
             // If the tag ending is the conversation, create the graph conversation, with the first node of the list
-            if( qName.equals( "graph-conversation" ) ) {
+            if( sName.equals( "graph-conversation" ) ) {
                 setNodeLinks( );
                 chapter.addConversation( new GraphConversation( conversationName, graphNodes.get( 0 ) ) );
             }
 
             // If a node is closed
-            else if( qName.equals( "dialogue-node" ) || qName.equals( "option-node" ) ) {
+            else if( sName.equals( "dialogue-node" ) || sName.equals( "option-node" ) ) {
                 // Add the current node to the node list, and the set of children references into the node links
                 graphNodes.add( currentNode );
                 nodeLinks.add( currentLinks );
             }
 
             // If the tag is a line said by the player, add it to the current node
-            else if( qName.equals( "speak-player" ) ) {
+            else if( sName.equals( "speak-player" ) ) {
                 // Store the read string into the current node, and then delete the string. The trim is performed so we
                 // don't
                 // have to worry with indentations or leading/trailing spaces
@@ -316,7 +316,7 @@ public class GraphConversationSubParser extends SubParser {
             }
 
             // If the tag is a line said by a non-player character, add it to the current node
-            else if( qName.equals( "speak-char" ) ) {
+            else if( sName.equals( "speak-char" ) ) {
                 // Store the read string into the current node, and then delete the string. The trim is performed so we
                 // don't
                 // have to worry with indentations or leading/trailing spaces
@@ -336,15 +336,15 @@ public class GraphConversationSubParser extends SubParser {
         // If we are subparsing an effect
         else if( subParsing == SUBPARSING_EFFECT || subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect is being closed, insert the effect into the current node
-            if( qName.equals( "effect" ) && subParsing == SUBPARSING_EFFECT ) {
+            if( sName.equals( "effect" ) && subParsing == SUBPARSING_EFFECT ) {
                 currentNode.setEffects( currentEffects );
                 subParsing = SUBPARSING_NONE;
             }
             // If the effect is being closed, insert the effect into the current node
-            else if( qName.equals( "condition" ) && subParsing == SUBPARSING_CONDITION ) {
+            else if( sName.equals( "condition" ) && subParsing == SUBPARSING_CONDITION ) {
                 conversationLine.setConditions( currentConditions );
                 subParsing = SUBPARSING_NONE;
             }

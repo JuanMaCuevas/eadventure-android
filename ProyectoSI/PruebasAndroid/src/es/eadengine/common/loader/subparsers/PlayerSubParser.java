@@ -108,37 +108,37 @@ public class PlayerSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a player tag, create the player
-            if( qName.equals( "player" ) ) {
+            if( sName.equals( "player" ) ) {
                 player = new Player( );
             }
 
             // If it is a resources tag, create new resources
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
 
             }
 
             // If it is a condition tag, create new conditions, new subparser and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 conditionSubParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -148,43 +148,43 @@ public class PlayerSubParser extends SubParser {
             }
 
             // If it is a frontcolor or bordercolor tag, pick the color
-            else if( qName.equals( "frontcolor" ) || qName.equals( "bordercolor" ) ) {
+            else if( sName.equals( "frontcolor" ) || sName.equals( "bordercolor" ) ) {
                 String color = "";
 
                 // Pick the color
                 for( int i = 0; i < attrs.getLength( ); i++ )
-                    if( attrs.getQName( i ).equals( "color" ) )
+                    if( attrs.getLocalName( i ).equals( "color" ) )
                         color = attrs.getValue( i );
 
                 // Set the color in the player
-                if( qName.equals( "frontcolor" ) )
+                if( sName.equals( "frontcolor" ) )
                     player.setTextFrontColor( color );
-                if( qName.equals( "bordercolor" ) )
+                if( sName.equals( "bordercolor" ) )
                     player.setTextBorderColor( color );
             }
 
-            else if( qName.equals( "textcolor" ) ) {
+            else if( sName.equals( "textcolor" ) ) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "showsSpeechBubble" ) )
+                    if( attrs.getLocalName( i ).equals( "showsSpeechBubble" ) )
                         player.setShowsSpeechBubbles( attrs.getValue( i ).equals( "yes" ) );
-                    if( attrs.getQName( i ).equals( "bubbleBkgColor" ) )
+                    if( attrs.getLocalName( i ).equals( "bubbleBkgColor" ) )
                         player.setBubbleBkgColor( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "bubbleBorderColor" ) )
+                    if( attrs.getLocalName( i ).equals( "bubbleBorderColor" ) )
                         player.setBubbleBorderColor( attrs.getValue( i ) );
                 }
             }
 
             // If it is a voice tag, take the voice and the always synthesizer option
-            else if( qName.equals( "voice" ) ) {
+            else if( sName.equals( "voice" ) ) {
                 String voice = new String( "" );
                 String response;
                 boolean alwaysSynthesizer = false;
 
                 // Pick the voice and synthesizer option
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "name" ) )
+                    if( attrs.getLocalName( i ).equals( "name" ) )
                         voice = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "synthesizeAlways" ) ) {
+                    if( attrs.getLocalName( i ).equals( "synthesizeAlways" ) ) {
                         response = attrs.getValue( i );
                         if( response.equals( "yes" ) )
                             alwaysSynthesizer = true;
@@ -199,7 +199,7 @@ public class PlayerSubParser extends SubParser {
 
         // If a condition is being subparsed, spread the call
         if( subParsing == SUBPARSING_CONDITION ) {
-            conditionSubParser.startElement( namespaceURI, sName, qName, attrs );
+            conditionSubParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -216,32 +216,32 @@ public class PlayerSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a player tag, store the player in the game data
-            if( qName.equals( "player" ) ) {
+            if( sName.equals( "player" ) ) {
                 chapter.setPlayer( player );
             }
 
             // If it is a documentation tag, hold the documentation in the player
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 player.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // If it is a resources tag, add the resources to the player
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 player.addResources( currentResources );
             }
 
             // If it is a name tag, add the name to the player
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 player.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a brief tag, add the brief description to the player
-            else if( qName.equals( "brief" ) ) {
+            else if( sName.equals( "brief" ) ) {
                 player.setDescription( currentString.toString( ).trim( ) );
             }
 
             // If it is a detailed tag, add the detailed description to the player
-            else if( qName.equals( "detailed" ) ) {
+            else if( sName.equals( "detailed" ) ) {
                 player.setDetailedDescription( currentString.toString( ).trim( ) );
             }
 
@@ -252,10 +252,10 @@ public class PlayerSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            conditionSubParser.endElement( namespaceURI, sName, qName );
+            conditionSubParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed, add the condition to the resources, and switch the state
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 currentResources.setConditions( currentConditions );
                 subParsing = SUBPARSING_NONE;
             }

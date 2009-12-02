@@ -148,7 +148,7 @@ public class CutsceneSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a slidescene tag, create a new slidescene with its id
-            if( qName.equals( "slidescene" ) || qName.equals( "videoscene" ) ) {
+            if( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) {
                 String slidesceneId = "";
                 boolean initialScene = false;
                 String idTarget = "";
@@ -157,25 +157,25 @@ public class CutsceneSubParser extends SubParser {
                 String next = "go-back";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         slidesceneId = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "start" ) )
+                    if( attrs.getLocalName( i ).equals( "start" ) )
                         initialScene = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         idTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "destinyX" ) )
+                    if( attrs.getLocalName( i ).equals( "destinyX" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "destinyY" ) )
+                    if( attrs.getLocalName( i ).equals( "destinyY" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionType" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionType" ) )
                         transitionType = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionTime" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionTime" ) )
                         transitionTime = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "next" ) )
+                    if( attrs.getLocalName( i ).equals( "next" ) )
                         next = attrs.getValue( i );
                 }
 
-                if( qName.equals( "slidescene" ) )
+                if( sName.equals( "slidescene" ) )
                     cutscene = new Slidescene( slidesceneId );
                 else
                     cutscene = new Videoscene( slidesceneId );
@@ -198,11 +198,11 @@ public class CutsceneSubParser extends SubParser {
             }
 
             // If it is a resources tag, create new resources
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
 
@@ -210,14 +210,14 @@ public class CutsceneSubParser extends SubParser {
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -225,26 +225,26 @@ public class CutsceneSubParser extends SubParser {
             }
 
             // If it is an end-game tag, store it in the slidescene
-            else if( qName.equals( "end-game" ) ) {
+            else if( sName.equals( "end-game" ) ) {
                 cutscene.setNext( Cutscene.ENDCHAPTER );
             }
 
             // If it is a next-scene tag, create the new next scene
-            else if( qName.equals( "next-scene" ) ) {
+            else if( sName.equals( "next-scene" ) ) {
                 String idTarget = "";
                 int x = Integer.MIN_VALUE, y = Integer.MIN_VALUE;
                 int transitionType = 0, transitionTime = 0;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         idTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionType" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionType" ) )
                         transitionType = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionTime" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionTime" ) )
                         transitionTime = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -255,21 +255,21 @@ public class CutsceneSubParser extends SubParser {
             }
 
             // If it is a condition tag, create the new condition, the subparser and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is a effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
 
             // If it is a post-effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "post-effect" ) ) {
+            else if( sName.equals( "post-effect" ) ) {
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
@@ -278,7 +278,7 @@ public class CutsceneSubParser extends SubParser {
 
         // If it is reading an effect or a condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -295,28 +295,28 @@ public class CutsceneSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a slidescene tag, add it to the game data
-            if( qName.equals( "slidescene" ) || qName.equals( "videoscene" ) ) {
+            if( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) {
                 chapter.addCutscene( cutscene );
             }
 
             // If it is a resources tag, add it to the slidescene
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 cutscene.addResources( currentResources );
                 reading = READING_NONE;
             }
 
             // If it is a name tag, add the name to the slidescene
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 cutscene.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a documentation tag, hold the documentation in the slidescene
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 cutscene.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // If it is a next-scene tag, add the next scene to the slidescene
-            else if( qName.equals( "next-scene" ) ) {
+            else if( sName.equals( "next-scene" ) ) {
                 cutscene.addNextScene( currentNextScene );
                 reading = READING_NONE;
             }
@@ -328,10 +328,10 @@ public class CutsceneSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
                 // If we are parsing a resources tag, add the conditions to the current resources
                 if( reading == READING_RESOURCES )
                     currentResources.setConditions( currentConditions );
@@ -348,10 +348,10 @@ public class CutsceneSubParser extends SubParser {
         // If an effect is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect tag is being closed, store the effect in the next scene and switch the state
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
                 if( currentNextScene != null )
                     currentNextScene.setEffects( currentEffects );
                 else {
@@ -364,7 +364,7 @@ public class CutsceneSubParser extends SubParser {
             }
 
             // If the effect tag is being closed, add the post-effects to the current next scene and switch the state
-            if( qName.equals( "post-effect" ) ) {
+            if( sName.equals( "post-effect" ) ) {
                 if( currentNextScene != null )
                     currentNextScene.setPostEffects( currentEffects );
                 else {

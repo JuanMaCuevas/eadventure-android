@@ -193,20 +193,20 @@ public class SceneSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a scene tag, create a new scene with its id
-            if( qName.equals( "scene" ) ) {
+            if( sName.equals( "scene" ) ) {
                 String sceneId = "";
                 boolean initialScene = false;
                 int playerLayer = -1;
                 float playerScale = 1.0f;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         sceneId = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "start" ) )
+                    if( attrs.getLocalName( i ).equals( "start" ) )
                         initialScene = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "playerLayer" ) )
+                    if( attrs.getLocalName( i ).equals( "playerLayer" ) )
                         playerLayer = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "playerScale" ) )
+                    if( attrs.getLocalName( i ).equals( "playerScale" ) )
                         playerScale = Float.parseFloat( attrs.getValue( i ) );
                 }
 
@@ -218,11 +218,11 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is a resources tag, create the new resources
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
 
@@ -230,14 +230,14 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is an asset tag, read it and add it to the current resources
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
@@ -245,13 +245,13 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is a default-initial-position tag, store it in the scene
-            else if( qName.equals( "default-initial-position" ) ) {
+            else if( sName.equals( "default-initial-position" ) ) {
                 int x = Integer.MIN_VALUE, y = Integer.MIN_VALUE;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -259,7 +259,7 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is an exit tag, create the new exit
-            else if( qName.equals( "exit" ) ) {
+            else if( sName.equals( "exit" ) ) {
                 int x = 0, y = 0, width = 0, height = 0;
                 boolean rectangular = true;
                 int influenceX = 0, influenceY = 0, influenceWidth = 0, influenceHeight = 0;
@@ -270,38 +270,38 @@ public class SceneSubParser extends SubParser {
                 boolean notEffects = false;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "rectangular" ) )
+                    if( attrs.getLocalName( i ).equals( "rectangular" ) )
                         rectangular = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "width" ) )
+                    if( attrs.getLocalName( i ).equals( "width" ) )
                         width = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "height" ) )
+                    if( attrs.getLocalName( i ).equals( "height" ) )
                         height = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "hasInfluenceArea" ) )
+                    if( attrs.getLocalName( i ).equals( "hasInfluenceArea" ) )
                         hasInfluence = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "influenceX" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceX" ) )
                         influenceX = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceY" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceY" ) )
                         influenceY = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceWidth" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceWidth" ) )
                         influenceWidth = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceHeight" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceHeight" ) )
                         influenceHeight = Integer.parseInt( attrs.getValue( i ) );
 
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         idTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "destinyX" ) )
+                    if( attrs.getLocalName( i ).equals( "destinyX" ) )
                         destinyX = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "destinyY" ) )
+                    if( attrs.getLocalName( i ).equals( "destinyY" ) )
                         destinyY = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionType" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionType" ) )
                         transitionType = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionTime" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionTime" ) )
                         transitionTime = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "not-effects" ) )
+                    if( attrs.getLocalName( i ).equals( "not-effects" ) )
                         notEffects = attrs.getValue( i ).equals( "yes" );
                 }
 
@@ -319,14 +319,14 @@ public class SceneSubParser extends SubParser {
                 reading = READING_EXIT;
             }
 
-            else if( qName.equals( "exit-look" ) ) {
+            else if( sName.equals( "exit-look" ) ) {
                 currentExitLook = new ExitLook( );
                 String text = null;
                 String cursorPath = null;
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "text" ) )
+                    if( attrs.getLocalName( i ).equals( "text" ) )
                         text = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "cursor-path" ) )
+                    if( attrs.getLocalName( i ).equals( "cursor-path" ) )
                         cursorPath = attrs.getValue( i );
                 }
                 currentExitLook.setCursorPath( cursorPath );
@@ -334,21 +334,21 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is a next-scene tag, create the new next scene
-            else if( qName.equals( "next-scene" ) ) {
+            else if( sName.equals( "next-scene" ) ) {
                 String idTarget = "";
                 int x = Integer.MIN_VALUE, y = Integer.MIN_VALUE;
                 int transitionType = 0, transitionTime = 0;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         idTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionType" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionType" ) )
                         transitionType = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "transitionTime" ) )
+                    if( attrs.getLocalName( i ).equals( "transitionTime" ) )
                         transitionTime = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -358,15 +358,15 @@ public class SceneSubParser extends SubParser {
                 reading = READING_NEXT_SCENE;
             }
 
-            else if( qName.equals( "point" ) ) {
+            else if( sName.equals( "point" ) ) {
 
                 int x = 0;
                 int y = 0;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -374,7 +374,7 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is a object-ref or character-ref, create the new element reference
-            else if( qName.equals( "object-ref" ) || qName.equals( "character-ref" ) || qName.equals( "atrezzo-ref" ) ) {
+            else if( sName.equals( "object-ref" ) || sName.equals( "character-ref" ) || sName.equals( "atrezzo-ref" ) ) {
                 String idTarget = "";
                 int x = 0, y = 0;
                 float scale = 0;
@@ -383,25 +383,25 @@ public class SceneSubParser extends SubParser {
                 boolean hasInfluence = false;
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "idTarget" ) )
+                    if( attrs.getLocalName( i ).equals( "idTarget" ) )
                         idTarget = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "x" ) )
+                    if( attrs.getLocalName( i ).equals( "x" ) )
                         x = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "y" ) )
+                    if( attrs.getLocalName( i ).equals( "y" ) )
                         y = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "scale" ) )
+                    if( attrs.getLocalName( i ).equals( "scale" ) )
                         scale = Float.parseFloat( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "layer" ) )
+                    if( attrs.getLocalName( i ).equals( "layer" ) )
                         layer = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "hasInfluenceArea" ) )
+                    if( attrs.getLocalName( i ).equals( "hasInfluenceArea" ) )
                         hasInfluence = attrs.getValue( i ).equals( "yes" );
-                    if( attrs.getQName( i ).equals( "influenceX" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceX" ) )
                         influenceX = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceY" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceY" ) )
                         influenceY = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceWidth" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceWidth" ) )
                         influenceWidth = Integer.parseInt( attrs.getValue( i ) );
-                    if( attrs.getQName( i ).equals( "influenceHeight" ) )
+                    if( attrs.getLocalName( i ).equals( "influenceHeight" ) )
                         influenceHeight = Integer.parseInt( attrs.getValue( i ) );
                 }
 
@@ -416,46 +416,46 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is a condition tag, create the new condition, the subparser and switch the state
-            else if( qName.equals( "condition" ) ) {
+            else if( sName.equals( "condition" ) ) {
                 currentConditions = new Conditions( );
                 subParser = new ConditionSubParser( currentConditions, chapter );
                 subParsing = SUBPARSING_CONDITION;
             }
 
             // If it is a effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "effect" ) ) {
+            else if( sName.equals( "effect" ) ) {
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
 
             // If it is a post-effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "post-effect" ) ) {
+            else if( sName.equals( "post-effect" ) ) {
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
 
             // If it is a post-effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "not-effect" ) ) {
+            else if( sName.equals( "not-effect" ) ) {
                 currentEffects = new Effects( );
                 subParser = new EffectSubParser( currentEffects, chapter );
                 subParsing = SUBPARSING_EFFECT;
             }
 
             // If it is a post-effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "active-area" ) ) {
+            else if( sName.equals( "active-area" ) ) {
                 subParsing = SUBPARSING_ACTIVE_AREA;
                 subParser = new ActiveAreaSubParser( chapter, scene, scene.getActiveAreas( ).size( ) );
             }
 
             // If it is a post-effect tag, create the new effect, the subparser and switch the state
-            else if( qName.equals( "barrier" ) ) {
+            else if( sName.equals( "barrier" ) ) {
                 subParsing = SUBPARSING_BARRIER;
                 subParser = new BarrierSubParser( chapter, scene, scene.getBarriers( ).size( ) );
             }
 
-            else if( qName.equals( "trajectory" ) ) {
+            else if( sName.equals( "trajectory" ) ) {
                 subParsing = SUBPARSING_TRAJECTORY;
                 subParser = new TrajectorySubParser( chapter, scene );
             }
@@ -464,7 +464,7 @@ public class SceneSubParser extends SubParser {
 
         // If it is subparsing an effect or condition, spread the call
         if( subParsing != SUBPARSING_NONE ) {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
         }
     }
 
@@ -481,23 +481,23 @@ public class SceneSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a scene tag, store the scene in the game data
-            if( qName.equals( "scene" ) ) {
+            if( sName.equals( "scene" ) ) {
                 chapter.addScene( scene );
             }
 
             // If it is a resources tag, add the resources to the scene
-            else if( qName.equals( "resources" ) ) {
+            else if( sName.equals( "resources" ) ) {
                 scene.addResources( currentResources );
                 reading = READING_NONE;
             }
 
             // If it is a name tag, store the name in the scene
-            else if( qName.equals( "name" ) ) {
+            else if( sName.equals( "name" ) ) {
                 scene.setName( currentString.toString( ).trim( ) );
             }
 
             // If it is a documentation tag, hold the documentation in the current element
-            else if( qName.equals( "documentation" ) ) {
+            else if( sName.equals( "documentation" ) ) {
                 if( reading == READING_NONE )
                     scene.setDocumentation( currentString.toString( ).trim( ) );
                 else if( reading == READING_EXIT )
@@ -507,7 +507,7 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is an exit tag, store the exit in the scene
-            else if( qName.equals( "exit" ) ) {
+            else if( sName.equals( "exit" ) ) {
                 if( currentExit.getNextScenes( ).size( ) > 0 ) {
                     for( NextScene nextScene : currentExit.getNextScenes( ) ) {
                         try {
@@ -545,7 +545,7 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is an exit look tag, store the look in the exit
-            else if( qName.equals( "exit-look" ) ) {
+            else if( sName.equals( "exit-look" ) ) {
                 if( reading == READING_NEXT_SCENE )
                     currentNextScene.setExitLook( currentExitLook );
                 else if( reading == READING_EXIT ) {
@@ -554,28 +554,28 @@ public class SceneSubParser extends SubParser {
             }
 
             // If it is a next-scene tag, store the next scene in the current exit
-            else if( qName.equals( "next-scene" ) ) {
+            else if( sName.equals( "next-scene" ) ) {
                 currentExit.addNextScene( currentNextScene );
                 reading = READING_NONE;
             }
 
-            else if( qName.equals( "point" ) ) {
+            else if( sName.equals( "point" ) ) {
                 currentExit.addPoint( currentPoint );
             }
 
             // If it is a object-ref tag, store the reference in the scene
-            else if( qName.equals( "object-ref" ) ) {
+            else if( sName.equals( "object-ref" ) ) {
                 scene.addItemReference( currentElementReference );
                 reading = READING_NONE;
             }
 
             // If it is a character-ref tag, store the reference in the scene
-            else if( qName.equals( "character-ref" ) ) {
+            else if( sName.equals( "character-ref" ) ) {
                 scene.addCharacterReference( currentElementReference );
                 reading = READING_NONE;
             }
             // If it is a atrezzo-ref tag, store the reference in the scene
-            else if( qName.equals( "atrezzo-ref" ) ) {
+            else if( sName.equals( "atrezzo-ref" ) ) {
                 scene.addAtrezzoReference( currentElementReference );
                 reading = READING_NONE;
             }
@@ -587,10 +587,10 @@ public class SceneSubParser extends SubParser {
         // If a condition is being subparsed
         else if( subParsing == SUBPARSING_CONDITION ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the condition tag is being closed
-            if( qName.equals( "condition" ) ) {
+            if( sName.equals( "condition" ) ) {
 
                 // If we are parsing resources, add the condition to the current resources
                 if( reading == READING_RESOURCES )
@@ -616,10 +616,10 @@ public class SceneSubParser extends SubParser {
         // If an effect is being subparsed
         else if( subParsing == SUBPARSING_EFFECT ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the effect tag is being closed, add the effects to the current next scene and switch the state
-            if( qName.equals( "effect" ) ) {
+            if( sName.equals( "effect" ) ) {
                 if( reading == READING_NEXT_SCENE )
                     currentNextScene.setEffects( currentEffects );
                 if( reading == READING_EXIT )
@@ -628,7 +628,7 @@ public class SceneSubParser extends SubParser {
             }
 
             // If the effect tag is being closed, add the post-effects to the current next scene and switch the state
-            if( qName.equals( "post-effect" ) ) {
+            if( sName.equals( "post-effect" ) ) {
                 if( reading == READING_NEXT_SCENE )
                     currentNextScene.setPostEffects( currentEffects );
                 if( reading == READING_EXIT )
@@ -636,7 +636,7 @@ public class SceneSubParser extends SubParser {
                 subParsing = SUBPARSING_NONE;
             }
 
-            if( qName.equals( "not-effect" ) ) {
+            if( sName.equals( "not-effect" ) ) {
                 currentExit.setNotEffects( currentEffects );
                 subParsing = SUBPARSING_NONE;
             }
@@ -645,9 +645,9 @@ public class SceneSubParser extends SubParser {
         // If an active area is being subparsed
         else if( subParsing == SUBPARSING_ACTIVE_AREA ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
-            if( qName.equals( "active-area" ) ) {
+            if( sName.equals( "active-area" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }
@@ -655,16 +655,16 @@ public class SceneSubParser extends SubParser {
         // If a barrier is being subparsed
         else if( subParsing == SUBPARSING_BARRIER ) {
             // Spread the call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
-            if( qName.equals( "barrier" ) ) {
+            if( sName.equals( "barrier" ) ) {
                 subParsing = SUBPARSING_NONE;
             }
         }
 
         else if( subParsing == SUBPARSING_TRAJECTORY ) {
-            subParser.endElement( namespaceURI, sName, qName );
-            if( qName.equals( "trajectory" ) ) {
+            subParser.endElement( namespaceURI, sName, sName );
+            if( sName.equals( "trajectory" ) ) {
                 subParsing = SUBPARSING_NONE;
                 // next line is moved to TrayectorySubParser
                 //scene.getTrajectory().deleteUnconnectedNodes();

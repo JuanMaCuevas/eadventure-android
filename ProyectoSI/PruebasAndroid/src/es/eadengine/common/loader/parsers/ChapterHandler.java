@@ -198,75 +198,75 @@ public class ChapterHandler extends DefaultHandler {
         if( subParsing == NONE ) {
 
             //Parse eAdventure attributes
-            if( qName.equals( "eAdventure" ) ) {
+            if( sName.equals( "eAdventure" ) ) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "adaptProfile" ) ) {
+                    if( attrs.getLocalName( i ).equals( "adaptProfile" ) ) {
                         chapter.setAdaptationName( attrs.getValue( i ) );
                     }
-                    if( attrs.getQName( i ).equals( "assessProfile" ) ) {
+                    if( attrs.getLocalName( i ).equals( "assessProfile" ) ) {
                         chapter.setAssessmentName( attrs.getValue( i ) );
                     }
                 }
             }
             // Subparse scene
-            else if( qName.equals( "scene" ) ) {
+            else if( sName.equals( "scene" ) ) {
                 subParser = new SceneSubParser( chapter );
                 subParsing = SCENE;
             }
 
             // Subparse slidescene
-            else if( qName.equals( "slidescene" ) || qName.equals( "videoscene" ) ) {
+            else if( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) {
                 subParser = new CutsceneSubParser( chapter );
                 subParsing = CUTSCENE;
             }
 
             // Subparse book
-            else if( qName.equals( "book" ) ) {
+            else if( sName.equals( "book" ) ) {
                 subParser = new BookSubParser( chapter );
                 subParsing = BOOK;
             }
 
             // Subparse object
-            else if( qName.equals( "object" ) ) {
+            else if( sName.equals( "object" ) ) {
                 subParser = new ItemSubParser( chapter );
                 subParsing = OBJECT;
             }
 
             // Subparse player
-            else if( qName.equals( "player" ) ) {
+            else if( sName.equals( "player" ) ) {
                 subParser = new PlayerSubParser( chapter );
                 subParsing = PLAYER;
             }
 
             // Subparse character
-            else if( qName.equals( "character" ) ) {
+            else if( sName.equals( "character" ) ) {
                 subParser = new CharacterSubParser( chapter );
                 subParsing = CHARACTER;
             }
 
             // Subparse conversacion (tree conversation)
-            else if( qName.equals( "tree-conversation" ) ) {
+            else if( sName.equals( "tree-conversation" ) ) {
                 subParser = new TreeConversationSubParser( chapter );
                 subParsing = CONVERSATION;
             }
 
             // Subparse conversation (graph conversation)
-            else if( qName.equals( "graph-conversation" ) ) {
+            else if( sName.equals( "graph-conversation" ) ) {
                 subParser = new GraphConversationSubParser( chapter );
                 subParsing = CONVERSATION;
             }
 
             // Subparse timer
-            else if( qName.equals( "timer" ) ) {
+            else if( sName.equals( "timer" ) ) {
                 subParser = new TimerSubParser( chapter );
                 subParsing = TIMER;
             }
 
             // Subparse global-state
-            else if( qName.equals( "global-state" ) ) {
+            else if( sName.equals( "global-state" ) ) {
                 String id = null;
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         id = attrs.getValue( i );
                 }
                 currentGlobalState = new GlobalState( id );
@@ -277,10 +277,10 @@ public class ChapterHandler extends DefaultHandler {
             }
 
             // Subparse macro
-            else if( qName.equals( "macro" ) ) {
+            else if( sName.equals( "macro" ) ) {
                 String id = null;
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) )
+                    if( attrs.getLocalName( i ).equals( "id" ) )
                         id = attrs.getValue( i );
                 }
                 currentMacro = new Macro( id );
@@ -290,15 +290,15 @@ public class ChapterHandler extends DefaultHandler {
                 subParsing = MACRO;
             }
             // Subparse atrezzo object
-            else if( qName.equals( "atrezzoobject" ) ) {
+            else if( sName.equals( "atrezzoobject" ) ) {
                 subParser = new AtrezzoSubParser( chapter );
                 subParsing = ATREZZO;
             }// Subparse assessment profile
-            else if( qName.equals( "assessment" ) ) {
+            else if( sName.equals( "assessment" ) ) {
                 subParser = new AssessmentSubParser( chapter );
                 subParsing = ASSESSMENT;
             }// Subparse adaptation profile
-            else if( qName.equals( "adaptation" ) ) {
+            else if( sName.equals( "adaptation" ) ) {
                 subParser = new AdaptationSubParser( chapter );
                 subParsing = ADAPTATION;
             }
@@ -308,7 +308,7 @@ public class ChapterHandler extends DefaultHandler {
         // If an element is being subparsed, spread the call
         if( subParsing != NONE ) {
             //try {
-            subParser.startElement( namespaceURI, sName, qName, attrs );
+            subParser.startElement( namespaceURI, sName, sName, attrs );
             //} catch (Exception e){
             //	System.out.println("Marihuanhell es muy malo pero hemos capturado la excepción");
             //e.printStackTrace();
@@ -320,10 +320,10 @@ public class ChapterHandler extends DefaultHandler {
     @Override
     public void endElement( String namespaceURI, String sName, String qName ) throws SAXException {
 
-        if( qName.equals( "documentation" ) && subParsing == GLOBAL_STATE ) {
+        if( sName.equals( "documentation" ) && subParsing == GLOBAL_STATE ) {
             currentGlobalState.setDocumentation( currentString.toString( ).trim( ) );
         }
-        else if( qName.equals( "documentation" ) && subParsing == MACRO ) {
+        else if( sName.equals( "documentation" ) && subParsing == MACRO ) {
             currentMacro.setDocumentation( currentString.toString( ).trim( ) );
         }
 
@@ -333,10 +333,10 @@ public class ChapterHandler extends DefaultHandler {
         if( subParsing != NONE ) {
 
             // Spread the end element call
-            subParser.endElement( namespaceURI, sName, qName );
+            subParser.endElement( namespaceURI, sName, sName );
 
             // If the element is not being subparsed anymore, return to normal state
-            if( qName.equals( "scene" ) && subParsing == SCENE || ( qName.equals( "slidescene" ) || qName.equals( "videoscene" ) ) && subParsing == CUTSCENE || qName.equals( "book" ) && subParsing == BOOK || qName.equals( "object" ) && subParsing == OBJECT || qName.equals( "player" ) && subParsing == PLAYER || qName.equals( "character" ) && subParsing == CHARACTER || qName.equals( "tree-conversation" ) && subParsing == CONVERSATION || qName.equals( "graph-conversation" ) && subParsing == CONVERSATION || qName.equals( "timer" ) && subParsing == TIMER || qName.equals( "global-state" ) && subParsing == GLOBAL_STATE || qName.equals( "macro" ) && subParsing == MACRO || qName.equals( "atrezzoobject" ) && subParsing == ATREZZO || qName.equals( "assessment" ) && subParsing == ASSESSMENT || qName.equals( "adaptation" ) && subParsing == ADAPTATION ) {
+            if( sName.equals( "scene" ) && subParsing == SCENE || ( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) && subParsing == CUTSCENE || sName.equals( "book" ) && subParsing == BOOK || sName.equals( "object" ) && subParsing == OBJECT || sName.equals( "player" ) && subParsing == PLAYER || sName.equals( "character" ) && subParsing == CHARACTER || sName.equals( "tree-conversation" ) && subParsing == CONVERSATION || sName.equals( "graph-conversation" ) && subParsing == CONVERSATION || sName.equals( "timer" ) && subParsing == TIMER || sName.equals( "global-state" ) && subParsing == GLOBAL_STATE || sName.equals( "macro" ) && subParsing == MACRO || sName.equals( "atrezzoobject" ) && subParsing == ATREZZO || sName.equals( "assessment" ) && subParsing == ASSESSMENT || sName.equals( "adaptation" ) && subParsing == ADAPTATION ) {
                 subParsing = NONE;
             }
 

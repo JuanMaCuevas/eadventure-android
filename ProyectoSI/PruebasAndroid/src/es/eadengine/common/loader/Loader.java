@@ -33,19 +33,17 @@
  */
 package es.eadengine.common.loader;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
-
 
 
 import android.util.Log;
@@ -71,6 +69,9 @@ import es.eadengine.common.loader.parsers.DescriptorHandler;
  */
 public class Loader {
 
+	
+	private static final String TAG= "Loader";
+	
     /**
      * AdventureData structure which has been previously read. (For Debug
      * execution)
@@ -153,8 +154,8 @@ public class Loader {
 
                 // Create a new factory
                 SAXParserFactory factory = SAXParserFactory.newInstance( );
-            //    factory.setValidating( true );
-                SAXParser saxParser = factory.newSAXParser( );
+              //  factory.setValidating( true );
+                SAXParser saxParser = factory.newSAXParser();
 
                 // Read and close the inputstream
                 InputStream descriptorIS = isCreator.buildInputStream( "descriptor.xml" );
@@ -166,13 +167,13 @@ public class Loader {
 
             }
             catch( ParserConfigurationException e ) {
-            Log.e("Loader",e.toString());
+            Log.e(TAG+".loadDescriptorData",e.toString());
             }
             catch( SAXException e ) {
-            Log.e("Loader",e.toString());
+            Log.e(TAG+".loadDescriptorData",e.toString());
             }
             catch( IOException e ) {
-            Log.e("Loader",e.toString());
+            Log.e(TAG+".loadDescriptorData",e.toString());
             }
         }
         return descriptorData;
@@ -240,7 +241,7 @@ public class Loader {
 
                     // Create a new factory
                     SAXParserFactory factory = SAXParserFactory.newInstance( );
-                    factory.setValidating( validate );
+                   // factory.setValidating( validate );
                     SAXParser saxParser = factory.newSAXParser( );
 
                     // Parse the data and close the data
@@ -250,13 +251,13 @@ public class Loader {
 
             }
             catch( ParserConfigurationException e ) {
-                incidences.add( Incidence.createChapterIncidence( TC.get( "Error.LoadData.SAX" ), fileName, e ) );
+            	Log.e(TAG+".loadChapterData",e.toString());
             }
             catch( SAXException e ) {
-                incidences.add( Incidence.createChapterIncidence( TC.get( "Error.LoadData.SAX" ), fileName, e ) );
+            	Log.e(TAG+".loadChapterData",e.toString());
             }
             catch( IOException e ) {
-                incidences.add( Incidence.createChapterIncidence( TC.get( "Error.LoadData.IO" ), fileName, e ) );
+            	Log.e(TAG+".loadChapterData",e.toString());
             }
         }
         return currentChapter;

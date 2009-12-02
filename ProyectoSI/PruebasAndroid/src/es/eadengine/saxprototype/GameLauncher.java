@@ -1,11 +1,13 @@
 package es.eadengine.saxprototype;
 
-import es.eadengine.common.data.adventure.DescriptorData;
-import es.eadengine.common.loader.Loader;
-import es.eadengine.resourcehandler.ResourceHandler;
+import java.io.File;
+import java.util.ArrayList;
+
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -17,12 +19,24 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import es.eadengine.common.data.adventure.ChapterSummary;
+import es.eadengine.common.data.adventure.DescriptorData;
+import es.eadengine.common.data.chapter.Chapter;
+import es.eadengine.common.loader.Loader;
+import es.eadengine.common.loader.incidences.Incidence;
+import es.eadengine.resourcehandler.ResourceHandler;
+
 
 public class GameLauncher extends ListActivity {
 
 	// Menu item ids
 	public static final int MENU_ITEM_INSTALL = Menu.FIRST;
 	public static final int MENU_ITEM_UNINSTALL = Menu.FIRST + 1;
+	
+	public static final String TAG = "GameLauncher";
+
+	private String adventureName;
+	private String adventurePath;
 
 	ProgressDialog dialog;
 
@@ -37,31 +51,33 @@ public class GameLauncher extends ListActivity {
 		public void handleMessage(Message msg) {
 
 			dialog.dismiss();
-
 			setContentView(R.layout.game_launcher);
 
 			switch (msg.what) {
 
 			case GlobalMessages.GAMES_FOUND: {
-
 				Bundle b = msg.getData();
 				advList = b.getStringArray("adventuresList");
 				insertAdventuresToList(advList);
-
 				break;
-
 			}
-
-			case GlobalMessages.NO_GAMES_FOUND: {
-
+			case GlobalMessages.NO_GAMES_FOUND:
 				break;
-
-			}
+			case GlobalMessages.NO_SD_CARD:
+				showAlert("No SD card mounted");
+				break;
 
 			}
 		}
 
 	};
+
+	private void showAlert(String msg) {
+
+		new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
+				null).show();
+
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +89,7 @@ public class GameLauncher extends ListActivity {
 		this.getListView().setOnCreateContextMenuListener(this);
 
 		searchForGames();
+		
 
 	}
 
@@ -96,31 +113,45 @@ public class GameLauncher extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
+		
+		
+		String adventureName = this.getListView().getItemAtPosition(position).toString();
+		
+		Log.d(TAG,"AdventureName : "+adventureName);
 
-		String advPath = "assets/adventures/"
-				+ getListView().getItemAtPosition(position).toString();
+		File sdCard = Environment.getExternalStorageDirectory();
+		
+		String adventureAbsPath = sdCard.getAbsolutePath();		
+		Log.d(TAG,"AdventureAbsolutePath : "+adventureAbsPath);
+		
+		String advPath = adventureAbsPath+"/"+adventureName;		
+		Log.d(TAG,"PathToFile : "+advPath);
+			
+		 ResourceHandler.setRestrictedMode(false);
+		 ResourceHandler.getInstance().setZipFile(advPath); 
+		 DescriptorData gameDescriptor = Loader.loadDescriptorData(ResourceHandler.getInstance());
+		 
+		 Log.d(TAG,"AdventuresDescription loaded : "+gameDescriptor.getDescription().toString());
+		 
+		 int currentChapter = 0 ;
+		 
+		// Extract the chapter
+	     ChapterSummary chapter = gameDescriptor.getChapterSummaries( ).get( currentChapter );
+	     
+	     Chapter gameData;
 
-		Log.d("GameLauncher", advPath);
+	        // Load the script data
+	     gameData = Loader.loadChapterData( ResourceHandler.getInstance( ), chapter.getChapterPath( ), new ArrayList<Incidence>( ), true );
+	     
+	     Log.d(TAG,"ChapterData loaded : "+gameData.getTitle());
 
-		ResourceHandler.setRestrictedMode(false);
-		ResourceHandler.getInstance().setZipFile(advPath);
-		DescriptorData gameDescriptor = Loader
-				.loadDescriptorData(ResourceHandler.getInstance());
-		ResourceHandler.getInstance().closeZipFile();
-		ResourceHandler.delete();
-
-		/*
-		 * Uri uri = ContentUris.withAppendedId(getIntent().getData(), id);
-		 * 
-		 * String action = getIntent().getAction(); if
-		 * (Intent.ACTION_PICK.equals(action) ||
-		 * Intent.ACTION_GET_CONTENT.equals(action)) { // The caller is waiting
-		 * for us to return a note selected by // the user. The have clicked on
-		 * one, so return it now. setResult(RESULT_OK, new
-		 * Intent().setData(uri)); } else { // Launch activity to view/edit the
-		 * currently selected item startActivity(new Intent(Intent.ACTION_EDIT,
-		 * uri)); }
-		 */
+	     
+	     
+		 ResourceHandler.getInstance().closeZipFile();
+		 ResourceHandler.delete();
+		 
+		 
+		
 	}
 
 	@Override
