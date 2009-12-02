@@ -1,4 +1,5 @@
 #summary Contiene el índice de la memoria del proyecto (sistemas informáticos)
+#sidebar BarraNavegacion
 
 INDICE :
 
