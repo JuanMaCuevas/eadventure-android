@@ -1,5 +1,6 @@
 #summary Aquí introducimos las propuestas de prototipos sobre funcionalidades de Android.
 #labels Phase-Requirements
+#sidebar BarraNavegacion
 
 = Propuestas =
 
