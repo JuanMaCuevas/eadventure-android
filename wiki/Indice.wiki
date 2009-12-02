@@ -1,38 +1,5 @@
 #summary Indice de la documentación
 #labels Featured
+#sidebar BarraNavegacion
 
-= INDICE =
-
-----
-
-== Planificación ==
-
- # RepartoTareas 
- # PropuestasAndroid
-
-----
-
-== Android ==
-
- # EnlacesInteresAndroid 
- # TerminalesAndroid
- # [http://developer.android.com/guide/appendix/glossary.html GlosarioAndroid]
-
-
-===Prototipos===
- 
- # PrototipoLoaderAndroid 
-
-----
-
-== e-Adventure ==
-
- # RequisitosFuncionales
-
-----
-
-== Memoria Proyecto Sistemas Informaticos ==
-
- # IndiceMemoria 
-
-----
+= e-Adventure engine for Android =
