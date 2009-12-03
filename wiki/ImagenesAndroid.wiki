@@ -6,7 +6,7 @@ Uno de los retos que se nos plantean durante el diseño de ésta aplicación es 
 
 
 == Cuestiones sobre la carga y tratamiento de imágenes==
-===Analisis del pre-procesado de imágenes. ¿Se cargan las imágenes directamente del sistema de ficheros? ¿Es necesario pre-procesarlas?
+===Analisis del pre-procesado de imágenes. ¿Se cargan las imágenes directamente del sistema de ficheros? ¿Es necesario pre-procesarlas?===
 
 	Preprocesado de imágenes : (escalar comprimir, elegir formato (PNG))
 
