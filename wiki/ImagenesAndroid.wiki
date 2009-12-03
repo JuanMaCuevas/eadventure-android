@@ -1,5 +1,5 @@
 #summary Estudio sobre el tratado de imágenes en Android
-#sidebar BarraNavegación
+#sidebar BarraNavegacion
 =Interfaz de las aventuras gráficas en dispositivos móviles=
 
 Uno de los retos que se nos plantean durante el diseño de ésta aplicación es la forma de mostrar al usuario la interfaz del juego. Hasta ahora el motor de eAdventure muestra los juegos en una ventana de tamaño fijo (600x800px) apto para pantallas de ordenador. En cambio en Android la situación cambia ya que el sistema operativo está diseñado para funcionar en dispositivos móviles con resoluciones de pantalla mas reducidas. Por ello debemos encontrar una solución óptima para que la experiencia del usuario durante el juego mantenga un buen nivel, es decir que se vea bien y que sea rápido. Para éste propósito vamos a analizar una serie de cuestiones sobre la plataforma.
