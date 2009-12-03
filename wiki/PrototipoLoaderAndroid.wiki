@@ -10,7 +10,7 @@ Aquí voy a anotar los cambios y decisiones que voy tomando para realizar la int
  # Me cargo el handler de Animaciones y toda la informacion necesaria para la carga de animaciones -> Tarea para la siguiente iteracion ( carga de animacinoes )
  # Realizo limpieza del paquete es.eucm.eadventure.common.auxiliar ( no se usa por el momento en el motor ) -> dejo solo assetsConstants
  # Al no tener JOptionPane para mostrar mensajes -> apaño crenado una clase que en el reimplementa los metodos con Alerts de Android ( creo que no se va a usar) .
- # Null pointer exception en : AssesmentSubParser debido a una declaracion doble de currentString , la que se declara localmente y la que se declara en la clase padre SubParser . 
+ # Null pointer exception en : assesmentSubparser debido a una declaracion doble de currentString , la que se declara localmente y la que se declara en la clase padre subParser. 
 
 == Limitaciones de plataforma ==
 
@@ -39,4 +39,3 @@ Aquí voy a anotar los cambios y decisiones que voy tomando para realizar la int
    # Solucion : Usar los siguientes comandos de consola.
     * Meter datos : adb push foo.txt /sdcard/foo.txt
     * Sacar datos : adb pull /sdcard/foo.txt foo.txt 
-
