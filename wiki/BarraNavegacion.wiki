@@ -8,6 +8,8 @@
       * EnlacesInteresAndroid
       * TerminalesAndroid
       * [http://developer.android.com/guide/appendix/glossary.html GlosarioAndroid] 
+      * Estudios de la plataforma
+          * ImagenesAndroid
       * Prototipos
           * PrototipoLoaderAndroid
     * E-Adventure
