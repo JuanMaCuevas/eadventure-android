@@ -19,6 +19,8 @@
 <wiki:video url="http://www.youtube.com/watch?v=2StxDbxV8gQ&feature=player_embedded">
 
 ----
+== [http://www.rbgrn.net/content/54-getting-started-android-game-development Getting started android game development] ===
+----
 
 == Google IO Sessions ==
 
