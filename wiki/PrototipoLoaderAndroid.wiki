@@ -1,42 +1,42 @@
 #summary Anotaciones Implementacion Loader SAX Android
 #sidebar BarraNavegacion
 
-= Introduccion =
-
 Aquí voy a anotar los cambios y decisiones que voy tomando para realizar la integración del loader en Android . 
 
-= Apuntes =
+== Cambios realizados ==
 
- * Añado clase Polygon sacada de URL : .......  y añado metodo addPoint ...
- * Cambio clases Point por las de Android , falta metodo Clone -> hago cambio me creo un nuevo objeto y lo construyo con copia del point a clonar .
- * Me cargo el parser y toda la informacion necesaria para la carga de animaciones
- * Quito cosas que no se usan , dejo en el paquete es.eucm.eadventure.common.auxiliar solo la clase assetsConstants
- * Al no tener JOptionPane para mostrar mensajes ( se usa en varias partes ) he creado una clase que en el fondo reimplementa los metodos con Alerts de Android.
- * Problemilla :  The default Android implementation of SAXParser supports only the following three features:
+ # Añado clase Polygon sacada de URL : http://www.anddev.org/viewtopic.php?p=22799  y añado metodo addPoint().
+ # Cambio clases java.awt.Point por las de Android , falta metodo Clone -> lo hago a pelo creandome un objeto nuevo y usando el constructor por copia.
+ # Me cargo el handler de Animaciones y toda la informacion necesaria para la carga de animaciones -> Tarea para la siguiente iteracion ( carga de animacinoes )
+ # Realizo limpieza del paquete es.eucm.eadventure.common.auxiliar ( no se usa por el momento en el motor ) -> dejo solo assetsConstants
+ # Al no tener JOptionPane para mostrar mensajes -> apaño crenado una clase que en el reimplementa los metodos con Alerts de Android ( creo que no se va a usar) .
+ # Null pointer exception en : AssesmentSubParser debido a una declaracion doble de currentString , la que se declara localmente y la que se declara en la clase padre SubParser . 
 
-http://xml.org/sax/features/namespaces
-    Queries the state of namespace-awareness.
-http://xml.org/sax/features/namespace-prefixes
-    Queries the state of namespace prefix processing
-http://xml.org/sax/features/validation
-    Queries the state of validation.
+== Limitaciones de plataforma ==
 
-Note that despite the ability to query the validation feature, there is currently no validating parser available. Also note that currently either namespaces or namespace prefixes can be enabled, but not both at the same time.
+=== Limitaciones SAX Android === 
 
- ISSUE 990: http://code.google.com/p/android/issues/detail?id=990 No referencia bien sin namespaces los qname 
+   * *Caracteristicas soportadas :* 
 
+        The default Android implementation of SAXParser supports only the following three features:
+ 
+         http://xml.org/sax/features/namespaces : Queries the state of namespace-awareness.
+         http://xml.org/sax/features/namespace-prefixes : Queries the state of namespace prefix processing
+         http://xml.org/sax/features/validation :Queries the state of validation.
 
- -> para solucionar cambio los qName por sName de los Handler ( ChapterHandler y DescriptorHandler)
- -> cambio todos los getQName por getLocalName de los Handler ( ChapterHandler y DescriptorHandler)
+        Note that despite the ability to query the validation feature, there is currently no validating parser available. Also note that currently either namespaces or namespace prefixes can be enabled, but not both at the same time.
 
-Basicamente lo de arriba lo tengo que hacer para todos los Handler .. se van a acabar usando casi todos... asi que lo cambio en todos los parsers del paquete Loader.parser y loader.subparsers
+   * *Bug implementacion qName* : ISSUE 990: http://code.google.com/p/android/issues/detail?id=990 
 
- * Pasar datos a SD -> bug en DDMS utilizar comando consola :
-  * Meter datos : adb push foo.txt /sdcard/foo.txt
-  * Sacar datos : adb pull /sdcard/foo.txt foo.txt 
+      Solucion tomada :
+       # Cambio qName por sName en todos los parser y subparser del Loader.
+       # Cambio getQName() por getLocalName() en todos los parser y subparser del Loader. 
 
- * Metodos del editor que no usa el motor ( Proxima iteracion del prototipo , limpio las clases ) :
-  * Clase Loader : loadAdaptationProfile(InputStreamCreator, String, List<Incidence>) loadAdventureData(InputStreamCreator, List<Incidence>, boolean)
+  
+=== Limitaciones DDMS ===
 
+   # Bug al realizar pull y push a SD del emulador
+   # Solucion : Usar los siguientes comandos de consola.
+    * Meter datos : adb push foo.txt /sdcard/foo.txt
+    * Sacar datos : adb pull /sdcard/foo.txt foo.txt 
 
- * Null pointer exception en : AssesmentSubParser debido a una declaracion doble de currentString , la que se declara localmente y la que se declara en la clase padre SubParser...
