@@ -4,6 +4,8 @@
 
 La lista tiene como objetivo el hacernos una idea de los dispositivos en los que debera correr la aplicacíon ( que tipo de pantallas , de que memoria y potencia disponen , que componentes HW tienen ) 
 
+[http://en.wikipedia.org/wiki/List_of_Android_devices Listado completo actualizado]
+
 
 ==T-Mobile G1 ( HTC Dream ) ==
   * Procesador: Qualcomm a 528MHz
