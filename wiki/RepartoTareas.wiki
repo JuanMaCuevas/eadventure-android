@@ -4,6 +4,28 @@
 
 ----
 
+Posible Libro:
+Andre Lamoth: Game programming
+
+
+== Semana 04Dic-10Dic 09 ==
+
+Para la semana que viene:
+
+=== Todos ===
+ * Proponer nuevo día/hora reunión semanal
+
+=== Juanma ===
+ * Seguir con los prototipos de imágenes, animaciones
+ * Prototipo vídeos (si se puede)
+
+=== Willy ===
+ * Sistema de carga de juegos mediante descarga de un repositorio
+
+=== Álvaro ===
+ * Documento alternativas de interacción juegos en Android
+
+
 == Semana 26Nov-03Dic 09 ==
 
 === Juanma ===
