@@ -90,3 +90,8 @@ Large screen
 
 WVGA (480x800), 4.8"-5.5" diagonal
 FWVGA (480x854), 5.0"-5.8" diagonal
+
+
+== Enlaces útiles ==
+
+ * [http://groups.google.com/group/android-developers/browse_thread/thread/75469626215fa969?pli=1 Scrolling large image]
