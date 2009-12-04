@@ -1,0 +1,6 @@
+#summary One-sentence summary of this page
+
+
+Controles en ScummVM para iphone
+
+http://wiki.scummvm.org/index.php/IPhone#Controls
