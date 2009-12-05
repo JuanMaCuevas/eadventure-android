@@ -1,13 +1,14 @@
 #summary Análisis de la interacción de usuario en juegos de aventuras graficas para Android
 #sidebar BarraNavegacion
 
+<wiki:toc max_depth="3" />
+
 =Introducción=
 
 En este documento se analiza : 
 
  # ¿Que es interaccion con el usuario?
- # Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android
-   ( y por el momento lo que soporta el framework ) 
+ # Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android ( y por el momento lo que soporta el framework ) 
  # Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
  # Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
  # Analizar el caso de MonkeyISland y ScummVM para iphone
@@ -19,7 +20,7 @@ En este documento se analiza :
 
 == ¿Que es interaccion con el usuario? ==
 
-Teniendo en cuenta la teconoclogia que soporta el framework de Android y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo Android se puede definir de la siguiente manera :
+Teniendo en cuenta las distintas tecnologias que da soporte el framework de Android 2.0 API level 5 y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo movil Android se puede definir de la siguiente manera :
 
  # INPUT del usuario al dispositivo a traves de :
   * Pantalla Tactil ( cualquier gesto )
@@ -44,7 +45,7 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 == Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
 
 
-=== MonkeyIsland Iphone ===
+=== Monkey Island ===
 
 === ScummVM ===
 
@@ -57,4 +58,4 @@ http://wiki.scummvm.org/index.php/IPhone#Controls
 
 === Prototipos ===
 
-=== Borrador arquitectura de la parte de initeraccion con usuario del motor ===
+=== Borrador arquitectura ( parte de interacción con el usuario ) ===
