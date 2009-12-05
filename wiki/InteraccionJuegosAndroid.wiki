@@ -1,0 +1,4 @@
+#summary Análisis de la interacción de usuario en juegos de aventuras graficas para Android
+#sidebar BarraNavegacion
+
+http://wiki.scummvm.org/index.php/IPhone#Controls
