@@ -7,7 +7,7 @@
 
 En este documento se analiza : 
 
- # ¿Que es interaccion con el usuario?
+ # ¿Que es interaccion con el usuario HCI ?
  # Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android ( y por el momento lo que soporta el framework ) 
  # Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
  # Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
@@ -18,7 +18,7 @@ En este documento se analiza :
 
 
 
-== ¿Que es interaccion con el usuario? ==
+== ¿Que es interaccion con el usuario? HCI  ==
 
 Teniendo en cuenta las distintas tecnologias que da soporte el framework de Android 2.0 API level 5 y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo movil Android se puede definir de la siguiente manera :
 
