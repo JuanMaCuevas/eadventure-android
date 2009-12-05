@@ -1,4 +1,58 @@
 #summary Análisis de la interacción de usuario en juegos de aventuras graficas para Android
 #sidebar BarraNavegacion
 
+=Introducción=
+
+En este documento se analiza : 
+
+# Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android
+   ( y por el momento lo que soporta el framework ) 
+# Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
+# Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
+# Analizar el caso de MonkeyISland y ScummVM para iphone
+# Elegir una serie de tipos de interaccion y 
+# De los elegidos proponer distintas alternativas de diseño visual , ejemplos y prototipos a realizar
+# De la alternativa que finalmente se escoge como principal ( realizar diseño arquitectura sencillo )
+
+
+
+== ¿Que es interaccion con el usuario? ==
+
+Teniendo en cuenta la teconoclogia que soporta el framework de Android y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo Android se puede definir de la siguiente manera :
+
+1) INPUT del usuario al dispositivo a traves de :
+
+PantallaTactil ( cualquier gesto )
+Teclado
+TrackBall
+Acelerometro
+Posicionamiento
+Brujula
+Reconocimiento de Voz
+
+2) El dispositivo lo procesa
+
+3) El dispositivo interactua con el usuario produciendo un OUTPUT a traves de :
+
+La pantalla
+El alatavoz ( como un sonido : sonido , textToSpeach etc.. )
+Con una vibracion del dispositivo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 http://wiki.scummvm.org/index.php/IPhone#Controls
