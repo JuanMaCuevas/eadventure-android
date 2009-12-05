@@ -5,14 +5,15 @@
 
 En este documento se analiza : 
 
-# Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android
+ # ¿Que es interaccion con el usuario?
+ # Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android
    ( y por el momento lo que soporta el framework ) 
-# Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
-# Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
-# Analizar el caso de MonkeyISland y ScummVM para iphone
-# Elegir una serie de tipos de interaccion y 
-# De los elegidos proponer distintas alternativas de diseño visual , ejemplos y prototipos a realizar
-# De la alternativa que finalmente se escoge como principal ( realizar diseño arquitectura sencillo )
+ # Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
+ # Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
+ # Analizar el caso de MonkeyISland y ScummVM para iphone
+ # Elegir una serie de tipos de interaccion y 
+ # De los elegidos proponer distintas alternativas de diseño visual , ejemplos y prototipos a realizar
+ # De la alternativa que finalmente se escoge como principal ( realizar diseño arquitectura sencillo )
 
 
 
@@ -20,39 +21,40 @@ En este documento se analiza :
 
 Teniendo en cuenta la teconoclogia que soporta el framework de Android y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo Android se puede definir de la siguiente manera :
 
-1) INPUT del usuario al dispositivo a traves de :
+ # INPUT del usuario al dispositivo a traves de :
+  * Pantalla Tactil ( cualquier gesto )
+  * Teclado
+  * Track Ball
+  * Acelerometro
+  * Posicionamiento
+  * Brujula
+  * Reconocimiento de Voz
+ # El dispositivo lo procesa
+ # El dispositivo interactua con el usuario produciendo un OUTPUT a traves de :
+  * La pantalla
+  * El alatavoz ( como un sonido : sonido , textToSpeach etc.. )
+  * Con una vibracion del dispositivo
 
-PantallaTactil ( cualquier gesto )
-Teclado
-TrackBall
-Acelerometro
-Posicionamiento
-Brujula
-Reconocimiento de Voz
+== Tipos de interaccion soportada por framework de Android 2.0 API level 5 ==
 
-2) El dispositivo lo procesa
+== Analisis mercado dispositivos Android == 
 
-3) El dispositivo interactua con el usuario produciendo un OUTPUT a traves de :
+http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
-La pantalla
-El alatavoz ( como un sonido : sonido , textToSpeach etc.. )
-Con una vibracion del dispositivo
-
-
-
-
-
-
+== Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
 
 
+=== MonkeyIsland Iphone ===
 
-
-
-
-
-
-
-
-
+=== ScummVM ===
 
 http://wiki.scummvm.org/index.php/IPhone#Controls
+
+
+== Eleccion de tipos de interaccion ==
+
+=== Diseños ===
+
+=== Prototipos ===
+
+=== Borrador arquitectura de la parte de initeraccion con usuario del motor ===
