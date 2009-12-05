@@ -17,7 +17,6 @@ En este documento se analiza :
  # De la alternativa que finalmente se escoge como principal ( realizar diseño arquitectura sencillo )
 
 
-
 == Interaccion persona ordenador HCI  ==
 
 Teniendo en cuenta las distintas tecnologias que da soporte el framework de Android 2.0 API level 5 y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo movil Android se puede definir de la siguiente manera :
@@ -64,7 +63,47 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
 == Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
 
-=== Monkey Island ===
+=== The Secret of Monkey Island ( Special Edition ) para Iphone ===
+
+Input : 
+
+Pantalla multitactil : saca provecho solo para hacer zoom en la aventura , lo demas son con gestos de click sobre la pantalla
+Acelerometro : se utiliza para diferenciar si el dispositivo esta en apaisado o en vertical . Si esta en apaisado muestra el juego , si esta en vertical muestra el menu del juego
+
+Output : 
+
+Pantalla : aqui muestra todo lo que al juego se refiere 
+Audio : realiza sonidos cuando se hacen acciones sobre elementos y lee las conversaciones de los personajes . No tiene en cuenta la accesibilidad.
+
+
+Caracteristicas :
+
+Puntero : Se hace uso del puntero para mover al personaje y para realizar acciones sobre los elementos del juego . El puntero lleva un icono en todo momento asociado.
+El icono muestra en todo momento la accion que se tiene seleccionada en ese momento y puede cambiar momentaneamente dando pistas al jugador sobre que acciones se pueden realizar sobre el elemento en el que el puntero esta situado
+
+HUD : 
+
+Acciones :
+
+Inventario :
+
+Menu del juego :
+
+
+
+
+ # El juego solo se muestra en forma apaisada , cuando se pone en vertical se muestra el menu
+ # 
+
+
+Menu del juego :
+
+
+Jugando :
+
+
+
+
 
 === ScummVM ===
 
