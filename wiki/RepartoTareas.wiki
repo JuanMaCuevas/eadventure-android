@@ -2,7 +2,7 @@
 #sidebar BarraNavegacion
 = Planificación Semanal =
 
-<wiki:toc max_depth="1 />
+<wiki:toc max_depth="2" />
 
 ----
 
