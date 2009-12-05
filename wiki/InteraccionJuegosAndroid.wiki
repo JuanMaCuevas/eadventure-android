@@ -7,7 +7,7 @@
 
 En este documento se analiza : 
 
- # ¿Que es interaccion con el usuario HCI ?
+ # Interaccion persona ordenador HCI 
  # Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android ( y por el momento lo que soporta el framework ) 
  # Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
  # Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
@@ -18,7 +18,7 @@ En este documento se analiza :
 
 
 
-== ¿Que es interaccion con el usuario? HCI  ==
+== Interaccion persona ordenador HCI  ==
 
 Teniendo en cuenta las distintas tecnologias que da soporte el framework de Android 2.0 API level 5 y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo movil Android se puede definir de la siguiente manera :
 
@@ -30,6 +30,8 @@ Teniendo en cuenta las distintas tecnologias que da soporte el framework de Andr
   * Posicionamiento
   * Brujula
   * Reconocimiento de Voz
+  * Utilizar la camara como dispositivo de entrada de datos
+  * Net ( Wifi Bluetoth GPRS EDGE/3g/HDSPA ) como entrada de datos
  # El dispositivo lo procesa
  # El dispositivo interactua con el usuario produciendo un OUTPUT a traves de :
   * La pantalla
@@ -38,21 +40,41 @@ Teniendo en cuenta las distintas tecnologias que da soporte el framework de Andr
 
 == Tipos de interaccion soportada por framework de Android 2.0 API level 5 ==
 
+ # Android soporta entrada de informacion por medio de :
+
+  * Pantalla tactil : capacitiva, resistiva , multitactil etc.. con stylus o con dedo
+  * Teclado qwerty o no ?¿?¿  No encuentro ningun movil con teclado alfanumerico ( podria darse el caso )
+  * TrackBall ( Botones de direccion )
+  * Acelerometro
+  * GPS posicionamiento
+  * Brujula
+  * Microfono ( Reconocimiento de voz)
+  * Camara
+  * Net
+
+
+ # El sistema cambia de modo de interaccion con el usuario automaticamente a modo Touch
+ si el usuario presiona la pantalla y a no modo Touch si presiona el teclado
+
+
+
 == Analisis mercado dispositivos Android == 
 
 http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
 == Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
 
-
 === Monkey Island ===
 
 === ScummVM ===
 
+===EAdventure===
+
+
 http://wiki.scummvm.org/index.php/IPhone#Controls
 
 
-== Eleccion de tipos de interaccion ==
+== Eleccion de tipos de interaccion y adaptacion a entorno e-Adventure ==
 
 === Diseños ===
 
