@@ -65,23 +65,28 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
 === The Secret of Monkey Island ( Special Edition ) para Iphone ===
 
-Input : 
+*Input :* 
 
-Pantalla multitactil : saca provecho solo para hacer zoom en la aventura , lo demas son con gestos de click sobre la pantalla
-Acelerometro : se utiliza para diferenciar si el dispositivo esta en apaisado o en vertical . Si esta en apaisado muestra el juego , si esta en vertical muestra el menu del juego
+ * *Pantalla multitactil* : saca provecho solo para hacer zoom en la aventura , lo demas son con gestos de click sobre la pantalla
+ * *Acelerometro* : se utiliza para diferenciar si el dispositivo esta en apaisado o en vertical . Si esta en apaisado muestra el juego , si esta en vertical muestra el menu del juego
 
-Output : 
+*Output :*
 
-Pantalla : aqui muestra todo lo que al juego se refiere 
-Audio : realiza sonidos cuando se hacen acciones sobre elementos y lee las conversaciones de los personajes . No tiene en cuenta la accesibilidad.
+ * *Pantalla* : aqui muestra todo lo que al juego se refiere 
+ * *Audio* : realiza sonidos cuando se hacen acciones sobre elementos y lee las conversaciones de los personajes . No tiene en cuenta la accesibilidad.
 
 
 Caracteristicas :
 
 Puntero : Se hace uso del puntero para mover al personaje y para realizar acciones sobre los elementos del juego . El puntero lleva un icono en todo momento asociado.
-El icono muestra en todo momento la accion que se tiene seleccionada en ese momento y puede cambiar momentaneamente dando pistas al jugador sobre que acciones se pueden realizar sobre el elemento en el que el puntero esta situado
+El icono muestra la accion seleccionada en ese momento . El icono puede cambiar momentaneamente cuando pasa por encima de un elemento del juego dando pistas al jugador sobre que acciones se pueden realizar sobre este elemento.
 
 HUD : 
+
+
+Min 5:45 http://www.youtube.com/watch?v=5UDrXP3qM2Q&feature=fvw
+
+
 
 Acciones :
 
@@ -107,7 +112,7 @@ Jugando :
 
 === ScummVM ===
 
-===EAdventure===
+
 
 
 http://wiki.scummvm.org/index.php/IPhone#Controls
