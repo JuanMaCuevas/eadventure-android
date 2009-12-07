@@ -67,46 +67,86 @@ http://www.zonajugones.com/archivos_subidos/comparativa-moviles-zonajugones.jpg
 
 === The Secret of Monkey Island ( Special Edition ) para Iphone ===
 
+*Tecnologias utilizadas :*
+
 *Input :* 
 
- * *Pantalla multitactil* : saca provecho solo para hacer zoom en la aventura , lo demas son con gestos de click sobre la pantalla
- * *Acelerometro* : se utiliza para diferenciar si el dispositivo esta en apaisado o en vertical . Si esta en apaisado muestra el juego , si esta en vertical muestra el menu del juego
+ * *Pantalla multitactil* : para todo las acciones sobre la aventura grafica
+ * *Acelerometro* : para cambiar entre el juego y el menu de pausa del juego
 
 *Output :*
 
- * *Pantalla* : aqui muestra todo lo que al juego se refiere 
- * *Audio* : realiza sonidos cuando se hacen acciones sobre elementos y lee las conversaciones de los personajes . No tiene en cuenta la accesibilidad.
+ * *Pantalla* : aqui se muestra todo sobre el juego .
+ * *Audio* : realiza sonidos cuando se hacen acciones sobre elementos y lee las conversaciones de los personajes , etc.. 
+ * *Vibracion* : para informar de la deteccion del gesto de agitacion del dispositivo cuando el usuario utiliza el sistema de pistas.
 
 
-Caracteristicas :
+*Caracteristicas :*
 
-Puntero : Se hace uso del puntero para mover al personaje y para realizar acciones sobre los elementos del juego . El puntero lleva un icono en todo momento asociado.
+ * La aventura grafica se muestra estando el dispositivo en horizontal ( apaisado ) , si se pone vertical se muestra el Menu de pausa del juego .
+
+*Dentro del juego :*
+
+ * *Puntero :*
+   * Se mueve con el dedo , gestos sobre la pantalla multitactil con un solo dedo.
+   * Permite al usuario relacionarse con lo que rodea a la aventura grafica ( no al HUD )
+   * Mueves el cursor donde quieras que vaya el personaje y presionas en cualquier lugar de la pantalla para que se mueva hacia ahi.
+
+ * *HUD :*
+   # Situado en una barra inferior que ocupa parte de la pantalla y no desaparece.
+   # Menu de verbos 
+     * Pulsas en el icono de menu de verbos situado en la barra en la zona iquierda y aparece un cuadro para selecionar la accion que deseas que realize el personaje 
+     * Seleccionas la accion
+     * Mueves el cursor ( mostrara el verbo seleccionado ) sobre el objeto o persona con el que deseas relacionarte y pulsa cualquier lugar de la pantalla
+     * Si pulsas dos veces realiza la accion predeterminada y se muestra en la esquina superior izquierda
+     * El icono del cursor cambiara momentaneamente al de la accion predeterminada cuando el puntero este situado encima de un objeto o persona
+   # Menu de inventario
+     * Pulsas el icono del menu de inventario situado en la barra enl a zona derecha y aparece un cuadro con los elementos del inventario 
+     * Pulsa el elemento que desees seleccionar
+     * Si se quiere combinar dos objetos del inventario sleccionas preimero la accion del menu de verbos ( combinar ) y luego  muestras el menu inventario . Pulsas el objeto sobre el que se realiza la accion.
+     * Algunos objetos perimten que los uses con otro objeot ya sea de la aventura que lo rodea o del menu inventario
+
+ * *Pistas :*
+   * Tiene un sistema de pistas para ayudar al usuario a continuar con la aventura
+   * Tiene tres niveles el sistema
+   * Da la pista cuando agitas el movil y lo detecta el acelerometro
+   * Cuando lo detecta el acelerometro sale la pista en pantalla y vibra el telefono
+
+ * *Acercar y Alejar :*
+   * Puedes hacer zoom realizando el gesto del pellizco con dos dedos hacia dentro para acercar y hacia fuera para alejar.
+   * Usar dosd dedos moviendolos hacia una direccion para mover el foco de la pantalla en la aventura
+   * Con un dedo mueves el cursor , puedes sacar el cursor fuera de tu vista y que deje de ser visible.
+   * Cuando le das fuera y haces que el personaje se mueva hacia el puntero , el foco va siguiendo al personaje , de manera que el personaje siempre esta visible.
+
+ * *Cambiar tipo de vista :*
+   * Monkey island Special edition es una remasterizacion , con lo que puedes volver a la version grafica anterior del juego
+   * Para hacerlo hay que hacer un gesto de deslizamiento hacia la derecha o izquierda con dos dedos .
+   * Para volver a cambiar a la anterior se usa el mismo gesto.
+
+ * *Igonrar cutscenes y dialogos :*
+   * Para ignorar las cutscenes y dialogos basta con pulsar dos veces sobre la parte inferior de la pantalla
+
+*Menu pausa :*
+   * Para ir al menu del juego hay que girar el dispositivo , de manera que el acelerometro lo detecta y muestra el menu .
+   * Si lo vuelves a girar a modo landscape , vuelve el juego.
+
+*Boton Home Iphone:*
+   * Si pulsas el boton home del iphone , se sale de la aplicacion
+   * Cuando vuelves a entrar muestra el menu principal del juego y este se ha guardado .
+   * Puedes continuar la partida donde la dejaste .
+
+
+
+
+
+Se hace uso del puntero para mover al personaje y para realizar acciones sobre los elementos del juego . El puntero lleva un icono en todo momento asociado.
 El icono muestra la accion seleccionada en ese momento . El icono puede cambiar momentaneamente cuando pasa por encima de un elemento del juego dando pistas al jugador sobre que acciones se pueden realizar sobre este elemento.
 
-HUD : 
+
 
 
 Min 5:45 http://www.youtube.com/watch?v=5UDrXP3qM2Q&feature=fvw
 
-
-
-Acciones :
-
-Inventario :
-
-Menu del juego :
-
-
-
-
- # El juego solo se muestra en forma apaisada , cuando se pone en vertical se muestra el menu
- # 
-
-
-Menu del juego :
-
-
-Jugando :
 
 
 
