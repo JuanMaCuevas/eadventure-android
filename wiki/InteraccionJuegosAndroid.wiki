@@ -59,9 +59,22 @@ Teniendo en cuenta las distintas tecnologias que da soporte el framework de Andr
 
 == Analisis mercado dispositivos Android == 
 
+La imagen inferior muestra una serie de moviles basados en Android con las caracteristicas correspondientes a cada modelo . Esta imagen no muestra todos los modelos existentes hoy en dia basados en la plataforma Android pero nos puede servir como una muestra de los mas asentados al menos en Europa.
+
+Podemos decir que :
+ * TODOS cuentan con pantalla tactil ( Capacitiva o Resistiva ) no se sabe si multitactil. 
+ * 2 DE 6 cuentan con teclado tipo QWERTY 
+ * 3 de 6 cuentan con trackball , los otros 3 cuentan con teclas de direccion
+ * TODOS cuentan con internet
+ * Acelerometro
+ * Vibracion , GPS 
+
+Todos estos telefonos cuentan con pantalla tactil  , con lo que con toda seguridad se hara uso de ella en nuestra implementacion del motor, ya que cubrira la mayoria de moviles del mercado actualmente y seguramente en un futuro . No obstante nuestro motor debera estar diseñado de manera que en un futuro se pueda añadir soporte a otro tipo de input como puede ser el teclado QWERTY + trackball 
+ 
+
 http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
-http://www.zonajugones.com/archivos_subidos/comparativa-moviles-zonajugones.jpg
+
 
 == Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
 
