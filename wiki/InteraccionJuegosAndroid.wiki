@@ -61,6 +61,8 @@ Teniendo en cuenta las distintas tecnologias que da soporte el framework de Andr
 
 http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
+http://www.zonajugones.com/archivos_subidos/comparativa-moviles-zonajugones.jpg
+
 == Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
 
 === The Secret of Monkey Island ( Special Edition ) para Iphone ===
