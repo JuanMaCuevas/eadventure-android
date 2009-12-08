@@ -7,21 +7,20 @@
 
 En este documento se analiza : 
 
- # Interaccion persona ordenador HCI 
- # Tipos de interaccion con el usuario que pueden tener los dispositivos moviles Android ( y por el momento lo que soporta el framework ) 
- # Dentro de estos tipos analizar el mercado de moviles % de tipo de interaccion ( touch ,DPad , trackball) hacia donde vamos ??
- # Dentro de estos tipos de interaccion cuales tienen sentido para un motor de juegos de aventuras graficas
- # Analizar el caso de MonkeyISland y ScummVM para iphone
- # Elegir una serie de tipos de interaccion y 
- # De los elegidos proponer distintas alternativas de diseño visual , ejemplos y prototipos a realizar
- # De la alternativa que finalmente se escoge como principal ( realizar diseño arquitectura sencillo )
+ # HCI en dispositivos móviles con Android ( 1.0 ,1.5 , 1.6 y 2.0 )
+ # Analisis del mercado de moviles Andoid . ¿ Que tipo de mobile input es el que mas se implementa ?
+ # ¿ Cuales de estos tienen sentido para un motor de juegos de aventuras graficas ?
+ # Análisis de MonkeyISland y ScummVM para iphone
+ # Elección de un tipo de mobile input e interacción .
+ # Diseño y prototipo de la elección .
+ # Diseño de un borrador de esta parte de la arquitectura del motor.
 
 
-== Interaccion persona ordenador HCI  ==
+== HCI en dispositivos móviles con Android ( 1.0 ,1.5 , 1.6 y 2.0 ) ==
 
 Teniendo en cuenta las distintas tecnologias que da soporte el framework de Android 2.0 API level 5 y el contexto en el que nos encontramos de tecnologia móvil , la interaccion con el usuario de un dispositivo movil Android se puede definir de la siguiente manera :
 
- # INPUT del usuario al dispositivo a traves de :
+ # MOBILE INPUT del usuario al dispositivo a traves de :
   * Pantalla Tactil ( cualquier gesto )
   * Teclado
   * Track Ball
@@ -31,25 +30,11 @@ Teniendo en cuenta las distintas tecnologias que da soporte el framework de Andr
   * Reconocimiento de Voz
   * Utilizar la camara como dispositivo de entrada de datos
   * Net ( Wifi Bluetoth GPRS EDGE/3g/HDSPA ) como entrada de datos
- # El dispositivo lo procesa
- # El dispositivo interactua con el usuario produciendo un OUTPUT a traves de :
+
+ # MOBILE INTERACTION : El dispositivo interactua con el usuario produciendo un OUTPUT a traves de :
   * La pantalla
   * El alatavoz ( como un sonido : sonido , textToSpeach etc.. )
   * Con una vibracion del dispositivo
-
-== Tipos de interaccion soportada por framework de Android 2.0 API level 5 ==
-
- # Android soporta entrada de informacion por medio de :
-
-  * Pantalla tactil : capacitiva, resistiva , multitactil etc.. con stylus o con dedo
-  * Teclado qwerty o no ?¿?¿  No encuentro ningun movil con teclado alfanumerico ( podria darse el caso )
-  * TrackBall ( Botones de direccion )
-  * Acelerometro
-  * GPS posicionamiento
-  * Brujula
-  * Microfono ( Reconocimiento de voz)
-  * Camara
-  * Net
 
 
  # El sistema cambia de modo de interaccion con el usuario automaticamente a modo Touch
@@ -59,39 +44,39 @@ Teniendo en cuenta las distintas tecnologias que da soporte el framework de Andr
 
 == Analisis mercado dispositivos Android == 
 
-La imagen inferior muestra una serie de moviles basados en Android con las caracteristicas correspondientes a cada modelo . Esta imagen no muestra todos los modelos existentes hoy en dia basados en la plataforma Android pero nos puede servir como una muestra de los mas asentados al menos en Europa.
+La imagen inferior muestra una serie de moviles basados en Android con las caracteristicas correspondientes de cada modelo . Esta imagen no muestra todos los modelos existentes hoy en dia basados en la plataforma Android pero nos puede servir como una muestra de los mas asentados , al menos en Europa.
 
 Podemos decir que :
- * TODOS cuentan con pantalla tactil ( Capacitiva o Resistiva ) no se sabe si multitactil. 
+ * TODOS cuentan con pantalla tactil ( Capacitiva o Resistiva ) no sé si multitactil. 
  * 2 DE 6 cuentan con teclado tipo QWERTY 
- * 3 de 6 cuentan con trackball , los otros 3 cuentan con teclas de direccion
- * TODOS cuentan con internet
+ * 3 de 6 cuentan con trackball , los otros 3 cuentan con teclas de dirección
+ * TODOS cuentan con Net
  * Acelerometro
  * Vibracion , GPS 
 
-Todos estos telefonos cuentan con pantalla tactil  , con lo que con toda seguridad se hara uso de ella en nuestra implementacion del motor, ya que cubrira la mayoria de moviles del mercado actualmente y seguramente en un futuro . No obstante nuestro motor debera estar diseñado de manera que en un futuro se pueda añadir soporte a otro tipo de input como puede ser el teclado QWERTY + trackball 
+Todos estos teléfonos cuentan con pantalla tactil  , con lo que con toda seguridad se hara uso de ella en nuestra implementacion del motor, ya que cubrira la mayoria de moviles del mercado actualmente y seguramente en un futuro . No obstante nuestro motor debera estar diseñado de manera que en un futuro se pueda añadir soporte a otro tipo de input como puede ser el teclado QWERTY + trackball 
  
 
 http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
 
 
-== Interaccion de usuario en aventuras graficas ( dispositivos moviles ) ==
+== HCI en dispositivos móviles para aventuras gráficas ==
 
 === The Secret of Monkey Island ( Special Edition ) para Iphone ===
 
 *Tecnologias utilizadas :*
 
-*Input :* 
+*Mobile Input :* 
 
  * *Pantalla multitactil* : para todo las acciones sobre la aventura grafica
  * *Acelerometro* : para cambiar entre el juego y el menu de pausa del juego
 
-*Output :*
+*Interaction :*
 
  * *Pantalla* : aqui se muestra todo sobre el juego .
  * *Audio* : realiza sonidos cuando se hacen acciones sobre elementos y lee las conversaciones de los personajes , etc.. 
- * *Vibracion* : para informar de la deteccion del gesto de agitacion del dispositivo cuando el usuario utiliza el sistema de pistas.
+ * *Vibracion* : para informar de la deteccion del gesto de agitación del dispositivo cuando el usuario utiliza el sistema de pistas.
 
 
 *Caracteristicas :*
@@ -104,57 +89,51 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
    * Se mueve con el dedo , gestos sobre la pantalla multitactil con un solo dedo.
    * Permite al usuario relacionarse con lo que rodea a la aventura grafica ( no al HUD )
    * Mueves el cursor donde quieras que vaya el personaje y presionas en cualquier lugar de la pantalla para que se mueva hacia ahi.
+   * El puntero siempre lleva un icono que hace referencia a la accion que esta seleccionada en ese momento.
+   * Si pulsas la pantalla dos veces se realiza la accion predeterminada y se muestra en la esquina superior izquierda
+   * El icono del cursor cambiara momentaneamente al de la acción predeterminada cuando el puntero este situado encima de un objeto o persona . Da una pista de lo que se puede hacer con ese elemento del juego.
 
  * *HUD :*
    # Situado en una barra inferior que ocupa parte de la pantalla y no desaparece.
+   # Cuenta con menu de verbos y menu de inventario . Para acceder a cada uno de ellos basta con pulsar sobre su icono .
    # Menu de verbos 
      * Pulsas en el icono de menu de verbos situado en la barra en la zona iquierda y aparece un cuadro para selecionar la accion que deseas que realize el personaje 
      * Seleccionas la accion
-     * Mueves el cursor ( mostrara el verbo seleccionado ) sobre el objeto o persona con el que deseas relacionarte y pulsa cualquier lugar de la pantalla
-     * Si pulsas dos veces realiza la accion predeterminada y se muestra en la esquina superior izquierda
-     * El icono del cursor cambiara momentaneamente al de la accion predeterminada cuando el puntero este situado encima de un objeto o persona
+     * Mueves el cursor ( mostrara el verbo seleccionado ) sobre el objeto o persona con el que deseas relacionarte y pulsa cualquier lugar de la pantalla    
    # Menu de inventario
-     * Pulsas el icono del menu de inventario situado en la barra enl a zona derecha y aparece un cuadro con los elementos del inventario 
-     * Pulsa el elemento que desees seleccionar
-     * Si se quiere combinar dos objetos del inventario sleccionas preimero la accion del menu de verbos ( combinar ) y luego  muestras el menu inventario . Pulsas el objeto sobre el que se realiza la accion.
-     * Algunos objetos perimten que los uses con otro objeot ya sea de la aventura que lo rodea o del menu inventario
+     * Pulsas el icono del menu de inventario situado en la barra , en la zona derecha y aparece un cuadro con los elementos del inventario 
+     * Pulsa el elemento que deseas seleccionar
+     * Si se quiere combinar dos objetos del inventario seleccionas preimero la accion del menu de verbos ( combinar ) y luego  muestras el menu inventario . Pulsas el objeto sobre el que se realiza la accion.
+     * Algunos objetos perimten que los uses con otro objeto ya sea de la aventura que lo rodea o del menu inventario , solo tendras que elegir del menu combinar y pulsar en los dos objetos.
 
  * *Pistas :*
    * Tiene un sistema de pistas para ayudar al usuario a continuar con la aventura
-   * Tiene tres niveles el sistema
-   * Da la pista cuando agitas el movil y lo detecta el acelerometro
-   * Cuando lo detecta el acelerometro sale la pista en pantalla y vibra el telefono
+   * Tiene tres niveles de pistas , cada vez mas obvias.
+   * Muestra la pista en pantalla cuando agitas el movil . Este vibra cuando detecta el movimiento (acelerometro).
 
  * *Acercar y Alejar :*
    * Puedes hacer zoom realizando el gesto del pellizco con dos dedos hacia dentro para acercar y hacia fuera para alejar.
-   * Usar dosd dedos moviendolos hacia una direccion para mover el foco de la pantalla en la aventura
+   * Usar dos dedos moviendolos hacia una direccion para mover el foco de la pantalla en la aventura
    * Con un dedo mueves el cursor , puedes sacar el cursor fuera de tu vista y que deje de ser visible.
    * Cuando le das fuera y haces que el personaje se mueva hacia el puntero , el foco va siguiendo al personaje , de manera que el personaje siempre esta visible.
 
  * *Cambiar tipo de vista :*
-   * Monkey island Special edition es una remasterizacion , con lo que puedes volver a la version grafica anterior del juego
+   * Monkey island Special edition es una remasterizacion , con lo que puedes cambiar a la version grafica antigua del juego
    * Para hacerlo hay que hacer un gesto de deslizamiento hacia la derecha o izquierda con dos dedos .
    * Para volver a cambiar a la anterior se usa el mismo gesto.
 
  * *Igonrar cutscenes y dialogos :*
    * Para ignorar las cutscenes y dialogos basta con pulsar dos veces sobre la parte inferior de la pantalla
+   * En los cutscenes y dialogos desaparece la barra del HUD de abajo.
 
 *Menu pausa :*
-   * Para ir al menu del juego hay que girar el dispositivo , de manera que el acelerometro lo detecta y muestra el menu .
+   * Para ir al menu del juego hay que girar el dispositivo de horizontal a vertical , de manera que el acelerometro lo detecta y muestra el menu .
    * Si lo vuelves a girar a modo landscape , vuelve el juego.
 
 *Boton Home Iphone:*
-   * Si pulsas el boton home del iphone , se sale de la aplicacion
-   * Cuando vuelves a entrar muestra el menu principal del juego y este se ha guardado .
+   * Si pulsas el boton home del iphone , se sale de la aplicacion autoguardando la partida.
+   * Cuando vuelves a entrar muestra el menu principal del juego.
    * Puedes continuar la partida donde la dejaste .
-
-
-
-
-
-Se hace uso del puntero para mover al personaje y para realizar acciones sobre los elementos del juego . El puntero lleva un icono en todo momento asociado.
-El icono muestra la accion seleccionada en ese momento . El icono puede cambiar momentaneamente cuando pasa por encima de un elemento del juego dando pistas al jugador sobre que acciones se pueden realizar sobre este elemento.
-
 
 
 
