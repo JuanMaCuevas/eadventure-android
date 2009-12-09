@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, TestUpload!</string>
-    <string name="app_name">download</string>
+    <string name="app_name">Test_download</string>
 </resources>
