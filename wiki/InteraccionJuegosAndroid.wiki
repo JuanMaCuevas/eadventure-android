@@ -81,7 +81,15 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 
 *Caracteristicas :*
 
- * La aventura grafica se muestra estando el dispositivo en horizontal ( apaisado ) , si se pone vertical se muestra el Menu de pausa del juego .
+   * La aventura grafica se muestra estando el dispositivo en horizontal ( apaisado ) , si se pone vertical se muestra el Menu de pausa del juego .
+   * Monkey island Special edition es una remasterizacion , con lo que puedes cambiar a la version grafica antigua del juego
+   * Para hacerlo hay que hacer un gesto de deslizamiento hacia la derecha o izquierda con dos dedos .
+   * Para volver a cambiar a la anterior se usa el mismo gesto.
+   * Solo voy a analizar el sistema grafico nuevo , ya que el antiguo cuenta con el menu  tradicional  de las antiguas aventuras graficas.
+   *  Este tipo de interfaz está basada en las primeras aventuras gráficas de LuscasArtsTM. En todo momento podemos encontrar un panel con las diferentes opciones que podemos realizar en la parte inferior de la pantalla (mitad izquierda), junto con el panel del inventario (mitad derecha). 
+  *  Bajo mi punto de vista no esta orientado a dispositivos moviles , ya que estos tienen una pantalla de tamaño reducido y este menu ocuparia parte de la panalla.
+
+*Nuevo sistema grafico :*
 
 *Dentro del juego :*
 
@@ -117,11 +125,6 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
    * Con un dedo mueves el cursor , puedes sacar el cursor fuera de tu vista y que deje de ser visible.
    * Cuando le das fuera y haces que el personaje se mueva hacia el puntero , el foco va siguiendo al personaje , de manera que el personaje siempre esta visible.
 
- * *Cambiar tipo de vista :*
-   * Monkey island Special edition es una remasterizacion , con lo que puedes cambiar a la version grafica antigua del juego
-   * Para hacerlo hay que hacer un gesto de deslizamiento hacia la derecha o izquierda con dos dedos .
-   * Para volver a cambiar a la anterior se usa el mismo gesto.
-
  * *Igonrar cutscenes y dialogos :*
    * Para ignorar las cutscenes y dialogos basta con pulsar dos veces sobre la parte inferior de la pantalla
    * En los cutscenes y dialogos desaparece la barra del HUD de abajo.
@@ -140,21 +143,80 @@ http://farm4.static.flickr.com/3498/3912166563_975c600f8f_o.png
 Min 5:45 http://www.youtube.com/watch?v=5UDrXP3qM2Q&feature=fvw
 
 
+=== ScummVM para iphone ===
+
+ScummVM  es un emulador que permite correr algunas de las clásicas aventuras graphicas point-and-click en iPhone / iPodTouch. Es un porting de la version de escritorio .
+
+Podemos sacar algunas ideas a partir del mapeo de controles de este emulador , de todas maneras al estar orientado a iPhone , este usa mucho las características multitáctiles de la pantalla , cosa que no todos los moviles android disponen de ella.
+
+A continuacion se muestra el mapeo de controles por defecto para jugar a las aventuras graficas con ScummVM
+
+|| *ACCIÓN*   ||  *GESTO TOUCH* ||
+||  *Left click* || Single tap ||
+||  *Right click* || Hold one finger on screen where you want to click, single tap another || 
+||  *Arrow keys* || 	Without holding any other finger down, swipe your finger quickly across the screen in the direction of the arrow key you want.|| 
+|| *ESC*|| 	Hold one finger on screen, double tap another|| 
+|| *F5 (menu)*|| 	Hold one finger on screen, swipe another down from top to bottom || 
+|| *F 0-9 keys*	||  Press the keyboard button directly under the appropriate number || 
+|| *Pause* || 	Keyboard spacebar || 
+|| *Toggle Click+Drag mode* || 	Hold one finger on screen, swipe another up from bottom to top. In this mode, a mouse click is sent immediately when you touch the screen, drags to wherever you slide your finger, and releases where you lift your finger. If you press down a second finger in this mode, you effectively release the left mouse button, and press down the right one (which is then released when you lift your finger again). Useful for Monkey Island 3: The Curse of Monkey Island and Full Throttle.|| 
+|| *Toggle Touchpad mode* || Hold one finger on screen, swipe another up from left to right. In this mode, the cursor doesn't stay underneath your finger, but is rather moved around from its current position depending on the direction of your finger movement, just like a touchpad on a laptop. From version 0.12.0-pre3 and upwards only.|| 
+|| *Suspend* || Press the tactile "home" button. || 
+|| *Quit* || Press and hold the tactile "home" button for 5-6 seconds.|| 
+
+_Sacado de : http://wiki.scummvm.org/index.php/IPhone#Controls_
 
 
 
+== Tipos de interaccion y adaptacion a entorno e-Adventure ==
 
-=== ScummVM ===
+¿ Que INPUT usa e-Adventure para escritorio ?
+
+Como input usa el puntero .
+
+Tiene dos tipos de vista para interactuar con la aventura grafica :
+
+Menu tradicional ( actualmente en desuso ) y Menu contextual
+
+¿ Que OUTPUT usa e-Adventure para escriotrio ?
+
+Pantalla y Audio .
 
 
+INPUTS :
+
+Como adaptar el INPUT del puntero : 
+
+Se puede adaptar como puntero utilizando ideas similares a las de MonkeyIsland para iphone.
+
+Se puede aplicar mi idea ( Remix de todo y experiencia con iphone ) .
+
+Mi idea : 
 
 
-http://wiki.scummvm.org/index.php/IPhone#Controls
+Android acepta mas INPUTS :
+
+Acelerometro , Brujula etc...
+
+Posibles aplicaciones de esos inputs :
 
 
-== Eleccion de tipos de interaccion y adaptacion a entorno e-Adventure ==
+Android acepta mas outputs : 
 
-=== Diseños ===
+Vibracion :
+
+
+==Idea final==
+
+Cubre la mayoria de dispositivos android . Es sencillo de usar y de aprender . Es intuitivo . 
+
+INPUT :
+
+
+OUTPUT:
+
+
+=== Diseño Idea final ===
 
 === Prototipos ===
 
