@@ -13,6 +13,7 @@
           * InteraccionJuegosAndroid
       * Prototipos
           * PrototipoLoaderAndroid
+          * PrototipoDrawPicsAndroid
     * E-Adventure
       * RequisitosFuncionales
     * Proyecto SI
