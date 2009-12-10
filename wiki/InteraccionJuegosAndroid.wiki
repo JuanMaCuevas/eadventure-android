@@ -208,12 +208,136 @@ Vibracion :
 
 ==Idea final==
 
-Cubre la mayoria de dispositivos android . Es sencillo de usar y de aprender . Es intuitivo . 
+Cubre la mayoria de dispositivos android . Es sencillo de usar y de aprender . Es intuitivo .  Siempre responde al usuario .
 
 INPUT :
 
+Pantalla tactil ( puede o no ser multitactil ) y boton de menu .
 
 OUTPUT:
+
+Pantalla
+Audio
+
+
+Caracteristicas :
+
+
+Modo Juego : 
+
+En este modo el usuario interacciona con la aventura grafica , mueve al personaje por el escenario , interactua con los elementos etc...
+Este modo tiene una barra HUD en la zona superior de la pantalla y lo demas forma parte de la presentacion de la aventura grafica
+Se ha elegido que la barra este en la zona superior para que el usuario siempre la tenga visible , de manera que cuando usa el dedo para interaccionar 
+, siempre la tenga visible.
+
+imagen
+
+En la barra superior HUD se muestra :
+
+A la izquierda el menu de acciones 
+Siguiendolo , la accion asociada en ese momento .
+Notese que si no hay ninguna accion selecionada , la accion por defecto es la de mover el personaje -> Ir a ...
+A la derecha el menu de inventario
+
+El menu de acciones :
+
+Si presionas el icono de menu de acciones , este se muestra :
+imagen
+Luego basta con presionar la accion que deseas emplear y se mostrara como seleccionada :
+imagen
+
+El menu de inventario : 
+
+Si presionas  el menu de inventario , este se muestra :
+imagen
+Si no tienes ninguna accion seleccionada y presionas en un elemento del inventario , te pondra en pantalla la descripcion del elemento .
+imagen
+Si tienes una accion seleccionada y presionas en el elemento , se te marcara como que la accion esta asociada con el elemento :
+imagen
+Notese que el inventario puede estar todo lo lleno que se quiera , ya que tiene dos flechas para poder buscar mas...
+
+
+Movimiento del protagonista :
+
+En el caso de tercera persona ...
+Seria el analogo al gesto de hacer click para mover el personaje en el motor de escritorio.
+Por defecto , no hay ninguna accion ( del menu de acciones ) seleccionada . 
+En este caso el protagonista de la aventura esta libre , y el usuario presiona con 1 dedo a donde quiere que vaya el protagonista ,moviendolo por el escenario .
+
+Imagen
+
+
+Nota de salidas .
+
+
+
+Analizar el escenario :
+
+Este caso seria el analogo , en el motor de escrotorio , al gesto de mover el cursor por el escenario viendo los elementos con los que puede interaccionar.
+El gesto elegido seria el de presionar la pantalla y mover el dedo presionando sobre el escenario . 
+Cuando el dedo se situe encima de un elemento con el que se puede interaccionar , se mostrara el nombre del elemento en la barra del HUD y los iconos de las acciones 
+que se pueden hacer sobre el .
+
+Imagen
+
+Salidas :
+
+
+Ejecutar Acciones sobre elementos :
+
+Acciones de un solo paso :
+
+Las acciones de un solo paso son las que comprenden la accion con el elemento sobre el cual se realiza la accion .
+Ejemplo de estos serian : Hablar con , Abrir , Usar .
+
+Para ejecutar estas acciones el usuario debera .
+
+0 Opcional ( el usuario "analiza el escenario" y ve que acciones puede realizar con el elemento sobre el cual quiere realizar la accion )
+
+1 Elige la accion del menu de acciones
+imagen
+2 Presiona el escenario y mueve el dedo presionando sobre el escenario , hasta que se situe encima del elemento sobre el cual quiere hacer la accion .
+   Notese que si el elemento no tiene esa accion asociada , no se seleccionara y lo pasara por alto . ( esto puede cambiar ) 
+imgen
+3 Una vez situado sobre el elemento , sabiendo que este tiene esa accion asociada , se  mostrara la accion y el elemento asociado en el HUD ( ej :
+Hablar con Pepe ) y solamente quitando el dedo ejecutara la accion .
+imagen
+4 Hasta que la accion no  termine su ejecucion  , se seguira mostrarando la informacion de la accion en el HUD .
+imagen
+
+
+Acciones de varios pasos :
+
+Combinar con :
+
+
+
+
+
+
+
+
+
+
+
+
+CutScenes y dialogos
+
+
+
+Menu :
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 === Diseño Idea final ===
