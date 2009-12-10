@@ -206,7 +206,7 @@ Android acepta mas outputs :
 Vibracion :
 
 
-==Idea final==
+==Idea final orientada a aventuras en tercera persona ==
 
 Cubre la mayoria de dispositivos android . Es sencillo de usar y de aprender . Es intuitivo .  Siempre responde al usuario .
 
@@ -229,7 +229,7 @@ En este modo el usuario interacciona con la aventura grafica , mueve al personaj
 Este modo tiene una barra HUD en la zona superior de la pantalla y lo demas forma parte de la presentacion de la aventura grafica
 La barra este en la zona superior con el fin de que el usuario  al interaccionar con el escenario no pierda visibilidad del HUD .
 
-Imagen :
+Imagen Inicial
 
 
 
@@ -243,32 +243,44 @@ A la derecha el menu de inventario
 El menu de acciones :
 
 Si presionas el icono de menu de acciones , este se muestra :
-imagen
+Imagen MenuAcciones
 Luego basta con presionar la accion que deseas emplear y se mostrara como seleccionada :
-imagen
+Imagen MenuAccionesSeleccion
+
+
+Si la accion es una accion que se puede realizar sobre objetos como por ejemplo examinar ( en el hud se seguira mostrando el icono del inventario ) , si es una accion que solo se asocia a personajes como hablar con.. el icono del inventario desaparecera del HUD hasta que se termine la accion .
+
+ 
 
 El menu de inventario : 
 
 Si presionas  el menu de inventario , este se muestra :
-imagen
-Si no tienes ninguna accion seleccionada y presionas en un elemento del inventario , te pondra en pantalla la descripcion del elemento .
-imagen
-Si tienes una accion seleccionada y presionas en el elemento , se te marcara como que la accion esta asociada con el elemento :
-imagen
+
+imagen MenuInventario
+
 Notese que el inventario puede estar todo lo lleno que se quiera , ya que tiene dos flechas para poder buscar mas...
+
+Si no tienes ninguna accion seleccionada y presionas en un elemento del inventario , te pondra en pantalla la descripcion del elemento .
+
+imagenMIDescElemento
+
+Si tienes una accion seleccionada y presionas en el elemento , se te marcara como que la accion esta asociada con el elemento :
+
+imagenMIAccionElemento
+
 
 
 Movimiento del protagonista :
 
-En el caso de tercera persona ...
-Seria el analogo al gesto de hacer click para mover el personaje en el motor de escritorio.
+
+Seria el analogo , del motor de escritorio , al gesto de hacer click para mover el personaje por el escenario .
 Por defecto , no hay ninguna accion ( del menu de acciones ) seleccionada . 
 En este caso el protagonista de la aventura esta libre , y el usuario presiona con 1 dedo a donde quiere que vaya el protagonista ,moviendolo por el escenario .
 
-Imagen
+Imagen AccionIr
 
 
-Nota de salidas .
+Nota : si presionas la salida no va a salir , se va a desplazar hasta ahi pero no tomara la salida , para ello fijarse en el proximo apartado de Salidas dentro de Analizar el escenario.
 
 
 
@@ -276,12 +288,17 @@ Analizar el escenario :
 
 Este caso seria el analogo , en el motor de escrotorio , al gesto de mover el cursor por el escenario viendo los elementos con los que puede interaccionar.
 El gesto elegido seria el de presionar la pantalla y mover el dedo presionando sobre el escenario . 
+
+Imagen AnalizarEntornoBuscando
+
 Cuando el dedo se situe encima de un elemento con el que se puede interaccionar , se mostrara el nombre del elemento en la barra del HUD y los iconos de las acciones 
 que se pueden hacer sobre el .
 
-Imagen
+AnalizaEscenarioElemento
 
 Salidas :
+
+AnalizaEscenarioSalidaA
 
 
 Ejecutar Acciones sobre elementos :
@@ -350,19 +367,6 @@ Menu :
 
 Para mostrar el menu el usuario debe pulsar el boton menu .
 Todos los dispositivos android cuentan con el boton menu .
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 === Diseño Idea final ===
 
