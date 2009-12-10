@@ -285,47 +285,70 @@ Salidas :
 
 Ejecutar Acciones sobre elementos :
 
-Acciones de un solo paso :
+Acciones de un solo paso (accion sobre un elemento):
 
 Las acciones de un solo paso son las que comprenden la accion con el elemento sobre el cual se realiza la accion .
-Ejemplo de estos serian : Hablar con , Abrir , Usar .
+Ejemplo de estos serian 
+
+Sobre objetos : Examinar , coger , usar ,  entregar a y personalizables de accion .
+Sobre personajes : Examinar , Usar , Hablar con  y Personalizables de accion .
 
 Para ejecutar estas acciones el usuario debera .
 
-0 Opcional ( el usuario "analiza el escenario" y ve que acciones puede realizar con el elemento sobre el cual quiere realizar la accion )
+ # Opcional ( el usuario "analiza el escenario" y ve que acciones puede realizar con el elemento sobre el cual quiere realizar la accion )
 
-1 Elige la accion del menu de acciones
+ # Elige la accion del menu de acciones
 imagen
-2 Presiona el escenario y mueve el dedo presionando sobre el escenario , hasta que se situe encima del elemento sobre el cual quiere hacer la accion .
-   Notese que si el elemento no tiene esa accion asociada , no se seleccionara y lo pasara por alto . ( esto puede cambiar ) 
-imgen
-3 Una vez situado sobre el elemento , sabiendo que este tiene esa accion asociada , se  mostrara la accion y el elemento asociado en el HUD ( ej :
-Hablar con Pepe ) y solamente quitando el dedo ejecutara la accion .
+ # Presiona el escenario y mueve el dedo presionando sobre el escenario , hasta que se situe encima del elemento sobre el cual quiere hacer la accion .
+   Notese que si el elemento no tiene esa accion asociada , no se seleccionara y lo pasara por alto . ( esto puede cambiar )
+ imgen
+ # Una vez situado sobre el elemento , sabiendo que este tiene esa accion asociada , se  mostrara la accion y el elemento asociado en el HUD ( ej : Hablar con Pepe ) y solamente quitando el dedo ejecutara la accion .
 imagen
-4 Hasta que la accion no  termine su ejecucion  , se seguira mostrarando la informacion de la accion en el HUD .
+ # Hasta que la accion no  termine su ejecucion  , se seguira mostrarando la informacion de la accion en el HUD . 
 imagen
 
 
-Acciones de varios pasos :
+Acciones de varios pasos (interaccion con otro elemento) :
 
-Combinar con :
+Las acciones de varios pasos son las que comprenden las acciones en las que interaccionan varios elementos entre si como pueden ser :
+usar con , y personalizables de interaccion .
+Estas solo se usan sobre objetos .
+
+Para ejecutar estas acciones el usuario debera .
+
+# Opcional ( el usuario "analiza el escenario" y ve que acciones puede realizar con el elemento sobre el cual quiere realizar la accion )
+
+ # Elige la accion del menu de acciones
+imagen
+ # Aqui debera escoger dos elementos . Estos dos elementos los puede seleccionar del inventario o del escenario directamente. Debera seleccionar primero uno y luego el siguiente.Puede seleccionarlos de cualquiera de estas dos maneras .
+    * Presionando sobre el escenario y moviendo el dedo presionando  , hasta que se situe encima del elemento sobre el cual quiere hacer la accion .
+        Notese que si el elemento no tiene esa accion asociada , no se seleccionara y lo pasara por alto . ( esto puede cambiar )
+    *  Pulsando en el menu de inventario y seleccionando el objeto
+  # En todo momento se  mostrara la accion y los elemento asociados en el HUD ( ej : Usar llave con cerradura )  hasta que se finalize la ejecucion de la accion .
+imagen
 
 
+Libros : 
+
+El libro se mostrara cuando se haga la accion de examinar o usar sobre el objeto libro :
 
 
+Pasar paginas del libro :
 
+Para pasar paginas hacia delante : hacer un gesto con un dedo sobre la pantalla  moviendo el dedo de derecha a izquierda
+Para pasar paginas hacia atras : hacer un gesto con un dedo sobre la pantalla  moviendo el dedo de izquierda a derecha
 
-
-
-
-
-
+imagen
 
 CutScenes y dialogos
 
-
+Los cutscenes y dialogos se mostraran en la pantalla de presentacion de la aventura .
+Si queremos pasar rapidamente los cutscenes o dialgos basta con hacer doble click en la pantalla.
 
 Menu :
+
+Para mostrar el menu el usuario debe pulsar el boton menu .
+Todos los dispositivos android cuentan con el boton menu .
 
 
 
