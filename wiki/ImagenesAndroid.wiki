@@ -40,16 +40,16 @@ Si queremos soportar los juegos actuales (generados para escritorio) tenemos las
 
 ===Averiguar cómo se usan imágenes en ANDROID. Analizar rendimiento. ¿Es necesario usar una caché? ¿Pueden cargarse imágenes al vuelo según se necesitan? hay que cargarlas todas a la vez? cuántas imágenes pueden cargarse a la vez?===
 
-[PrototipoCargaImagenes]: Tiempo de carga de imágenes varios tamaños, pruebas de cache, acceso directo al .ead (memoria interna o SD), precarga a memoria. Analizar tiempos de carga y tamaño en memoria.
+[PrototipoDrawPicsAndroid#Carga]: Tiempo de carga de imágenes varios tamaños, pruebas de cache, acceso directo al .ead (memoria interna o SD), precarga a memoria. Analizar tiempos de carga y tamaño en memoria.
 
 ===Averiguar cómo se pueden escalar imágenes en ANDROID. Analizar distintas opciones. Analizar rendimiento===
 
 
-[PrototipoEscalado]:  Escalado de imágenes. Tiempos de ejecución
+[PrototipoDrawPicsAndroid#Escalado]:  Escalado de imágenes. Tiempos de ejecución
 
 ===Analizar el tratamiento de transparencias en imágenes ANDROID (rendimiento)===
 
-[PrototipoTranspas]: Benchmark de transparencias.
+[PrototipoDrawPicsAndroid#Transparencias]: Benchmark de transparencias.
 	
 ===Analizar el sistema de pintado de ANDROID. ¿Permite backbuffer? ¿Quién controla el pintado? ¿Cada cuánto se repinta la pantalla?===
 
