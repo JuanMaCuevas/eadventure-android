@@ -1,5 +1,6 @@
 #summary Prototipo del pintado de imágenes en Android
 #labels Phase-Requirements
+#sidebar BarraNavegacion
 
 =Prototipo Pintado de Imágenes =
 Esta página explica los prototipos planificados en la página [ImagenesAndroid], para la evaluación del rendimiento de Android en lo relacionado al pintado de imágenes.
