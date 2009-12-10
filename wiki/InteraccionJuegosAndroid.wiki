@@ -227,10 +227,11 @@ Modo Juego :
 
 En este modo el usuario interacciona con la aventura grafica , mueve al personaje por el escenario , interactua con los elementos etc...
 Este modo tiene una barra HUD en la zona superior de la pantalla y lo demas forma parte de la presentacion de la aventura grafica
-Se ha elegido que la barra este en la zona superior para que el usuario siempre la tenga visible , de manera que cuando usa el dedo para interaccionar 
-, siempre la tenga visible.
+La barra este en la zona superior con el fin de que el usuario  al interaccionar con el escenario no pierda visibilidad del HUD .
 
-imagen
+Imagen :
+
+
 
 En la barra superior HUD se muestra :
 
