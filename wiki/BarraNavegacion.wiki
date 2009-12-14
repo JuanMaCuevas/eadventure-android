@@ -11,6 +11,8 @@
       * Estudios de la plataforma
           * ImagenesAndroid
           * InteraccionJuegosAndroid
+          * GestosAndroid
+
       * Prototipos
           * PrototipoLoaderAndroid
           * PrototipoDrawPicsAndroid
