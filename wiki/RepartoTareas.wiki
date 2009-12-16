@@ -4,6 +4,7 @@
 
 <wiki:toc max_depth="2" />
 
+----
 
 == Semana 14Dic-21Dic 09 ==
 
@@ -23,6 +24,7 @@
  * Terminar documento interacción de usuario . Elección final definida.
  * Prototipos de interacción .
 
+----
 
 == Semana 04Dic-10Dic 09 ==
 
