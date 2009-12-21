@@ -4,7 +4,27 @@
 
 <wiki:toc max_depth="2" />
 
-----
+---- 
+
+== Semana 21Dic-27Dic 09 ==
+
+
+=== Todos (Importante)===
+ *  Idea del motor para comentarlo la próxima reunión ( como son etc..)
+ *  Posible Libro:  Andre Lamoth: Game programming
+
+=== Juanma ===
+ * Terminar con los prototipos de imágenes, animaciones ( carga desde zip , analizar rendimiento con carga de imagenes de ProtocoloDeIncendios etc ...)
+ * Prototipo vídeos y audio (si se puede)
+
+=== Willy ===
+ * Terminar sistema de carga Repositorio 
+
+=== Álvaro ===
+ * Terminar documento interacción de usuario . Elección final definida.
+ * Prototipos de interacción .
+
+---- 
 
 == Semana 14Dic-21Dic 09 ==
 
