@@ -27,13 +27,12 @@ import es.eucm.eadandroid.common.loader.incidences.Incidence;
 import es.eucm.eadandroid.resourcehandler.ResourceHandler;
 import es.eucm.saxprototype.R;
 
-
-public class GameLauncher extends ListActivity {
+public class GameLauncherActivity extends ListActivity {
 
 	// Menu item ids
 	public static final int MENU_ITEM_INSTALL = Menu.FIRST;
 	public static final int MENU_ITEM_UNINSTALL = Menu.FIRST + 1;
-	
+
 	public static final String TAG = "GameLauncher";
 
 	private String adventureName;
@@ -48,7 +47,7 @@ public class GameLauncher extends ListActivity {
 	 */
 	private Handler GLActivityHandler = new Handler() {
 		@Override
-		/* * Called when a message is sent to Engines Handler Queue */
+		/*  * Called when a message is sent to Engines Handler Queue */
 		public void handleMessage(Message msg) {
 
 			dialog.dismiss();
@@ -56,15 +55,15 @@ public class GameLauncher extends ListActivity {
 
 			switch (msg.what) {
 
-			case GlobalMessages.GAMES_FOUND: {
+			case SearchHandlerMessages.GAMES_FOUND: {
 				Bundle b = msg.getData();
 				advList = b.getStringArray("adventuresList");
 				insertAdventuresToList(advList);
 				break;
 			}
-			case GlobalMessages.NO_GAMES_FOUND:
+			case SearchHandlerMessages.NO_GAMES_FOUND:
 				break;
-			case GlobalMessages.NO_SD_CARD:
+			case SearchHandlerMessages.NO_SD_CARD:
 				showAlert("No SD card mounted");
 				break;
 
@@ -73,11 +72,35 @@ public class GameLauncher extends ListActivity {
 
 	};
 
-	private void showAlert(String msg) {
+	private void insertAdventuresToList(String[] advList) {
 
-		new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
-				null).show();
+		setListAdapter(new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, advList));
+		getListView().setTextFilterEnabled(true);
 
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info;
+		try {
+			info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		} catch (ClassCastException e) {
+			Log.e(this.getClass().getSimpleName(), "bad menuInfo", e);
+			return false;
+		}
+
+		switch (item.getItemId()) {
+		case MENU_ITEM_UNINSTALL: {
+			// Delete the note that the context menu is for
+			/*
+			 * Uri noteUri = ContentUris.withAppendedId(getIntent().getData(),
+			 * info.id); getContentResolver().delete(noteUri, null, null);
+			 */
+			return true;
+		}
+		}
+		return false;
 	}
 
 	@Override
@@ -90,69 +113,27 @@ public class GameLauncher extends ListActivity {
 		this.getListView().setOnCreateContextMenuListener(this);
 
 		searchForGames();
-		
-
-	}
-
-	/** Starts SearchGamesThread -> searches for ead games */
-	private void searchForGames() {
-
-		dialog = ProgressDialog.show(this, "", "Searching for ead games...",
-				true);
-		SearchGamesThread t = new SearchGamesThread(this, GLActivityHandler);
-		t.start();
-
-	}
-
-	private void insertAdventuresToList(String[] advList) {
-
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, advList));
-		getListView().setTextFilterEnabled(true);
 
 	}
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		
-		
-		String adventureName = this.getListView().getItemAtPosition(position).toString();
-		
-		Log.d(TAG,"AdventureName : "+adventureName);
+	public void onCreateContextMenu(ContextMenu menu, View view,
+			ContextMenuInfo menuInfo) {
+		AdapterView.AdapterContextMenuInfo info;
+		try {
+			info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		} catch (ClassCastException e) {
+			Log.e(this.getClass().getSimpleName(), "bad menuInfo", e);
+			return;
+		}
 
-		File sdCard = Environment.getExternalStorageDirectory();
-		
-		String adventureAbsPath = sdCard.getAbsolutePath();		
-		Log.d(TAG,"AdventureAbsolutePath : "+adventureAbsPath);
-		
-		String advPath = adventureAbsPath+"/"+adventureName;		
-		Log.d(TAG,"PathToFile : "+advPath);
-			
-		 ResourceHandler.setRestrictedMode(false);
-		 ResourceHandler.getInstance().setZipFile(advPath); 
-		 DescriptorData gameDescriptor = Loader.loadDescriptorData(ResourceHandler.getInstance());
-		 
-		 Log.d(TAG,"AdventuresDescription loaded : "+gameDescriptor.getDescription().toString());
-		 
-		 int currentChapter = 0 ;
-		 
-		// Extract the chapter
-	     ChapterSummary chapter = gameDescriptor.getChapterSummaries( ).get( currentChapter );
-	     
-	     Chapter gameData;
+		String advName = (String) getListAdapter().getItem(info.position);
 
-	        // Load the script data
-	     gameData = Loader.loadChapterData( ResourceHandler.getInstance( ), chapter.getChapterPath( ), new ArrayList<Incidence>( ), true );
-	     
-	     Log.d(TAG,"ChapterData loaded : "+gameData.getTitle());
+		// Setup the menu header
+		menu.setHeaderTitle(advName);
 
-	     
-	     
-		 ResourceHandler.getInstance().closeZipFile();
-		 ResourceHandler.delete();
-		 
-		 
-		
+		// Add a menu item to delete the note
+		menu.add(0, MENU_ITEM_UNINSTALL, 0, R.string.menu_uninstall);
 	}
 
 	@Override
@@ -179,6 +160,66 @@ public class GameLauncher extends ListActivity {
 		 * ComponentName(this, NotesList.class), null, intent, 0, null);
 		 */
 		return true;
+	}
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+
+		String adventureName = this.getListView().getItemAtPosition(position)
+				.toString();
+
+		Log.d(TAG, "AdventureName : " + adventureName);
+
+		File sdCard = Environment.getExternalStorageDirectory();
+
+		String adventureAbsPath = sdCard.getAbsolutePath();
+		Log.d(TAG, "AdventureAbsolutePath : " + adventureAbsPath);
+
+		String advPath = adventureAbsPath + "/" + adventureName;
+		Log.d(TAG, "PathToFile : " + advPath);
+
+		ResourceHandler.setRestrictedMode(false);
+		ResourceHandler.getInstance().setZipFile(advPath);
+		DescriptorData gameDescriptor = Loader
+				.loadDescriptorData(ResourceHandler.getInstance());
+
+		Log.d(TAG, "AdventuresDescription loaded : "
+				+ gameDescriptor.getDescription().toString());
+
+		int currentChapter = 0;
+
+		// Extract the chapter
+		ChapterSummary chapter = gameDescriptor.getChapterSummaries().get(
+				currentChapter);
+
+		Chapter gameData;
+
+		// Load the script data
+		gameData = Loader.loadChapterData(ResourceHandler.getInstance(),
+				chapter.getChapterPath(), new ArrayList<Incidence>(), true);
+
+		Log.d(TAG, "ChapterData loaded : " + gameData.getTitle());
+
+		ResourceHandler.getInstance().closeZipFile();
+		ResourceHandler.delete();
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_ITEM_INSTALL:
+			// Launch activity to insert a new item
+			// startActivity(new Intent(Intent.ACTION_INSERT,
+			// getIntent().getData()));
+			return true;
+		case MENU_ITEM_UNINSTALL:
+			// Launch activity to insert a new item
+			// startActivity(new Intent(Intent.ACTION_INSERT,
+			// getIntent().getData()));
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -212,64 +253,21 @@ public class GameLauncher extends ListActivity {
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_ITEM_INSTALL:
-			// Launch activity to insert a new item
-			// startActivity(new Intent(Intent.ACTION_INSERT,
-			// getIntent().getData()));
-			return true;
-		case MENU_ITEM_UNINSTALL:
-			// Launch activity to insert a new item
-			// startActivity(new Intent(Intent.ACTION_INSERT,
-			// getIntent().getData()));
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	/** Starts SearchGamesThread -> searches for ead games */
+	private void searchForGames() {
+
+		dialog = ProgressDialog.show(this, "", "Searching for ead games...",
+				true);
+		SearchGamesThread t = new SearchGamesThread(this, GLActivityHandler);
+		t.start();
+
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view,
-			ContextMenuInfo menuInfo) {
-		AdapterView.AdapterContextMenuInfo info;
-		try {
-			info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		} catch (ClassCastException e) {
-			Log.e(this.getClass().getSimpleName(), "bad menuInfo", e);
-			return;
-		}
+	private void showAlert(String msg) {
 
-		String advName = (String) getListAdapter().getItem(info.position);
+		new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
+				null).show();
 
-		// Setup the menu header
-		menu.setHeaderTitle(advName);
-
-		// Add a menu item to delete the note
-		menu.add(0, MENU_ITEM_UNINSTALL, 0, R.string.menu_uninstall);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info;
-		try {
-			info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		} catch (ClassCastException e) {
-			Log.e(this.getClass().getSimpleName(), "bad menuInfo", e);
-			return false;
-		}
-
-		switch (item.getItemId()) {
-		case MENU_ITEM_UNINSTALL: {
-			// Delete the note that the context menu is for
-			/*
-			 * Uri noteUri = ContentUris.withAppendedId(getIntent().getData(),
-			 * info.id); getContentResolver().delete(noteUri, null, null);
-			 */
-			return true;
-		}
-		}
-		return false;
 	}
 
 }
