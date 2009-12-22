@@ -17,7 +17,7 @@
           * PrototipoDrawPicsAndroid
     * e-Adventure
       * RequisitosFuncionales
-    * e-AdventureAndroidEngine
-      * AndroidEngine
+    * e-!AdventureAndroidEngine
+      * AnotacionesIniciales
     * Proyecto SI
       * IndiceMemoria
