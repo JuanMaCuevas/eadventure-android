@@ -1,17 +1,7 @@
 package es.eucm.eadandroid.gameLauncher;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-
-import es.eucm.eadandroid.common.data.adventure.DescriptorData;
-import es.eucm.eadandroid.common.loader.Loader;
-import es.eucm.eadandroid.resourcehandler.ResourceHandler;
-
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -35,13 +25,14 @@ public class SearchGamesThread extends Thread {
 	}
 
 	/**
-	 * Starts the thread and searches for ead games in externalstorage SDCard , when task is
-	 * finished it sends a GAMES_FOUND message through "ha" handler .
+	 * Starts the thread and searches for ead games in externalstorage SDCard ,
+	 * when task is finished it sends a GAMES_FOUND message through "ha" handler
+	 * .
 	 */
-	
+
 	@Override
 	public void run() {
-		
+
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -51,10 +42,12 @@ public class SearchGamesThread extends Thread {
 
 		Message msg = new Message();
 		File sdCard = Environment.getExternalStorageDirectory();
-		
-		Log.d("SearcgGamesThread","SDCard state : "+Environment.getExternalStorageState().toString());
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+		Log.d("SearcgGamesThread", "SDCard state : "
+				+ Environment.getExternalStorageState().toString());
+
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 
 			String adventures[] = sdCard.list(new EADFileFilter());
 
@@ -64,7 +57,7 @@ public class SearchGamesThread extends Thread {
 
 				Bundle b = new Bundle();
 				b.putStringArray("adventuresList", adventures);
-				msg.what = GlobalMessages.GAMES_FOUND;
+				msg.what = SearchHandlerMessages.GAMES_FOUND;
 				msg.setData(b);
 
 			}
@@ -73,7 +66,7 @@ public class SearchGamesThread extends Thread {
 
 				Log.d(this.getClass().getSimpleName(), "No adventures in SD");
 
-				msg.what = GlobalMessages.NO_GAMES_FOUND;
+				msg.what = SearchHandlerMessages.NO_GAMES_FOUND;
 
 			}
 
@@ -81,7 +74,7 @@ public class SearchGamesThread extends Thread {
 
 		else {
 
-			msg.what = GlobalMessages.NO_SD_CARD;
+			msg.what = SearchHandlerMessages.NO_SD_CARD;
 		}
 
 		handler.sendMessage(msg);
