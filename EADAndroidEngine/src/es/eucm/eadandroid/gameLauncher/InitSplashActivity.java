@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import es.eucm.saxprototype.R;
+import es.eucm.eadandroid.R;
 
 public class InitSplashActivity extends Activity {
 
