@@ -19,13 +19,13 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
 import es.eucm.eadandroid.resourcehandler.ResourceHandler;
-import es.eucm.saxprototype.R;
 
 public class GameLauncherActivity extends ListActivity {
 
