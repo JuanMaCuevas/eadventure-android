@@ -1,5 +1,16 @@
 #summary Aqui vamos a ir anotando ideas que nos van a ir surgiendo del motor .
 
+ = Portando motor de escritorio =
+
+La idea seria hacer un porting de la parte grafica GUI a interfaz de Android.
+
+Riesgos que podemos encontrar :
+
+ * Riesgo de librerias que no existen en android -> como implementarlo?
+ * Riesgo de eficiencia . overflow memoria maquina virtual..
+ 
+
+
 = Empezando a desarrollar juegos para android =
 
 _Fuente : "http://www.rbgrn.net/content/54-getting-started-android-game- development" 
