@@ -43,7 +43,6 @@ public class ProgressNotifier extends TaskNode {
 			msg.setData(b);
 
 			handler.sendMessage(msg);
-
 		}
 
 	}

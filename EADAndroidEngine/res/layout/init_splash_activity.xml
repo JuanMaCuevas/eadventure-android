@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout android:id="@+id/LinearLayout01"
+<RelativeLayout android:layout_below="@+id/init_animation"
+	android:id="@+id/RelativeLayout01" xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@drawable/pantalla_inicio">
-</LinearLayout>
+	android:background="@color/White">
+	<ImageView android:id="@+id/init_animation"
+		android:background="@drawable/eadventure1" android:layout_width="wrap_content"
+		android:layout_centerInParent="true" android:layout_height="wrap_content">
+	</ImageView>
+	<TextView android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:layout_below="@+id/init_animation"
+		android:layout_centerHorizontal="true" android:layout_marginTop="20dip"
+		android:text="Please press the screen to continue" android:textSize="12dip"></TextView>
+</RelativeLayout>
+
+

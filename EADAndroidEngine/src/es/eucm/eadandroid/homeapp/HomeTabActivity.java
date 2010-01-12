@@ -31,18 +31,18 @@ public class HomeTabActivity extends TabActivity {
 		mTabHost = getTabHost();
 
 		mTabHost.addTab(mTabHost.newTabSpec("tab_games").setIndicator("Games",
-				getResources().getDrawable(android.R.drawable.ic_menu_gallery))
+				getResources().getDrawable(R.drawable.monitor))
 				.setContent(new Intent(this, LocalGamesActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("tab_downloads").setIndicator(
-				"Download Games",
-				getResources().getDrawable(android.R.drawable.ic_menu_add))
+				"Repository",
+				getResources().getDrawable(R.drawable.cloud))
 				.setContent(new Intent(this, RepositoryActivity.class)));
 
 		mTabHost.addTab(mTabHost.newTabSpec("tab_preferences").setIndicator(
 				"Preferences",
 				getResources().getDrawable(
-						android.R.drawable.ic_menu_preferences)).setContent(
+						R.drawable.equalizer)).setContent(
 				new Intent(this, PreferencesActivity.class)));
 
 		mTabHost.setCurrentTab(0);

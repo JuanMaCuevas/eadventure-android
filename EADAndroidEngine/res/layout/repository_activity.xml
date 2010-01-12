@@ -5,11 +5,7 @@
   android:layout_height="wrap_content"
   android:orientation="vertical"
   >
-<ImageView
-        android:id="@+id/icon"
-       android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:background="@drawable/cabecera"/>
+
         
 <ListView android:id="@android:id/list" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
