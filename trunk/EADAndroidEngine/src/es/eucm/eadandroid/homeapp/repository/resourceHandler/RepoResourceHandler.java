@@ -42,7 +42,7 @@ public class RepoResourceHandler {
 				e.printStackTrace();
 			}
 
-			pn.notifyFinished("Image downloaded");
+//			pn.notifyFinished("Image downloaded");
 	        
 	        return bitmap;                
 	    }
@@ -117,7 +117,7 @@ public class RepoResourceHandler {
 				fos.close();
 				in.close();
 
-				pt.notifyFinished(fileName + " downloaded succesfully");
+	//			pt.notifyFinished(fileName + " downloaded succesfully");
 
 			} catch (IOException e) {
 
