@@ -428,7 +428,7 @@ public class GUI {
             create();
         return instance;
     }
-
+ 
     /**
      * Create the singleton instance
      */
@@ -466,9 +466,9 @@ public class GUI {
      * @param component
      * @return
      */
-    public abstract JFrame showComponent( Component component );
+  //OLD  public abstract JFrame showComponent( Component component );
     
-    public abstract JFrame showComponent( Component component, int w, int h );
+  //OLD  public abstract JFrame showComponent( Component component, int w, int h );
 
     /**
      * Restores the frame to its original state after displaying a Swing or AWT
@@ -952,16 +952,20 @@ public class GUI {
      *            Graphics2D to be used by the scene buffer
      */
     public void drawScene( Canvas g, long elapsedTime ) {
+    	
+    	drawToGraphics( g );
 
-        if( transition != null && !transition.hasStarted( ) ) {
+      //TODO uncomment when transition class is migrated
+    	/*
+    	if( transition != null && !transition.hasStarted( ) ) {
 
             //gameFrame.paintAll((Graphics2D) transition.getGraphics());
 
             drawToGraphics( (Graphics2D) transition.getGraphics( ) );
 
-            /*Graphics2D graph = (Graphics2D) transition.getGraphics();
-            gameFrame.paintAll(graph);
-            graph.dispose();*/
+           // Graphics2D graph = (Graphics2D) transition.getGraphics();
+           // gameFrame.paintAll(graph);
+           // graph.dispose();
 
             //transition.setImage(gameFrame.createVolatileImage(800, 600));
             transition.start( this.getGraphics( ) );
@@ -972,7 +976,9 @@ public class GUI {
         }
         else {
             transition.update( g );
-        }
+        }*/
+    	
+        
     }
     
     private void recalculateInteractiveElementsOrder(){
@@ -983,7 +989,7 @@ public class GUI {
         }
     }
 
-    public void drawToGraphics( Graphics2D g ) {
+    public void drawToGraphics( Canvas g ) {
         if( background != null ) {
             background.draw( g );
             //background = null;
@@ -1001,7 +1007,9 @@ public class GUI {
         }
 
 
-        TimerManager timerManager = TimerManager.getInstance( );
+        //TODO uncomment next once timerManager is migrated
+        /*
+       TimerManager timerManager = TimerManager.getInstance( );
         if( timerManager != null ) {
             timerManager.draw( g );
         }
@@ -1032,7 +1040,7 @@ public class GUI {
             g.drawLine( GUI.WINDOW_WIDTH - 5, ytemp, GUI.WINDOW_WIDTH - 15, ytemp - 15 );
             g.drawLine( GUI.WINDOW_WIDTH - 5, ytemp, GUI.WINDOW_WIDTH - 15, ytemp + 15 );
             g.setStroke( oldStroke );
-        }
+        }*/
 
         for( Text text : textToDraw )
             text.draw( g );
@@ -1404,27 +1412,27 @@ public class GUI {
         return hud.mouseReleased( e );
     }
 
-    public boolean mousePressedinHud( MouseEvent e ) {
+   //OLD public boolean mousePressedinHud( MouseEvent e ) {
 
-        return hud.mousePressed( e );
-    }
+        /*return hud.mousePressed( e );
+    }*/
 
-    public boolean mouseDraggedinHud( MouseEvent e ) {
-
+ //OLD   public boolean mouseDraggedinHud( MouseEvent e ) {
+/*
         return hud.mouseDragged( e );
-    }
+    }*/
 
     public void setTransition( int transitionTime, int transitionType, long elapsedTime ) {
 
         if( transitionTime > 0 && transitionType > 0 ) {
-            this.transition = new Transition( transitionTime, transitionType );
+       //TODO     this.transition = new Transition( transitionTime, transitionType );
         }
 
     }
 
     public boolean hasTransition( ) {
 
-        return transition != null && !transition.hasFinished( 0 );
+   //TODO     return transition != null && !transition.hasFinished( 0 );
     }
 
     public void setShowsOffestArrows( boolean showsOffsetArrows, boolean moveOffsetRight, boolean moveOffsetLeft ) {
