@@ -19,7 +19,7 @@ import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.Func
 
 
 
-public class GUI {
+public abstract class GUI {
 	//FIXME pal perry
 	public static int SCREEN_HEIGHT = 600;
 	public static int SCREEN_WIDTH = 800;
