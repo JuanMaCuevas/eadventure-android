@@ -1,8 +1,8 @@
-package es.eucm.eadAndroid.Prototipes;
+package es.eucm.eadAndroid.Prototypes;
 
 import java.util.HashMap;
 
-import es.eucm.eadAndroid.Prototipes.multimedia.MultimediaManager;
+import es.eucm.eadAndroid.Prototypes.multimedia.MultimediaManager;
 
 import android.graphics.Bitmap;
 

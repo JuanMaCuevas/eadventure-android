@@ -1,11 +1,12 @@
-package es.eucm.eadAndroid.Prototipes;
+package es.eucm.eadAndroid.Prototypes;
 
 
 import java.io.File;
 
-import es.eucm.eadAndroid.Prototipes.multimedia.MultimediaManager;
-import es.eucm.eadAndroid.Prototipes.multimedia.Sound;
-import es.eucm.eadAndroid.Prototipes.multimedia.SoundAndroidMp3;
+import es.eucm.eadAndroid.Prototipes.R;
+import es.eucm.eadAndroid.Prototypes.multimedia.MultimediaManager;
+import es.eucm.eadAndroid.Prototypes.multimedia.Sound;
+import es.eucm.eadAndroid.Prototypes.multimedia.SoundAndroidMp3;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-public class MultimediaPrototipe extends Activity {
+public class MultimediaPrototype extends Activity {
     /** Called when the activity is first created. */
 	
 	 

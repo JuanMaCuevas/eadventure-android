@@ -1,4 +1,4 @@
-package es.eucm.eadAndroid.Prototipes.multimedia;
+package es.eucm.eadAndroid.Prototypes.multimedia;
 
 import java.io.File;
 import java.io.FileInputStream;

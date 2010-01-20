@@ -31,7 +31,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  */
-package es.eucm.eadAndroid.Prototipes.multimedia;
+package es.eucm.eadAndroid.Prototypes.multimedia;
 
 /**
  * This abstract class defines any kind of sound event managed in eAdventure.
