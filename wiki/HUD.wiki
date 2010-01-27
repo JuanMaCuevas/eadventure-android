@@ -1,4 +1,5 @@
 #summary aqui introduciré  de manera desordenada temas técnicos de android resueltos
+#sidebar BarraNavegacion
 
 = Lupa =
 
