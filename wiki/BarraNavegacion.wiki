@@ -19,6 +19,6 @@
       * RequisitosFuncionales
     * e-!AdventureAndroidEngine
       * AnotacionesIniciales
-      * HUD
+      * [HUD]
     * Proyecto SI
       * IndiceMemoria
