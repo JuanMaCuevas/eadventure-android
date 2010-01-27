@@ -1,0 +1,15 @@
+#summary aqui introduciré  de manera desordenada temas técnicos de android resueltos
+
+= Lupa =
+
+ * Para poder hacer zoom necesito tener una copia del bitmap del surface para poder coger la región y representarla zoomeada en la lupa. La decision es tener un bitmap sobre el que pintar todo el escenario , personajes etc..  y a la hora de pintarlo en pantalla pintar ese bitmap sobre el surface . 
+ * Es eficiente aunque contenemos una copia de lo que estamos pintando . 
+
+= Orientacion de  pantalla =
+
+ * Para que el activity SOLO se muestre en orientacion landscape , debe estar definido como activity con orientacion landscape en el manifest :
+{{{
+<activity android:name=".Drawproof" 
+    android:label="@string/app_name" 
+  android:screenOrientation="landscape"> 
+}}}
