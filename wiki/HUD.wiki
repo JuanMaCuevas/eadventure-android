@@ -8,7 +8,7 @@
 
 = Orientacion de  pantalla =
 
- * Para que el activity SOLO se muestre en orientacion landscape , debe estar definido como activity con orientacion landscape en el manifest :
+ * Para que el activity SOLO se muestre en orientacion landscape , debe estar definido como activity con orientacion landscape en el manifest : ( por el momento vale , pero esto cada vez que se gira el activiry se pausa y se recrea , deberia de continuar , y que pase de los eventos de girar el dispositivo
 {{{
 <activity android:name=".Drawproof" 
     android:label="@string/app_name" 
