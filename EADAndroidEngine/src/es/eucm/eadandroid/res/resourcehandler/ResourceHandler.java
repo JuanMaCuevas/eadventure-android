@@ -1,55 +1,28 @@
-/**
- * <e-Adventure> is an <e-UCM> research project. <e-UCM>, Department of Software
- * Engineering and Artificial Intelligence. Faculty of Informatics, Complutense
- * University of Madrid (Spain).
- * 
- * @author Del Blanco, A., Marchiori, E., Torrente, F.J. (alphabetical order) *
- * @author López Mañas, E., Pérez Padilla, F., Sollet, E., Torijano, B. (former
- *         developers by alphabetical order)
- * @author Moreno-Ger, P. & Fernández-Manjón, B. (directors)
- * @year 2009 Web-site: http://e-adventure.e-ucm.es
- */
-
-/*
- * Copyright (C) 2004-2009 <e-UCM> research group
- * 
- * This file is part of <e-Adventure> project, an educational game & game-like
- * simulation authoring tool, available at http://e-adventure.e-ucm.es.
- * 
- * <e-Adventure> is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the Free
- * Software Foundation; either version 2 of the License, or (at your option) any
- * later version.
- * 
- * <e-Adventure> is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * <e-Adventure>; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- */
 package es.eucm.eadandroid.res.resourcehandler;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import es.eucm.eadandroid.common.loader.InputStreamCreator;
+import es.eucm.eadandroid.res.resourcehandler.zipurl.ZipURL;
 
-/**
- * Abstract class in charge of loading the resources (files) of the game
- */
-public abstract class ResourceHandler implements InputStreamCreator {
+public class ResourceHandler implements InputStreamCreator {
 
 	/**
 	 * Path of the default background image
@@ -87,14 +60,6 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	public static final String DEFAULT_HARDMAP = "gui/defaultassets/NRB_hardmap.png";
 
 	/**
-	 * Stores if the resource handler should load the files for an applet or for
-	 * an application
-	 */
-	protected static boolean isRestrictedMode = false;
-
-	protected static boolean extraRestriction = true;
-
-	/**
 	 * Stores the zip file containing the needed files for the game
 	 */
 	protected static ZipFile zipFile = null;
@@ -104,52 +69,30 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	 */
 	protected static String zipPath = null;
 
-	protected static boolean isExternalMode = false;
+	private static ResourceHandler INSTANCE = null;
+
+	private ResourceHandler() {
+	}
+
+	private synchronized static void createInstance() {
+
+		if (INSTANCE == null) {
+			INSTANCE = new ResourceHandler();
+		}
+
+	}
+	
 
 	/**
 	 * Returns the instance of the resource handler
 	 * 
 	 * @return Instance of the resource handler
 	 */
-	public static ResourceHandler getInstance() {
+	public synchronized static ResourceHandler getInstance() {
 
-		ResourceHandler handler = null;
-		if (!isExternalMode && isRestrictedMode) {
-			handler = ResourceHandlerRestricted.getInstance();
-		} else if (!isExternalMode) {
-			handler = ResourceHandlerUnrestricted.getInstance();
-		} else {
-			handler = ResourceHandlerExternalSource.getInstance();
-		}
-		return handler;
-	}
-
-	/**
-	 * Sets the restricted value of the resource handler
-	 * 
-	 * @param isRestrictedMode
-	 *            New value for restricted
-	 */
-	public static void setRestrictedMode(boolean isRestrictedMode, boolean extra) {
-
-		ResourceHandler.isRestrictedMode = isRestrictedMode;
-		ResourceHandler.extraRestriction = extra;
-		if (isRestrictedMode) {
-			ResourceHandlerRestricted.create();
-		} else {
-			ResourceHandlerUnrestricted.create();
-		}
-	}
-
-	public static void setRestrictedMode(boolean isRestrictedMode) {
-
-		setRestrictedMode(isRestrictedMode, true);
-	}
-
-	public static void setExternalMode(InputStreamCreator isCreator) {
-
-		isExternalMode = true;
-		ResourceHandlerExternalSource.create(isCreator);
+		if (INSTANCE == null)
+			createInstance();
+		return INSTANCE;
 	}
 
 	/**
@@ -157,8 +100,25 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	 */
 	public static void delete() {
 
-		ResourceHandlerRestricted.delete();
-		ResourceHandlerUnrestricted.delete();
+		if (INSTANCE != null && INSTANCE.tempFiles != null) {
+			for (TempFile file : INSTANCE.tempFiles) {
+				file.delete();
+			}
+		}
+		INSTANCE = null;
+	}
+
+	/**
+	 * Returns the extension of the given asset.
+	 * 
+	 * @param assetPath
+	 *            Path to the asset
+	 * @return Extension of the file
+	 */
+	public static String getExtension(String assetPath) {
+
+		return assetPath.substring(assetPath.lastIndexOf('.') + 1, assetPath
+				.length());
 	}
 
 	/**
@@ -167,7 +127,22 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	 * @param zipFilename
 	 *            Filename of the zip
 	 */
-	public abstract void setZipFile(String zipFilename);
+	public void setZipFile(String zipFilename) {
+
+		try {
+
+			ResourceHandler.zipPath = zipFilename;
+			zipFile = new ZipFile(zipFilename);
+
+			Log.d("ResourceHandlerUnrestricted", "Nombre Zip" + zipFilename);
+
+		} catch (ZipException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	/**
 	 * Closes the open zip file in use.
@@ -183,23 +158,31 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	}
 
 	/**
-	 * Returns if the resource handler is restricted (for use with applets)
-	 * 
-	 * @return True if the resource handler is restricted, false otherwise
-	 */
-	public boolean isRestrictedMode() {
-
-		return isRestrictedMode;
-	}
-
-	/**
 	 * Returns an output stream specified
 	 * 
 	 * @param path
 	 *            Name of the file
 	 * @return The output stream if it could be loaded, null otherwise
 	 */
-	public abstract OutputStream getOutputStream(String path);
+	public OutputStream getOutputStream(String path) {
+
+		OutputStream os = null;
+
+		if (path.startsWith("/")) {
+			path = path.substring(1);
+		}
+
+		try {
+			os = new FileOutputStream(path);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			os = null;
+		}
+
+		return os;
+
+	}
 
 	/**
 	 * Loads a file as an input stream
@@ -208,17 +191,31 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	 *            Path of the file
 	 * @return The file as an input stream
 	 */
-	public abstract InputStream getResourceAsStream(String path);
+	public InputStream getResourceAsStream(String path) {
+
+		InputStream is = null;
+
+		if (path.startsWith("/")) {
+			path = path.substring(1);
+		}
+
+		try {
+			is = new FileInputStream(path);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			is = null;
+		}
+		return is;
+
+	}
 
 	/**
-	 * Changed on port form desktop app to android App -> ImageIO
-	 * ->BitmapFactory
-	 * 
-	 * Loads a file as an image
+	 * Loads a file as a Bitmap Image
 	 * 
 	 * @param path
 	 *            Path of the file
-	 * @return The file as an image
+	 * @return The file as a Bitmap Image
 	 */
 
 	public Bitmap getResourceAsImage(String path) {
@@ -261,7 +258,8 @@ public abstract class ResourceHandler implements InputStreamCreator {
 			if (zipFile != null && zipFile.getEntry(path) != null)
 				inputStream = zipFile.getInputStream(zipFile.getEntry(path));
 			else
-				inputStream = getResourceAsStream(path);
+				inputStream = getResourceAsStream(path); // TODO esta linea no
+			// deberia estar??
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -270,14 +268,12 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	}
 
 	/**
-	 * Changed on port form desktop app to android App -> ImageIO
-	 * ->BitmapFactory
 	 * 
-	 * Loads a file as an image from the Zip file
+	 * Loads a file as a Bitmap image from the Zip file
 	 * 
 	 * @param path
 	 *            Path of the file
-	 * @return The file as an image
+	 * @return The file as a Bitmap image
 	 */
 
 	public Bitmap getResourceAsImageFromZip(String path) {
@@ -293,8 +289,6 @@ public abstract class ResourceHandler implements InputStreamCreator {
 			if (inputStream != null) {
 				image = BitmapFactory.decodeStream(inputStream);
 				inputStream.close();
-			} else {
-				// System.out.println( "IMAGE NULL = "+path );
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -302,23 +296,25 @@ public abstract class ResourceHandler implements InputStreamCreator {
 
 		return image;
 	}
+	
+	
+	public URL buildURL(String path) {
 
-	// ////////////////////////////////////////NEW/////////////////////////////////////////////////////////
-	public abstract URL getResourceAsURLFromZip(String path);
-
-	/**
-	 * Returns the extension of the given asset.
-	 * 
-	 * @param assetPath
-	 *            Path to the asset
-	 * @return Extension of the file
-	 */
-	public static String getExtension(String assetPath) {
-
-		return assetPath.substring(assetPath.lastIndexOf('.') + 1, assetPath
-				.length());
+		return getResourceAsURLFromZip(path);
 	}
 
+	public InputStream buildInputStream(String filePath) {
+		return getResourceAsStreamFromZip(filePath);
+	}
+
+	public String[] listNames(String filePath) {
+		File dir = new File(zipPath, filePath);
+		return dir.list();
+	}
+
+	
+	//////// NEW //////////////////////
+	
 	private static Random random = new Random();
 
 	private static int MAX_RANDOM = 100000;
@@ -326,8 +322,74 @@ public abstract class ResourceHandler implements InputStreamCreator {
 	protected ArrayList<TempFile> tempFiles = new ArrayList<TempFile>();
 
 	private static final String TEMP_FILE_NAME = "$temp_ead_";
+	
+	
+	public URL getResourceAsURLFromZip(String path) {
 
-	public abstract URL getResourceAsURL(String path);
+		try {
+			return ZipURL.createAssetURL(zipPath, path);
+		} catch (MalformedURLException e) {
+			return null;
+		}
+
+	}
+
+	public URL getResourceAsURL(String assetPath) {
+
+		URL toReturn = null;
+		try {
+			InputStream is = this.getResourceAsStreamFromZip(assetPath);
+			String filePath = generateTempFileAbsolutePath(getExtension(assetPath));
+			// File sourceFile = new File( zipPath, assetPath );
+			File destinyFile = new File(filePath);
+			if (writeFile(is, destinyFile)) {
+				toReturn = destinyFile.toURI().toURL();
+				TempFile tempFile = new TempFile(destinyFile.getAbsolutePath());
+				tempFile.setOriginalAssetPath(assetPath);
+				tempFiles.add(tempFile);
+			} else
+				toReturn = null;
+		} catch (Exception e) {
+			toReturn = null;
+		}
+
+		return toReturn;
+
+	}
+
+	public boolean writeFile(InputStream is, File dest) {
+		try {
+			// FileWriter out = new FileWriter(dest);
+			FileOutputStream os = new FileOutputStream(dest);
+			int c;
+			byte[] buffer = new byte[512];
+			while ((c = is.read(buffer)) != -1)
+				os.write(buffer, 0, c);
+			os.close();
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+
+	}
+
+	public boolean copyFile(File source, File dest) {
+		try {
+			FileReader in = new FileReader(source);
+			FileWriter out = new FileWriter(dest);
+			int c;
+
+			while ((c = in.read()) != -1)
+				out.write(c);
+
+			in.close();
+			out.close();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
 
 	protected String generateTempFileAbsolutePath(String extension) {
 
@@ -356,16 +418,6 @@ public abstract class ResourceHandler implements InputStreamCreator {
 		}
 		return tempDirectory + java.io.File.separatorChar + fileName;
 
-	}
-
-	public boolean isExtraRestriction() {
-
-		return ResourceHandler.extraRestriction;
-	}
-
-	public URL buildURL(String path) {
-
-		return getResourceAsURLFromZip(path);
 	}
 
 	public class TempFile extends java.io.File {
@@ -400,4 +452,6 @@ public abstract class ResourceHandler implements InputStreamCreator {
 		private static final long serialVersionUID = 896282044492374745L;
 
 	}
+
+
 }

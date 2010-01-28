@@ -24,7 +24,7 @@ public class DetailedGameActivity extends Activity {
 	
 	private Handler DGAHandler = new Handler() {
 		@Override
-		/*   * Called when a message is sent to Engines Handler Queue */
+		/* Called when a message is sent to Engines Handler Queue */
 		public void handleMessage(Message msg) {
 
 			String m = null;

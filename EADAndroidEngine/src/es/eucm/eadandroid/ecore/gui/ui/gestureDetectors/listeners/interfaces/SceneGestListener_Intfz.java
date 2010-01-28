@@ -16,5 +16,4 @@ public interface SceneGestListener_Intfz {
 	public boolean onScrollPressed(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY);
 
-
 }

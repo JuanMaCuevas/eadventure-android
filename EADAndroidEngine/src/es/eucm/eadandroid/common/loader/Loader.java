@@ -34,10 +34,12 @@
 package es.eucm.eadandroid.common.loader;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -45,21 +47,21 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-
 import android.util.Log;
-
-//import es.eucm.common.auxiliar.ReportDialog;
 import es.eucm.eadandroid.common.data.adaptation.AdaptationProfile;
 import es.eucm.eadandroid.common.data.adaptation.AdaptationRule;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.adventure.AdventureData;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
+import es.eucm.eadandroid.common.data.animation.Animation;
+import es.eucm.eadandroid.common.data.animation.ImageLoaderFactory;
 import es.eucm.eadandroid.common.data.assessment.AssessmentProfile;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
 import es.eucm.eadandroid.common.loader.parsers.AdaptationHandler;
 import es.eucm.eadandroid.common.loader.parsers.AdventureHandler;
+import es.eucm.eadandroid.common.loader.parsers.AnimationHandler;
 import es.eucm.eadandroid.common.loader.parsers.AssessmentHandler;
 import es.eucm.eadandroid.common.loader.parsers.ChapterHandler;
 import es.eucm.eadandroid.common.loader.parsers.DescriptorHandler;
@@ -431,7 +433,7 @@ public class Loader {
      *            The xml descriptor for the animation
      * @return the loaded Animation
      */
-    /*  public static Animation loadAnimation( InputStreamCreator isCreator, String filename, ImageLoaderFactory imageloader ) {
+    public static Animation loadAnimation( InputStreamCreator isCreator, String filename, ImageLoaderFactory imageloader ) {
         AnimationHandler animationHandler = new AnimationHandler( isCreator, imageloader );
 
         // Create a new factory
@@ -456,7 +458,7 @@ public class Loader {
             if (descriptorIS == null) {
             	descriptorIS = AssetsController.getInputStream(filename);
             }*/
-        /*           descriptorIS = isCreator.buildInputStream( filename );
+            descriptorIS = isCreator.buildInputStream( filename );
 
             saxParser.parse( descriptorIS, animationHandler );
             descriptorIS.close( );
@@ -477,9 +479,7 @@ public class Loader {
 
         if( animationHandler.getAnimation( ) != null )
             return animationHandler.getAnimation( );
-        else 
+        else
             return new Animation( "anim" + ( new Random( ) ).nextInt( 1000 ) , imageloader);
-        
-        return null;
-    }*/
+    }
 }

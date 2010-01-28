@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import es.eucm.eadandroid.common.data.adventure.DescriptorData;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
+import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 /**
@@ -29,7 +31,7 @@ import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 public class LocalGamesActivity extends ListActivity {
 
 
-	public static final String TAG = "GameLauncher";
+	public static final String TAG = "LocalGamesActivity";
 
 	ProgressDialog dialog;
 
@@ -82,7 +84,7 @@ public class LocalGamesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT); // ?????
+		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
 
 		// Inform the list we provide context menus for items
 		this.getListView().setOnCreateContextMenuListener(this);
@@ -93,44 +95,14 @@ public class LocalGamesActivity extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-
-		String adventureName = this.getListView().getItemAtPosition(position)
-				.toString();
-
-		Log.d(TAG, "AdventureName : " + adventureName);
-
-		File sdCard = Environment.getExternalStorageDirectory();
-
-		String adventureAbsPath = sdCard.getAbsolutePath();
-		Log.d(TAG, "AdventureAbsolutePath : " + adventureAbsPath);
-
-		String advPath = adventureAbsPath + "/" + adventureName;
-		Log.d(TAG, "PathToFile : " + advPath);
-
-		ResourceHandler.setRestrictedMode(false);
-		ResourceHandler.getInstance().setZipFile(advPath);
-		DescriptorData gameDescriptor = Loader
-				.loadDescriptorData(ResourceHandler.getInstance());
-
-		Log.d(TAG, "AdventuresDescription loaded : "
-				+ gameDescriptor.getDescription().toString());
-
-		int currentChapter = 0;
-
-		// Extract the chapter
-		ChapterSummary chapter = gameDescriptor.getChapterSummaries().get(
-				currentChapter);
-
-		Chapter gameData;
-
-		// Load the script data
-		gameData = Loader.loadChapterData(ResourceHandler.getInstance(),
-				chapter.getChapterPath(), new ArrayList<Incidence>(), true);
-
-		Log.d(TAG, "ChapterData loaded : " + gameData.getTitle());
-
-		ResourceHandler.getInstance().closeZipFile();
-		ResourceHandler.delete();
+		
+		String selectedAdventure = this.getListView().getItemAtPosition(position)
+		.toString();
+		
+		Intent i = new Intent(this, ECoreActivity.class);
+		i.putExtra("AdventureName", selectedAdventure);
+		this.startActivity(i);
+		
 
 	}
 

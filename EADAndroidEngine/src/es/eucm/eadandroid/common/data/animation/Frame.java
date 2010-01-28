@@ -42,7 +42,6 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import es.eucm.eadandroid.common.auxiliar.CreateImage;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.gui.TC;
@@ -406,7 +405,7 @@ public class Frame implements Cloneable, Timed {
 
     	Bitmap newImage = null;
     	
-    	newImage = Bitmap.createScaledBitmap(image, GUI.SCREEN_WIDTH, GUI.SCREEN_HEIGHT, true);
+    	newImage = Bitmap.createScaledBitmap(image, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, true);
     	
 // PORTCOMMENT
   /*  	

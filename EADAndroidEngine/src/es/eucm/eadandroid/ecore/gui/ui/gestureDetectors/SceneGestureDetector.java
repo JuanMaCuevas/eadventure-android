@@ -9,7 +9,7 @@ import android.view.ViewConfiguration;
 import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.listeners.interfaces.SceneGestListener_Intfz;
 
 
-public class SceneGestureDetector implements GestureDetector_Intfz{
+public class SceneGestureDetector extends UIEventAdapter{
 
 
     private static final int TOUCH_SLOP_SQUARE = ViewConfiguration.getTouchSlop()
@@ -183,4 +183,5 @@ public class SceneGestureDetector implements GestureDetector_Intfz{
         mListener.onPressed(mCurrentDownEvent);
         
     }
+
 }
