@@ -8,14 +8,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.GestureDetector_Intfz;
 import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.SceneGestureDetector;
+import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.UIEventListener;
 import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.listeners.SceneGestureListener;
 
 public class Gestos extends Activity {
 
 
-	private GestureDetector_Intfz gestureDetector;
+	private UIEventListener gestureDetector;
 	private SceneGestureListener sgl;
 	
 	/** Called when the activity is first created. */
@@ -41,11 +41,15 @@ public class Gestos extends Activity {
 	}
 
 
+	// WINDOWS.CALLBACK implementation
+	
 	public boolean dispatchTouchEvent(MotionEvent event) {
 
 		return gestureDetector.onTouchEvent(event);
 
 	}
+	
+	// KEYEVENT.CALLBAK implementation
 	
 	public boolean  onKeyUp(int keyCode, KeyEvent event) {
 		

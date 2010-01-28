@@ -16,16 +16,16 @@ import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressTask;
-import es.eucm.eadandroid.res.pathdirectory.FilePaths;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class UpdateDatabaseThread extends Thread {
 
 
-	private static final String REPO_FULLPATH = FilePaths.repository.DEFAULT_PATH
-			+ FilePaths.repository.XML_NAME;
-	private static final String EXTERNAL_STORAGE = FilePaths.device.EXTERNAL_STORAGE;
+	private static final String REPO_FULLPATH = Paths.repository.DEFAULT_PATH
+			+ Paths.repository.SOURCE_XML;
+	private static final String EXTERNAL_STORAGE = Paths.device.EXTERNAL_STORAGE;
 	
-	private static final String LOCAL_REPO_XML = FilePaths.device.EXTERNAL_STORAGE+FilePaths.repository.XML_NAME;
+	private static final String LOCAL_REPO_XML = Paths.device.EXTERNAL_STORAGE+Paths.repository.SOURCE_XML;
 
 	private Context context;
 	private Handler handler;

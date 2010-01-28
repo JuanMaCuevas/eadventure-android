@@ -3,7 +3,6 @@ package es.eucm.eadandroid.homeapp.repository.database;
 import java.io.Serializable;
 
 import android.graphics.Bitmap;
-import es.eucm.eadandroid.res.pathdirectory.FilePaths;
 
 public class GameInfo implements Comparable<GameInfo> , Serializable {
 
@@ -15,11 +14,6 @@ public class GameInfo implements Comparable<GameInfo> , Serializable {
 	private String gameDescription = "";
 	private String eadUrl;
 	private Bitmap image;
-	
-	/* Local repository gameinfo cache */
-	
-	private static final String REPO_CACHE_PATH = FilePaths.eaddirectory.repodatacache.ABSOLUTE_PATH;	
-	private String GAMEINFO_CACHE_PATH ;
 
 
 	public GameInfo(String ti, String desc, String eadURL, Bitmap imageBitmap) {
@@ -28,8 +22,7 @@ public class GameInfo implements Comparable<GameInfo> , Serializable {
 		gameTitle = ti;
 		eadUrl = eadURL;
 		image = imageBitmap;
-		
-	//	GAMEINFO_CACHE_PATH = GameInfoCache.REPO_CACHE_PATH+gameTitle+"/";
+
 
 	}
 	
