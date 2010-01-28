@@ -17,3 +17,7 @@
     android:label="@string/app_name" 
   android:screenOrientation="landscape"> 
 }}}
+
+== UI Events ==
+
+ * Repasar con equipo la diversidad de los eventos que pueden producirse ...
