@@ -6,6 +6,22 @@
 
 ---- 
 
+== Semana 25Ene - 1-Feb ==
+
+===Juanma ===
+
+ * Portar functional data
+
+===Willy===
+
+ * Terminar GUI
+
+===Alvaro===
+
+ * HUD 
+ * Sistema de eventos 
+
+
 == Semana 21Dic-27Dic 09 ==
 
 
