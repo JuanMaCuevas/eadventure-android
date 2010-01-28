@@ -1,30 +1,10 @@
 #summary Aqui vamos a ir anotando ideas que nos van a ir surgiendo del motor .
 
- = Portando motor de escritorio =
+ = TASK TAGS =
 
-La idea seria hacer un porting de la parte grafica GUI a interfaz de Android.
+ * Aqui anotamos los distintos task tags que vamos a utilizar
 
-Riesgos que podemos encontrar :
-
- * Riesgo de librerias que no existen en android -> como implementarlo?
- * Riesgo de eficiencia . overflow memoria maquina virtual..
- 
-
-
-= Empezando a desarrollar juegos para android =
-
-_Fuente : "http://www.rbgrn.net/content/54-getting-started-android-game- development" 
-22/12/09 - 12:35_
-
-== Main loop ==
-
- * If you are writing an action game or a game that has animations, timers or any kind of automation, you should seriously consider using a main loop.
- * The order of execution inside mainLoop is usually as follows:  State, Input, AI, Physics, Animation, Sound and Video.  
- 
-===Updating State===
-
-Means to manage state transitions, such as a game over, character select or next level.  Often times you will want to wait a few seconds on a state and the State management is the part that should handle this delay and setting the next state after the time has passed.
-
-===Update Input===
-
-Input is any key, scroll or touch from the user.  It's important to handle this before processing Physics because often times input will affect the physics so processing input first will make the game more responsive.  In Android, the input events come in from the main UI thread and so you must code to buffer the input so that your main loop can pick it up when the time comes.  This is not a difficult task.  Defining a field for the next user input and having the onKeyPressed or onTouchEvent set the next user action into that field is all that will be required.  All the Input update needs to do at that point is determine if it is valid input given the state of the game and let the Physics side handle responding to it.  
+ * OLD
+ * CHECK
+ * TODO
+ * FIXME
