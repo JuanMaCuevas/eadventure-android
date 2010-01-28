@@ -8,6 +8,8 @@
 
 == Semana 25Ene - 1-Feb ==
 
+ * Como objetivo nos marcamos eliminar 500 errores de compilación .
+
 ===Juanma ===
 
  * Portar functional data
