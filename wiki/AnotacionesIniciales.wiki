@@ -1,4 +1,5 @@
 #summary Aqui vamos a ir anotando ideas que nos van a ir surgiendo del motor .
+#sidebar BarraNavegacion
 
  = TASK TAGS =
 
