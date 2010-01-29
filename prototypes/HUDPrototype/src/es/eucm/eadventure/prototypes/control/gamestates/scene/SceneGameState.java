@@ -138,11 +138,11 @@ public class SceneGameState extends GameState {
 			switch (e.getAction()) {
 			case TouchListener.CallBack.PRESSED_ACTION:
 				GUI.getInstance().showHud();
-				GUI.getInstance().updateHud((int) e.getX(), (int) e.getY());
+				GUI.getInstance().updateHudPos((int) e.getX(), (int) e.getY());
 				break;
 			case TouchListener.CallBack.SCROLL_PRESSED_ACTION:
 				GUI.getInstance().showHud();
-				GUI.getInstance().updateHud((int) e.getX(), (int) e.getY());
+				GUI.getInstance().updateHudPos((int) e.getX(), (int) e.getY());
 				break;
 			case TouchListener.CallBack.UNPRESSED_ACTION:
 				GUI.getInstance().hideHud();

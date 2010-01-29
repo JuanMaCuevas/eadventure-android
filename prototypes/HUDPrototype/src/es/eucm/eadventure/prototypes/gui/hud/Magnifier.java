@@ -34,6 +34,11 @@ public class Magnifier {
 	private int left;
 	private int top;
 	private int right;
+
+	
+	// Frame Paint
+	
+	Paint pFrame;
 	
 	/**
 	 * FINGER REGION
@@ -65,42 +70,59 @@ public class Magnifier {
 		left=0;
 		top=0;
 		right=0;
+        pFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
+        pFrame.setColor(0xFF000000);
+        pFrame.setStyle(Paint.Style.STROKE);
+        pFrame.setStrokeWidth(magFrameWidth);
+		
 		createMagnifier();
 		
 	}
 	
 	private void createMagnifier() {
 
-		magBmp = Bitmap.createBitmap(bmpEdgeSize, bmpEdgeSize, Bitmap.Config.ARGB_4444);
-		canvasMag = new Canvas(magBmp);
-		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-		p.setColor(0xFF000000);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(magFrameWidth);
-		canvasMag.drawCircle(bmpEdgeSize/2,bmpEdgeSize/2, this.radius, p);
-				
+		magBmp = Bitmap.createBitmap(bmpEdgeSize, bmpEdgeSize, Bitmap.Config.RGB_565);
+		canvasMag = new Canvas(magBmp);		
 	}
 	
-	public void updateMagPos(int xfocus,int yfocus) {
-			
-		calculateCenter(xfocus,yfocus);
-		calculateFingerSlope(xfocus,yfocus);
+
+	
+	public void doDraw(Canvas c ) {
 		
+		if (shown) {
+			updateMagPicture();
+			paintMagBmp(c);
+			
+		}
 	}
 	
 	private void updateMagPicture() {
-		
+	
 		Bitmap bmpmagaux = Bitmap.createBitmap(bmpsrc, frleft, frtop, frradius*2, frradius*2);
 		Bitmap bmpmag = Bitmap.createScaledBitmap(bmpmagaux, bmpEdgeSize, bmpEdgeSize,false);
+		canvasMag.drawBitmap(bmpmag, 0, 0, null);
+	}
 	
+	private void paintMagBmp(Canvas c) {
+		
 		Path mPath = new Path();
-        canvasMag.save();
+        c.save();
+        c.translate(left,top);
         mPath.reset();
         mPath.addCircle(bmpEdgeSize/2, bmpEdgeSize/2, radius, Path.Direction.CCW);
-        canvasMag.clipPath(mPath, Region.Op.REPLACE);
-        canvasMag.drawBitmap(bmpmag, 0, 0, null);
-        canvasMag.restore();
+        c.clipPath(mPath, Region.Op.REPLACE); 
+        c.drawBitmap(magBmp, 0, 0, null);
+
+		c.drawCircle(bmpEdgeSize/2,bmpEdgeSize/2, this.radius, pFrame);
+		
+        c.restore();
+	}
+	
+
+	public void updateMagPos(int xfocus,int yfocus) {
+		
+		calculateCenterBounds(xfocus,yfocus);
+		calculateFingerSlope(xfocus,yfocus);
 		
 	}
 	
@@ -111,23 +133,17 @@ public class Magnifier {
 		frright = xfocus + frradius;
 	}
 
-	private void calculateCenter(int xfocus, int yfocus) {
+	private void calculateCenterBounds(int xfocus, int yfocus) {
 		
 		this.centerX = xfocus;		
 		this.centerY = yfocus-radius;
 		top = centerY - bmpEdgeSize/2;
 		left = centerX - bmpEdgeSize/2;
 		right = centerX + bmpEdgeSize/2;
+
 			
 	}
 
-	public void doDraw(Canvas c ) {
-		
-		if (shown) {
-			updateMagPicture();
-			c.drawBitmap(magBmp, left, top, null);
-		}
-	}
 
 	public void toggle() {
 		

@@ -105,7 +105,7 @@ public class GUI {
 		
 	}
 
-	public void updateHud(int x, int y) {
+	public void updateHudPos(int x, int y) {
 		magnifier.updateMagPos(x,y);
 	}
 	
