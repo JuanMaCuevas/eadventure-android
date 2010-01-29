@@ -23,5 +23,23 @@
 == Diseño =
 
 
+== Detalles de implementación ==
+
+===Eventos táctiles===
+
+===Eventos de KeyPad===
+
+===Eventos de trackball===
+
+===Eventos de Sensores===
+
+
+
+===Eventos de control por voz===
+
+
+
+
+
 
 = Details =
