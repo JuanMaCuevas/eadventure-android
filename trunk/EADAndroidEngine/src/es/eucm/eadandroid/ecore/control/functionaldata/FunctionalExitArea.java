@@ -33,16 +33,17 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Transparency;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import es.eucm.eadandroid.common.data.Polygon;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.InfluenceArea;
@@ -84,17 +85,17 @@ public class FunctionalExitArea extends FunctionalItem {
         this.influenceArea = influenceArea;
 
         // Create transparent image
-        BufferedImage bImagenTransparente = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( exit.getWidth( ), exit.getHeight( ), Transparency.BITMASK );
+        Bitmap bImagenTransparente = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( exit.getWidth( ), exit.getHeight( ), true );
 
-        Graphics2D g2d = bImagenTransparente.createGraphics( );
-
+        //Graphics2D g2d = bImagenTransparente.createGraphics( );
+        Canvas c = new Canvas(bImagenTransparente);
+        
         // Make all pixels transparent
-        Color transparent = new Color( 0, 0, 0, 0 );
-        g2d.setColor( transparent );
-        g2d.setComposite( AlphaComposite.Src );
-        g2d.fill( new Rectangle2D.Float( 0, 0, exit.getWidth( ), exit.getHeight( ) ) );
-        g2d.dispose( );
-
+        Paint p = new Paint();
+        p.setColor(Color.TRANSPARENT);      
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+        c.drawRect(new Rect(0, 0, exit.getWidth( ), exit.getHeight( )), p);
+  
         image = bImagenTransparente;
 
         if( !exit.isRectangular( ) ) {
