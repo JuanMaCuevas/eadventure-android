@@ -187,23 +187,23 @@ public class FunctionalScene implements Renderable {
         if( resources.existAsset( Scene.RESOURCE_TYPE_BACKGROUND ) )
             background = MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
 
-        if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth( null ) > GUI.WINDOW_WIDTH ) {
+        if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth( ) > GUI.WINDOW_WIDTH ) {
             showsOffsetArrows = true;
         }
 
         // Load the foreground image
         foreground = null;
         if( background != null && resources.existAsset( Scene.RESOURCE_TYPE_FOREGROUND ) ) {
-            BufferedImage bufferedBackground = (BufferedImage) background;
-            BufferedImage foregroundHardMap = (BufferedImage) MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
-            BufferedImage bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth( null ), foregroundHardMap.getHeight( null ), Transparency.BITMASK );
+            Bitmap bufferedBackground =  background;
+            Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
+            Bitmap bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth(  ), foregroundHardMap.getHeight(  ), true );
 
-            for( int i = 0; i < foregroundHardMap.getWidth( null ); i++ ) {
-                for( int j = 0; j < foregroundHardMap.getHeight( null ); j++ ) {
-                    if( foregroundHardMap.getRGB( i, j ) == 0xFFFFFFFF )
-                        bufferedForeground.setRGB( i, j, 0x00000000 );
+            for( int i = 0; i < foregroundHardMap.getWidth(  ); i++ ) {
+                for( int j = 0; j < foregroundHardMap.getHeight(  ); j++ ) {
+                    if( foregroundHardMap.getPixel(i, j)==0xFFFFFFFF ) //GRAPHICS (foregroundHardMap.getRGB( i, j ) == 0xFFFFFFFF )
+                        bufferedForeground.setPixel(i, j, 0x00000000); //bufferedForeground.setRGB( i, j, 0x00000000 );
                     else
-                        bufferedForeground.setRGB( i, j, bufferedBackground.getRGB( i, j ) );
+                        bufferedForeground.setPixel( i, j, bufferedBackground.getPixel(i, j) );
                 }
             }
 
@@ -462,27 +462,28 @@ public class FunctionalScene implements Renderable {
             if( resources.existAsset( Scene.RESOURCE_TYPE_BACKGROUND ) )
                 background = MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
 
-            if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth( null ) > GUI.WINDOW_WIDTH ) {
+            if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth(  ) > GUI.WINDOW_WIDTH ) {
                 showsOffsetArrows = true;
             }
 
             // If there was a foreground, delete it
             if( foreground != null )
-                foreground.flush( );
+                foreground.recycle();//.flush( );
+            //GRAPHICS
 
             // Load the foreground image
             foreground = null;
             if( background != null && resources.existAsset( Scene.RESOURCE_TYPE_FOREGROUND ) ) {
-                BufferedImage bufferedBackground = (BufferedImage) background;
-                BufferedImage foregroundHardMap = (BufferedImage) MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
-                BufferedImage bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth( null ), foregroundHardMap.getHeight( null ), Transparency.BITMASK );
+                Bitmap bufferedBackground =  background;
+                Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
+                Bitmap bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth(  ), foregroundHardMap.getHeight(  ), true );
 
-                for( int i = 0; i < foregroundHardMap.getWidth( null ); i++ ) {
-                    for( int j = 0; j < foregroundHardMap.getHeight( null ); j++ ) {
-                        if( foregroundHardMap.getRGB( i, j ) == 0xFFFFFFFF )
-                            bufferedForeground.setRGB( i, j, 0x00000000 );
+                for( int i = 0; i < foregroundHardMap.getWidth(  ); i++ ) {
+                    for( int j = 0; j < foregroundHardMap.getHeight(  ); j++ ) {
+                        if( foregroundHardMap.getPixel(i, j) == 0xFFFFFFFF )
+                            bufferedForeground.setPixel(i, j, 0x00000000);
                         else
-                            bufferedForeground.setRGB( i, j, bufferedBackground.getRGB( i, j ) );
+                            bufferedForeground.setPixel(i, j, bufferedBackground.getPixel(i, j));
                     }
                 }
 
@@ -577,6 +578,7 @@ public class FunctionalScene implements Renderable {
         player.update( elapsedTime );
 
         // Update the offset
+        //EVENT
         if( updateOffset( ) && Game.getInstance( ).getLastMouseEvent( ) != null && Game.getInstance( ).getLastMouseEvent( ).getID( ) != MouseEvent.MOUSE_DRAGGED )
             Game.getInstance( ).mouseMoved( Game.getInstance( ).getLastMouseEvent( ) );
         else if( updateOffset( ) && Game.getInstance( ).getLastMouseEvent( ) != null)
@@ -606,7 +608,7 @@ public class FunctionalScene implements Renderable {
         boolean updated = false;
 
         // Scroll
-        int iw = background.getWidth( null );
+        int iw = background.getWidth(  );
         if( player.getX( ) - offsetX > ( GUI.WINDOW_WIDTH - MAX_OFFSET_X ) ) {
             updated = true;
             offsetX += player.getX( ) - offsetX - ( GUI.WINDOW_WIDTH - MAX_OFFSET_X );
@@ -626,7 +628,7 @@ public class FunctionalScene implements Renderable {
 
     public void updateOffset( boolean right ) {
 
-        int iw = background.getWidth( null );
+        int iw = background.getWidth(  );
         if( right ) {
             offsetX += 10;
             if( offsetX + GUI.WINDOW_WIDTH > iw )

@@ -51,6 +51,27 @@ public class Polygon {
         }
         return oddTransitions;
     }
+    
+	/**
+     * Checks if the Polygon contains a point.
+     * @see "http://alienryderflex.com/polygon/"
+     * @param x Point horizontal pos.
+     * @param y Point vertical pos.
+     * @return Point is in Poly flag.
+     */
+    public boolean contains( float fx, float fy ) {
+    	int x=Float.floatToIntBits(fx);
+    	int y=Float.floatToIntBits(fy);
+        boolean oddTransitions = false;
+        for( int i = 0, j = polySides -1; i < polySides; j = i++ ) {
+            if( ( polyY[ i ] < y && polyY[ j ] >= y ) || ( polyY[ j ] < y && polyY[ i ] >= y ) ) {
+                if( polyX[ i ] + ( y - polyY[ i ] ) / ( polyY[ j ] - polyY[ i ] ) * ( polyX[ j ] - polyX[ i ] ) < x ) {
+                    oddTransitions = !oddTransitions;          
+                }
+            }
+        }
+        return oddTransitions;
+    }
 
 
 	public void addPoint(int x, int y) {
