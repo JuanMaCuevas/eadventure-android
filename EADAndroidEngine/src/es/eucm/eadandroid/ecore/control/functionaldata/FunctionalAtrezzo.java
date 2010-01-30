@@ -33,12 +33,15 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
@@ -65,13 +68,13 @@ public class FunctionalAtrezzo extends FunctionalElement {
     /**
      * Image of the atrezo item, to display in the scene
      */
-    protected Image image;
+    protected Bitmap image;
 
     /**
      * Image of the atrezzo item, to display on the inventory
      */
     // private Image icon;
-    private Image oldImage = null;
+    private Bitmap oldImage = null;
     
     private int x1, y1, x2, y2;
     
@@ -79,7 +82,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
 
     private float oldScale = -1;
 
-    private Image oldOriginalImage = null;
+    private Bitmap oldOriginalImage = null;
 
     /**
      * Atrezzo item containing the data
@@ -111,7 +114,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
         super( x, y );
         this.atrezzo = atrezzo;
         this.scale = 1;
-        Image tempimage = null;
+        Bitmap tempimage = null;
         //icon = null;
 
         resources = createResourcesBlock( );
@@ -124,16 +127,16 @@ public class FunctionalAtrezzo extends FunctionalElement {
         }
     }
     
-    private void removeTransparentParts(Image tempimage) {
-        x1 = tempimage.getWidth( null ); y1 = tempimage.getHeight( null ); x2 = 0; y2 = 0;
+    private void removeTransparentParts(Bitmap tempimage) {
+        x1 = tempimage.getWidth(); y1 = tempimage.getHeight(); x2 = 0; y2 = 0;
         width = x1;
         height = y1;
-        for (int i = 0; i < tempimage.getWidth( null ); i++) {
+        for (int i = 0; i < tempimage.getWidth(); i++) {
             boolean x_clear = true;
-            for (int j = 0; j < tempimage.getHeight( null ); j++) {
+            for (int j = 0; j < tempimage.getHeight(); j++) {
                 boolean y_clear = true;
-                BufferedImage bufferedImage = (BufferedImage) tempimage;
-                int alpha = bufferedImage.getRGB( i, j ) >>> 24;
+                Bitmap bufferedImage = tempimage;
+                int alpha = Color.alpha(bufferedImage.getPixel(i,j)); 
                 if (alpha > 128) {
                     if (x_clear)
                         x1 = Math.min( x1, i );
@@ -148,14 +151,14 @@ public class FunctionalAtrezzo extends FunctionalElement {
         }
         
         // create a transparent (not translucent) image
-        image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( x2 - x1, y2 - y1, Transparency.BITMASK );
+        image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( x2 - x1, y2 - y1, true );
 
         // draw the transformed image
-        Graphics2D g = (Graphics2D) image.getGraphics( );
-
-        g.drawImage( tempimage, 0, 0, x2-x1, y2-y1, x1, y1, x2, y2, null);
-//        g.drawImage( image, transform, null );
-        g.dispose( );
+        
+        Canvas c = new Canvas(image);       
+        c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
+        //GRAPHICS
+        //g.drawImage( tempimage, 0, 0, x2-x1, y2-y1, x1, y1, x2, y2, null);
         
     }
 
@@ -174,7 +177,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
 
             // Load the resources
             MultimediaManager multimediaManager = MultimediaManager.getInstance( );
-            Image tempimage = null;
+            Bitmap tempimage = null;
             if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
                 tempimage = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
                 removeTransparentParts(tempimage);
@@ -240,14 +243,21 @@ public class FunctionalAtrezzo extends FunctionalElement {
         x_image+=x1;
         y_image+=y1;
         if( scale != 1 ) {
-            Image temp;
+            Bitmap temp;
             if( scale == oldScale && image == oldOriginalImage ) {
                 temp = oldImage;
             }
             else {
                 //temp = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
-                temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( null ) * scale ),  Math.round( image.getHeight( null ) * scale ), Transparency.BITMASK );
-                ((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+                temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+                Canvas c = new Canvas(temp);
+                
+                Matrix m = new Matrix();
+                m.setScale(scale,scale);
+                //GRAPHICS
+                c.drawBitmap(image, m, null);
+                //((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+                
                 oldImage = temp;
                 oldOriginalImage = image;
                 oldScale = scale;
@@ -277,8 +287,10 @@ public class FunctionalAtrezzo extends FunctionalElement {
         mousex = mousex - x1;
         mousey = mousey - y1;
         if( ( mousex >= 0 ) && ( mousex < getWidth( ) * scale ) && ( mousey >= 0 ) && ( mousey < getHeight( ) * scale ) ) {
-            BufferedImage bufferedImage = (BufferedImage) image;
-            int alpha = bufferedImage.getRGB( (int) ( mousex / scale ), (int) ( mousey / scale ) ) >>> 24;
+            Bitmap bufferedImage =  image;
+            int alpha = Color.alpha(bufferedImage.getPixel((int) ( mousex / scale ),  (int) ( mousey / scale ))) ;
+            //GRAPHICS
+            //bufferedImage.getRGB( (int) ( mousex / scale ), (int) ( mousey / scale ) ) >>> 24;
             isInside = alpha > 128;
         }
 

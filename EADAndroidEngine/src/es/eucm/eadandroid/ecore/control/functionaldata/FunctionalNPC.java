@@ -33,9 +33,10 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 
+
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
@@ -98,16 +99,16 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
     /**
      * Front color of the character's text
      */
-    private Color textFrontColor;
+    private int textFrontColor;
 
     /**
      * Border color of the character's text
      */
-    private Color textBorderColor;
+    private int textBorderColor;
 
-    private Color bubbleBkgColor;
+    private int bubbleBkgColor;
 
-    private Color bubbleBorderColor;
+    private int bubbleBorderColor;
 
     /**
      * Resources being used by the character
@@ -236,7 +237,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
      * 
      * @return Front color of the text
      */
-    public Color getTextFrontColor( ) {
+    public int getTextFrontColor( ) {
 
         return textFrontColor;
     }
@@ -246,7 +247,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
      * 
      * @return Border color of the text
      */
-    public Color getTextBorderColor( ) {
+    public int getTextBorderColor( ) {
 
         return textBorderColor;
     }
@@ -290,13 +291,13 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
     @Override
     public int getWidth( ) {
 
-        return currentState.getImage( ).getWidth( null );
+        return currentState.getImage( ).getWidth(  );
     }
 
     @Override
     public int getHeight( ) {
 
-        return currentState.getImage( ).getHeight( null );
+        return currentState.getImage( ).getHeight(  );
     }
 
     /*
@@ -332,8 +333,8 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
         int mousey = (int) ( y - ( this.y - getHeight( ) * scale ) );
 
         if( ( mousex >= 0 ) && ( mousex < getWidth( ) * scale ) && ( mousey >= 0 ) && ( mousey < getHeight( ) * scale ) ) {
-            BufferedImage bufferedImage = (BufferedImage) currentState.getImage( );
-            int alpha = bufferedImage.getRGB( (int) ( mousex / scale ), (int) ( mousey / scale ) ) >>> 24;
+            Bitmap bufferedImage = currentState.getImage( );
+            int alpha = Color.alpha(bufferedImage.getPixel( (int) ( mousex / scale ), (int) ( mousey / scale )));
             isInside = alpha > 128;
         }
 
@@ -745,12 +746,12 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
         return influenceArea;
     }
 
-    public Color getBubbleBkgColor( ) {
+    public int getBubbleBkgColor( ) {
 
         return bubbleBkgColor;
     }
 
-    public Color getBubbleBorderColor( ) {
+    public int getBubbleBorderColor( ) {
 
         return bubbleBorderColor;
     }

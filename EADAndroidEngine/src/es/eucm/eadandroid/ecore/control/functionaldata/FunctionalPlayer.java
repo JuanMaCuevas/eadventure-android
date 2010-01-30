@@ -33,13 +33,13 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.chapter.Action;
@@ -106,16 +106,16 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
     /**
      * Front color of the player's text
      */
-    private Color textFrontColor;
+    private int textFrontColor;
 
     /**
      * Border color of the player's text
      */
-    private Color textBorderColor;
+    private int textBorderColor;
 
-    private Color bubbleBkgColor;
+    private int bubbleBkgColor;
 
-    private Color bubbleBorderColor;
+    private int bubbleBorderColor;
 
     /**
      * Resources being used by the character
@@ -144,9 +144,9 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
 
     private float oldScale = -1;
 
-    private Image oldImage = null;
+    private Bitmap oldImage = null;
 
-    private Image oldOriginalImage = null;
+    private Bitmap oldOriginalImage = null;
 
     /**
      * @return the isTransparent
@@ -252,13 +252,13 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
     @Override
     public int getWidth( ) {
 
-        return getCurrentAnimation( ).getImage( ).getWidth( null );
+        return getCurrentAnimation( ).getImage( ).getWidth(  );
     }
 
     @Override
     public int getHeight( ) {
 
-        return getCurrentAnimation( ).getImage( ).getHeight( null );
+        return getCurrentAnimation( ).getImage( ).getHeight(  );
     }
 
     /**
@@ -509,10 +509,10 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
     public void draw( ) {
 
         if( !isTransparent ) {
-            Image image = getCurrentAnimation( ).getImage( );
+            Bitmap image = getCurrentAnimation( ).getImage( );
 
-            int realX = (int) ( x - ( image.getWidth( null ) * scale / 2 ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ) );
-            int realY = (int) ( y - ( image.getHeight( null ) * scale ) );
+            int realX = (int) ( x - ( image.getWidth(  ) * scale / 2 ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ) );
+            int realY = (int) ( y - ( image.getHeight(  ) * scale ) );
 
             if( image == oldOriginalImage && scale == oldScale ) {
                 image = oldImage;
@@ -520,8 +520,12 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
             else if( scale != 1 ) {
                 oldOriginalImage = image;
                 //image = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
-                image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( null ) * scale ),  Math.round( image.getHeight( null ) * scale ), Transparency.BITMASK );
-                ((Graphics2D) image.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+                image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+                Canvas c = new Canvas(image);
+                Matrix m = new Matrix();
+                m.setScale(scale,scale);
+                c.drawBitmap(image, m, null);
+                
             }
             else {
                 oldOriginalImage = image;
@@ -766,7 +770,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      * 
      * @return Front color of the text
      */
-    public Color getTextFrontColor( ) {
+    public int getTextFrontColor( ) {
 
         return textFrontColor;
     }
@@ -776,7 +780,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      * 
      * @return Border color of the text
      */
-    public Color getTextBorderColor( ) {
+    public int getTextBorderColor( ) {
 
         return textBorderColor;
     }
@@ -843,12 +847,12 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
         return null;
     }
 
-    public Color getBubbleBkgColor( ) {
+    public int getBubbleBkgColor( ) {
 
         return bubbleBkgColor;
     }
 
-    public Color getBubbleBorderColor( ) {
+    public int getBubbleBorderColor( ) {
 
         return bubbleBorderColor;
     }

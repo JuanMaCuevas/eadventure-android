@@ -33,7 +33,7 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Color;
+
 
 /**
  * Interface for all talking characters
@@ -81,7 +81,7 @@ public interface TalkingElement {
 
     public boolean getShowsSpeechBubbles( );
 
-    public Color getBubbleBkgColor( );
+    public int getBubbleBkgColor( );
 
-    public Color getBubbleBorderColor( );
+    public int getBubbleBorderColor( );
 }
