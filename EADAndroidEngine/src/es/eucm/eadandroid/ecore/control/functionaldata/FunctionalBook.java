@@ -40,7 +40,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -49,6 +48,10 @@ import es.eucm.eadventure.editor.gui.auxiliar.ImageTransformer;
 
 import javax.swing.ImageIcon;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Point;
+import es.eucm.eadandroid.utils.Dimension;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.resources.Asset;
@@ -95,18 +98,18 @@ public abstract class FunctionalBook {
     /**
      * Image for background
      */
-    protected Image background;
+    protected Bitmap background;
 
     /**
      * Current images for the arrows
      */
-    protected BufferedImage currentArrowLeft,
+    protected Bitmap currentArrowLeft,
             currentArrowRight;
 
     /**
      * All images for the arrows
      */
-    protected BufferedImage arrowLeftNormal, arrowLeftOver,
+    protected Bitmap arrowLeftNormal, arrowLeftOver,
             arrowRightNormal, arrowRightOver;
 
     /**
@@ -125,7 +128,7 @@ public abstract class FunctionalBook {
      */
     public boolean isInNextPage( int x, int y ) {
 
-        if( ( nextPage.getX( ) < x ) && ( x < nextPage.getX( ) + nextPageDimension.getWidth( ) ) && ( nextPage.getY( ) < y ) && ( y < nextPage.getY( ) + nextPageDimension.getHeight( ) )){
+        if( ( nextPage.x < x ) && ( x < nextPage.x + nextPageDimension.width ) && ( nextPage.y < y ) && ( y < nextPage.y + nextPageDimension.height )){
             boolean isInside = false;
 
             int mousex = x - nextPage.x;
@@ -133,7 +136,7 @@ public abstract class FunctionalBook {
             
             try{ 
 
-            int alpha = currentArrowRight.getRGB( mousex, mousey ) >>> 24;
+            int alpha = Color.alpha(currentArrowRight.getPixel(mousex, mousey));
             isInside = alpha > 128;
             }
             catch ( Exception e ){
@@ -177,7 +180,7 @@ public abstract class FunctionalBook {
      */
     public boolean isInPreviousPage( int x, int y ) {
 
-        if ( ( previousPage.x < x ) && ( x < previousPage.x + previousPageDimension.getWidth( ) ) && ( previousPage.y < y ) && ( y < previousPage.y + previousPageDimension.height ) ){
+        if ( ( previousPage.x < x ) && ( x < previousPage.x + previousPageDimension.width ) && ( previousPage.y < y ) && ( y < previousPage.y + previousPageDimension.y ) ){
             boolean isInside = false;
 
             int mousex = x - previousPage.x;
