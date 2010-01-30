@@ -43,18 +43,18 @@ public abstract class GUI {
 	 * The frame/window of the game
 	 */
 	protected Canvas gameFrame;
+	
+	/**
+	 * The GraphicsConfiguration class 
+	 */
+	private GraphicsConfiguration graphicsConf;
 
 	/**
 	 * The HUE element
 	 */
 	// OLD protected HUD hud;
 
-	/**
-	 * Graphic configuration value specifies if the display is fullscreen,
-	 * window, etc.
-	 * 
-	 */
-	// OLD protected static int graphicConfig;
+	
 
 	/**
 	 * The GUI singleton class
@@ -618,7 +618,7 @@ public abstract class GUI {
 	 */
 	public GraphicsConfiguration getGraphicsConfiguration() {
 
-		return gameFrame.getGraphicsConfiguration();
+		return graphicsConf;
 	}
 
 	/**
