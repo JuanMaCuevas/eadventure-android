@@ -1,6 +1,7 @@
-#summary Cuestiones surgidas durante la migración
+#summary Cuestiones surgidas durante la migraci√≥n
 
 = Anotaciones Juanma =
 
-Esta página contiene todo tipo de cuestiones surgidas durante el proceso de migración.
+Esta p√°gina contiene todo tipo de cuestiones surgidas durante el proceso de migraci√≥n.
 
+  
