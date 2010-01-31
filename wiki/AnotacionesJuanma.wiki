@@ -1,0 +1,6 @@
+#summary One-sentence summary of this page.
+
+= Anotaciones Juanma =
+
+Esta página contiene todo tipo de cuestiones surgidas durante el proceso de migración.
+
