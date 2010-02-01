@@ -1,12 +1,10 @@
 package es.eucm.eadventure.prototypes;
 
-import es.eucm.eadventure.prototypes.control.GameThread;
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.ViewConfiguration;
+import es.eucm.eadventure.prototypes.control.GameThread;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 

@@ -11,9 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.Log;
-import android.view.MotionEvent;
 import es.eucm.eadventure.prototypes.control.gamestates.GameState;
-import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.TouchListener;
 import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.UIEvent;
 import es.eucm.eadventure.prototypes.gui.GUI;
 
@@ -100,10 +98,11 @@ public class SceneGameState extends GameState {
 
 		}
 
-		Bitmap notScaled = BitmapFactory
+		fondo = BitmapFactory
 				.decodeFile("/sdcard/pics/kitchen_bg.jpg");
-		fondo = Bitmap.createScaledBitmap(notScaled, mCanvasWidth,
-				mCanvasHeight, false);
+	//	fondo = Bitmap.createBitmap(notScaled, 0, 0, mCanvasWidth, mCanvasHeight);
+/*		fondo = Bitmap.createScaledBitmap(notScaled, mCanvasWidth,
+				mCanvasHeight, true);*/
 
 	}
 
