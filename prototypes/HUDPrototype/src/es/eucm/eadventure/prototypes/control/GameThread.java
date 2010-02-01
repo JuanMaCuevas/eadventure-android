@@ -22,6 +22,7 @@ public class GameThread extends Thread {
 		
 		Game.create();
 		GUI.create(mSurfaceHolder);
+		GUI.getInstance().init();
 
 							
 	}

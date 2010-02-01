@@ -7,19 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Queue;
 
-import es.eucm.eadventure.prototypes.control.gamestates.GameState;
-import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.TouchListener;
-import es.eucm.eadventure.prototypes.gui.GUI;
-import es.eucm.eadventure.prototypes.gui.hud.Magnifier;
-
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
+import es.eucm.eadventure.prototypes.control.gamestates.GameState;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.TouchListener;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.UIEvent;
+import es.eucm.eadventure.prototypes.gui.GUI;
 
 public class SceneGameState extends GameState {
 
@@ -66,6 +62,7 @@ public class SceneGameState extends GameState {
 
 		handleUIEvents();
 		updatePhysics();
+		GUI.getInstance().update(elapsedTime);
 		doDraw(GUI.getInstance().getGraphics());
 
 	}
@@ -120,6 +117,8 @@ public class SceneGameState extends GameState {
 		mPosX = mPosX + 3;
 		if (mPosX > mCanvasWidth)
 			mPosX = 0;
+		
+
 
 	}
 
@@ -132,20 +131,18 @@ public class SceneGameState extends GameState {
 	}
 
 	protected void handleUIEvents() {
-		MotionEvent e;
-		Queue<MotionEvent> vEvents = sch.getEventQueue();
+		UIEvent e;
+		Queue<UIEvent> vEvents = sch.getEventQueue();
 		while ((e = vEvents.poll()) != null) {
 			switch (e.getAction()) {
-			case TouchListener.CallBack.PRESSED_ACTION:
-				GUI.getInstance().showHud();
-				GUI.getInstance().updateHudPos((int) e.getX(), (int) e.getY());
+			case UIEvent.PRESSED_ACTION:
+				GUI.getInstance().processPressed(e);
 				break;
-			case TouchListener.CallBack.SCROLL_PRESSED_ACTION:
-				GUI.getInstance().showHud();
-				GUI.getInstance().updateHudPos((int) e.getX(), (int) e.getY());
+			case UIEvent.SCROLL_PRESSED_ACTION:
+				GUI.getInstance().processScrollPressed(e);
 				break;
-			case TouchListener.CallBack.UNPRESSED_ACTION:
-				GUI.getInstance().hideHud();
+			case UIEvent.UNPRESSED_ACTION:
+				GUI.getInstance().processUnPressed(e);
 			}
 
 		}

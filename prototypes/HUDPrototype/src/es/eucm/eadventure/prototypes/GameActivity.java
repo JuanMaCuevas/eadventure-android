@@ -72,7 +72,14 @@ public class GameActivity extends Activity {
 	 * @see android.app.Activity#dispatchTouchEvent(android.view.MotionEvent)
 	 */
 	public boolean dispatchTouchEvent(MotionEvent event) {
-		return mThread.processTouchEvent(event);
+		boolean dispatched = mThread.processTouchEvent(event);
+			
+			// don't allow more than 60 motion events per second
+			try {
+			Thread.sleep(30);
+			} catch (InterruptedException e) {
+			}
+		return dispatched;
 	}
 
 	/*

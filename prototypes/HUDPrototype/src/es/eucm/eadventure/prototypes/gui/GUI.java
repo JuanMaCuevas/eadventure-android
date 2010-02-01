@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import es.eucm.eadventure.prototypes.gui.hud.Magnifier;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.UIEvent;
+import es.eucm.eadventure.prototypes.gui.hud.HUD;
 
 public class GUI {
 
@@ -19,8 +21,8 @@ public class GUI {
 	/**
 	 * Canvas dimension
 	 */
-	private static int mCanvasHeight=320;
-	private static int mCanvasWidth=480;
+	public static int WINDOW_HEIGHT=320;
+	public static int WINDOW_WIDTH=480;
 	
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder mSurfaceHolder;
@@ -36,10 +38,10 @@ public class GUI {
 	private static Canvas canvascpy;
 
 	/**
-	 * MAGNIFIER
+	 * HUD
 	 */
-
-	private static Magnifier magnifier;
+	
+	private HUD hud;
 	
 	/**
 	 * TEXT PAINT
@@ -54,11 +56,9 @@ public class GUI {
 	public static void create(SurfaceHolder mSurfaceHolder) {
 
 		instance = new GUI(mSurfaceHolder);
-		bitmapcpy = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.RGB_565);
+		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT, Bitmap.Config.RGB_565);
 		canvascpy = new Canvas(bitmapcpy);
-		
-		magnifier = new Magnifier(45,4,bitmapcpy);
-		
+				
 		mPaint = new Paint();
 		mPaint.setTextSize(15);
 		mPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.NORMAL));
@@ -72,16 +72,16 @@ public class GUI {
 		return instance;
 	}
 	
+	public void init() {
+		
+		hud = new HUD();
+		
+	}
+	
 	public Canvas getGraphics() {
 		return canvascpy;
 	}
 	
-	
-	private void drawHUD(Canvas canvas) {
-
-		magnifier.doDraw(canvas);
-		
-	}
 	
 	public void doPushDraw() {
 				
@@ -90,7 +90,7 @@ public class GUI {
               canvas = mSurfaceHolder.lockCanvas(null);
               synchronized (mSurfaceHolder) {
           		 canvas.drawBitmap(bitmapcpy, 0, 0, null);
-            	 drawHUD(canvas);
+            	 hud.doDraw(canvas);
               }
           } finally {
               // do this in a finally so that if an exception is thrown
@@ -105,31 +105,34 @@ public class GUI {
 		
 	}
 
-	public void updateHudPos(int x, int y) {
-		magnifier.updateMagPos(x,y);
-	}
-	
-
-	public void toggleHud() {
-		
-		magnifier.toggle();
-		
-	}
-
-	public void showHud() {
-		magnifier.show();
-		
-	}
-
-	public void hideHud() {
-	
-	    magnifier.hide();
-		
-	}
-
 	public void drawFPS(int calcFPS) {
 	
 		canvascpy.drawText(String.valueOf((calcFPS)), 10, 10, mPaint);
+		
+	}
+
+	public Bitmap getBmpCpy() {
+		return bitmapcpy;
+	}
+	
+	public void update(long elapsedTime) {
+		hud.update(elapsedTime);
+	}
+
+	public boolean processPressed(UIEvent e) {
+		return hud.processPressed(e);
+		
+	}
+
+	public boolean processScrollPressed(UIEvent e) {
+	
+		return hud.processScrollPressed(e);
+		
+	}
+
+	public boolean processUnPressed(UIEvent e) {
+		
+		return hud.processUnPressed(e);
 		
 	}
 

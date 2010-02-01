@@ -1,6 +1,7 @@
 package es.eucm.eadventure.prototypes.control;
 
 import android.hardware.SensorEvent;
+import android.os.Debug;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -71,7 +72,8 @@ public class Game {
         long time;
         int fps = 0;
         int oldFps = 0;
-
+        
+ 
 		while (mRun) {
 
 		  if (mMode == STATE_RUNNING) {
@@ -103,7 +105,7 @@ public class Game {
 		  }
 		  
 		  }
-			
+							
 	}
 	
 

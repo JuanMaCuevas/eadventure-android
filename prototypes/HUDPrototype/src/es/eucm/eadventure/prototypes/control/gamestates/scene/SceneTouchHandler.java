@@ -6,15 +6,17 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import android.util.Log;
 import android.view.MotionEvent;
 import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.TouchListener;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.FlingEvent;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.PressedEvent;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.ScrollPressedEvent;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.TapEvent;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.UIEvent;
+import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.UnPressedEvent;
 
 public class SceneTouchHandler implements TouchListener.CallBack{
 
-	//**********************************************************************************************/
-	//******************* METODOS DE INTERFAZ ON_SCENE_GESTURE_LISTENER ****************************/
-	//**********************************************************************************************/
-
 	
-	    protected Queue<MotionEvent> vEvents;
+	    protected Queue<UIEvent> vEvents;
 		
 		// swipe gesture constants
 		private static final int SWIPE_MIN_DISTANCE = 120;
@@ -23,14 +25,13 @@ public class SceneTouchHandler implements TouchListener.CallBack{
 
 		
 		public SceneTouchHandler() {
-			vEvents = new ConcurrentLinkedQueue<MotionEvent>();
+			vEvents = new ConcurrentLinkedQueue<UIEvent>();
 		}
 
 		public boolean onTap(MotionEvent e) {
 		
-			e.setAction(TouchListener.CallBack.TAP_ACTION);
 			Log.d("TOUCH","TAP");
-			vEvents.add(e);
+			vEvents.add(new TapEvent(e));
 			return true;
 		}
 
@@ -38,9 +39,8 @@ public class SceneTouchHandler implements TouchListener.CallBack{
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
 			
-			e2.setAction(TouchListener.CallBack.FLING_ACTION);
 			Log.d("TOUCH","FLING");
-			vEvents.add(e2);
+			vEvents.add(new FlingEvent(e1,e2,velocityX,velocityY));
 			
 			return false;
 		}
@@ -48,35 +48,32 @@ public class SceneTouchHandler implements TouchListener.CallBack{
 
 		public boolean onPressed(MotionEvent e) {
 			
-			e.setAction(TouchListener.CallBack.PRESSED_ACTION);
 			Log.d("TOUCH","PRESSED");
-			vEvents.add(e);
+			vEvents.add(new PressedEvent(e));
 			return true;
 		}
 
 
 		public boolean onScrollPressed(MotionEvent e1, MotionEvent e2,
 				float distanceX, float distanceY) {
-			
-			e2.setAction(TouchListener.CallBack.SCROLL_PRESSED_ACTION);
-			Log.d("TOUCH","SCROLLPRESSED");
-			vEvents.add(e2);
+
+			Log.d("TOUCH","SCROLLPRESSED "+e1.getY());
+			vEvents.add(new ScrollPressedEvent(e1,e2,distanceX,distanceY));
 			
 			return true;
 		}
 
 
 		public boolean onUnPressed(MotionEvent e) {
-			
-			e.setAction(TouchListener.CallBack.UNPRESSED_ACTION);
+
 			Log.d("TOUCH","UNPRESSED");
-			vEvents.add(e);
+			vEvents.add(new UnPressedEvent(e));
 		
 			return true;
 		}
 		
 		
-		protected Queue<MotionEvent> getEventQueue() {
+		protected Queue<UIEvent> getEventQueue() {
 			return vEvents;
 		}
 	
