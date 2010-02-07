@@ -116,7 +116,7 @@ public class Magnifier {
 
 		Path mPath = new Path();
 		c.save();
-		c.translate(left, top);
+		c.translate(left, top-20); // el 20 esta puesto a pelo demomento -> cambiara cuando se tenga en cuenta la densidad de pixeles
 		mPath.reset();
 		mPath.addCircle(bmpEdgeSize / 2, bmpEdgeSize / 2, radius,
 				Path.Direction.CCW);
