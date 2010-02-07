@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.events.UIEvent;
 import es.eucm.eadventure.prototypes.gui.hud.HUD;
@@ -21,8 +21,11 @@ public class GUI {
 	/**
 	 * Canvas dimension
 	 */
-	public static int WINDOW_HEIGHT=320;
-	public static int WINDOW_WIDTH=480;
+	public static int WINDOW_HEIGHT ;
+	public static int WINDOW_WIDTH ;
+	
+	public static float EAD_SCALE;
+	public static int EAD_DESKTOP_HEIGHT = 600;
 	
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder mSurfaceHolder;
@@ -51,20 +54,13 @@ public class GUI {
 	
 	private GUI(SurfaceHolder mSurfaceHolder) {
 		this.mSurfaceHolder = mSurfaceHolder;
+		
 	}
 
 	public static void create(SurfaceHolder mSurfaceHolder) {
 
 		instance = new GUI(mSurfaceHolder);
-		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT, Bitmap.Config.RGB_565);
-		canvascpy = new Canvas(bitmapcpy);
 				
-		mPaint = new Paint();
-		mPaint.setTextSize(15);
-		mPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.NORMAL));
-        mPaint.setStrokeWidth(4);
-        mPaint.setColor(0XFFFFFFFF);
-
 	}
 
 	public static GUI getInstance() {
@@ -72,9 +68,23 @@ public class GUI {
 		return instance;
 	}
 	
-	public void init() {
+	public void init(int landscapeHeight, int landscapeWidth) {
+		
+		WINDOW_HEIGHT = landscapeHeight;
+		WINDOW_WIDTH = landscapeWidth;
+		
+		EAD_SCALE = (float)WINDOW_HEIGHT / (float)EAD_DESKTOP_HEIGHT;
+		
+		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT, Bitmap.Config.RGB_565);
+		canvascpy = new Canvas(bitmapcpy);
 		
 		hud = new HUD();
+		
+		mPaint = new Paint();
+		mPaint.setTextSize(15);
+		mPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.NORMAL));
+        mPaint.setStrokeWidth(4);
+        mPaint.setColor(0XFFFFFFFF);
 		
 	}
 	

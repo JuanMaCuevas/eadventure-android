@@ -3,6 +3,7 @@ package es.eucm.eadventure.prototypes.control.gamestates.scene;
 
 import es.eucm.eadventure.prototypes.control.gamestates.eventlisteners.TouchListener;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;

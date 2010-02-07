@@ -6,13 +6,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.Window;
 import android.view.WindowManager;
 import es.eucm.eadventure.prototypes.control.GameThread;
+import es.eucm.eadventure.prototypes.gui.GUI;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements SurfaceHolder.Callback{
 
 	private static final String TAG = "DrawProof";
 
@@ -36,7 +40,21 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.main);
 		// get handles to the view from XML, and its LunarThread
 		mSuperficie = (GameSurfaceView) findViewById(R.id.lunar);
-		mThread = mSuperficie.getThread();
+		
+		SurfaceHolder holder = mSuperficie.getHolder();
+		// register our interest in hearing about changes to our surface
+		holder.addCallback(this);
+						
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int landscapeHeight = displaymetrics.heightPixels;
+		int landscapeWidth = displaymetrics.widthPixels;
+				
+		GUI.create(holder);
+		GUI.getInstance().init(landscapeHeight,landscapeWidth);
+		
+		// create thread only; it's started in surfaceCreated()
+		mThread = new GameThread(this, null);
 
 	}
 
@@ -53,6 +71,31 @@ public class GameActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		mThread.pause(); // pause game when Activity pauses
+
+	}
+	
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+	//	thread.setSurfaceSize(width, height);
+	}
+
+	public void surfaceCreated(SurfaceHolder holder) {	
+
+		mThread.start();
+	}
+	
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// we have to tell thread to shut down & wait for it to finish, or else
+		// it might touch the Surface after we return and explode
+		boolean retry = true;
+		mThread.finish();
+		while (retry) {
+			try {
+				mThread.join();
+				retry = false;
+			} catch (InterruptedException e) {
+			}
+		}
 
 	}
 

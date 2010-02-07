@@ -26,8 +26,8 @@ public class SceneGameState extends GameState {
 	/**
 	 * Canvas dimension
 	 */
-	private int mCanvasHeight = 320;
-	private int mCanvasWidth = 480;
+	private int mCanvasHeight;
+	private int mCanvasWidth;
 
 	/**
 	 * Current frame index from pics , and frame x coordinate position
@@ -44,6 +44,9 @@ public class SceneGameState extends GameState {
 	SceneTouchHandler sch;
 
 	public SceneGameState() {
+
+		mCanvasHeight = GUI.WINDOW_HEIGHT;
+		mCanvasWidth = GUI.WINDOW_WIDTH;
 
 		this.sch = new SceneTouchHandler();
 		this.touchListener = new SceneTouchListener(sch);
@@ -77,11 +80,12 @@ public class SceneGameState extends GameState {
 
 			try {
 				is = new FileInputStream(new File("/sdcard/pics/Master_Idle_"
-						+ number + ".png")); // kitchen_bg.jpg"));
+						+ number + ".png"));
 				bis = new BufferedInputStream(is);
 
-				pics[i] = BitmapFactory.decodeStream(is);
-				// fondo = BitmapFactory.decodeStream(is);
+				Bitmap aux = BitmapFactory.decodeStream(is);
+
+				pics[i] = Bitmap.createScaledBitmap(aux, ((int)((float)(aux.getWidth())*GUI.EAD_SCALE)), ((int)((float)aux.getHeight()*GUI.EAD_SCALE)) ,true);
 
 				bis.close();
 				is.close();
@@ -98,11 +102,10 @@ public class SceneGameState extends GameState {
 
 		}
 
-		fondo = BitmapFactory
+		Bitmap notScaled = BitmapFactory
 				.decodeFile("/sdcard/pics/kitchen_bg.jpg");
-	//	fondo = Bitmap.createBitmap(notScaled, 0, 0, mCanvasWidth, mCanvasHeight);
-/*		fondo = Bitmap.createScaledBitmap(notScaled, mCanvasWidth,
-				mCanvasHeight, true);*/
+		fondo = Bitmap.createScaledBitmap(notScaled, (int)((float)notScaled.getWidth()*GUI.EAD_SCALE),
+				((int)((float)notScaled.getHeight()*GUI.EAD_SCALE)), true);
 
 	}
 
@@ -116,8 +119,6 @@ public class SceneGameState extends GameState {
 		mPosX = mPosX + 3;
 		if (mPosX > mCanvasWidth)
 			mPosX = 0;
-		
-
 
 	}
 

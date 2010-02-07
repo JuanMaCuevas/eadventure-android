@@ -3,6 +3,7 @@ package es.eucm.eadventure.prototypes.control;
 import android.content.Context;
 import android.hardware.SensorEvent;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -15,15 +16,11 @@ public class GameThread extends Thread {
 	private Context mContext;
 	
 	
-	public GameThread(SurfaceHolder mSurfaceHolder, Context context,
+	public GameThread(Context context,
 			Handler handler) {
 
 		mContext = context;
-		
 		Game.create();
-		GUI.create(mSurfaceHolder);
-		GUI.getInstance().init();
-
 							
 	}
 
@@ -37,15 +34,17 @@ public class GameThread extends Thread {
 	
 	
 	public void pause() {
-		
+		if (Game.getInstance()!=null) {
 		Game.getInstance().pause();
+		}
 		
 	}
 	
 	public void unpause() {
 	
+		if (Game.getInstance()!=null) {
 		Game.getInstance().unpause();
-		
+		}
 	}
 	
 	public void finish() {
@@ -68,5 +67,6 @@ public class GameThread extends Thread {
 	public boolean processSensorEvent(SensorEvent e) {
 		return Game.getInstance().processSensorEvent(e);
 	}
+
 	
 }
