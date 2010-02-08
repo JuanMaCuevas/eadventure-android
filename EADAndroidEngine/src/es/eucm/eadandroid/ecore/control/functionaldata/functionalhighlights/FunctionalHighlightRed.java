@@ -31,12 +31,9 @@
 */
 package es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
 
@@ -48,24 +45,35 @@ public class FunctionalHighlightRed extends FunctionalHighlight {
     }
     
     @Override
-    public Image getHighlightedImage( Image image ) {
+    public Bitmap getHighlightedImage( Bitmap image ) {
 
         if (animated)
-            calculateDisplacements(image.getWidth( null ), image.getHeight( null ));
+            calculateDisplacements(image.getWidth(  ), image.getHeight(  ));
 
-        if (oldImage == null || oldImage != image) {
-            BufferedImage temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage(image.getWidth( null ), image.getHeight( null ), Transparency.BITMASK );
-            temp.getGraphics( ).drawImage( image, 0, 0, null );
-           for (int i = 0 ; i < image.getWidth( null ); i++) {
-                for (int j = 0; j < image.getHeight( null ); j++) {
-                    temp.setRGB( i, j, temp.getRGB( i, j ) | 0x00ff0000 );
+        if (oldImage == null || oldImage != image) {            
+            Bitmap temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage(image.getWidth(), image.getHeight(), true );
+            
+            Canvas c = new Canvas(temp);
+            c.drawBitmap(image, 0, 0, null);
+            //GRAPHICS 
+            
+            //temp.getGraphics( ).drawImage( image, 0, 0, null );
+            //OPTIMIZE improve performance using android API?            
+           for (int i = 0 ; i < image.getWidth(  ); i++) {
+                for (int j = 0; j < image.getHeight(  ); j++) {
+                	temp.setPixel( i, j, temp.getPixel(i, j) | 0x00ff0000 );
                 }
             }
             oldImage = image;
             newImage = temp;
-        }
-        BufferedImage temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( null ) * scale ),  Math.round( image.getHeight( null ) * scale ), Transparency.BITMASK );
-        ((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+        } 
+        Bitmap temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+        Canvas c = new Canvas(temp);
+        
+        Matrix m = new Matrix();
+        m.setScale(scale, scale);
+        
+        c.drawBitmap(temp, m, null);  
         return temp;
 
 //        return newImage.getScaledInstance( (int)(image.getWidth(null) * scale), (int)(image.getHeight( null ) * scale), Image.SCALE_SMOOTH );

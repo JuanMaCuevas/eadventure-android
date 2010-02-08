@@ -33,7 +33,8 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Graphics2D;
+import android.graphics.Canvas;
+
 
 /**
  * This class defines any kind of object that can be put in a book scene
@@ -64,6 +65,6 @@ public abstract class FunctionalBookParagraph {
      * @param y
      *            vertical position of the object
      */
-    public abstract void draw( Graphics2D g, int x, int y );
+    public abstract void draw( Canvas c, int x, int y );
 
 }

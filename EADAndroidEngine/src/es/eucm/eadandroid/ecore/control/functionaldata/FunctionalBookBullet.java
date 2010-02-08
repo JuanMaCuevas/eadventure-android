@@ -33,11 +33,10 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
+
 import java.util.ArrayList;
+
+import android.graphics.Bitmap;
 
 import es.eucm.eadandroid.common.data.chapter.book.BookParagraph;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -61,7 +60,7 @@ public class FunctionalBookBullet extends FunctionalBookParagraph {
     /**
      * Image of the bullet
      */
-    private Image imgBullet;
+    private Bitmap imgBullet;
 
     /**
      * Creates a new FunctionalBookBullet

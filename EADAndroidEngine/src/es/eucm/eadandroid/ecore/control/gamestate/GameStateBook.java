@@ -34,9 +34,7 @@
 package es.eucm.eadandroid.ecore.control.gamestate;
 
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
+
 
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;

@@ -33,9 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control.gamestate;
 
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -99,14 +96,14 @@ public class GameStatePlaying extends GameState {
         GUI.getInstance( ).update( elapsedTime );
 
         // Get the graphics and paint the whole screen in black
-        Graphics2D g = GUI.getInstance( ).getGraphics( );
+        Canvas c = GUI.getInstance( ).getGraphics( );
         // TODO check, though it should give no problems with non-transparent backgrounds
         //g.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
 
         // Draw the functional scene, and then the GUI
         game.getFunctionalScene( ).draw( );
         
-        GUI.getInstance( ).drawScene( g, elapsedTime );
+        GUI.getInstance( ).drawScene( c, elapsedTime );
         
 
         GUI.getInstance( ).drawHUD( g );
