@@ -33,7 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Component;
 import java.util.ArrayList;
 
 import es.eucm.eadandroid.common.data.chapter.book.Book;

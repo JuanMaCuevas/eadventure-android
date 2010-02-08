@@ -33,9 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Graphics2D;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import es.eucm.eadandroid.common.data.chapter.book.BookParagraph;

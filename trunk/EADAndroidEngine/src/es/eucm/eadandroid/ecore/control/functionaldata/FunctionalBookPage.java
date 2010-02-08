@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import es.eucm.eadandroid.common.auxiliar.ReportDialog;
 import es.eucm.eadandroid.common.data.chapter.book.BookPage;
@@ -72,22 +73,22 @@ public class FunctionalBookPage extends JPanel {
 
     private boolean isValid;
 
-    private Image background, currentArrowLeft, currentArrowRight;
+    private Bitmap background, currentArrowLeft, currentArrowRight;
     
     private Point previousPage, nextPage;
 
-    private Image image;
+    private Bitmap image;
     
     private FunctionalStyledBook fBook;
 
     private BookEditorPane editorPane;
 
-    public FunctionalBookPage( Image background ) {
+    public FunctionalBookPage( Bitmap background ) {
 
         this.background = background;
     }
 
-    public FunctionalBookPage( BookPage bookPage, FunctionalStyledBook fBook, Image background, Image currentArrowLeft, Image currentArrowRight, Point previousPage, Point nextPage,  boolean listenHyperLinks ) {
+    public FunctionalBookPage( BookPage bookPage, FunctionalStyledBook fBook, Bitmap background, Point previousPage, Point nextPage,  boolean listenHyperLinks ) {
 
         super( );
         editorPane = new BookEditorPane( bookPage );
@@ -95,8 +96,6 @@ public class FunctionalBookPage extends JPanel {
         this.bookPage = bookPage;
         this.fBook = fBook;
         this.background = background;
-        this.currentArrowLeft = currentArrowLeft;
-        this.currentArrowRight = currentArrowRight;
         this.previousPage = previousPage;
         this.nextPage = nextPage;
         

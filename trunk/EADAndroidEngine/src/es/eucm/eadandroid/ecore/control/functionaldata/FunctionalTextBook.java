@@ -33,13 +33,11 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Transparency;
+
 
 import java.util.ArrayList;
+
+import android.graphics.Bitmap;
 
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.book.BookParagraph;
@@ -95,12 +93,12 @@ public class FunctionalTextBook extends FunctionalBook {
     /**
      * Image of the book.
      */
-    protected Image imgBook;
+    protected Bitmap imgBook;
     
     /**
      * Background image of the book
      */
-    protected Image background;
+    protected Bitmap background;
 
     /**
      * Total height of the book.
