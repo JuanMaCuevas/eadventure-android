@@ -5,6 +5,19 @@
 <wiki:toc max_depth="2" />
 
 ---- 
+== Semana 15Feb - 22Feb ==
+
+ * Quitar todos los errores
+ 
+===Willy===
+
+ * GameStateVideo
+ * GameStateSlideScene
+ * GameStateLoading 
+ 
+===Juanma y Alvaro===
+ * Integrar prototipo HUD
+ * Quitar errores
 
 == Semana 25Ene - 1-Feb ==
 
