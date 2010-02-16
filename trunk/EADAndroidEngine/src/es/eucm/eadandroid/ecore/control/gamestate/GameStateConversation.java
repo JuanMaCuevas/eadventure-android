@@ -33,8 +33,7 @@
  */
 package es.eucm.eadandroid.ecore.control.gamestate;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -163,15 +162,15 @@ public class GameStateConversation extends GameState {
     @Override
     public synchronized void mainLoop( long elapsedTime, int fps ) {
 
-        Graphics2D g = setUpGUI( elapsedTime );
+        Canvas c = setUpGUI( elapsedTime );
 
         if( currentNode.getType( ) == ConversationNodeView.DIALOGUE )
             processDialogNode( );
         else if( currentNode.getType( ) == ConversationNodeView.OPTION )
-            processOptionNode( g );
+            processOptionNode( c );
 
         GUI.getInstance( ).endDraw( );
-        g.dispose( );
+        c.dispose( );
     }
 
     /**
@@ -181,7 +180,7 @@ public class GameStateConversation extends GameState {
      *            The time elapsed since the last update
      * @return The graphics element for the scene
      */
-    private Graphics2D setUpGUI( long elapsedTime ) {
+    private Canvas setUpGUI( long elapsedTime ) {
 
         GUI.getInstance( ).toggleHud( false );
         GUI.getInstance( ).setDefaultCursor( );
@@ -189,7 +188,7 @@ public class GameStateConversation extends GameState {
         game.getFunctionalScene( ).update( elapsedTime );
         GUI.getInstance( ).update( elapsedTime );
 
-        Graphics2D g = GUI.getInstance( ).getGraphics( );
+        Canvas g = GUI.getInstance( ).getGraphics( );
         g.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
 
         game.getFunctionalScene( ).draw( );

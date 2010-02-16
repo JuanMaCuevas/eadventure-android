@@ -23,6 +23,10 @@ import es.eucm.eadandroid.common.data.chapter.Timer;
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.conversation.Conversation;
 import es.eucm.eadandroid.common.data.chapter.elements.NPC;
+import es.eucm.eadandroid.common.data.chapter.resources.Resources;
+import es.eucm.eadandroid.common.data.chapter.scenes.Cutscene;
+import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
+import es.eucm.eadandroid.common.gui.JOptionPane;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
@@ -32,7 +36,15 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffect;
 import es.eucm.eadandroid.ecore.control.gamestate.GameState;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateBook;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateConversation;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateLoading;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateNextScene;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateOptions;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateRunEffects;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateSlidescene;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateVideoscene;
 import es.eucm.eadandroid.ecore.data.GameText;
 import es.eucm.eadandroid.ecore.data.SaveGame;
 import es.eucm.eadandroid.ecore.data.SaveGameException;
@@ -40,7 +52,6 @@ import es.eucm.eadandroid.ecore.data.SaveTimer;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
-import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 
 public class Game implements TimerEventListener , SpecialAssetPaths{
 
@@ -339,7 +350,20 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	public String getAdventurePath() {
 		return this.advPath;
 	}
+	
+    /**
+     * Sets the adventure name
+     * 
+     * @param adventureName
+     *            The name of the adventure
+     */
+    public void setAdventureName( String adventureName ) {
 
+        this.adventureName = adventureName;
+    }
+
+	//TODO assessment
+	//TODO adaptation 
 	public void start() {
 		
 	        try {
@@ -363,7 +387,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 	            GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
 
-	            GUI.create( );
+	            GUI.create(mSurfaceHolder);
 
 	            currentState = new GameStateLoading( );
 
@@ -374,8 +398,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	            options.loadOptions( adventurePath, adventureName );
 
 	            // Init the assessment and adaptation engines
-	  //          adaptationEngine = new AdaptationEngine( );
-	  //          assessmentEngine = new AssessmentEngine( );
+	  //         adaptationEngine = new AdaptationEngine( );
+	  //         assessmentEngine = new AssessmentEngine( );
 	            
 	            
 	            currentChapter = 0;
@@ -634,11 +658,112 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         }
 
     }
+    
+    /**
+     * Processes the adapted state
+     * 
+     * @param firstScene
+     *            to add it a new scene
+     * @param adaptedState
+     */
+    private void processAdaptedState( Exit firstScene, AdaptedState adaptedState ) {
+
+        // If there is an adapted state to be executed
+        if( adaptedState != null ) {
+
+            // If it has an initial scene, set it
+            if( adaptedState.getTargetId( ) != null ){
+                boolean found = false;
+                // check the scene is in chapter
+                for( Scene scene : gameData.getScenes( ) ) {
+                    if( scene.getId( ).equals( adaptedState.getTargetId( ) ) ){
+                        firstScene.setNextSceneId( adaptedState.getTargetId( ) );
+                        found = true;
+                    }
+                    
+                }
+                if (!found){
+                // check the scene is a cutscene
+                for( Cutscene cutscene : gameData.getCutscenes( ) ) {
+                    if( cutscene.getId( ).equals( adaptedState.getTargetId( ) ) )
+                        firstScene.setNextSceneId( adaptedState.getTargetId( ) );
+                
+                      }
+                 }
+            }
+            // Set the flags
+            for( String flag : adaptedState.getActivatedFlags( ) )
+                if( flags.existFlag( flag ) )
+                    flags.activateFlag( flag );
+            for( String flag : adaptedState.getDeactivatedFlags( ) )
+                if( flags.existFlag( flag ) )
+                    flags.deactivateFlag( flag );
+            // Set the vars
+            List<String> adaptedVars = new ArrayList<String>( );
+            List<String> adaptedValues = new ArrayList<String>( );
+            adaptedState.getVarsValues( adaptedVars, adaptedValues );
+            for( int i = 0; i < adaptedVars.size( ); i++ ) {
+                String varName = adaptedVars.get( i );
+                String varValue = adaptedValues.get( i );
+                // check if it is a "set value" operation
+                if( AdaptedState.isSetValueOp( varValue ) ) {
+                    String val = AdaptedState.getSetValueData( varValue );
+                    if( val != null )
+                        vars.setVarValue( varName, Integer.parseInt( val ) );
+                }
+                // it is "increment" or "decrement" operation, for both of them is necessary to 
+                // get the current value of referenced variable
+                else {
+                    if( vars.existVar( varName ) ) {
+                        int currentValue = vars.getValue( varName );
+                        int operationValue = Integer.parseInt( varValue.substring( varValue.indexOf( " " ) + 1 ) );
+                        if( AdaptedState.isIncrementOp( varValue.substring( 0, varValue.indexOf( " " ) ) ) ) {
+                            vars.setVarValue( varName, currentValue + operationValue );
+                        }
+                        else if( AdaptedState.isDecrementOp( varValue.substring( 0, varValue.indexOf( " " ) ) ) ) {
+                            if( currentValue - operationValue >= 0 )
+                                vars.setVarValue( varName, currentValue - operationValue );
+                            else
+                                vars.setVarValue( varName, 0 );
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 
 	
 	private void stop() {
+		  //Stop the music (if it is playing) and the adaptation clock
+        if( functionalScene != null )
+            functionalScene.stopBackgroundMusic( );
+        if( adaptationEngine != null )
+            adaptationEngine.stopAdaptationClock( );
+
+        // Stop the communication 
+        /*if( comm.getCommType( ) == CommManagerApi.SCORMV12_TYPE ) {
+            comm.disconnect( null );
+        }*/
+        staticStop( );
 		
 	}
+	
+	  /**
+     * Stops all sounds and music, the gui, etc
+     */
+    private static void staticStop( ) {
+
+        //Delete all sounds
+        if( MultimediaManager.getInstance( ) != null )
+            MultimediaManager.getInstance( ).deleteSounds( );
+
+        //Hide the GUI
+        if( GUI.getInstance( ) != null) {
+            // Delete the GUI
+            GUI.delete( );
+        }
+    }
 	
 	// GENERAL METHODS //
 	
@@ -672,6 +797,12 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     public void goToNextChapter( ) {
 
         currentChapter++;
+        nextChapter = true;
+    }
+    
+    public void goToChapter( int chapter ) {
+
+        currentChapter = chapter;
         nextChapter = true;
     }
     
@@ -777,6 +908,16 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
         // Count the item as grabbed
         itemSummary.grabItem( itemId );
+    }
+    
+    /**
+     * Returns the atrezzo item summary
+     * 
+     * @return Atrezzo item summary
+     */
+    public AtrezzoSummary getAtrezzoItemSummary( ) {
+
+        return atrezzoSummary;
     }
 	
     
@@ -912,8 +1053,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
                         }
 
-                        //TODO no estoy seguro 
-                        lastMouseEvent = null;
+                     
                     }
 
                     setState( STATE_PLAYING );
@@ -924,11 +1064,12 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
             }
         }
         catch( SaveGameException e ) {
+        	Log.i("Game.load","There was an error while loading the selected adventure");
             JOptionPane.showMessageDialog( null, "There was an error while loading the selected adventure.\nPlease check that no configuration file is missing or incorrect", "Error loading adventure", JOptionPane.ERROR_MESSAGE );
             JOptionPane.showMessageDialog( null, "The first chapter will be reloaded", "Error loading adventure", JOptionPane.ERROR_MESSAGE );
-            Graphics2D g = GUI.getInstance( ).getGraphics( );
+        //    Graphics2D g = GUI.getInstance( ).getGraphics( );
             currentChapter = 0;
-            loadCurrentChapter( g );
+            loadCurrentChapter(  );
         }
 
     }
@@ -1045,6 +1186,17 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         return itemSummary;
     }
     
+
+    /**
+     * Returns the inventory
+     * 
+     * @return Inventory
+     */
+    public Inventory getInventory( ) {
+
+        return inventory;
+    }
+    
     /**
      * Returns the action manager
      * 
@@ -1063,6 +1215,12 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     public Exit getNextScene( ) {
 
         return nextScene;
+    }
+    
+
+    public int getTime( ) {
+
+        return (int) totalTime / 1000;
     }
     
     /**
@@ -1165,14 +1323,14 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * Management System
      * 
      * @return true If the communication is active
-     */
+     *//*
     public boolean isConnected( ) {
 
         if( comm != null ) {
             return comm.isConnected( );
         }
         return false;
-    }
+    }*/
     
     //SETTERS //
     
@@ -1207,15 +1365,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      */
     public void setState( int state ) {
 
-        GUI.getInstance( ).setDefaultCursor( );
+       
         switch( state ) {
             case STATE_LOADING:
                 currentState = new GameStateLoading( );
                 break;
             case STATE_PLAYING:
                 currentState = new GameStatePlaying( );
-                if( lastMouseEvent != null )
-                    currentState.mouseMoved( lastMouseEvent );
                 break;
             case STATE_SLIDE_SCENE:
                 currentState = new GameStateSlidescene( );
@@ -1295,6 +1451,10 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         this.functionalScene = scene;
     }
 
+    public void setGameOver( ) {
+
+        gameOver = true;
+    }
 	// HANDLING GLOBAL STATE //
 
 	private void setGlobalState(int state) {
@@ -1344,5 +1504,27 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		// TODO Auto-generated method stub
 		
 	}
+	
+    /**
+     * Check if the Stack only have one empty FIFO
+     */
+    public boolean isEmptyFIFOinStack( ) {
+
+        return effectsQueue.peek( ).isEmpty( );
+    }
+    
+    // Assessment methods //
+    /**
+     * Returns the assessment engine
+     * 
+     * @return Assessment engine
+     */
+    //ASSESSMENT
+    public AssessmentEngine getAssessmentEngine( ) {
+
+        return assessmentEngine;
+    }
+    
+
 
 }
