@@ -578,11 +578,11 @@ public class FunctionalScene implements Renderable {
         player.update( elapsedTime );
 
         // Update the offset
-        //EVENT
+        /*//EVENT
         if( updateOffset( ) && Game.getInstance( ).getLastMouseEvent( ) != null && Game.getInstance( ).getLastMouseEvent( ).getID( ) != MouseEvent.MOUSE_DRAGGED )
             Game.getInstance( ).mouseMoved( Game.getInstance( ).getLastMouseEvent( ) );
         else if( updateOffset( ) && Game.getInstance( ).getLastMouseEvent( ) != null)
-            Game.getInstance( ).mouseDragged( Game.getInstance( ).getLastMouseEvent( ) );
+            Game.getInstance( ).mouseDragged( Game.getInstance( ).getLastMouseEvent( ) );*/
     }
 
     /**

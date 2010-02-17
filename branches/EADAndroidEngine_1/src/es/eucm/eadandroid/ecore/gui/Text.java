@@ -75,8 +75,8 @@ class Text {
 	 *            Color of the borde of the text
 	 */
 	public Text(String[] text, int x, int y, int textColor,
-			int borderColor, int bubbleBkgColor, int bubbleBorderColor,
-			boolean showArrow) {
+			int borderColor, int bubbleBkgColor, int bubbleBorderColor
+			) {
 
 		this.text = text;
 		this.x = x;
@@ -86,7 +86,7 @@ class Text {
 		this.showBubble = true;
 		this.bubbleBkgColor = bubbleBkgColor;
 		this.bubbleBorderColor = bubbleBorderColor;
-		this.showArrow = showArrow;
+		this.showArrow = false;
 	}
 
 	/**

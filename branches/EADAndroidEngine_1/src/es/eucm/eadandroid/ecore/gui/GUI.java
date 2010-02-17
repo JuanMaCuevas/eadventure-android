@@ -411,12 +411,12 @@ public class GUI {
 	 * @param bubbleBorderColor
 	 *            Color of the bubbles border
 	 */
-	public void addTextToDraw(String[] string, int x, int y, int textColor,int borderColor, int bubbleBkgColor, int bubbleBorderColor,
-			boolean showArrow) {
+	public void addTextToDraw(String[] string, int x, int y, int textColor,int borderColor, int bubbleBkgColor, int bubbleBorderColor
+			) {
 
 		boolean added = false;
 		int i = 0;
-		Text text = new Text(string, x, y, textColor, borderColor,bubbleBkgColor, bubbleBorderColor, showArrow);
+		Text text = new Text(string, x, y, textColor, borderColor,bubbleBkgColor, bubbleBorderColor);
 		while (!added && i < textToDraw.size()) {
 			if (y <= textToDraw.get(i).getY()) {
 				textToDraw.add(i, text);

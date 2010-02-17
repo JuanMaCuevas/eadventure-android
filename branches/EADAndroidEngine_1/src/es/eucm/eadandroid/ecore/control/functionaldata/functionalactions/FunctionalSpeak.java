@@ -36,9 +36,6 @@ package es.eucm.eadandroid.ecore.control.functionaldata.functionalactions;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
-
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.elements.NPC;
@@ -75,7 +72,7 @@ public class FunctionalSpeak extends FunctionalAction {
      * This is an Voice object of FreeTTS, that is used to synthesize the sound
      * of a conversation line.
      */
-    private Voice voice;
+ //VOICE   private Voice voice;
 
     /**
      * The speech must be launched in another thread
@@ -283,11 +280,11 @@ public class FunctionalSpeak extends FunctionalAction {
             System.setProperty( "freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory" );
             this.text = text;
             this.deallocate = false;
-            VoiceManager voiceManager = VoiceManager.getInstance( );
-            voice = voiceManager.getVoice( voiceText );
-            // this call could throw a java.io.IOException if voiceText is not a valid voice (for example "")
-            // now, in the editor we only can choose a valid void or no voice. Both behaviors are controled.
-            voice.allocate( );
+//   //VOICE         VoiceManager voiceManager = VoiceManager.getInstance( );
+//            voice = voiceManager.getVoice( voiceText );
+//            // this call could throw a java.io.IOException if voiceText is not a valid voice (for example "")
+//            // now, in the editor we only can choose a valid void or no voice. Both behaviors are controled.
+//            voice.allocate( );
 
         }
 
@@ -296,7 +293,7 @@ public class FunctionalSpeak extends FunctionalAction {
 
             try {
 
-                voice.speak( text );
+     //VOICE           voice.speak( text );
                 ttsInUse = false;
 
             }
@@ -310,7 +307,7 @@ public class FunctionalSpeak extends FunctionalAction {
         public boolean cancel( ) {
 
             if( !deallocate ) {
-                voice.deallocate( );
+     //VOICE           voice.deallocate( );
                 deallocate = true;
             }
             return true;

@@ -36,8 +36,6 @@ package es.eucm.eadandroid.ecore.control.animations.npc;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
 
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
@@ -76,7 +74,7 @@ public class NPCTalking extends NPCState {
      * This is an Voice object of FreeTTS, that is used to synthesize the sound
      * of a conversation line.
      */
-    private Voice voice;
+ //VOICE   private Voice voice; 
 
     /**
      * The speech must be launched in another thread
@@ -237,9 +235,10 @@ public class NPCTalking extends NPCState {
 
             this.text = text;
             this.deallocate = false;
-            VoiceManager voiceManager = VoiceManager.getInstance( );
+            //VOICE
+          /*  VoiceManager voiceManager = VoiceManager.getInstance( );
             voice = voiceManager.getVoice( voiceText );
-            voice.allocate( );
+            voice.allocate( );*/
         }
 
         @Override
@@ -247,7 +246,7 @@ public class NPCTalking extends NPCState {
 
             try {
 
-                voice.speak( text );
+       //VOICE         voice.speak( text );
                 ttsInUse = false;
 
             }
@@ -261,7 +260,7 @@ public class NPCTalking extends NPCState {
         public boolean cancel( ) {
 
             if( !deallocate ) {
-                voice.deallocate( );
+       //VOICE         voice.deallocate( );
                 deallocate = true;
             }
             return true;
