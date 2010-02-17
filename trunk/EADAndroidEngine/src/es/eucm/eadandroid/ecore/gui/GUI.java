@@ -12,10 +12,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
 import android.graphics.Typeface;
+import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 
 import es.eucm.eadandroid.ecore.control.TimerManager;
@@ -42,8 +44,21 @@ public class GUI {
 	/**
 	 * Canvas dimension
 	 */
-	public static int WINDOW_HEIGHT=320;
-	public static int WINDOW_WIDTH=480;
+	public static int WINDOW_HEIGHT=600;
+	public static int WINDOW_WIDTH=800;
+	
+	public static int FINAL_WINDOW_HEIGHT;
+	public static int FINAL_WINDOW_WIDTH;
+	
+	/**
+	 * scaleRatio
+	 */
+	public static float SCALE_RATIO;
+	
+	/**
+	 * scaleMatrix
+	 */
+	public static Matrix scaleMatrix;
 	
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder mSurfaceHolder;
@@ -57,6 +72,14 @@ public class GUI {
 
 	private static Bitmap bitmapcpy;
 	private static Canvas canvascpy;
+	
+	/**
+	 *  finalbmp bitmap scaled to the device screen size
+	 */
+	private static Bitmap finalBmp; 
+	private static Canvas finalCanvas;
+
+	
 
 	
 	/**
@@ -125,15 +148,28 @@ public class GUI {
 	public static void create(SurfaceHolder mSurfaceHolder) {
 
 		instance = new GUI(mSurfaceHolder);
+		
 		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT, Bitmap.Config.RGB_565);
 		canvascpy = new Canvas(bitmapcpy);
-				
+		
+		//initialize reescalation bitmap
+		DisplayMetrics metrics = new DisplayMetrics();
+		FINAL_WINDOW_WIDTH = metrics.widthPixels;
+		FINAL_WINDOW_HEIGHT= metrics.heightPixels;
+		finalBmp = Bitmap.createBitmap(FINAL_WINDOW_WIDTH, FINAL_WINDOW_HEIGHT, Bitmap.Config.RGB_565);
+		finalCanvas = new Canvas(finalBmp);
+		
+		//Set the scale
+		SCALE_RATIO=FINAL_WINDOW_HEIGHT/WINDOW_HEIGHT;
+		scaleMatrix=new Matrix();
+		scaleMatrix.setScale(SCALE_RATIO, SCALE_RATIO);
+		
+
 		mPaint = new Paint();
 		mPaint.setTextSize(15);
 		mPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.NORMAL));
         mPaint.setStrokeWidth(4);
-        mPaint.setColor(0XFFFFFFFF);
-        
+        mPaint.setColor(0XFFFFFFFF);       
        
 
 	}
@@ -183,11 +219,13 @@ public class GUI {
 	            timerManager.draw(canvascpy);
 	        }
 		
+	     // reescale the drawn bitmap to fit the sreen size
+	    finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
 		
         try {
             canvas = mSurfaceHolder.lockCanvas(null);
             synchronized (mSurfaceHolder) {
-        		 canvas.drawBitmap(bitmapcpy, 0, 0, null);
+        		 canvas.drawBitmap(finalBmp, 0, 0, null);
 
         		fps.draw(canvas);       		 
           	    drawHUD(canvas);
@@ -809,7 +847,7 @@ public class GUI {
     public void drawToGraphics( Canvas g ) {
        
 
-this.doPushDraw();
+    	this.doPushDraw();
 
 //TODO arrows
 
