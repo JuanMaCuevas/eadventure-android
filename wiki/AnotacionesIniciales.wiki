@@ -5,8 +5,12 @@
 
  * Aqui anotamos los distintos task tags que vamos a utilizar
 
- * OLD
+ * OLD   
  * CHECK
  * TODO
  * FIXME
  * GRAPHICS
+ * VOICE
+ * ASSESSMENT
+ * ADAPTATION
+ * GAMESTATE
