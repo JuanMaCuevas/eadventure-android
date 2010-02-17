@@ -134,7 +134,7 @@ public class ResourceHandler implements InputStreamCreator {
 			ResourceHandler.zipPath = zipFilename;
 			zipFile = new ZipFile(zipFilename);
 
-			Log.d("ResourceHandlerUnrestricted", "Nombre Zip" + zipFilename);
+			Log.d("ResourceHandlerUnrestricted", "Nombre Zip: " + zipFilename);
 
 		} catch (ZipException e) {
 			e.printStackTrace();
