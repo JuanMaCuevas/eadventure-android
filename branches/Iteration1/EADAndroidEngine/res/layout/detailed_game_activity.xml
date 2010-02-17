@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="horizontal">
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:shrinkColumns="1">
+		<TableRow>
+			<ImageView android:id="@+id/Viewdetallado"
+				android:layout_height="70px" android:layout_width="70px"
+				android:layout_margin="10px"></ImageView>
+			<LinearLayout android:id="@+id/LinearLayout02"
+				android:gravity="right" android:layout_height="fill_parent" android:orientation="horizontal" android:layout_width="fill_parent">
+				<TextView android:text="@+id/titulo" android:id="@+id/titulodetallado"
+					android:textSize="22px" android:layout_height="fill_parent" android:focusable="false"
+					android:layout_width="fill_parent" android:paddingLeft="10dip" android:gravity="center"></TextView>
+			</LinearLayout>
+		</TableRow>
+
+		<TableRow android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<TextView></TextView>
+			<TextView android:text="@+id/texto" android:id="@+id/textodetallado"
+				android:textSize="14px" android:focusable="false" android:paddingLeft="20dip" android:layout_width="fill_parent" android:layout_height="wrap_content"></TextView>
+		</TableRow>
+		<TableRow>
+			<TextView android:layout_height="fill_parent" android:layout_width="fill_parent"></TextView>
+			<Button android:id="@+id/botondetallado" android:textSize="14px"
+				android:text="Descargar" android:layout_width="fill_parent"
+				android:layout_height="wrap_content"></Button>
+		</TableRow>
+
+
+	</TableLayout>
+
+</LinearLayout>
