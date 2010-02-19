@@ -38,6 +38,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
@@ -136,12 +137,25 @@ public class FunctionalItem extends FunctionalElement {
         x1 = tempimage.getWidth(); y1 = tempimage.getHeight(); x2 = 0; y2 = 0;
         width = x1;
         height = y1;
-        for (int i = 0; i < tempimage.getWidth(); i++) {
+        
+        int tempWidth = tempimage.getWidth();
+        int tempHeight = tempimage.getHeight();
+        
+        Log.d("Ll","inicio");
+        
+        int[] temp = new int[tempWidth * tempHeight] ;
+        
+        tempimage.getPixels(temp, 0, tempWidth, 0, 0, tempWidth, tempHeight);
+        
+        Log.d("Ll","fin1");
+        
+        //OPTIMIZE
+        
+        for (int i = 0; i < tempWidth; i++) {
             boolean x_clear = true;
-            for (int j = 0; j < tempimage.getHeight(); j++) {
+            for (int j = 0; j < tempHeight; j++) {
                 boolean y_clear = true;
-                Bitmap bufferedImage = tempimage;
-                int alpha = Color.alpha(bufferedImage.getPixel(i,j)); 
+                int alpha = Color.alpha(temp[i * j]); 
                 if (alpha > 128) {
                     if (x_clear)
                         x1 = Math.min( x1, i );
@@ -154,6 +168,8 @@ public class FunctionalItem extends FunctionalElement {
                 }
             }
         }
+        
+        Log.d("Ll","fin");
         
         // create a transparent (not translucent) image
         image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( x2 - x1, y2 - y1, true );

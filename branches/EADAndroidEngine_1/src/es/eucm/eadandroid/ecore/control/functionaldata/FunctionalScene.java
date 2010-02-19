@@ -213,7 +213,7 @@ public class FunctionalScene implements Renderable {
         // Load the background music (if it is not loaded)
         this.backgroundMusicId = backgroundMusicId;
         if( backgroundMusicId == -1 )
-            playBackgroundMusic( );
+           playBackgroundMusic( );
 
         // Add the functional items
         for( ElementReference itemReference : scene.getItemReferences( ) )
@@ -840,7 +840,8 @@ public class FunctionalScene implements Renderable {
      */
     public void stopBackgroundMusic( ) {
 
-        MultimediaManager.getInstance( ).stopPlaying( backgroundMusicId );
+    	MultimediaManager.getInstance( ).stopPlaying( backgroundMusicId );
+    	
     }
 
     /**

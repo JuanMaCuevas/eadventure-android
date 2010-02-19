@@ -33,12 +33,11 @@
  */
 package es.eucm.eadandroid.ecore.control.gamestate;
 
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
-import javax.swing.JOptionPane;
+import java.util.Queue;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
 import es.eucm.eadandroid.common.data.chapter.resources.Asset;
@@ -52,6 +51,7 @@ import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.animations.Animation;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
@@ -76,15 +76,23 @@ public class GameStateSlidescene extends GameState {
      */
     private boolean yetSkipped = false;
 
-    private BufferedImage bkg = new BufferedImage( GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR );
+    private Bitmap bkg ;
 
+    private Canvas canvas ;
+    
+
+    
     /**
      * Creates a new GameStateSlidescene
      */
     public GameStateSlidescene( ) {
 
         super( );
-
+        
+        
+        bkg = Bitmap.createBitmap( GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, Bitmap.Config.ARGB_4444);
+        canvas = new Canvas(bkg);
+        
         slidescene = (Slidescene) game.getCurrentChapterData( ).getGeneralScene( game.getNextScene( ).getNextSceneId( ) );
 
         // Select the resources
@@ -138,14 +146,15 @@ public class GameStateSlidescene extends GameState {
     @Override
     public void mainLoop( long elapsedTime, int fps ) {
 
+    	handleUIEvents();
+    	
         // Paint the current slide
-        Graphics2D g = (Graphics2D) bkg.getGraphics( );
-        g.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
+       //TODO = falta por limpiarlo ... :S
+        canvas.clipRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
         slides.update( elapsedTime );
         if( !slides.isPlayingForFirstTime( ) )
             finishedSlides( );
-        g.drawImage( slides.getImage( ), 0, 0, null );
-        g.dispose( );
+           canvas.drawBitmap( slides.getImage( ), 0, 0, null );
 
         GUI.getInstance( ).addBackgroundToDraw( bkg, 0 );
         //        GUI.getInstance().addElementToDraw(slides.getImage(), 0, 0, 0, 0);
@@ -154,18 +163,7 @@ public class GameStateSlidescene extends GameState {
 
     }
 
-    @Override
-    public void mouseClicked( MouseEvent e ) {
-
-        // Display the next slide 
-        boolean endSlides = slides.nextImage( );
-
-        // If the slides have ended
-        if( endSlides ) {
-            finishedSlides( );
-        }
-    }
-
+    
     private void finishedSlides( ) {
 
         // If it is a endscene, go to the next chapter
@@ -211,4 +209,26 @@ public class GameStateSlidescene extends GameState {
         }
         return newResources;
     }
+
+	
+	private void handleUIEvents() {
+		
+		UIEvent e;
+		Queue<UIEvent> vEvents = touchListener.getEventQueue();
+		while ((e = vEvents.poll()) != null) {
+			switch (e.getAction()) {
+			case UIEvent.TAP_ACTION: 
+		        // Display the next slide 
+		        boolean endSlides = slides.nextImage( );
+
+		        // If the slides have ended
+		        if( endSlides ) {
+		            finishedSlides( );
+		        }
+			}
+
+		}
+	}
+		
+	
 }

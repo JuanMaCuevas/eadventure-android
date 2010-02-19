@@ -33,15 +33,15 @@
  */
 package es.eucm.eadandroid.ecore.control.gamestate;
 
+import es.eucm.eadandroid.common.data.chapter.Exit;
+import es.eucm.eadandroid.common.data.chapter.Trajectory.Node;
+import es.eucm.eadandroid.common.data.chapter.scenes.GeneralScene;
+import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.ecore.control.ActionManager;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
-import es.eucm.eadandroid.common.data.chapter.Exit;
-import es.eucm.eadandroid.common.data.chapter.Trajectory.Node;
-import es.eucm.eadandroid.common.data.chapter.scenes.GeneralScene;
-import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 
@@ -182,4 +182,6 @@ public class GameStateNextScene extends GameState {
                 break;
         }
     }
+
+
 }

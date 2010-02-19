@@ -3,6 +3,7 @@ package es.eucm.eadandroid.multimedia;
 import java.io.IOException;
 
 import android.media.MediaPlayer;
+import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class SoundAndroidMp3 extends Sound {
 	/*
@@ -14,25 +15,26 @@ public class SoundAndroidMp3 extends Sound {
 	private String path;
 	private MediaPlayer mMediaPlayer;
 
+
 	public SoundAndroidMp3(String filename,boolean loop) {
 		super(loop);
 		path=filename;
-	
-		
+        mMediaPlayer = new MediaPlayer();
+        		
 	}
 
 @Override
 	public void playOnce() {
 		// TODO if the path is not correct I should disable the sound and send an error
-		
-		
-        mMediaPlayer = new MediaPlayer();
+			
         try {
-        	
-			mMediaPlayer.setDataSource(path);
+
+        	ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
+
+			mMediaPlayer.setDataSource("/sdcard/ProtocoloDeIncendios.ead/path");
 			mMediaPlayer.prepare();
 	        mMediaPlayer.start();
-	        
+        
 	        
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

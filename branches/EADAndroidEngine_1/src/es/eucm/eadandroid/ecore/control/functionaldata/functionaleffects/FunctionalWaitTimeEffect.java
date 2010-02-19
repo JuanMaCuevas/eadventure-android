@@ -31,25 +31,59 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  */
-package es.eucm.eadandroid.ecore.control.gamestate;
+package es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
-import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.common.data.chapter.effects.WaitTimeEffect;
 
 /**
- * A game main loop while a scene is being loaded
+ * An effect that blocks game during set seconds.
  */
-public class GameStateLoading extends GameState {
+public class FunctionalWaitTimeEffect extends FunctionalEffect {
 
-    /*
-     * (non-Javadoc)
-     * @see es.eucm.eadventure.engine.engine.control.gamestate.GameState#EvilLoop(long, int)
-     */
-    @Override
-    public void mainLoop( long elapsedTime, int fps ) {
+	private boolean isStillRunning;
 
-    	GUI.getInstance().loading(10);
+	private Timer timer;
 
-    }
+	public FunctionalWaitTimeEffect(WaitTimeEffect effect) {
+
+		super(effect);
+		isStillRunning = false;
+	}
+
+	@Override
+	public boolean isInstantaneous() {
+
+		return false;
+	}
+
+	@Override
+	public boolean isStillRunning() {
+
+		return isStillRunning;
+	}
+
+	@Override
+	public void triggerEffect() {
+
+		timer = new Timer();
+
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+
+				isStillRunning = false;
+				timer.cancel();
+
+			}
+
+		}, ((WaitTimeEffect) effect).getTime() * 1000);
+		
+		isStillRunning = true;
+
+	}
 
 }

@@ -13,8 +13,8 @@ public final class Paths {
 
 	public static final class eaddirectory {
 
-		public static final String ROOT_PATH = Paths.device.EXTERNAL_STORAGE + "/eadventure_engine";
-		public static final String GAMES_PATH = ROOT_PATH + "/games";
+		public static final String ROOT_PATH = Paths.device.EXTERNAL_STORAGE ;
+		public static final String GAMES_PATH = ROOT_PATH + "";
 
 
 	}

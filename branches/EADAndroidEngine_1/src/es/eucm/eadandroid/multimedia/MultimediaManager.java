@@ -26,8 +26,6 @@ import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
  */
 public class MultimediaManager {
 
-	// TODO delete this class because his code is duplicated . Ask Alvaro
-	LoadImage load = new LoadImage();
 
 	/**
 	 * Cached scene image category
@@ -94,7 +92,7 @@ public class MultimediaManager {
 
 		soundCache = new HashMap<Long, Sound>();
 
-		// animationCache = new HashMap<String, Animation>( );
+		 animationCache = new HashMap<String, Animation>( );
 
 		musicSoundId = -1;
 	}
@@ -112,13 +110,8 @@ public class MultimediaManager {
 		Bitmap image = imageCache[category].get(bitmapPath);
 
 		if (image == null) {
-			// Load the image and store it in cache
-			// TODO delete LoadImage of the multimedia package because it will
-			// be duplicated
-			image = load.dameimagen(bitmapPath);
-			// TODO scale
-			// image = getScaledImage( ResourceHandler.getInstance(
-			// ).getResourceAsImage( imagePath ), 1, 1 );
+			 image = getScaledImage( ResourceHandler.getInstance(
+			 ).getResourceAsImage( bitmapPath ), 1, 1 );
 			if (image != null)
 				imageCache[category].put(bitmapPath, image);
 		}
@@ -137,8 +130,17 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImageFromZip(String imagePath, int category) {
-		// TODO ask how to extract from a zip
-		return null;
+       
+		Bitmap image = imageCache[category].get( imagePath );
+        // If the image is in cache, don't load it
+        if( image == null ) {
+            // Load the image and store it in cache
+            image = getScaledImage( ResourceHandler.getInstance( ).getResourceAsImageFromZip( imagePath ), 1, 1 );
+            if( image != null ) {
+                imageCache[category].put( imagePath, image );
+            }
+        }
+        return image;
 	}
 
 	/**
@@ -158,14 +160,8 @@ public class MultimediaManager {
 		if (image == null) {
 			// Load the image and store it in cache
 
-			image = load.dameimagen(imagePath);
-			Matrix temp1 = new Matrix();
-			temp1.preScale(-1.0f, 1.0f);
-			image = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image
-					.getHeight(), temp1, false);
-			// TODO scale image
-			// image = getScaledImage( loadImageFromZip( imagePath, category ),
-			// -1, 1 );
+			 image = getScaledImage( loadImageFromZip( imagePath, category ),
+			 -1, 1 );
 			if (image != null) {
 				mirrorImageCache[category].put(imagePath, image);
 			}
@@ -200,7 +196,14 @@ public class MultimediaManager {
 
 	private Bitmap getScaledImage(Bitmap image, int width, int height) {
 
-		return Bitmap.createScaledBitmap(image, width, height, false);
+		Bitmap scaledImage = null;
+		
+		  if( image != null ) {
+			  
+			 scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * width, image.getHeight() * height, false);
+		  }
+		
+		return scaledImage;
 	}
 
 	/**
@@ -507,7 +510,7 @@ public class MultimediaManager {
 	 *            Category of the animation
 	 * @return an Animation with frames animationPath_xy.jpg
 	 */
-	// TODO animation later
+
 
 	public Animation loadSlides(String slidesPath, int category) {
 

@@ -1,35 +1,35 @@
 package es.eucm.eadandroid.ecore.control.gamestate;
 
-import java.util.ArrayList;
-
+import android.hardware.SensorEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.accessibility.AccessibilityEvent;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.UIEventListener;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.KeyPadListener;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TouchListener;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TrackBallListener;
 
 /**
  * A state of the game main loop
  */
 public abstract class GameState {
 
-	
 	/**
 	 * Instance of game
 	 */
-	protected Game game;
-	
-	/**
-	 * List of UIEventListener to notify when an event is triggered - > Observer pattern based
-	 */
-	private ArrayList<UIEventListener> eventListeners = new ArrayList<UIEventListener>();
+	 protected Game game;
+
+
+	protected TouchListener touchListener;
+	protected KeyPadListener keyListener;
+	protected TrackBallListener tballListener;
 
 	/**
 	 * Creates a new GameState
 	 */
 	public GameState() {
 
-		this.game = Game.getInstance();
+
+		 this.game = Game.getInstance();
 	}
 
 	/**
@@ -42,82 +42,54 @@ public abstract class GameState {
 	 */
 	public abstract void mainLoop(long elapsedTime, int fps);
 
-	
-	
-	
-	public void registerUIEventListener(UIEventListener eventListener) {
-		
-		eventListeners.add(eventListener);
-		
-	}
-	
-	public void unregisterUIEventListener(UIEventListener eventListener) {
-		
-		eventListeners.remove(eventListener);
-	}
-	
-	
 	/**
 	 * Called to process key events.
+	 * 
 	 * @param event
 	 * @return
 	 */
-	public boolean dispatchKeyEvent(KeyEvent event) {
-		
-		boolean dispatched = false;
-		
-		for (UIEventListener evListener : eventListeners) {
-			dispatched |= evListener.onKeyEvent(event);
-		}
-		
-		return dispatched;
+	public boolean processKeyEvent(KeyEvent event) {
+
+		if (keyListener != null)
+			return keyListener.processKeyEvent(event);
+		else
+			return false;
+	}
+
+	/**
+	 * Called to process touch screen events.
+	 * 
+	 * @param event
+	 * @return
+	 */
+	public boolean processTouchEvent(MotionEvent event) {
+		if (touchListener != null)
+			return touchListener.processTouchEvent(event);
+		return false;
+	}
+
+	/**
+	 * Called to process trackball events.
+	 * 
+	 * @param event
+	 * @return
+	 */
+	public boolean processTrackballEvent(MotionEvent event) {
+		if (tballListener != null)
+			return tballListener.processTrackballEvent(event);
+		else
+			return false;
+	}
+
+	public boolean processSensorEvent(SensorEvent e) {
+
+		return false;
+
+	}
+
+	public void registerTouchListener(TouchListener t) {
+		this.touchListener = t;
 	}
 	
-	/**
-	 * 	Called to process population of AccessibilityEvents.
-	 * @param event
-	 * @return
-	 */
-	public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
-		
-		boolean dispatched = false;
-		
-		for (UIEventListener evListener : eventListeners) {
-			dispatched |= evListener.onPopulateAccessibilityEvent(event);
-		}
-		
-		return dispatched;
-		
-	}
-
-	/**
-	 * 	Called to process touch screen events.
-	 * @param event
-	 * @return
-	 */
-	public boolean dispatchTouchEvent(MotionEvent event) {
-		
-		boolean dispatched = false;
-		
-		for (UIEventListener evListener : eventListeners) {
-			dispatched |= evListener.onTouchEvent(event);
-		}		
-		return dispatched;		
-	}
-
-	/**
-	 * 	Called to process trackball events.
-	 * @param event
-	 * @return
-	 */
-	public boolean dispatchTrackballEvent(MotionEvent event) {
-		
-		boolean dispatched = false;
-		
-		for (UIEventListener evListener : eventListeners) {
-			dispatched |= evListener.onTrackballEvent(event);
-		}
-		return dispatched;	
-	}
 
 }

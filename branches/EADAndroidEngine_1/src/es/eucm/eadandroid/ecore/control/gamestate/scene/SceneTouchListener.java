@@ -1,15 +1,25 @@
 
-package es.eucm.eadandroid.ecore.gui.ui.gestureDetectors;
+package es.eucm.eadandroid.ecore.control.gamestate.scene;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
-import es.eucm.eadandroid.ecore.gui.ui.gestureDetectors.listeners.interfaces.SceneGestListener_Intfz;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TouchListener;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 
 
-public class SceneGestureDetector extends UIEventAdapter{
+public class SceneTouchListener implements TouchListener , TouchListener.CallBack{
 
 
     private static final int TOUCH_SLOP_SQUARE = ViewConfiguration.getTouchSlop()
@@ -19,7 +29,7 @@ public class SceneGestureDetector extends UIEventAdapter{
     private static final int LONG_PRESS = 2;
 
     private final Handler mHandler;
-    private final SceneGestListener_Intfz mListener;
+
 
     private boolean mPressedOrAndMoved;
     private boolean mAlwaysInTapRegion;
@@ -29,6 +39,8 @@ public class SceneGestureDetector extends UIEventAdapter{
 
     private float mLastMotionY;
     private float mLastMotionX;
+
+    protected Queue<UIEvent> vEvents;    
 
 
     /**
@@ -60,26 +72,19 @@ public class SceneGestureDetector extends UIEventAdapter{
     }
 
 
-    public SceneGestureDetector(SceneGestListener_Intfz listener, Handler handler) {
+    public SceneTouchListener(Handler handler) {
         mHandler = new GestureHandler(handler);
-        mListener = listener;
-        init();        
+        vEvents = new ConcurrentLinkedQueue<UIEvent>();    
     }
 
 
-    public SceneGestureDetector(SceneGestListener_Intfz listener) {
+    public SceneTouchListener() {
         mHandler = new GestureHandler();
-        mListener = listener;
-        init();
+        vEvents = new ConcurrentLinkedQueue<UIEvent>();
     }
 
-    private void init() {
-        if (mListener == null) {
-            throw new NullPointerException("OnGestureListener must not be null");
-        }
-    }
 
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean processTouchEvent(MotionEvent ev) {
    
     	final long tapTime = ViewConfiguration.getTapTimeout();   	
         final long longpressTime = ViewConfiguration.getLongPressTimeout();       
@@ -123,7 +128,7 @@ public class SceneGestureDetector extends UIEventAdapter{
                 final int deltaY = (int) (y - mCurrentDownEvent.getY());
                 int distance = (deltaX * deltaX) + (deltaY * deltaY);
                 if (distance > TOUCH_SLOP_SQUARE) {
-                    handled = mListener.onScrollPressed(mCurrentDownEvent, ev, scrollX, scrollY);
+                    handled = this.onScrollPressed(mCurrentDownEvent, ev, scrollX, scrollY);
                     mLastMotionX = x;
                     mLastMotionY = y;
                     mAlwaysInTapRegion = false;
@@ -133,7 +138,7 @@ public class SceneGestureDetector extends UIEventAdapter{
                     mHandler.removeMessages(LONG_PRESS);
                 }
             } else if ((Math.abs(scrollX) >= 1) || (Math.abs(scrollY) >= 1)) {
-                handled = mListener.onScrollPressed(mCurrentDownEvent, ev, scrollX, scrollY);
+                handled = this.onScrollPressed(mCurrentDownEvent, ev, scrollX, scrollY);
                 mLastMotionX = x;
                 mLastMotionY = y;
             }
@@ -143,24 +148,26 @@ public class SceneGestureDetector extends UIEventAdapter{
             mCurrentUpEvent = MotionEvent.obtain(ev);
             
             
-            if(mPressedOrAndMoved) handled = mListener.onUnPressed(ev);
-            
-            else  if (mAlwaysInTapRegion) {
-                 	handled = mListener.onClick(ev);
-                   }
-            else {
+            if(mPressedOrAndMoved) {
+            	
+                // A fling must travel the minimum tap distance
+                final VelocityTracker velocityTracker = mVelocityTracker;
+                velocityTracker.computeCurrentVelocity(1000);
+                final float velocityY = velocityTracker.getYVelocity();
+                final float velocityX = velocityTracker.getXVelocity();
 
-                    // A fling must travel the minimum tap distance
-                    final VelocityTracker velocityTracker = mVelocityTracker;
-                    velocityTracker.computeCurrentVelocity(1000);
-                    final float velocityY = velocityTracker.getYVelocity();
-                    final float velocityX = velocityTracker.getXVelocity();
-
-                    if ((Math.abs(velocityY) > ViewConfiguration.getMinimumFlingVelocity())
-                            || (Math.abs(velocityX) > ViewConfiguration.getMinimumFlingVelocity())){
-                        handled = mListener.onFling(mCurrentDownEvent, mCurrentUpEvent, velocityX, velocityY);
-                    }
+                if ((Math.abs(velocityY) > ViewConfiguration.getMinimumFlingVelocity())
+                        || (Math.abs(velocityX) > ViewConfiguration.getMinimumFlingVelocity())){
+                    handled = this.onFling(mCurrentDownEvent, mCurrentUpEvent, velocityX, velocityY);
                 }
+                
+            	handled = this.onUnPressed(ev);
+            	
+            }
+            
+            else if (mAlwaysInTapRegion) {
+                 	handled = this.onTap(ev);
+                   }
 
 
             mVelocityTracker.recycle();
@@ -180,8 +187,51 @@ public class SceneGestureDetector extends UIEventAdapter{
     private void dispatchLongPress() {
     	
     	mPressedOrAndMoved=true;
-        mListener.onPressed(mCurrentDownEvent);
+        this.onPressed(mCurrentDownEvent);
         
     }
+    
+    /** INTERFACE IMPLEMENTATION TOUCH_LISTENER.CALLBACK **/
+    
+	public boolean onTap(MotionEvent e) {
+		
+		vEvents.add(new TapEvent(e));
+		return true;
+	}
+
+
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
+					
+		vEvents.add(new FlingEvent(e1,e2,velocityX,velocityY));			
+		return true;
+	}
+
+
+	public boolean onPressed(MotionEvent e) {
+
+		vEvents.add(new PressedEvent(e));
+		return true;
+	}
+
+
+	public boolean onScrollPressed(MotionEvent e1, MotionEvent e2,
+			float distanceX, float distanceY) {
+
+		vEvents.add(new ScrollPressedEvent(e1,e2,distanceX,distanceY));			
+		return true;
+	}
+
+
+	public boolean onUnPressed(MotionEvent e) {
+
+		vEvents.add(new UnPressedEvent(e));		
+		return true;
+	}
+	
+	
+	public Queue<UIEvent> getEventQueue() {
+		return vEvents;
+	}
 
 }

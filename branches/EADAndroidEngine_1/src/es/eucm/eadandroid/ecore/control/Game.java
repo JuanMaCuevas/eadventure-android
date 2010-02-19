@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import es.eucm.eadandroid.adaptation.AdaptationEngine;
-import es.eucm.eadandroid.assesment.AssessmentEngine;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
@@ -36,15 +37,12 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffect;
 import es.eucm.eadandroid.ecore.control.gamestate.GameState;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStateBook;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStateConversation;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateLoading;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateNextScene;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStateOptions;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateRunEffects;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateSlidescene;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStateVideoscene;
+import es.eucm.eadandroid.ecore.control.gamestate.scene.SceneTouchListener;
 import es.eucm.eadandroid.ecore.data.GameText;
 import es.eucm.eadandroid.ecore.data.SaveGame;
 import es.eucm.eadandroid.ecore.data.SaveGameException;
@@ -151,17 +149,17 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * Var summary
      */
     private VarSummary vars;
-
-    /**
+/* ADAPTATION & ASSESSMENT
+    *//**
      * Assessment engine
-     */
+     *//*
     private AssessmentEngine assessmentEngine;
 
-    /**
+    *//**
      * Adaptation engine
-     */
+     *//*
     private AdaptationEngine adaptationEngine;
-
+*/
     /**
      * The adapted state to be executed. It holds a null value if no adapted
      * state must be executed.
@@ -322,10 +320,26 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     private DebugLogPanel debugLogPanel;*/
     
     /* ************************ */
+    
+    /** UIEVENT LISTENERS */
+    
+
+    private SceneTouchListener sceneTouchListener;
+    
+    /*******/
 
 	private Game(SurfaceHolder surfaceHolder) {
 
 		this.mSurfaceHolder = surfaceHolder;
+		
+		createUIEventListeners();
+		
+	}
+	
+	public void createUIEventListeners() {
+		
+		this.sceneTouchListener = new SceneTouchListener();
+		
 	}
 
 	public static void create(SurfaceHolder mSurfaceHolder) {
@@ -385,13 +399,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	            }
 	            gameDescriptor.setProjectName( adventureName );
 
-	            GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
+	        //    GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
 
-	            GUI.create(mSurfaceHolder);
+	      //      GUI.create(mSurfaceHolder);
 
 	            currentState = new GameStateLoading( );
 
-	            GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
+	   //         GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
 
 	            // Load the options
 	            options = new Options( );
@@ -511,7 +525,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         timerManager = TimerManager.getInstance( );
         timerManager.reset( );
         
-/* TODO ASSENGINE       if (gameData.getAdaptationName()!="")
+/* ASSESSMENT       if (gameData.getAdaptationName()!="")
         chapter.setAdaptationName(gameData.getAdaptationName());
         if (gameData.getAssessmentName()!="")
         chapter.setAssessmentName(gameData.getAssessmentName());
@@ -554,14 +568,14 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 //        GUI.getInstance( ).loading(70);
 
         // Load images to cache
-        new GameStateOptions( );
+//GAMESTATE        new GameStateOptions( );
 
         // By default, set the initial scene taking it from the XML script
         //GeneralScene initialScene = gameData.getInitialGeneralScene( );
         Exit firstScene = new Exit( true, 0, 0, 40, 40 );
         firstScene.setNextSceneId( gameData.getInitialGeneralScene( ).getId( ) );
 
-/* TODO ASSENGINE      // process the initial adapted state
+/* ASSESSMENT      // process the initial adapted state
         processAdaptedState( firstScene, initialState );
         // process the adaptedStateOfExecute (this var will has value if any adaptation rule has been achieve)
         processAdaptedState( firstScene, adaptedStateToExecute );*/
@@ -738,8 +752,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		  //Stop the music (if it is playing) and the adaptation clock
         if( functionalScene != null )
             functionalScene.stopBackgroundMusic( );
-        if( adaptationEngine != null )
-            adaptationEngine.stopAdaptationClock( );
+        // ADAPTATION
+//        if( adaptationEngine != null )
+//            adaptationEngine.stopAdaptationClock( );
 
         // Stop the communication 
         /*if( comm.getCommType( ) == CommManagerApi.SCORMV12_TYPE ) {
@@ -785,7 +800,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         if( numberConv < stackOfState.size( ) ) {
             currentState = stackOfState.pop( );
             // set the game attribute conversation to stored conversation
-            setConversation( ( (GameStateConversation) currentState ).getConvID( ) );
+  //GAMESTATE          setConversation( ( (GameStateConversation) currentState ).getConvID( ) );
 
         }
         else if( !isEmptyFIFOinStack( ) )
@@ -817,8 +832,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         timerManager.update( notifyTimerCycles );
         functionalScene.updateScene( );
         if( gameData.hasAssessmentProfile( ) )
-            assessmentEngine.processRules( );
-
+      // ASSESSMENT      assessmentEngine.processRules( );
+;
     }
     
     /**
@@ -935,7 +950,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
         // store the name of the conversation for future conversation restoring. It will be needed to
         // restore the effects in nodes of this conversation.
-        ( (GameStateConversation) currentState ).setConvID( conversation.getId( ) );
+   //GAMESTATE     ( (GameStateConversation) currentState ).setConvID( conversation.getId( ) );
 
     }
     
@@ -1047,8 +1062,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                             // If it is assessment timer, set the correct values in assessmentEngine
                             if( isAssessment ) {
                                 // current time - the time in second that has been
-                                if( assessmentEngine.getTimedAssessmentRule( new Integer( i ) ) != null )
-                                    assessmentEngine.getTimedAssessmentRule( new Integer( i ) ).setStartTime( System.currentTimeMillis( ) / 1000 - Integer.valueOf( aux[2] ).longValue( ) );
+//  ASSESSMENT                              if( assessmentEngine.getTimedAssessmentRule( new Integer( i ) ) != null )
+//                                    assessmentEngine.getTimedAssessmentRule( new Integer( i ) ).setStartTime( System.currentTimeMillis( ) / 1000 - Integer.valueOf( aux[2] ).longValue( ) );
                             }
 
                         }
@@ -1372,32 +1387,34 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 break;
             case STATE_PLAYING:
                 currentState = new GameStatePlaying( );
+                currentState.registerTouchListener(sceneTouchListener);
                 break;
-            case STATE_SLIDE_SCENE:
-                currentState = new GameStateSlidescene( );
+            case STATE_SLIDE_SCENE: 
+               currentState = new GameStateSlidescene( );
+               currentState.registerTouchListener(sceneTouchListener);
                 break;
             case STATE_NEXT_SCENE:
                 currentState = new GameStateNextScene( );
                 break;
             case STATE_VIDEO_SCENE:
-                currentState = new GameStateVideoscene( );
+ //GAMESTATE               currentState = new GameStateVideoscene( );
                 break;
             case STATE_RUN_EFFECTS:
-                currentState = new GameStateRunEffects( this.isConvEffectsBlock.peek( ) );
+               currentState = new GameStateRunEffects( this.isConvEffectsBlock.peek( ) );
                 break;
             case STATE_RUN_EFFECTS_FROM_CONVERSATION:
-                currentState = new GameStateRunEffects( true );
+               currentState = new GameStateRunEffects( true );
                 break;
             case STATE_BOOK:
-                currentState = new GameStateBook( );
+//    BOOK            currentState = new GameStateBook( );
                 break;
             case STATE_CONVERSATION:
-                currentState = new GameStateConversation( );
+ //GAMESTATE               currentState = new GameStateConversation( );
                 break;
             case STATE_OPTIONS:
-                currentState = new GameStateOptions( );
+ // GAMESTATE               currentState = new GameStateOptions( );
                 break;
-        }//}
+        }
     }
     
     /**
@@ -1520,11 +1537,31 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * @return Assessment engine
      */
     //ASSESSMENT
-    public AssessmentEngine getAssessmentEngine( ) {
-
-        return assessmentEngine;
-    }
+//    public AssessmentEngine getAssessmentEngine( ) {
+//
+//        return assessmentEngine;
+//    }
     
+	public void finish() {
+		
+	}
+    
+	
+	public boolean processTouchEvent(MotionEvent e) {
+		return currentState.processTouchEvent(e);
+	}
+	
+	public boolean processTrackballEvent(MotionEvent e) {
+		return currentState.processTrackballEvent(e);
+	}
+	
+	public boolean processKeyEvent(KeyEvent e) {
+		return currentState.processKeyEvent(e);
+	}
+		
+	public boolean processSensorEvent(SensorEvent e) {
+		return currentState.processSensorEvent(e);
+	}
 
 
 }

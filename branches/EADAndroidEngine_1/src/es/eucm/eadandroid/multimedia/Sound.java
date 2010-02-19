@@ -75,13 +75,13 @@ public abstract class Sound extends Thread {
      */
     @Override
     public void run( ) {
-
-        boolean playedAtLeastOnce = false;
-        while( !stop && ( loop || !playedAtLeastOnce ) ) {
-            playOnce( );
-            playedAtLeastOnce = true;
-        }
-        finalize( );
+//TODO AUDIO
+//        boolean playedAtLeastOnce = false;
+//        while( !stop && ( loop || !playedAtLeastOnce ) ) {
+//            playOnce( );
+//            playedAtLeastOnce = true;
+//        }
+//        finalize( );
     }
 
     /**

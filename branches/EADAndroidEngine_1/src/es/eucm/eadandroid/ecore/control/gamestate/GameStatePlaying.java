@@ -36,12 +36,13 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
-
+import android.graphics.Canvas;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.scene.SceneTouchListener;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
 /**
@@ -50,16 +51,11 @@ import es.eucm.eadandroid.ecore.gui.GUI;
 public class GameStatePlaying extends GameState {
 
     /**
-     * List of mouse events.
-     */
-    private Queue<MouseEvent> vMouse;
-
-    /**
      * Constructor.
      */
     public GameStatePlaying( ) {
         super( );
-        vMouse = new ConcurrentLinkedQueue<MouseEvent>( );
+        
     }
 
     /*
@@ -70,26 +66,7 @@ public class GameStatePlaying extends GameState {
     public synchronized void mainLoop( long elapsedTime, int fps ) {
  
 
-        // Process the mouse events
-        MouseEvent e;
-        while( (e = vMouse.poll( )) != null ) {
-            switch (e.getID( )) {
-                case MouseEvent.MOUSE_CLICKED:
-                    mouseClickedEvent( e );
-                    break;
-                case MouseEvent.MOUSE_MOVED:
-                    mouseMovedEvent( e );
-                    break;
-                case MouseEvent.MOUSE_PRESSED:
-                    mousePressedEvent( e );
-                    break;
-                case MouseEvent.MOUSE_RELEASED:
-                    mouseReleasedEvent( e );
-                    break;
-                case MouseEvent.MOUSE_DRAGGED:
-                    mouseMovedEvent( e );
-            }
-        }
+    	handleUIEvents();
 
         // Update the time elapsed in the functional scene and in the GUI
         game.getFunctionalScene( ).update( elapsedTime );
@@ -105,12 +82,8 @@ public class GameStatePlaying extends GameState {
         
         GUI.getInstance( ).drawScene( c, elapsedTime );
         
-
-        GUI.getInstance( ).drawHUD( g );
-
-        // Draw the FPS
-        //g.setColor( Color.WHITE );
-        //g.drawString( Integer.toString( fps ) + " fps", 700, 14 );
+        //GUI.getInstance( ).drawHUD( g );
+        
 
         // If there is an adapted state to be executed
         if( game.getAdaptedStateToExecute( ) != null ) {
@@ -170,81 +143,33 @@ public class GameStatePlaying extends GameState {
 
         // Ends the draw process
         GUI.getInstance( ).endDraw( );
-        g.dispose( );
+  
     }
 
-    @Override
-    public synchronized void mouseClicked( MouseEvent e ) {
+	private void handleUIEvents() {
+		UIEvent e;
+		Queue<UIEvent> vEvents = touchListener.getEventQueue();
+		while ((e = vEvents.poll()) != null) {
+			switch (e.getAction()) {
+			case UIEvent.PRESSED_ACTION:
+				GUI.getInstance().processPressed(e);
+				break;
+			case UIEvent.SCROLL_PRESSED_ACTION:
+				GUI.getInstance().processScrollPressed(e);
+				break;
+			case UIEvent.UNPRESSED_ACTION:
+				GUI.getInstance().processUnPressed(e);
+				break;		
+			case UIEvent.FLING_ACTION:
+				GUI.getInstance().processFling(e);
+				break;	
+			case UIEvent.TAP_ACTION: 
+				if (!GUI.getInstance().processTap(e)) {
 
-        vMouse.add( e );
-    }
+				}
+			}
 
-    @Override
-    public synchronized void mouseMoved( MouseEvent e ) {
-
-        vMouse.add( e );
-    }
-
-    @Override
-    public synchronized void mousePressed( MouseEvent e ) {
-
-        vMouse.add( e );
-    }
-
-    @Override
-    public synchronized void mouseReleased( MouseEvent e ) {
-       
-        vMouse.add( e );
-    }
-
-    @Override
-    public synchronized void mouseDragged( MouseEvent e ) {
-
-        vMouse.add( e );
-    }
-
-    /**
-     * Triggers the given mouse event.
-     * 
-     * @param e
-     *            Mouse event
-     */
-    public void mouseClickedEvent( MouseEvent e ) {
-        if(!GUI.getInstance( ).mouseClickedInHud( e ))
-            game.getActionManager( ).mouseClicked( e );
-    }
-
-    /**
-     * Triggers the given mouse event.
-     * 
-     * @param e
-     *            Mouse event
-     */
-    public void mouseMovedEvent( MouseEvent e ) {
-        game.getActionManager( ).setExitCustomized( null, null );
-        game.getActionManager( ).setElementOver( null );
-
-        if(!GUI.getInstance( ).mouseMovedinHud( e ) ) {
-            game.getActionManager( ).mouseMoved( e );
-        }
-    }
-
-    private void mouseReleasedEvent( MouseEvent e ) {
-        GUI.getInstance( ).mouseReleasedinHud( e );
-    }
-
-    private void mousePressedEvent( MouseEvent e ) {
-        GUI.getInstance( ).mousePressedinHud( e );
-    }
-
-    @Override
-    public void keyPressed( KeyEvent e ) {
-
-        switch( e.getKeyCode( ) ) {
-            case KeyEvent.VK_ESCAPE:
-                if( !GUI.getInstance( ).keyInHud( e ) )
-                    game.setState( Game.STATE_OPTIONS );
-                break;
-        }
-    }
+		}
+	}
+    
 }

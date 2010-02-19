@@ -27,37 +27,37 @@ public class ResourceHandler implements InputStreamCreator {
 	/**
 	 * Path of the default background image
 	 */
-	public static final String DEFAULT_BACKGROUND = "gui/defaultassets/NRB_background.jpg";
+	public static final String DEFAULT_BACKGROUND = "/sdcard/gui/defaultassets/NRB_background.jpg";
 
 	/**
 	 * Path of the default slides fileset
 	 */
-	public static final String DEFAULT_SLIDES = "gui/defaultassets/NRB_slides_01.jpg";
+	public static final String DEFAULT_SLIDES = "/sdcard/gui/defaultassets/NRB_slides_01.jpg";
 
 	/**
 	 * Path of the default animation fileset
 	 */
-	public static final String DEFAULT_ANIMATION = "gui/defaultassets/NRB_animation_01.png";
+	public static final String DEFAULT_ANIMATION = "/sdcard/gui/defaultassets/NRB_animation_01.png";
 
 	/**
 	 * Path of the default image
 	 */
-	public static final String DEFAULT_IMAGE = "gui/defaultassets/NRB_image.png";
+	public static final String DEFAULT_IMAGE = "/sdcard/gui/defaultassets/NRB_image.png";
 
 	/**
 	 * Path of the default icon image
 	 */
-	public static final String DEFAULT_ICON = "gui/defaultassets/NRB_icon.png";
+	public static final String DEFAULT_ICON = "/sdcard/gui/defaultassets/NRB_icon.png";
 
 	/**
 	 * Path of the default foreground image
 	 */
-	public static final String DEFAULT_FOREGROUND = "gui/defaultassets/NRB_foreground.png";
+	public static final String DEFAULT_FOREGROUND = "/sdcard/gui/defaultassets/NRB_foreground.png";
 
 	/**
 	 * Path of the default hardmap image
 	 */
-	public static final String DEFAULT_HARDMAP = "gui/defaultassets/NRB_hardmap.png";
+	public static final String DEFAULT_HARDMAP = "/sdcard/gui/defaultassets/NRB_hardmap.png";
 
 	/**
 	 * Stores the zip file containing the needed files for the game
@@ -131,10 +131,11 @@ public class ResourceHandler implements InputStreamCreator {
 
 		try {
 
+			Log.d("ZipFileName", "Nombre Zip " + zipFilename);
+			
 			ResourceHandler.zipPath = zipFilename;
 			zipFile = new ZipFile(zipFilename);
 
-			Log.d("ResourceHandlerUnrestricted", "Nombre Zip: " + zipFilename);
 
 		} catch (ZipException e) {
 			e.printStackTrace();
@@ -225,6 +226,8 @@ public class ResourceHandler implements InputStreamCreator {
 		if (!path.startsWith("/")) {
 			path = "/" + path;
 		}
+		
+		Log.d("Path",path);
 
 		try {
 			InputStream inputStream = getResourceAsStream(path);

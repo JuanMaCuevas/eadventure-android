@@ -101,6 +101,8 @@ public class LocalGamesActivity extends ListActivity {
 		
 		Intent i = new Intent(this, ECoreActivity.class);
 		i.putExtra("AdventureName", selectedAdventure);
+		
+		Log.d("Path",selectedAdventure);
 		this.startActivity(i);
 		
 

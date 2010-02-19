@@ -181,13 +181,12 @@ public abstract class FunctionalEffect {
             case Effect.TRIGGER_SCENE:
                 fe = new FunctionalTriggerSceneEffect( (TriggerSceneEffect) effect );
                 break;
-             //EFFECTS
-//            case Effect.SHOW_TEXT:
-//                fe = new FunctionalShowTextEffect( (ShowTextEffect) effect );
-//                break;
-//            case Effect.WAIT_TIME:
-//                fe = new FunctionalWaitTimeEffect( (WaitTimeEffect) effect );
-//                break;
+            case Effect.SHOW_TEXT:
+                fe = new FunctionalShowTextEffect( (ShowTextEffect) effect );
+                break;
+            case Effect.WAIT_TIME:
+                fe = new FunctionalWaitTimeEffect( (WaitTimeEffect) effect );
+                break;
             case Effect.HIGHLIGHT_ITEM:
                 fe = new FunctionalHighlightItemEffect( (HighlightItemEffect) effect );
                 break;

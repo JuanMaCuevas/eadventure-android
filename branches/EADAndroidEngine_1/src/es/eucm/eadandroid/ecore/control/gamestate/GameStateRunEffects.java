@@ -33,9 +33,9 @@
  */
 package es.eucm.eadandroid.ecore.control.gamestate;
 
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 
+import android.graphics.Canvas;
+import android.view.MotionEvent;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffect;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalMoveObjectEffect;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalPlayAnimationEffect;
@@ -58,9 +58,9 @@ public class GameStateRunEffects extends GameState {
     private boolean fromConversation;
 
     /**
-     * Last mouse button pressed
+     * Skip effects bool
      */
-    private int mouseClickedButton = MouseEvent.NOBUTTON;
+    private boolean skip = false ;
 
     /**
      * Constructor
@@ -80,18 +80,20 @@ public class GameStateRunEffects extends GameState {
     public void mainLoop( long elapsedTime, int fps ) {
 
         game.getActionManager( ).setElementOver( null );
-        game.getActionManager( ).setExitCustomized( null, null );
 
+        game.getActionManager( ).setExitCustomized( null);
+        
         // Toggle the HUD off and set the default cursor
         GUI.getInstance( ).toggleHud( false );
-        GUI.getInstance( ).setDefaultCursor( );
+ //       GUI.getInstance( ).setDefaultCursor( );
 
         if( game.getFunctionalScene( ) != null )
             game.getFunctionalScene( ).update( elapsedTime );
         GUI.getInstance( ).update( elapsedTime );
 
-        Graphics2D g = GUI.getInstance( ).getGraphics( );
-        g.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
+        Canvas g = GUI.getInstance( ).getGraphics( );
+        
+        g.clipRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
 
         // Draw the scene
         if( game.getFunctionalScene( ) != null )
@@ -102,7 +104,7 @@ public class GameStateRunEffects extends GameState {
             ( (FunctionalShowTextEffect) currentExecutingEffect ).draw( );
         GUI.getInstance( ).drawScene( g, elapsedTime );
 
-        GUI.getInstance( ).drawHUD( g );
+      //  GUI.getInstance( ).drawHUD( g );
 
         // Draw the FPS
         //g.setColor( Color.WHITE );
@@ -156,7 +158,7 @@ public class GameStateRunEffects extends GameState {
             // by ( mouseClickedButton == MouseEvent.BUTTON1
             //      || mouseClickedButton == MouseEvent.BUTTON3 )
             // Therefore you can skip effects with left button
-            if ( (mouseClickedButton == MouseEvent.BUTTON1 || mouseClickedButton == MouseEvent.BUTTON3) && currentExecutingEffect.canSkip())  {
+            if ( skip && currentExecutingEffect.canSkip())  {
                 System.out.println( "!!!!! SKIPPING :"+currentExecutingEffect.getClass( ).getName( ) );
                 currentExecutingEffect.skip();
                 
@@ -171,19 +173,24 @@ public class GameStateRunEffects extends GameState {
             }
         }
         
-        mouseClickedButton = MouseEvent.NOBUTTON;
+        skip = false;
 
         GUI.getInstance( ).endDraw( );
-        g.dispose( );
+
     }
     
+	/**
+	 * Called to process touch screen events.
+	 * 
+	 * @param event
+	 * @return
+	 */
     @Override
-    public synchronized void mouseClicked( MouseEvent e ) {
-        mouseClickedButton = MouseEvent.NOBUTTON;
-        if( e.getButton( ) == MouseEvent.BUTTON1 )
-            mouseClickedButton = MouseEvent.BUTTON1;
-        else if( e.getButton( ) == MouseEvent.BUTTON3 )
-            mouseClickedButton = MouseEvent.BUTTON3;
-    }
+	public boolean processTouchEvent(MotionEvent event) {
 
+    	skip = (event.getAction() == MotionEvent.ACTION_DOWN);
+    	
+    	return true;	
+    	
+	}
 }

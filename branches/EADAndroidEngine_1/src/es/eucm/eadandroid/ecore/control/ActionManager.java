@@ -132,17 +132,17 @@ public class ActionManager {
      */
     private String exit;
 
-    /**
+/*    *//**
      * Cursor of the current exit being selected
-     */
+     *//*
     private Cursor exitCursor;
 
-    /**
+    *//**
      * List of the already created cursors. Useful to avoid creating the same
      * cursors more than once
-     */
+     *//*
     private HashMap<Exit, Cursor> cursors;
-
+*/
     private FunctionalElement dragElement = null;
 
     /**
@@ -153,8 +153,8 @@ public class ActionManager {
         elementOver = null;
         actionSelected = ACTION_GOTO;
         exit = "";
-        exitCursor = null;
-        cursors = new HashMap<Exit, Cursor>( );
+      //  exitCursor = null;
+      //  cursors = new HashMap<Exit, Cursor>( );
     }
 
     /**
@@ -197,7 +197,7 @@ public class ActionManager {
     public void setActionSelected( int actionSelected ) {
 
         this.actionSelected = actionSelected;
-        GUI.getInstance( ).newActionSelected( );
+ //       GUI.getInstance( ).newActionSelected( );
     }
 
     /**
@@ -209,16 +209,16 @@ public class ActionManager {
 
         return exit;
     }
-
-    /**
+/*
+    *//**
      * Returns the current exit cursor.
      * 
      * @return Current cursor
-     */
+     *//*
     public Cursor getExitCursor( ) {
 
         return exitCursor;
-    }
+    }*/
 
     /**
      * Sets the current exit.
@@ -240,7 +240,7 @@ public class ActionManager {
      * @param exit
      *            Current exit cursro
      */
-    public void setExitCursor( Cursor cursor ) {
+/*    public void setExitCursor( Cursor cursor ) {
 
         this.exitCursor = cursor;
     }
@@ -249,6 +249,12 @@ public class ActionManager {
 
         setExit( exit );
         setExitCursor( cursor );
+    }*/
+    
+    public void setExitCustomized( String exit) {
+
+        setExit( exit );
+        
     }
 
     /**
@@ -257,7 +263,7 @@ public class ActionManager {
      * @param e
      *            Mouse event
      */
-    public void mouseClicked( MouseEvent e ) {
+   /* public void mouseClicked( MouseEvent e ) {
 
         Game game = Game.getInstance( );
 
@@ -267,14 +273,14 @@ public class ActionManager {
         game.getFunctionalScene( ).mouseClicked( e.getX( ), e.getY( ) );
         //}
     }
-
+*/
     /**
      * Called when a mouse move event has been triggered
      * 
      * @param e
      *            Mouse event
      */
-    public void mouseMoved( MouseEvent e ) {
+  /*  public void mouseMoved( MouseEvent e ) {
 
         Game game = Game.getInstance( );
         FunctionalScene functionalScene = game.getFunctionalScene( );
@@ -328,7 +334,7 @@ public class ActionManager {
             else if( nextScene != null )
                 setExit( nextScene.getName( ) );
         }
-    }
+    }*/
 
     public String getExitText( Exit exit ) {
 

@@ -33,6 +33,7 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects;
 
+import android.graphics.Canvas;
 import es.eucm.eadandroid.common.data.chapter.effects.PlayAnimationEffect;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.animations.Animation;
@@ -95,7 +96,7 @@ public class FunctionalPlayAnimationEffect extends FunctionalEffect {
         animation.update( elapsedTime );
     }
 
-    public void draw() {
+    public void draw( Canvas g) {
 
         GUI.getInstance( ).addElementToDraw( animation.getImage( ), Math.round( ( (PlayAnimationEffect) effect ).getX( ) - ( animation.getImage( ).getWidth() / 2 ) ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), Math.round( ( (PlayAnimationEffect) effect ).getY( ) - ( animation.getImage( ).getHeight() / 2 ) ), Math.round( ( (PlayAnimationEffect) effect ).getY( ) ), Math.round( ( (PlayAnimationEffect) effect ).getY( ) ), null, null );
     }

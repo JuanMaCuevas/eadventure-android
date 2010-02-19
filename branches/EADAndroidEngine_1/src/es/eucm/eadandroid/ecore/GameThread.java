@@ -1,20 +1,13 @@
 package es.eucm.eadandroid.ecore;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.BitmapFactory.Options;
+import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
-import es.eucm.eadandroid.common.data.assessment.AssessmentProfile;
-import es.eucm.eadandroid.common.gui.JOptionPane;
-import es.eucm.eadandroid.common.gui.TC;
-import es.eucm.eadandroid.common.loader.Loader;
-import es.eucm.eadandroid.debug.ReportDialog;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class GameThread extends Thread {
@@ -27,12 +20,15 @@ public class GameThread extends Thread {
 	public GameThread(SurfaceHolder holder, Context context, Handler handler) {
 		mSurfaceHolder = holder;
 		mContext = context;
+		
+//		ResourceHandler.createInstance();
+		Game.create(mSurfaceHolder);
+		
 	}
 	
 	public void run() {
 
-	//	ResourceHandler.createInstance();
-		Game.create(mSurfaceHolder);
+
 		Game.getInstance().setAdventurePath(advPath);
 		ResourceHandler.getInstance().setZipFile(Game.getInstance().getAdventurePath());
 
@@ -43,6 +39,24 @@ public class GameThread extends Thread {
 	//	ConfigData.storeToXML();
 		
 	}
+	
+
+	public boolean processTouchEvent(MotionEvent e) {
+		return Game.getInstance().processTouchEvent(e);
+	}
+	
+	public boolean processTrackballEvent(MotionEvent e) {
+		return Game.getInstance().processTrackballEvent(e);
+	}
+	
+	public boolean processKeyEvent(KeyEvent e) {
+		return Game.getInstance().processKeyEvent(e);
+	}
+		
+	public boolean processSensorEvent(SensorEvent e) {
+		return Game.getInstance().processSensorEvent(e);
+	}
+
 
 	public void setAdventurePath(String advPath) {
 		this.advPath = advPath;
@@ -51,6 +65,17 @@ public class GameThread extends Thread {
 	public void pause() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void unpause() {
+		
+		if (Game.getInstance()!=null) {
+		Game.getInstance().unpause();
+		}
+	}
+	
+	public void finish() {
+		Game.getInstance().finish();
 	}
 
 

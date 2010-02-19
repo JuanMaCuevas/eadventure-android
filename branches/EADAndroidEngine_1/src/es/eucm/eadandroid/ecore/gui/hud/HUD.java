@@ -1,144 +1,112 @@
-/*package es.eucm.eadandroid.ecore.gui.hud;
+package es.eucm.eadandroid.ecore.gui.hud;
 
 import android.graphics.Canvas;
-
- TODO - Game instance not ported -> it is commented
- 
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.ecore.gui.hud.elements.Inventory;
+import es.eucm.eadandroid.ecore.gui.hud.elements.Magnifier;
+import es.eucm.eadandroid.ecore.gui.hud.states.ActionsState;
+import es.eucm.eadandroid.ecore.gui.hud.states.HiddenState;
+import es.eucm.eadandroid.ecore.gui.hud.states.InventoryState;
+import es.eucm.eadandroid.ecore.gui.hud.states.MagnifierState;
+import es.eucm.eadandroid.ecore.gui.hud.states.ShowingInventoryState;
 
 public class HUD {
 
-    *//**
-     * Reference to the game main class
-     *//*
-	//protected Game game;
+	/**
+	 * CURRENT STATE
+	 */
+	protected HUDstate currentState;
 
-    *//**
-     * Reference to the GUI of the game
-     *//*
-    protected GUI gui;
+	/**
+	 * STATES
+	 */
 
-    *//**
-     * If the HUD is shown
-     *//*
-    protected boolean showHud;
+	private HiddenState hiddenState;
+	private MagnifierState magnifierState;
+	private ShowingInventoryState showInventoryState;
+	private InventoryState inventoryState;
+	private ActionsState actionsState;
+	
+	/**
+	 * ELEMENTS
+	 */
+	
+	private Magnifier mag ;
+	private Inventory inventory;
+	
+	
 
-    *//**
-     * Function that initializes the HUD class
-     *//*
-    public void init( ) {
+	public HUD() {
 
-     //   game = Game.getInstance( );
-        gui = GUI.getInstance( );
-        showHud = true;
-    }
+		initElements();
+		
+		hiddenState = new HiddenState(this);
+		magnifierState = new MagnifierState(this,mag);
+		showInventoryState = new ShowingInventoryState(this,inventory);
+		inventoryState = new InventoryState(this,inventory);
+		actionsState = new ActionsState(this);
 
-    *//**
-     * Returns the width of the playable area of the screen
-     * 
-     * @return Width of the playable area
-     *//*
-    public abstract int getGameAreaWidth( );
+		currentState = hiddenState;
+	}
 
-    *//**
-     * Returns the height of the playable area of the screen
-     * 
-     * @return Height of the playable area
-     *//*
-    public abstract int getGameAreaHeight( );
+	private void initElements() {
+		
+		mag = new Magnifier(100,6,1.5f,GUI.getInstance().getBmpCpy());
+		inventory = new Inventory();
+		
+	}
+	
+	public void update(long elapsedTime) {
+		currentState.update(elapsedTime);
+	}
 
-    *//**
-     * Returns the X point of the response block text
-     * 
-     * @return X point of the response block text
-     *//*
-    public abstract int getResponseTextX( );
+	public void doDraw(Canvas c) {
+		currentState.doDraw(c);
+	}
 
-    *//**
-     * Returns the Y point of the response block text
-     * 
-     * @return Y point of the response block text
-     *//*
-    public abstract int getResponseTextY( );
+	public boolean processTap(UIEvent e) {
+		return currentState.processTap(e);
+	}
 
-    *//**
-     * Returns the number of lines of the response text block
-     * 
-     * @return Number of response lines
-     *//*
-    public abstract int getResponseTextNumberLines( );
+	public boolean processPressed(UIEvent e) {
+		return currentState.processPressed(e);
+	}
 
-    *//**
-     * Tells the HUD that there is a change in the action selected
-     *//*
-    public abstract void newActionSelected( );
-    
-    
-    *//**
-     * Draw the HUD with the action button, action and element selected
-     * 
-     * @param g
-     *            Graphics2D where will be drawn
-     *//*
-    public abstract void draw( Canvas c);
+	public boolean processUnPressed(UIEvent e) {
+		return currentState.processUnPressed(e);
+	}
 
-    *//**
-     * Updates the HUD representation
-     * 
-     * @param elapsedTime
-     *            Elapsed time since last update
-     *//*
-    public abstract void update( long elapsedTime );
+	public boolean processFling(UIEvent e) {
+		return currentState.processFling(e);
+	}
 
-    *//**
-     * Toggle the HUD on or off
-     * 
-     * @param show
-     *            If the Hud is shown or not
-     *//*
-    public void toggleHud( boolean show ) {
+	public boolean processScrollPressed(UIEvent e) {
+		return currentState.processScrollPressed(e);
+	}
 
-        showHud = show;
-    }
+	public void setState(int state) {
 
-    // OLD 
-    *//**
-     * There has been a mouse moved in the HUD in that coordinates
-     * 
-     * @param e
-     *            Mouse event
-     * @return boolean If the move is in the HUD
-     *//*
-    public abstract boolean mouseMoved( MouseEvent e );
+		switch (state) {
 
-    *//**
-     * There has been a click in the HUD in that coordinates
-     * 
-     * @param e
-     *            Mouse event
-     * @return boolean If the click is in the HUD
-     *//*
-    public abstract boolean mouseClicked( MouseEvent e );
+		case HUDstate.HiddenState:
+			currentState = hiddenState;
+			break;
+		case HUDstate.MagnifierState:
+			currentState = magnifierState;
+			break;
+		case HUDstate.ShowingInventoryState:
+			currentState = showInventoryState;
+			break;
+		case HUDstate.InventoryState:
+			currentState = inventoryState;
+			break;
+		case HUDstate.ActionsState:
+			currentState = actionsState;
+			break;
 
-    *//**
-     * Processes KeyEvents for the HUD. Its main purpose is to support the use
-     * of Esc for canceling an action
-     * 
-     * @param e
-     *            Key Event
-     * @return True if any changes made. False otherwise
-     *//*
-    public abstract boolean keyTyped( KeyEvent e );
+		}
 
-    public abstract boolean mouseReleased( MouseEvent e );
-
-    public abstract boolean mousePressed( MouseEvent e );
-
-    public abstract boolean mouseDragged( MouseEvent e );
-
-    public void setLastMouseMove( MouseEvent e ) {
-
-    }
-
+	}
 
 }
-*/

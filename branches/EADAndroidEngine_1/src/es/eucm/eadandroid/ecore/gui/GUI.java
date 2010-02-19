@@ -14,26 +14,25 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
-
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
-
 import es.eucm.eadandroid.ecore.control.TimerManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.gui.hud.HUD;
+
 
 
 public class GUI {
 	
 	private static final double MAX_WIDTH_IN_TEXT = 30;
-
-
-	Transition transition;
+    private Transition transition;
 	
-	
-	  protected static int graphicConfig;
+    protected static int graphicConfig;
 
 	/**
 	 * GUI INSTANCE
@@ -49,6 +48,22 @@ public class GUI {
 	
 	public static int FINAL_WINDOW_HEIGHT;
 	public static int FINAL_WINDOW_WIDTH;
+	
+	
+	public static float DISPLAY_DENSITY_SCALE;
+	
+
+	/**
+	 * HUD
+	 */
+	
+	private HUD hud;
+	
+	/**
+	 * TEXT PAINT
+	 */
+	
+	private static Paint mPaint;
 	
 	/**
 	 * scaleRatio
@@ -79,14 +94,7 @@ public class GUI {
 	private static Bitmap finalBmp; 
 	private static Canvas finalCanvas;
 
-	
-
-	
-	/**
-	 * TEXT PAINT
-	 */	
-	private static Paint mPaint;
-	
+		
 	
 	/**
 	 * List of elements to be painted.
@@ -149,29 +157,35 @@ public class GUI {
 
 		instance = new GUI(mSurfaceHolder);
 		
+	}
+	
+	public void init(int landscapeHeight, int landscapeWidth , float scaleDensity) {
+		
+		FINAL_WINDOW_HEIGHT = landscapeHeight;
+		FINAL_WINDOW_WIDTH = landscapeWidth;
+		
+		
+		DISPLAY_DENSITY_SCALE = scaleDensity;
+		
 		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT, Bitmap.Config.RGB_565);
 		canvascpy = new Canvas(bitmapcpy);
 		
-		//initialize reescalation bitmap
-		DisplayMetrics metrics = new DisplayMetrics();
-		FINAL_WINDOW_WIDTH = metrics.widthPixels;
-		FINAL_WINDOW_HEIGHT= metrics.heightPixels;
 		finalBmp = Bitmap.createBitmap(FINAL_WINDOW_WIDTH, FINAL_WINDOW_HEIGHT, Bitmap.Config.RGB_565);
 		finalCanvas = new Canvas(finalBmp);
 		
 		//Set the scale
-		SCALE_RATIO=FINAL_WINDOW_HEIGHT/WINDOW_HEIGHT;
+		SCALE_RATIO= (float)FINAL_WINDOW_HEIGHT/(float)WINDOW_HEIGHT;
 		scaleMatrix=new Matrix();
 		scaleMatrix.setScale(SCALE_RATIO, SCALE_RATIO);
 		
-
+		hud = new HUD();
+		
 		mPaint = new Paint();
 		mPaint.setTextSize(15);
 		mPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF,Typeface.NORMAL));
         mPaint.setStrokeWidth(4);
-        mPaint.setColor(0XFFFFFFFF);       
-       
-
+        mPaint.setColor(0XFFFFFFFF);
+		
 	}
 
 
@@ -188,7 +202,7 @@ public class GUI {
 	
 	private void drawHUD(Canvas canvas) {
 
-		
+		hud.doDraw(canvas);
 	}
 	
 	public void doPushDraw() {
@@ -205,7 +219,12 @@ public class GUI {
 		 this.elementsToDraw.clear();
 		//TODO tengo que ponerlo todo en una pila no en pilas separadas y tener un depth asi pinta todo ordenado
  		//xq si quiero poner un elemento encima de una mesa uqe es foreground 
-		 this.foreground.draw(canvascpy);
+		 
+	        if( foreground != null ) {
+	        	this.foreground.draw(canvascpy);
+	            foreground = null;
+	        }
+		 
 		 
 		 for (int i=0;i<this.textToDraw.size();i++)
 		 {
@@ -221,6 +240,8 @@ public class GUI {
 		
 	     // reescale the drawn bitmap to fit the sreen size
 	    finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
+	        
+	//        finalCanvas.drawARGB(255, 255, 0, 0);
 		
         try {
             canvas = mSurfaceHolder.lockCanvas(null);
@@ -411,8 +432,7 @@ public class GUI {
 	 * @param bubbleBorderColor
 	 *            Color of the bubbles border
 	 */
-	public void addTextToDraw(String[] string, int x, int y, int textColor,int borderColor, int bubbleBkgColor, int bubbleBorderColor
-			) {
+	public void addTextToDraw(String[] string, int x, int y, int textColor,int borderColor, int bubbleBkgColor, int bubbleBorderColor) {
 
 		boolean added = false;
 		int i = 0;
@@ -888,13 +908,7 @@ public class GUI {
      */
     public void endDraw( ) {
     	
-    	//TODO no se mu bien lo que tendre que hacer a lo mejor tengo que matar algo poniendolo a null
-    	/*
-        BufferStrategy strategy = gameFrame.getBufferStrategy( );
-        strategy.show( );
-        Toolkit.getDefaultToolkit( ).sync( );
-        
-        */
+    	doPushDraw();
     }
 
     
@@ -1021,74 +1035,74 @@ public class GUI {
     
     
     public void loading( int percent ) {
-        Timer loadingTimer = null;
-		if (percent == 0) {
-            
-            // FIXME Chapucilla que huele a pipi
-            //this.loadingImage =  new ImageIcon("gui/loading.jpg").getImage();
-      //      this.loadingImage = MultimediaManager.getInstance( ).loadImage( "gui/loading.jpg", MultimediaManager.IMAGE_MENU );
-       //     if (this.loadingImage == null ){
-        //        this.loadingImage = MultimediaManager.getInstance( ).loadImageFromZip( "gui/loading.jpg", MultimediaManager.IMAGE_MENU );
-         //   }
-            this.loading = percent;
-            loadingTimer = new Timer();
-            TimerTask loadingTask = new TimerTask() {
-                private int cont = 20;
-                private boolean contracting = false;
-                
-               
-                public void run( ) {
-           //         Graphics2D g = GUI.this.getGraphics( );
-            //        g.drawImage( loadingImage, 0, 0, null);
-                	
-                	//TODO haces esto bien q no tengo ni warra
-                	GUI.canvascpy.drawText("0", 50, 60,mPaint);
-            //        g.setColor( new Color(250, 173, 6) );
-             //       g.fillRoundRect( 200, 300, loading * 4, 50, 10, 10 );
-//                    g.setColor( Color.BLUE );
-//                    g.fillArc( 350, 250, 50, 50, cont, 20 );
-                    
-                   // g.setStroke( new BasicStroke(4.0f) );
-                   // g.setColor( new Color(90, 32, 2) );
-                   // g.drawRoundRect( 200, 300, 400, 50, 10, 10 );
-
-                   // g.setColor( new Color(247, 215, 105) );
-                   // g.fillOval( 400 - cont / 2, 100 - cont / 2, cont, cont );
-                    
-//                    g.setColor( Color.BLACK );
-//                    g.drawOval( 350, 250, 50, 50 );
-
-                    if (!contracting) {
-                        cont += 1;
-                        if (cont > 60)
-                            contracting = true;
-                    } else {
-                        cont -= 1;
-                        if (cont < 10)
-                            contracting = false;
-                    }
-                    
-                    GUI.this.endDraw( );
-                }
-            };
-            loadingTimer.scheduleAtFixedRate( loadingTask, 20, 20 );
-        }
-        if (percent == 100) {
-            loadingTimer.cancel( );
-        }
-        this.loading = percent;
-        //TODO coge no se mu bien como la pantalla
-       // Graphics2D g = this.getGraphics( );
-      //  g.drawImage( loadingImage, 0, 0, null);
-
-       // g.setColor( new Color(250, 173, 6) );
-       // g.fillRoundRect( 200, 300, loading * 4, 50, 10, 10 );
-        
-        //g.setStroke( new BasicStroke(4.0f) );
-        //g.setColor( new Color(90, 32, 2) );
-       // g.drawRoundRect( 200, 300, 400, 50, 10, 10 );
-        
-        this.endDraw( );
+//        Timer loadingTimer = null;
+//		if (percent == 0) {
+//            
+//            // FIXME Chapucilla que huele a pipi
+//            //this.loadingImage =  new ImageIcon("gui/loading.jpg").getImage();
+//      //      this.loadingImage = MultimediaManager.getInstance( ).loadImage( "gui/loading.jpg", MultimediaManager.IMAGE_MENU );
+//       //     if (this.loadingImage == null ){
+//        //        this.loadingImage = MultimediaManager.getInstance( ).loadImageFromZip( "gui/loading.jpg", MultimediaManager.IMAGE_MENU );
+//         //   }
+//            this.loading = percent;
+//            loadingTimer = new Timer();
+//            TimerTask loadingTask = new TimerTask() {
+//                private int cont = 20;
+//                private boolean contracting = false;
+//                
+//               
+//                public void run( ) {
+//           //         Graphics2D g = GUI.this.getGraphics( );
+//            //        g.drawImage( loadingImage, 0, 0, null);
+//                	
+//                	//TODO haces esto bien q no tengo ni warra
+//                	GUI.canvascpy.drawText("0", 50, 60,mPaint);
+//            //        g.setColor( new Color(250, 173, 6) );
+//             //       g.fillRoundRect( 200, 300, loading * 4, 50, 10, 10 );
+////                    g.setColor( Color.BLUE );
+////                    g.fillArc( 350, 250, 50, 50, cont, 20 );
+//                    
+//                   // g.setStroke( new BasicStroke(4.0f) );
+//                   // g.setColor( new Color(90, 32, 2) );
+//                   // g.drawRoundRect( 200, 300, 400, 50, 10, 10 );
+//
+//                   // g.setColor( new Color(247, 215, 105) );
+//                   // g.fillOval( 400 - cont / 2, 100 - cont / 2, cont, cont );
+//                    
+////                    g.setColor( Color.BLACK );
+////                    g.drawOval( 350, 250, 50, 50 );
+//
+//                    if (!contracting) {
+//                        cont += 1;
+//                        if (cont > 60)
+//                            contracting = true;
+//                    } else {
+//                        cont -= 1;
+//                        if (cont < 10)
+//                            contracting = false;
+//                    }
+//                    
+//                    GUI.this.endDraw( );
+//                }
+//            };
+//            loadingTimer.scheduleAtFixedRate( loadingTask, 20, 20 );
+//        }
+//        if (percent == 100) {
+//            loadingTimer.cancel( );
+//        }
+//        this.loading = percent;
+//        //TODO coge no se mu bien como la pantalla
+//       // Graphics2D g = this.getGraphics( );
+//      //  g.drawImage( loadingImage, 0, 0, null);
+//
+//       // g.setColor( new Color(250, 173, 6) );
+//       // g.fillRoundRect( 200, 300, loading * 4, 50, 10, 10 );
+//        
+//        //g.setStroke( new BasicStroke(4.0f) );
+//        //g.setColor( new Color(90, 32, 2) );
+//       // g.drawRoundRect( 200, 300, 400, 50, 10, 10 );
+//        
+//        this.endDraw( );
     }
     
     
@@ -1109,14 +1123,62 @@ public class GUI {
 
     }
     
-    /**
-     * Init the GUI class and also get focus for the mainwindow
-     */
 
-    public void initGUI( int guiType, boolean customized ) {
+	public void drawFPS(int calcFPS) {
+		
+		canvascpy.drawText(String.valueOf((calcFPS)), 10, 10, mPaint);
+		
+	}
 
- //No no vamos a utilizar
-    }
+	public Bitmap getBmpCpy() {
+		return finalBmp;
+	}
+	
+	public void update(long elapsedTime) {
+		hud.update(elapsedTime);
+	}
+
+	public boolean processPressed(UIEvent e) {
+		return hud.processPressed(e);
+		
+	}
+
+	public boolean processScrollPressed(UIEvent e) {
+	
+		return hud.processScrollPressed(e);
+		
+	}
+
+	public boolean processUnPressed(UIEvent e) {
+		
+		return hud.processUnPressed(e);
+		
+	}
+
+	public boolean processFling(UIEvent e) {
+		return hud.processFling(e);
+		
+	}
+
+	public boolean processTap(UIEvent e) {
+		return hud.processTap(e);
+	}
+
+	public int getGameAreaWidth() {
+		return WINDOW_WIDTH;
+	}
+	
+	public int getGameAreaHeight() {
+		return WINDOW_HEIGHT;
+	}
+
+	public void toggleHud(boolean b) {
+	
+		
+		
+	}
+    
+    
  
 	
 }
