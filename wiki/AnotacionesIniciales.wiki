@@ -1,6 +1,8 @@
 #summary Aqui vamos a ir anotando ideas que nos van a ir surgiendo del motor .
 #sidebar BarraNavegacion
 
+Nos basamos en la revisi—n 46 de E-adventure para portarlo a android
+
  = TASK TAGS =
 
  * Aqui anotamos los distintos task tags que vamos a utilizar
@@ -14,3 +16,18 @@
  * ASSESSMENT
  * ADAPTATION
  * GAMESTATE
+ * EFFECTS
+ 
+== Issues (1¼ iteracion) ==
+
+ * EcoreActivity 
+	cambiar path linea 70
+	
+ * ResourceHadnler
+ 	cambiar rutas default 
+ 	Cambiar Zip
+ 	
+ * Problema de rendimiento en buvles usando getPixel: ej RemoveTransparentParts (FuncItem).
+ 	
+
+
