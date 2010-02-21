@@ -185,7 +185,17 @@ public abstract class FunctionalElement implements Renderable {
      
     protected int generateColor( String colorText ) {
     	
-		return Color.parseColor(colorText);
+    	//FIXME En java se traga el #00000 aqui no , con lo que si salta execpcion pongo el bueno #000000
+    	
+    	int color = Color.WHITE;
+    	
+    	try {
+    		Color.parseColor(colorText);
+    	}
+    	catch(Exception e) {
+    	}
+    	
+		return color;
     }
     
 

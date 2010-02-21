@@ -156,7 +156,7 @@ public class FunctionalItem extends FunctionalElement {
             for (int j = 0; j < tempHeight; j++) {
                 boolean y_clear = true;
                 int alpha = Color.alpha(temp[i * j]); 
-                if (alpha > 128) {
+                if (alpha > 0) {
                     if (x_clear)
                         x1 = Math.min( x1, i );
                     if (y_clear)
@@ -177,6 +177,15 @@ public class FunctionalItem extends FunctionalElement {
         // draw the transformed image
         Canvas c = new Canvas(image);       
         c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
+        
+        for (int i = 0; i < (x2-x1); i++) {
+            for (int j = 0; j < (y2-y1); j++) {
+                int alpha = Color.alpha(image.getPixel(i, j));
+                if (alpha > 128) {
+                    Log.d(this.item.getName(),"Pixel no transparente "+i+" "+j);
+                }
+            }
+        }
         //GRAPHICS       
         
     }
@@ -287,7 +296,10 @@ public class FunctionalItem extends FunctionalElement {
                 Matrix m = new Matrix();
                 m.setScale(scale,scale);
                 //GRAPHICS
+
+                c.translate(100,100);
                 c.drawBitmap(image, m, null);
+
                 
                 oldImage = temp;
                 oldOriginalImage = image;
@@ -320,7 +332,10 @@ public class FunctionalItem extends FunctionalElement {
 
         if( ( mousex >= 0 ) && ( mousex < (x2 - x1) * scale ) && ( mousey >= 0 ) && ( mousey < (y2 - y1) * scale ) ) {
             Bitmap bufferedImage = image;
-            int alpha = Color.alpha(bufferedImage.getPixel((int) ( mousex / scale ), (int) ( mousey / scale ) ));
+            int xx = ( mousex / (int)scale );
+            int yy =  ( mousey / (int)scale ) ;
+            int color= bufferedImage.getPixel(xx,yy);
+            int alpha = Color.alpha(color);
             isInside = alpha > 128;
         }
 

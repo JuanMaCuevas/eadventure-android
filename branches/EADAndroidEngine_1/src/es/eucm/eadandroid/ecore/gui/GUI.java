@@ -119,7 +119,7 @@ public class GUI {
 	/**
 	 * The GraphicsConfiguration class
 	 */
-	private GraphicsConfiguration graphicsConf;
+	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();;
 
 	private int loading;
 

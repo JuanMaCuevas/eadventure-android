@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 public class GraphicsConfiguration {
 
-	public static Bitmap createCompatibleImage(int width, int height,
+	public Bitmap createCompatibleImage(int width, int height,
 			boolean transparency) {
 		Bitmap bmp = null;
 		if (transparency)

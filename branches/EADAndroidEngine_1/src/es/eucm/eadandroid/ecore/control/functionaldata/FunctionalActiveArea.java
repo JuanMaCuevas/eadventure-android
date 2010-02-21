@@ -40,6 +40,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.Polygon;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.InfluenceArea;
@@ -105,6 +106,8 @@ public class FunctionalActiveArea extends FunctionalItem {
                 polygon.addPoint( point.x, point.y );
             }
         }
+
+
 
     }
 
