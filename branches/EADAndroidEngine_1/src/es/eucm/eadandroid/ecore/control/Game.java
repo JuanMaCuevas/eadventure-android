@@ -42,6 +42,7 @@ import es.eucm.eadandroid.ecore.control.gamestate.GameStateNextScene;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateRunEffects;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateSlidescene;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateVideoscene;
 import es.eucm.eadandroid.ecore.control.gamestate.scene.SceneTouchListener;
 import es.eucm.eadandroid.ecore.data.GameText;
 import es.eucm.eadandroid.ecore.data.SaveGame;
@@ -1401,7 +1402,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 currentState = new GameStateNextScene( );
                 break;
             case STATE_VIDEO_SCENE:
- //GAMESTATE               currentState = new GameStateVideoscene( );
+           currentState = new GameStateVideoscene( );
                 break;
             case STATE_RUN_EFFECTS:
                currentState = new GameStateRunEffects( this.isConvEffectsBlock.peek( ) );

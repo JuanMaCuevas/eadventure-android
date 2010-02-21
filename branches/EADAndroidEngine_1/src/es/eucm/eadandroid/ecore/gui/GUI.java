@@ -133,6 +133,10 @@ public class GUI {
 		textToDraw = new ArrayList<Text>();
 	}
 
+	public SurfaceHolder getmSurfaceHolder() {
+		return mSurfaceHolder;
+	}
+
 	public static void create(SurfaceHolder mSurfaceHolder) {
 
 		instance = new GUI(mSurfaceHolder);
