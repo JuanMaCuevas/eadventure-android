@@ -62,7 +62,7 @@ public class ResourceHandler implements InputStreamCreator {
 	/**
 	 * Stores the zip file containing the needed files for the game
 	 */
-	protected static ZipFile zipFile = null;
+//	protected static ZipFile zipFile = null;
 
 	/**
 	 * Stores the zip file containing the needed files for the game
@@ -129,33 +129,35 @@ public class ResourceHandler implements InputStreamCreator {
 	 */
 	public void setZipFile(String zipFilename) {
 
-		try {
+	
 
 			Log.d("ZipFileName", "Nombre Zip " + zipFilename);
 			
 			ResourceHandler.zipPath = zipFilename;
-			zipFile = new ZipFile(zipFilename);
+		//	zipFile = new ZipFile(zipFilename);
 
 
-		} catch (ZipException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 	}
+	
+	public String getMediaPath(String a)
+	{
+		return ResourceHandler.zipPath+a;
+	}
+	
 
 	/**
 	 * Closes the open zip file in use.
 	 */
 	public void closeZipFile() {
-
+/*
 		try {
 			if (zipFile != null)
 				zipFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	*/
 	}
 
 	/**
@@ -257,15 +259,14 @@ public class ResourceHandler implements InputStreamCreator {
 		if (path.startsWith("/"))
 			path = path.substring(1);
 
-		try {
-			if (zipFile != null && zipFile.getEntry(path) != null)
-				inputStream = zipFile.getInputStream(zipFile.getEntry(path));
+		
+			if (zipPath != null && new File(zipPath+path).exists())
+				inputStream = getResourceAsStream(zipPath+path);
 			else
 				inputStream = getResourceAsStream(path); // TODO esta linea no
 			// deberia estar??
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+	
 
 		return inputStream;
 	}
@@ -286,7 +287,7 @@ public class ResourceHandler implements InputStreamCreator {
 		if (path.startsWith("/")) {
 			path = path.substring(1);
 		}
-
+/*
 		try {
 			InputStream inputStream = getResourceAsStreamFromZip(path);
 			if (inputStream != null) {
@@ -295,9 +296,9 @@ public class ResourceHandler implements InputStreamCreator {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 
-		return image;
+		return this.getResourceAsImage(ResourceHandler.zipPath+path);
 	}
 	
 	

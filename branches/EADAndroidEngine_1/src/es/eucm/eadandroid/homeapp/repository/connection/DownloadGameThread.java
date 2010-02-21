@@ -47,7 +47,8 @@ public class DownloadGameThread extends Thread {
 	private void downloadGame() throws IOException {
 
 		RepoResourceHandler.downloadFile(game.getEadUrl(), EXTERNAL_STORAGE, pn);
-
+	
+		RepoResourceHandler.unzip(game.getEadUrl());
 	}
 
 }

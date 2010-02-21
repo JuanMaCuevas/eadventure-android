@@ -1,18 +1,25 @@
 package es.eucm.eadandroid.homeapp.repository.resourceHandler;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class RepoResourceHandler {
 
@@ -46,7 +53,7 @@ public class RepoResourceHandler {
 	        
 	        return bitmap;                
 	    }
-
+// descarga el fichero
 	public static void downloadFile(String url_from, String path_to,
 			ProgressNotifier pt) throws IOException {
 		
@@ -116,8 +123,19 @@ public class RepoResourceHandler {
 
 				fos.close();
 				in.close();
-
-	//			pt.notifyFinished(fileName + " downloaded succesfully");
+				
+				
+				
+				
+				
+				
+				
+				
+				//pt.notifyProgress(progress.intValue(), "Downloading " + fileName);
+				
+				
+//TODO a pincho 
+				pt.notifyFinished(fileName + " downloaded succesfully");
 
 			} catch (IOException e) {
 
@@ -163,6 +181,140 @@ public class RepoResourceHandler {
 	        }
 	        return in;     
 	    }
+	  
+	 //////////////////// 
+	 
+	  
+
+	  
+	  
+	  
+	  //este string te da al url del juego yo cogere lo ultimo para la ruta
+	  public static void unzip(String locfichero)
+	  {
+		  
+		  
+		  //me creo la ruta hasta donde dejamos los juegos
+		  StringTokenizer numero=new StringTokenizer(Paths.eaddirectory.GAMES_PATH,"/",true);
+	        String actual=null;
+	        String total="";
+	        total=numero.nextToken();
+	        
+	        while (numero.hasMoreElements())
+	        {
+	        	total=total+numero.nextToken();
+	        	total=total+numero.nextToken();
+	        	if (!new File(total).exists())
+	        	{
+	        		(new File(total)).mkdir();
+	        	}
+	         }
+		  
+		  
+		  int last = locfichero.lastIndexOf("/");
+			String fileName = locfichero.substring(last + 1);
+		  
+		  String pathfinal=Paths.eaddirectory.GAMES_PATH+fileName+"/";
+		  (new File(pathfinal)).mkdir();
+		  
+		  
+		  
+		  Enumeration entries;
+		    ZipFile zipFile;
+	//aqui pondre pathout
+		    
+		    
+		    
+		    
+		   
+
+		    try {
+		    	//aqui pathin
+		      zipFile = new ZipFile(Paths.eaddirectory.ZIPPED_PATH+fileName);
+
+		      entries = zipFile.entries();
+		      
+		      
+		    
+		   //   Vector<ZipEntry> elementos=ordena(entries);
+		   
+		      
+		      BufferedOutputStream prueba;
+
+		      while(entries.hasMoreElements()) {
+		        ZipEntry entry = (ZipEntry)entries.nextElement();
+
+		        numero=new StringTokenizer(entry.getName(),"/",true);
+		        actual=null;
+		        total="";
+		        
+		        while (numero.hasMoreElements())
+		        {
+		        	
+		        	actual=numero.nextToken();
+		        	total=total+actual;
+		        	if (!new File(entry.getName()).exists())
+		        	{
+		        	
+		        		if(numero.hasMoreElements())
+		        		{
+		        			total=total+numero.nextToken();
+		        			(new File(pathfinal+total)).mkdir();
+		        		}else
+		        		{
+		        			//fichero final
+		        			
+		               		prueba=new BufferedOutputStream(new FileOutputStream(pathfinal+total));
+		               	 
+		        			System.err.println("Extracting file: " + entry.getName());
+		        			copyInputStream(zipFile.getInputStream(entry),prueba);
+		          		}
+		        	}else {total=total+numero.nextToken();}
+		        }
+		        
+		        
+		        
+		        
+		 
+		      }
+
+		      zipFile.close();
+		    } catch (IOException ioe) {
+		    ioe.printStackTrace();
+		      return;
+		    }
+	  
+		  
+		    (new File(Paths.eaddirectory.ZIPPED_PATH+fileName)).delete();
+		  
+		  
+	  }
+	 			  
+	  public static final void copyInputStream(InputStream in, OutputStream out)
+	  throws IOException
+	  {
+	    byte[] buffer = new byte[1024];
+	    int len;
+
+	    while((len = in.read(buffer)) >= 0)
+	      out.write(buffer, 0, len);
+
+	    in.close();
+	    out.close();
+	  }
+	  
+	   
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
 
 }

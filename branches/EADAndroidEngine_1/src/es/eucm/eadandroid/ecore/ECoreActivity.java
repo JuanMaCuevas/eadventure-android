@@ -67,7 +67,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 		String adventureName = (String) this.getIntent().getExtras().get(
 				"AdventureName");
 		
-		String advPath = Paths.eaddirectory.ROOT_PATH + "/" + adventureName;
+		String advPath = Paths.eaddirectory.GAMES_PATH + adventureName+"/";
 
 		
 		Log.d(TAG, "PathToFile : " + advPath);

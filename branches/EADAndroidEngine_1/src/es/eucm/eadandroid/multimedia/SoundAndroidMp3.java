@@ -19,7 +19,7 @@ public class SoundAndroidMp3 extends Sound {
 	public SoundAndroidMp3(String filename,boolean loop) {
 		super(loop);
 		path=filename;
-        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer = null;
         		
 	}
 
@@ -29,11 +29,15 @@ public class SoundAndroidMp3 extends Sound {
 			
         try {
 
-        	ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
-
-			mMediaPlayer.setDataSource("/sdcard/ProtocoloDeIncendios.ead/path");
+        	//ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
+        	 if (mMediaPlayer==null)
+        	 {
+        		 mMediaPlayer=new MediaPlayer();
+        		 String falla=ResourceHandler.getInstance().getMediaPath(path);
+			mMediaPlayer.setDataSource(falla);
 			mMediaPlayer.prepare();
 	        mMediaPlayer.start();
+        	 }else mMediaPlayer.start();
         
 	        
 		} catch (IllegalArgumentException e) {

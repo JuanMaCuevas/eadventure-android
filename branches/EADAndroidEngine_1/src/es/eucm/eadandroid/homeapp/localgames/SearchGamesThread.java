@@ -10,6 +10,7 @@ import android.os.Message;
 import android.util.Log;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity.LGAHandlerMessages;
 import es.eucm.eadandroid.res.filefilters.EADFileFilter;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class SearchGamesThread extends Thread {
 
@@ -44,15 +45,21 @@ public class SearchGamesThread extends Thread {
 		}
 
 		Message msg = handler.obtainMessage();
-		File sdCard = Environment.getExternalStorageDirectory();
+		
+		
+	//	if (!new File(entry.getName()).exists())
 
 		Log.d("SearcgGamesThread", "SDCard state : "
 				+ Environment.getExternalStorageState().toString());
 
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
-
-			String adventures[] = sdCard.list(new EADFileFilter());
+			
+			String adventures[]=null;
+			File games = new File(Paths.eaddirectory.GAMES_PATH);
+			
+			if(games.exists())
+			adventures = games.list(new EADFileFilter());
 
 			if (adventures != null && adventures.length > 0) {
 				Log.d("SearchGamesThread", "EAD files in sdCard : "
