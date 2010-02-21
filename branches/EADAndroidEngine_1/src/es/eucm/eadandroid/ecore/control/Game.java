@@ -450,9 +450,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	                        oldFps = fps;
 	                        fps = 1;
 	                    }
-
-	                    currentState.mainLoop( elapsedTime, oldFps );
 	                    
+	                    GUI.getInstance().drawFPS(oldFps);
+
+	                    
+	                    currentState.mainLoop( elapsedTime, oldFps );
+	                                       
+	                               
 	                    MultimediaManager.getInstance( ).update( );
 	                    
 	                    try {

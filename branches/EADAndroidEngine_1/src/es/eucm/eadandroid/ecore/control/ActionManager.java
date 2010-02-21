@@ -34,15 +34,12 @@
 package es.eucm.eadandroid.ecore.control;
 
 
-import java.util.HashMap;
-
+import android.view.MotionEvent;
 import es.eucm.eadandroid.common.data.chapter.Exit;
-import es.eucm.eadandroid.common.data.chapter.scenes.GeneralScene;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.multimedia.MultimediaManager;
 
 /**
  * Updated feb 2008: cursors
@@ -263,17 +260,14 @@ public class ActionManager {
      * @param e
      *            Mouse event
      */
-   /* public void mouseClicked( MouseEvent e ) {
+    public void unPressed( UIEvent ev) {
 
-        Game game = Game.getInstance( );
+    	MotionEvent e = ((UnPressedEvent) ev).event;
 
-        //if( //this.elementOver!=null && isBinaryAction ( actionSelected ) || 
-        //		e.getButton( ) == MouseEvent.BUTTON1 ) {
-        DebugLog.user( "Mouse clicked in scene: " + e.getX( ) + " , " + e.getY( ) );
-        game.getFunctionalScene( ).mouseClicked( e.getX( ), e.getY( ) );
-        //}
+        Game.getInstance().getFunctionalScene( ).mouseClicked( (int)(e.getX( ) / GUI.SCALE_RATIO) ,(int)(e.getY( ) / GUI.SCALE_RATIO) );
+ 
     }
-*/
+
     /**
      * Called when a mouse move event has been triggered
      * 

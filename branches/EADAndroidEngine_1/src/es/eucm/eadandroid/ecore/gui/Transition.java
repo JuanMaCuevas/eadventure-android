@@ -33,10 +33,13 @@
  */
 package es.eucm.eadandroid.ecore.gui;
 
-import es.eucm.eadandroid.common.data.chapter.NextScene;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Xfermode;
+import android.graphics.PorterDuff.Mode;
+import es.eucm.eadandroid.common.data.chapter.NextScene;
 
 
 
@@ -72,12 +75,19 @@ public class Transition {
      * The bufferd image of the transition
      */
     private Bitmap transitionImage;
+    
+    private Canvas transitionCanvas;
 
     /**
      * Temporary image for the transition
      */
-    private static Bitmap tempImage = Bitmap.createBitmap(GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, Bitmap.Config.RGB_565);
+    private static Bitmap tempImage = Bitmap.createBitmap( GUI.WINDOW_WIDTH,GUI.WINDOW_HEIGHT, Bitmap.Config.ARGB_4444);
+    private static Canvas tempCanvas = new Canvas(tempImage);
     
+    /** FadeEffect **/
+    
+    private Xfermode xf;
+    private Paint fadeInPaint;
     
     public Transition( int transitionTime, int transitionType ) {
 
@@ -85,7 +95,12 @@ public class Transition {
         this.type = transitionType;
         this.elapsedTime = 0;
         this.started = false;
-        this.transitionImage =  Bitmap.createBitmap(GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, Bitmap.Config.RGB_565);
+        this.transitionImage = Bitmap.createBitmap( GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT,Bitmap.Config.ARGB_4444);
+        this.transitionCanvas = new Canvas(transitionImage);
+        
+        xf = new PorterDuffXfermode(Mode.SRC_OVER);           
+        fadeInPaint = new Paint();
+        fadeInPaint.setXfermode(xf);
     }
 
     public boolean hasFinished( long elapsedTime ) {
@@ -102,18 +117,15 @@ public class Transition {
         return started;
     }
 
-    //OLD
-   /*
-    * no la voy a utilizar
-    *  public Graphics getGraphics( ) {
+    public Canvas getGraphics( ) {
 
-        return transitionImage.getGraphics( );
+        return transitionCanvas;
     }
-*/
+
     public void start( Canvas g ) {
 
         started = true;
-        g.drawBitmap(transitionImage, 0, 0, null);
+        g.drawBitmap( transitionImage, 0, 0, null );
         this.elapsedTime = 0;
     }
 
@@ -125,9 +137,10 @@ public class Transition {
     public void update( Canvas g ) {
 
         if( started ) {
-            
-            GUI.getInstance( ).drawToGraphics( g );
-            
+            Canvas g2 = tempCanvas;
+            g2.save();
+            GUI.getInstance( ).drawToGraphics( g2 );
+            g2.restore();
 
             float temp = (float) this.elapsedTime / (float) totalTime;
             if( type == NextScene.RIGHT_TO_LEFT ) {
@@ -151,9 +164,11 @@ public class Transition {
                 g.drawBitmap( tempImage, 0, (int) ( GUI.WINDOW_HEIGHT - temp3 ), null );
             }
             else if( type == NextScene.FADE_IN ) {
-            	g.drawBitmap( tempImage, 0, 0, null );
-                //TODO lo del alphacomposite
-            	g.drawBitmap( transitionImage, 0, 0, null );
+                g.drawBitmap( tempImage, 0, 0, null );
+       
+                fadeInPaint.setAlpha( (int) ((1-temp) * 255 ));
+                
+                g.drawBitmap( transitionImage, 0, 0, fadeInPaint );
             }
         }
     }

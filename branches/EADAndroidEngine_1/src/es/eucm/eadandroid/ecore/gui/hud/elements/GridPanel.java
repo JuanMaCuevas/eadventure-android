@@ -163,7 +163,7 @@ public class GridPanel {
 
 				c.translate(ICON_WIDTH / 2, ICON_HEIGHT
 						+ VERTICAL_TEXT_SEPARATION + TEXT_HEIGHT);
-				c.drawText("Prueba", 0, 0, textP);
+				c.drawText(invModel.getItem((j*numRows)+i).getItem().getName(), 0, 0, textP);
 
 				c.translate(-(ICON_WIDTH / 2), VERTICAL_ICON_SEPARATION);
 

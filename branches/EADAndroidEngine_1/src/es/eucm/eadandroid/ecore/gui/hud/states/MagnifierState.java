@@ -47,7 +47,7 @@ public class MagnifierState extends HUDstate{
 	public boolean processUnPressed(UIEvent e) {
 		magnifier.hide();
 		stateContext.setState(HUDstate.HiddenState);
-		return true;
+		return false;
 	}
 
 }

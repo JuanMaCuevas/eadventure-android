@@ -140,6 +140,7 @@ public class GameStatePlaying extends GameState {
         
         // Update the data pending from the flags
         game.updateDataPendingFromState( true );
+        
 
         // Ends the draw process
         GUI.getInstance( ).endDraw( );
@@ -158,7 +159,8 @@ public class GameStatePlaying extends GameState {
 				GUI.getInstance().processScrollPressed(e);
 				break;
 			case UIEvent.UNPRESSED_ACTION:
-				GUI.getInstance().processUnPressed(e);
+				if (!GUI.getInstance().processUnPressed(e))
+					 game.getActionManager( ).unPressed(e);
 				break;		
 			case UIEvent.FLING_ACTION:
 				GUI.getInstance().processFling(e);
