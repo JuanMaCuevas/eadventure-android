@@ -37,6 +37,7 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffect;
 import es.eucm.eadandroid.ecore.control.gamestate.GameState;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateBook;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateLoading;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateNextScene;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
@@ -1411,7 +1412,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                currentState = new GameStateRunEffects( true );
                 break;
             case STATE_BOOK:
-//    BOOK            currentState = new GameStateBook( );
+               currentState = new GameStateBook( );
                 break;
             case STATE_CONVERSATION:
  //GAMESTATE               currentState = new GameStateConversation( );
