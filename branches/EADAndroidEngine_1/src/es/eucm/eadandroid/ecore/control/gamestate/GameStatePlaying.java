@@ -41,8 +41,8 @@ import android.graphics.Canvas;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
-import es.eucm.eadandroid.ecore.control.gamestate.scene.SceneTouchListener;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
 /**
@@ -156,7 +156,12 @@ public class GameStatePlaying extends GameState {
 				GUI.getInstance().processPressed(e);
 				break;
 			case UIEvent.SCROLL_PRESSED_ACTION:
-				GUI.getInstance().processScrollPressed(e);
+				
+				game.getActionManager().setExitCustomized(null);
+		        game.getActionManager( ).setElementOver( null );
+				
+				if (!GUI.getInstance().processScrollPressed(e)) 
+					game.getActionManager( ).pressed(e);
 				break;
 			case UIEvent.UNPRESSED_ACTION:
 				if (!GUI.getInstance().processUnPressed(e))
@@ -167,7 +172,7 @@ public class GameStatePlaying extends GameState {
 				break;	
 			case UIEvent.TAP_ACTION: 
 				if (!GUI.getInstance().processTap(e)) {
-
+					game.getActionManager().tap((TapEvent)e);
 				}
 			}
 

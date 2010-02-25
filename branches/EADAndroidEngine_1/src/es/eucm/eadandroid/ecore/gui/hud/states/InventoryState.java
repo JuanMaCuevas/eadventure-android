@@ -41,11 +41,11 @@ public class InventoryState extends HUDstate {
 		FunctionalElement fe = null;
 		
 		if (inventory.pointInGrid(dstX,dstY)) {
-		  fe = inventory.selectItemFromGrid((int)ev.event.getX(),(int)ev.event.getY());
+		  fe = (FunctionalElement) inventory.selectItemFromGrid((int)ev.event.getX(),(int)ev.event.getY());
 		}
 		
 		if (fe!=null) {
-			stateContext.setState(HUDstate.ActionsState);
+			stateContext.setState(HUDstate.ActionsState,fe);
 		}
 		
 		return true;
@@ -105,10 +105,10 @@ public class InventoryState extends HUDstate {
 	public boolean processUnPressed(UIEvent e) {
 		
 		if (inventory.isAnimating((int) ((UnPressedEvent) e).event.getY())) {
-			stateContext.setState(HUDstate.InventoryState);
+			stateContext.setState(HUDstate.InventoryState,null);
 		} else {
 			inventory.resetPos();
-			stateContext.setState(HUDstate.HiddenState);
+			stateContext.setState(HUDstate.HiddenState,null);
 		}
 
 		return true;

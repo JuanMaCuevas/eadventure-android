@@ -128,6 +128,7 @@ public class FunctionalItem extends FunctionalElement {
         if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
             tempimage = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
             removeTransparentParts(tempimage);
+
         }
         if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
             icon = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_ICON ), MultimediaManager.IMAGE_SCENE );
@@ -155,8 +156,8 @@ public class FunctionalItem extends FunctionalElement {
             boolean x_clear = true;
             for (int j = 0; j < tempHeight; j++) {
                 boolean y_clear = true;
-                int alpha = Color.alpha(temp[i * j]); 
-                if (alpha > 0) {
+                int alpha = Color.alpha(temp[(j * tempWidth) + i ]);
+                if (alpha >128) {
                     if (x_clear)
                         x1 = Math.min( x1, i );
                     if (y_clear)
@@ -170,22 +171,39 @@ public class FunctionalItem extends FunctionalElement {
         }
         
         Log.d("Ll","fin");
-        
+//        
+//        x1 = tempimage.getWidth(); y1 = tempimage.getHeight(); x2 = 0; y2 = 0;
+//        width = x1;
+//        height = y1;
+//        for (int i = 0; i < tempimage.getWidth(); i++) {
+//            boolean x_clear = true;
+//            for (int j = 0; j < tempimage.getHeight(); j++) {
+//                boolean y_clear = true;
+//                Bitmap bufferedImage = tempimage;
+//                int alpha = Color.alpha(bufferedImage.getPixel(i,j)); 
+//                if (alpha > 128) {
+//                    if (x_clear)
+//                        x1 = Math.min( x1, i );
+//                    if (y_clear)
+//                        y1 = Math.min( y1, j );
+//                    x_clear = false;
+//                    y_clear = false;
+//                    x2 = Math.max( x2, i );
+//                    y2 = Math.max( y2, j );
+//                }
+//            }
+//        }
+    	
+       
         // create a transparent (not translucent) image
         image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( x2 - x1, y2 - y1, true );
 
+        
         // draw the transformed image
         Canvas c = new Canvas(image);       
         c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
         
-        for (int i = 0; i < (x2-x1); i++) {
-            for (int j = 0; j < (y2-y1); j++) {
-                int alpha = Color.alpha(image.getPixel(i, j));
-                if (alpha > 128) {
-                    Log.d(this.item.getName(),"Pixel no transparente "+i+" "+j);
-                }
-            }
-        }
+
         //GRAPHICS       
         
     }
@@ -339,6 +357,8 @@ public class FunctionalItem extends FunctionalElement {
             isInside = alpha > 128;
         }
 
+        Log.d("Esta?", String.valueOf(isInside));
+        
         return isInside;
     }
 

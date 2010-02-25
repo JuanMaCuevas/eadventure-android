@@ -21,11 +21,9 @@ import es.eucm.eadandroid.res.pathdirectory.Paths;
 public class UpdateDatabaseThread extends Thread {
 
 
-	private static final String REPO_FULLPATH = Paths.repository.DEFAULT_PATH
+	private static final String REPO_XML_FULLPATH = Paths.repository.DEFAULT_PATH
 			+ Paths.repository.SOURCE_XML;
-	private static final String EXTERNAL_STORAGE = Paths.device.EXTERNAL_STORAGE;
-	
-	private static final String LOCAL_REPO_XML = Paths.device.EXTERNAL_STORAGE+Paths.repository.SOURCE_XML;
+	private static final String LOCAL_REPO_XML = Paths.eaddirectory.ROOT_PATH + Paths.repository.SOURCE_XML;
 
 	private Context context;
 	private Handler handler;
@@ -67,7 +65,7 @@ public class UpdateDatabaseThread extends Thread {
 
 //		ProgressTask downloadPt = pt.createChildTask("Downlaod file", "Download "+REPO_FULLPATH+" to "+EXTERNAL_STORAGE,70);
 		
-		RepoResourceHandler.downloadFile(REPO_FULLPATH, EXTERNAL_STORAGE, pn);
+		RepoResourceHandler.downloadFile(REPO_XML_FULLPATH, Paths.eaddirectory.ROOT_PATH , Paths.repository.SOURCE_XML , pn);
 
 	}
 

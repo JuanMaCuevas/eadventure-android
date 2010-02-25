@@ -44,10 +44,10 @@ public class ShowingInventoryState extends HUDstate {
 	public boolean processUnPressed(UIEvent e) {
 
 		if (inventory.isAnimating((int) ((UnPressedEvent) e).event.getY())) {
-			stateContext.setState(HUDstate.InventoryState);
+			stateContext.setState(HUDstate.InventoryState,null);
 		} else {
 			inventory.resetPos();
-			stateContext.setState(HUDstate.HiddenState);
+			stateContext.setState(HUDstate.HiddenState,null);
 		}
 
 		return true;

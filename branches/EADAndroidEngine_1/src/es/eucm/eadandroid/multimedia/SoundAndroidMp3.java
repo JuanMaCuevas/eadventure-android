@@ -8,38 +8,36 @@ import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 public class SoundAndroidMp3 extends Sound {
 	/*
 	 * There are lot of options in android you can pause the reproduction and
-	 * continue it afterwards, this options are not implemented but can be easily added
+	 * continue it afterwards, this options are not implemented but can be
+	 * easily added
 	 */
-	
-	
+
 	private String path;
 	private MediaPlayer mMediaPlayer;
 
-
-	public SoundAndroidMp3(String filename,boolean loop) {
+	public SoundAndroidMp3(String filename, boolean loop) {
 		super(loop);
-		path=filename;
-        mMediaPlayer = null;
-        		
+		path = filename;
+		mMediaPlayer = null;
+
 	}
 
-@Override
+	@Override
 	public void playOnce() {
-		// TODO if the path is not correct I should disable the sound and send an error
-			
-        try {
+		// TODO if the path is not correct I should disable the sound and send
+		// an error
 
-        	//ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
-        	 if (mMediaPlayer==null)
-        	 {
-        		 mMediaPlayer=new MediaPlayer();
-        		 String falla=ResourceHandler.getInstance().getMediaPath(path);
-			mMediaPlayer.setDataSource(falla);
-			mMediaPlayer.prepare();
-	        mMediaPlayer.start();
-        	 }else mMediaPlayer.start();
-        
-	        
+		try {
+
+			// ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
+			if (mMediaPlayer == null) {
+				mMediaPlayer = new MediaPlayer();
+				String falla = ResourceHandler.getInstance().getMediaPath(path);
+				mMediaPlayer.setDataSource(falla);
+				mMediaPlayer.prepare();
+				mMediaPlayer.start();
+			}else mMediaPlayer.start();
+
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,23 +49,21 @@ public class SoundAndroidMp3 extends Sound {
 			e.printStackTrace();
 		}
 	}
-	
-	public synchronized void stopPlaying( ) {
-		mMediaPlayer.stop();
-		 mMediaPlayer.release();
-         mMediaPlayer = null;
-		
-		
+
+	public synchronized void stopPlaying() {
+//		mMediaPlayer.stop();
+//		mMediaPlayer.release();
+//		mMediaPlayer = null;
+
 	}
-	
+
 	@Override
 	public synchronized void finalize() {
-		  if (mMediaPlayer != null) {
-	            mMediaPlayer.release();
-	            mMediaPlayer = null;
-		  }
-		
+		if (mMediaPlayer != null) {
+			mMediaPlayer.release();
+			mMediaPlayer = null;
+		}
+
 	}
-	
 
 }

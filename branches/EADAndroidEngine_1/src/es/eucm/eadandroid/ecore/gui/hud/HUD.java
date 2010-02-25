@@ -85,7 +85,7 @@ public class HUD {
 		return currentState.processScrollPressed(e);
 	}
 
-	public void setState(int state) {
+	public void setState(int state , Object info) {
 
 		switch (state) {
 
@@ -103,6 +103,7 @@ public class HUD {
 			break;
 		case HUDstate.ActionsState:
 			currentState = actionsState;
+			((ActionsState) currentState).setItem(info);
 			break;
 
 		}

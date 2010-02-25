@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
 import es.eucm.eadandroid.common.data.chapter.Exit;

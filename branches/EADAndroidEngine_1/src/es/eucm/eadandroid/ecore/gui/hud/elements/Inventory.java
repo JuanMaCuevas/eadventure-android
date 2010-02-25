@@ -7,6 +7,7 @@ import android.graphics.Picture;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
+import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
@@ -115,6 +116,8 @@ public class Inventory {
 		c.translate(0, iPanelBottom - IPANEL_HEIGHT);
 		c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, TRANSPARENT_PADDING
 				+ RPANEL_PADDING);
+		// FIXME estooo tiene que quitarse de aqui y ponerl en otro sitio ;D!!!
+		gridPanel.setDataSet(Game.getInstance().getInventory());
 		gridPanel.draw(c);
 
 	}
@@ -170,7 +173,7 @@ public class Inventory {
 
 	}
 
-	public FunctionalElement selectItemFromGrid(int x, int y) {
+	public Object selectItemFromGrid(int x, int y) {
 
 		return gridPanel.selectItem(x, y);
 

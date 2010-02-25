@@ -43,6 +43,8 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.Properties;
 
+import es.eucm.eadandroid.res.pathdirectory.Paths;
+
 /**
  * The only purpose of this class is to keep the path of the folders and files
  * which will be in the release in a common place for both engine and editor
@@ -58,21 +60,21 @@ public class ReleaseFolders {
 
     private static String REPORTS_FOLDER = "../Reports";
 
-    private static final String WEB_FOLDER = "web";
+    private static final String WEB_FOLDER = Paths.eaddirectory.ROOT_PATH + "web";
 
-    private static final String WEB_TEMP_FOLDER = "web/temp";
+    private static final String WEB_TEMP_FOLDER = Paths.eaddirectory.ROOT_PATH + "web/temp";
 
-    private static final String CONFIG_FILE_PATH_EDITOR = "config_editor.xml";
+    private static final String CONFIG_FILE_PATH_EDITOR = Paths.eaddirectory.ROOT_PATH + "config_editor.xml";
 
-    private static final String CONFIG_FILE_PATH_ENGINE = "config_engine.xml";
+    private static final String CONFIG_FILE_PATH_ENGINE = Paths.eaddirectory.ROOT_PATH + "config_engine.xml";
 
-    public static final String LANGUAGE_DIR_EDITOR = "i18n/editor";
+    public static final String LANGUAGE_DIR_EDITOR = Paths.eaddirectory.ROOT_PATH + "i18n/editor";
 
-    public static final String LANGUAGE_DIR_ENGINE = "i18n/engine";
+    public static final String LANGUAGE_DIR_ENGINE = Paths.eaddirectory.ROOT_PATH + "i18n/engine";
 
-    private static final String ENGLISH_LOADING_IMAGE = "img/Editor2D-Loading-Eng.png";
+    private static final String ENGLISH_LOADING_IMAGE = Paths.eaddirectory.ROOT_PATH + "img/Editor2D-Loading-Eng.png";
 
-    private static final String SPANISH_LOADING_IMAGE = "img/Editor2D-Loading-Esp.png";
+    private static final String SPANISH_LOADING_IMAGE = Paths.eaddirectory.ROOT_PATH + "img/Editor2D-Loading-Esp.png";
     
     private static HashMap<String, String> languageNames = new HashMap<String, String>();
 

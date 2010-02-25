@@ -2,6 +2,8 @@ package es.eucm.eadandroid.ecore.gui.hud.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
@@ -31,7 +33,7 @@ public class MagnifierState extends HUDstate{
 		
 		magnifier.show();
 		magnifier.updateMagPos((int)m.getX(),(int)m.getY());
-		return true;
+		return false;
 	}
 
 	@Override
@@ -41,13 +43,22 @@ public class MagnifierState extends HUDstate{
 		
 		magnifier.show();
 		magnifier.updateMagPos((int)m.getX(),(int)m.getY());
-		return true;
+				
+		return false;
 	}
 	
 	public boolean processUnPressed(UIEvent e) {
 		magnifier.hide();
-		stateContext.setState(HUDstate.HiddenState);
+		
+		FunctionalElement elementOver = Game.getInstance().getActionManager().getElementOver();
+		
+		if (elementOver!=null)  {
+			stateContext.setState(HUDstate.ActionsState, elementOver);
+		}
+		else stateContext.setState(HUDstate.HiddenState,null);
+		
 		return false;
 	}
+	
 
 }

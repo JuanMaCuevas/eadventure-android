@@ -267,7 +267,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      * 
      * @param action
      *            The action to add to the pool
-     * @param element
+     * @param functionalElement
      *            The element on with the action is performed
      */
     public void addAction( FunctionalAction action ) {

@@ -33,13 +33,20 @@
  */
 package es.eucm.eadandroid.ecore.control;
 
-
+import android.util.Log;
 import android.view.MotionEvent;
 import es.eucm.eadandroid.common.data.chapter.Exit;
+import es.eucm.eadandroid.common.data.chapter.scenes.GeneralScene;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.ecore.gui.hud.elements.ActionButton;
 
 /**
  * Updated feb 2008: cursors
@@ -49,316 +56,389 @@ import es.eucm.eadandroid.ecore.gui.GUI;
  */
 public class ActionManager {
 
-    /**
-     * Constant for looking action
-     */
-    public static final int ACTION_LOOK = 0;
+	/**
+	 * Constant for looking action
+	 */
+	public static final int ACTION_LOOK = 0;
 
-    /**
-     * Constant for grabbing action
-     */
-    public static final int ACTION_GRAB = 1;
+	/**
+	 * Constant for grabbing action
+	 */
+	public static final int ACTION_GRAB = 1;
 
-    /**
-     * Constant for talking action
-     */
-    public static final int ACTION_TALK = 2;
+	/**
+	 * Constant for talking action
+	 */
+	public static final int ACTION_TALK = 2;
 
-    /**
-     * Constant for examining action
-     */
-    public static final int ACTION_EXAMINE = 3;
+	/**
+	 * Constant for examining action
+	 */
+	public static final int ACTION_EXAMINE = 3;
 
-    /**
-     * Constant for using action
-     */
-    public static final int ACTION_USE = 4;
+	/**
+	 * Constant for using action
+	 */
+	public static final int ACTION_USE = 4;
 
-    /**
-     * Constant for giving action
-     */
-    public static final int ACTION_GIVE = 5;
+	/**
+	 * Constant for giving action
+	 */
+	public static final int ACTION_GIVE = 5;
 
-    /**
-     * Constant for going to action
-     */
-    public static final int ACTION_GOTO = 6;
+	/**
+	 * Constant for going to action
+	 */
+	public static final int ACTION_GOTO = 6;
 
-    /**
-     * Constant for using with action
-     */
-    public static final int ACTION_USE_WITH = 7;
+	/**
+	 * Constant for using with action
+	 */
+	public static final int ACTION_USE_WITH = 7;
 
-    /**
-     * Constant for giving to action
-     */
-    public static final int ACTION_GIVE_TO = 8;
+	/**
+	 * Constant for giving to action
+	 */
+	public static final int ACTION_GIVE_TO = 8;
 
-    /**
-     * Constant for custom action
-     */
-    public static final int ACTION_CUSTOM = 9;
+	/**
+	 * Constant for custom action
+	 */
+	public static final int ACTION_CUSTOM = 9;
 
-    /**
-     * Constant for custom interact action
-     */
-    public static final int ACTION_CUSTOM_INTERACT = 10;
-    
-    /**
-     * Constant for drag to action
-     */
-    public static final int ACTION_DRAG_TO = 11;
+	/**
+	 * Constant for custom interact action
+	 */
+	public static final int ACTION_CUSTOM_INTERACT = 10;
 
-    /**
-     * Functional element in which the cursor is placed.
-     */
-    private FunctionalElement elementOver;
+	/**
+	 * Constant for drag to action
+	 */
+	public static final int ACTION_DRAG_TO = 11;
 
-    /**
-     * Current action selected.
-     */
-    private int actionSelected;
+	/**
+	 * Functional element in which the cursor is placed.
+	 */
+	private FunctionalElement elementOver;
 
-    /**
-     * The original action.
-     */
-    private String customActionName;
+	/**
+	 * Current action selected.
+	 */
+	private int actionSelected;
 
-    /**
-     * Name of the current string being selected.
-     */
-    private String exit;
+	/**
+	 * The original action.
+	 */
+	private String customActionName;
 
-/*    *//**
-     * Cursor of the current exit being selected
-     *//*
-    private Cursor exitCursor;
+	/**
+	 * Name of the current string being selected.
+	 */
+	private String exit;
 
+	/*    *//**
+	 * Cursor of the current exit being selected
+	 */
+	/*
+	 * private Cursor exitCursor;
+	 *//**
+	 * List of the already created cursors. Useful to avoid creating the same
+	 * cursors more than once
+	 */
+	/*
+	 * private HashMap<Exit, Cursor> cursors;
+	 */
+	private FunctionalElement dragElement = null;
+
+	/**
+	 * Constructor.
+	 */
+	public ActionManager() {
+
+		elementOver = null;
+		actionSelected = ACTION_GOTO;
+		exit = "";
+		// exitCursor = null;
+		// cursors = new HashMap<Exit, Cursor>( );
+	}
+
+	/**
+	 * Returns the selected element.
+	 * 
+	 * @return Selected element
+	 */
+	public FunctionalElement getElementOver() {
+
+		return elementOver;
+	}
+
+	/**
+	 * Sets the new selected element.
+	 * 
+	 * @param elementOver
+	 *            New selected element
+	 */
+	public void setElementOver(FunctionalElement elementOver) {
+
+		this.elementOver = elementOver;
+	}
+
+	/**
+	 * Returns the action selected.
+	 * 
+	 * @return Action selected
+	 */
+	public int getActionSelected() {
+
+		return actionSelected;
+	}
+
+	/**
+	 * Sets the new action selected.
+	 * 
+	 * @param actionSelected
+	 *            New action selected
+	 */
+	public void setActionSelected(int actionSelected) {
+
+		this.actionSelected = actionSelected;
+		// GUI.getInstance( ).newActionSelected( );
+	}
+
+	/**
+	 * Returns the current exit.
+	 * 
+	 * @return Current exit
+	 */
+	public String getExit() {
+
+		return exit;
+	}
+
+	/*
     *//**
-     * List of the already created cursors. Useful to avoid creating the same
-     * cursors more than once
-     *//*
-    private HashMap<Exit, Cursor> cursors;
-*/
-    private FunctionalElement dragElement = null;
+	 * Returns the current exit cursor.
+	 * 
+	 * @return Current cursor
+	 */
+	/*
+	 * public Cursor getExitCursor( ) {
+	 * 
+	 * return exitCursor; }
+	 */
 
-    /**
-     * Constructor.
-     */
-    public ActionManager( ) {
+	/**
+	 * Sets the current exit.
+	 * 
+	 * @param exit
+	 *            Current exit
+	 */
+	public void setExit(String exit) {
 
-        elementOver = null;
-        actionSelected = ACTION_GOTO;
-        exit = "";
-      //  exitCursor = null;
-      //  cursors = new HashMap<Exit, Cursor>( );
-    }
+		if (exit == null)
+			this.exit = "";
+		else
+			this.exit = exit;
+	}
 
-    /**
-     * Returns the selected element.
-     * 
-     * @return Selected element
-     */
-    public FunctionalElement getElementOver( ) {
+	/**
+	 * Sets the current exit cursor.
+	 * 
+	 * @param exit
+	 *            Current exit cursro
+	 */
+	/*
+	 * public void setExitCursor( Cursor cursor ) {
+	 * 
+	 * this.exitCursor = cursor; }
+	 * 
+	 * public void setExitCustomized( String exit, Cursor cursor ) {
+	 * 
+	 * setExit( exit ); setExitCursor( cursor ); }
+	 */
 
-        return elementOver;
-    }
+	public void setExitCustomized(String exit) {
 
-    /**
-     * Sets the new selected element.
-     * 
-     * @param elementOver
-     *            New selected element
-     */
-    public void setElementOver( FunctionalElement elementOver ) {
+		setExit(exit);
 
-        this.elementOver = elementOver;
-    }
+	}
 
-    /**
-     * Returns the action selected.
-     * 
-     * @return Action selected
-     */
-    public int getActionSelected( ) {
+	/**
+	 * Called when a mouse click event has been triggered
+	 * 
+	 * @param e
+	 *            Mouse event
+	 */
+	public void unPressed(UIEvent ev) {
 
-        return actionSelected;
-    }
+		MotionEvent e = ((UnPressedEvent) ev).event;
 
-    /**
-     * Sets the new action selected.
-     * 
-     * @param actionSelected
-     *            New action selected
-     */
-    public void setActionSelected( int actionSelected ) {
+		Game.getInstance().getFunctionalScene().mouseClicked(
+				(int) ((e.getX() - GUI.CENTER_OFFSET) / GUI.SCALE_RATIO),
+				(int) ((e.getY()) / GUI.SCALE_RATIO));
 
-        this.actionSelected = actionSelected;
- //       GUI.getInstance( ).newActionSelected( );
-    }
+	}
 
-    /**
-     * Returns the current exit.
-     * 
-     * @return Current exit
-     */
-    public String getExit( ) {
+	/**
+	 * Called when a mouse move event has been triggered
+	 * 
+	 * @param e
+	 *            Mouse event
+	 */
 
-        return exit;
-    }
-/*
-    *//**
-     * Returns the current exit cursor.
-     * 
-     * @return Current cursor
-     *//*
-    public Cursor getExitCursor( ) {
+	public void pressed(UIEvent ev) {
 
-        return exitCursor;
-    }*/
+		
+		MotionEvent e = null;
 
-    /**
-     * Sets the current exit.
-     * 
-     * @param exit
-     *            Current exit
-     */
-    public void setExit( String exit ) {
+		if (ev instanceof PressedEvent)
+			e = ((PressedEvent) ev).event;
+		else
+			e = ((ScrollPressedEvent) ev).eventDst;
 
-        if( exit == null )
-            this.exit = "";
-        else
-            this.exit = exit;
-    }
+//		e.setLocation(e.getX() + Magnifier.CENTER_OFFSET , e.getY() + Magnifier.CENTER_OFFSET);
+		
+		Game game = Game.getInstance();
+		FunctionalScene functionalScene = game.getFunctionalScene();
+		if (functionalScene == null)
+			return;
 
-    /**
-     * Sets the current exit cursor.
-     * 
-     * @param exit
-     *            Current exit cursro
-     */
-/*    public void setExitCursor( Cursor cursor ) {
+		FunctionalElement elementInside = functionalScene.getElementInside(
+				(int) e.getX(), (int) e.getY(), dragElement);
+		Exit exit = functionalScene.getExitInside((int) e.getX(), (int) e
+				.getY());
+		
+		if (elementInside !=null) 
+		Log.d("PRESSED",elementInside.getElement().getName());
+		if (exit!=null)
+		Log.d("PRESSED",exit.getNextSceneId());
+		
+		
 
-        this.exitCursor = cursor;
-    }
+		if (dragElement != null) {
+			dragElement.setX(e.getX());
+			dragElement.setY(e.getY());
+		}
 
-    public void setExitCustomized( String exit, Cursor cursor ) {
+		if (elementInside != null) {
+			setElementOver(elementInside);
+		} else if (exit != null && actionSelected == ACTION_GOTO) {
+			// SET EXIT CURSOR ;
 
-        setExit( exit );
-        setExitCursor( cursor );
-    }*/
-    
-    public void setExitCustomized( String exit) {
+			GeneralScene nextScene = null;
 
-        setExit( exit );
-        
-    }
+			// Pick the FIRST valid next-scene structure
+			for (int i = 0; i < exit.getNextScenes().size()
+					&& nextScene == null; i++)
+				if (new FunctionalConditions(exit.getNextScenes().get(i)
+						.getConditions()).allConditionsOk())
+					nextScene = game.getCurrentChapterData().getGeneralScene(
+							exit.getNextScenes().get(i).getTargetId());
 
-    /**
-     * Called when a mouse click event has been triggered
-     * 
-     * @param e
-     *            Mouse event
-     */
-    public void unPressed( UIEvent ev) {
+			// Check the text (customized or not)
+			if (getExitText(exit) != null && !getExitText(exit).equals("")) {
+				setExit(getExitText(exit));
+			} else if (getExitText(exit) != null) {
+				setExit(" ");
+			} else if (nextScene != null)
+				setExit(nextScene.getName());
+		}
 
-    	MotionEvent e = ((UnPressedEvent) ev).event;
+	}
 
-        Game.getInstance().getFunctionalScene( ).mouseClicked( (int)(e.getX( ) / GUI.SCALE_RATIO) ,(int)(e.getY( ) / GUI.SCALE_RATIO) );
- 
-    }
+	public String getExitText(Exit exit) {
 
-    /**
-     * Called when a mouse move event has been triggered
-     * 
-     * @param e
-     *            Mouse event
-     */
-  /*  public void mouseMoved( MouseEvent e ) {
+		if (exit.getDefaultExitLook() != null)
+			return exit.getDefaultExitLook().getExitText();
+		return null;
+	}
 
-        Game game = Game.getInstance( );
-        FunctionalScene functionalScene = game.getFunctionalScene( );
-        if( functionalScene == null )
-            return;
-        
-        FunctionalElement elementInside = functionalScene.getElementInside( e.getX( ), e.getY( ), dragElement );
-        Exit exit = functionalScene.getExitInside( e.getX( ), e.getY( ) );
+	/**
+	 * Returns the cursor of the first resources block which all conditions are
+	 * met
+	 * 
+	 * @return the cursor
+	 */
+	public String getCursorPath(Exit exit) {
 
-        if (dragElement != null) {
-            dragElement.setX( e.getX( ) );
-            dragElement.setY( e.getY( ) );
-        }
-        
-        if( elementInside != null ) {
-            setElementOver( elementInside );
-        }
-        else if( exit != null && actionSelected == ACTION_GOTO ) {
-            boolean isCursorSet = getCursorPath( exit ) != null && !getCursorPath( exit ).equals( "" );
+		if (exit.getDefaultExitLook() != null) {
+			return exit.getDefaultExitLook().getCursorPath();
+		}
+		return null;
+	}
 
-            if( isCursorSet && !cursors.containsKey( exit ) ) {
-                Cursor newCursor;
-                try {
-                    newCursor = Toolkit.getDefaultToolkit( ).createCustomCursor( MultimediaManager.getInstance( ).loadImageFromZip( getCursorPath( exit ), MultimediaManager.IMAGE_MENU ), new Point( 0, 0 ), "exitCursor(" + exit + ")" );
-                }
-                catch( Exception exc ) {
-                    newCursor = Toolkit.getDefaultToolkit( ).createCustomCursor( MultimediaManager.getInstance( ).loadImageFromZip( "gui/cursors/nocursor.png", MultimediaManager.IMAGE_MENU ), new Point( 0, 0 ), "exitCursor(" + exit + ")" );
-                }
-                this.cursors.put( exit, newCursor );
-                setExitCursor( newCursor );
-            }
-            else if( isCursorSet && cursors.containsKey( exit ) )
-                setExitCursor( cursors.get( exit ) );
-            else
-                setExitCursor( null );
+	public void setCustomActionName(String name) {
 
-            GeneralScene nextScene = null;
+		customActionName = name;
+	}
 
-            // Pick the FIRST valid next-scene structure
-            for( int i = 0; i < exit.getNextScenes( ).size( ) && nextScene == null; i++ )
-                if( new FunctionalConditions( exit.getNextScenes( ).get( i ).getConditions( ) ).allConditionsOk( ) )
-                    nextScene = game.getCurrentChapterData( ).getGeneralScene( exit.getNextScenes( ).get( i ).getTargetId( ) );
+	public String getCustomActionName() {
 
-            //Check the text (customized or not)
-            if( getExitText( exit ) != null && !getExitText( exit ).equals( "" ) ) {
-                setExit( getExitText( exit ) );
-            }
-            else if( getExitText( exit ) != null ) {
-                setExit( " " );
-            }
-            else if( nextScene != null )
-                setExit( nextScene.getName( ) );
-        }
-    }*/
+		return customActionName;
+	}
 
-    public String getExitText( Exit exit ) {
+	public void tap(TapEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-        if( exit.getDefaultExitLook( ) != null )
-            return exit.getDefaultExitLook( ).getExitText( );
-        return null;
-    }
+	public void processAction(int type , FunctionalElement elementAction) {
+		
+		Game game = Game.getInstance();
+		
+		 switch( type ) {
+         case ActionButton.HAND_BUTTON:
+         //    elementInCursor = null;
+         //    gui.setDefaultCursor( );
+             if( elementAction.canBeUsedAlone( ) ) {
+                 setActionSelected( ActionManager.ACTION_USE );
+                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
+             }
+             else {
+                 if( !elementAction.isInInventory( ) ) {
+                     setActionSelected( ActionManager.ACTION_GRAB );
+                     game.getFunctionalPlayer( ).performActionInElement( elementAction );
+                 }
+                 else {
+             //        elementInCursor = elementAction;
+             //        gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
+                 }
+             }
+             break;
+         case ActionButton.EYE_BUTTON:
+             setActionSelected( ActionManager.ACTION_EXAMINE );
+             game.getFunctionalPlayer( ).performActionInElement( elementAction );
+             break;
+         case ActionButton.MOUTH_BUTTON:
+             setActionSelected( ActionManager.ACTION_TALK );
+             game.getFunctionalPlayer( ).performActionInElement( elementAction );
+             break;
+         case ActionButton.DRAG_BUTTON:
+//          //   elementInCursor = elementAction;
+//             this.startDragging( elementInCursor );
+//             this.draggingElement.setX( pressedX );
+//             this.draggingElement.setY( pressedY + this.draggingElement.getHeight( ) / 2);
+//             pressedX = (int) this.originalDragX;
+//             pressedY = (int) this.originalDragY - this.draggingElement.getHeight( ) / 2;
+             break;
+//         case ActionButton.CUSTOM_BUTTON:
+//             if( actionButtons.getButtonPressed( ).getCustomAction( ).getType( ) == Action.CUSTOM ) {
+//                 actionManager.setActionSelected( ActionManager.ACTION_CUSTOM );
+//                 actionManager.setCustomActionName( actionButtons.getButtonPressed( ).getName( ) );
+//                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
+//                 break;
+//             }
+//             else {
+//             //    elementInCursor = elementAction;
+//                 gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
+//                 setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
+//                 .setCustomActionName( actionButtons.getButtonPressed( ).getName( ) );
+//                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
+//                 break;
+//             }
+     }
+     setActionSelected( ActionManager.ACTION_GOTO );
 
-    /**
-     * Returns the cursor of the first resources block which all conditions are
-     * met
-     * 
-     * @return the cursor
-     */
-    public String getCursorPath( Exit exit ) {
-
-        if( exit.getDefaultExitLook( ) != null ) {
-            return exit.getDefaultExitLook( ).getCursorPath( );
-        }
-        return null;
-    }
-
-    public void setCustomActionName( String name ) {
-
-        customActionName = name;
-    }
-
-    public String getCustomActionName( ) {
-
-        return customActionName;
-    }
+	}
 
 }

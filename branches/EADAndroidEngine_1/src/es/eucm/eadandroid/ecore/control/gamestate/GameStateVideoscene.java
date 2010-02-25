@@ -55,7 +55,7 @@ public class GameStateVideoscene extends GameState {
 
         try {
 
-            this.holder=GUI.getInstance().getmSurfaceHolder();
+            this.holder=GUI.getInstance().getSurfaceHolder();
             
             holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS); 
             

@@ -183,7 +183,7 @@ public class GameStateSlidescene extends GameState {
         }
         else {
             if( game.getFunctionalScene( ) == null ) {
-                JOptionPane.showMessageDialog( null, TC.get( "DesignError.Message" ), TC.get( "DesignError.Title" ), JOptionPane.ERROR_MESSAGE );
+  //              JOptionPane.showMessageDialog( null, TC.get( "DesignError.Message" ), TC.get( "DesignError.Title" ), JOptionPane.ERROR_MESSAGE );
                 yetSkipped = true;
                 game.goToNextChapter( );
             }

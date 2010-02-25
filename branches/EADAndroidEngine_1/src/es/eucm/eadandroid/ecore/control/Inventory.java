@@ -35,17 +35,21 @@ package es.eucm.eadandroid.ecore.control;
 
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
+
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
+import es.eucm.eadandroid.ecore.gui.hud.elements.DataSet;
 
 /**
  * This class stores all the items of the inventory
  */
-public class Inventory {
+public class Inventory implements DataSet{
 
     /**
      * List of items stored in the inventory
      */
     private ArrayList<FunctionalItem> storedItems;
+    
 
     /**
      * Empty constructor
@@ -87,7 +91,7 @@ public class Inventory {
 
         storedItems.add( item );
     }
-
+    
     /**
      * Deletes an item from the inventory
      * 
@@ -104,4 +108,15 @@ public class Inventory {
 
         storedItems.remove( item );
     }
+
+    
+	public Bitmap getItemImageIcon(int i) {
+		return storedItems.get(i).getIconImage();
+	}
+
+	public String getItemName(int i) {
+		return storedItems.get(i).getItem().getName();
+	}
+
+
 }

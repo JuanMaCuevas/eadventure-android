@@ -4,25 +4,39 @@ import android.content.Context;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class GameThread extends Thread {
 
 	
-	private SurfaceHolder mSurfaceHolder;
-	private Context mContext;
+
 	private String advPath;
 
 	public GameThread(SurfaceHolder holder, Context context, Handler handler) {
-		mSurfaceHolder = holder;
-		mContext = context;
-		
+
 //		ResourceHandler.createInstance();
-		Game.create(mSurfaceHolder);
+		Game.create();
+		
+		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+		
+		int landscapeHeight = displayMetrics.heightPixels;
+		int landscapeWidth = displayMetrics.widthPixels;
+		
+		Log.w("Height",String.valueOf(landscapeHeight));
+		
+		Log.w("Width",String.valueOf(landscapeWidth));
+		
+		float scaleDensity = displayMetrics.density;
+				
+		GUI.create(holder);
+		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 		
 	}
 	

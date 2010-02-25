@@ -18,6 +18,7 @@ import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.Func
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.hud.HUD;
 
+
 public class GUI {
 
 	private static final double MAX_WIDTH_IN_TEXT = 30;
@@ -41,6 +42,8 @@ public class GUI {
 	public static int FINAL_WINDOW_WIDTH;
 
 	public static float DISPLAY_DENSITY_SCALE;
+	
+	public static int CENTER_OFFSET;
 
 	/**
 	 * HUD
@@ -133,10 +136,6 @@ public class GUI {
 		textToDraw = new ArrayList<Text>();
 	}
 
-	public SurfaceHolder getmSurfaceHolder() {
-		return mSurfaceHolder;
-	}
-
 	public static void create(SurfaceHolder mSurfaceHolder) {
 
 		instance = new GUI(mSurfaceHolder);
@@ -147,7 +146,7 @@ public class GUI {
 
 		FINAL_WINDOW_HEIGHT = landscapeHeight;
 		FINAL_WINDOW_WIDTH = landscapeWidth;
-
+		
 		DISPLAY_DENSITY_SCALE = scaleDensity;
 
 		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -162,8 +161,10 @@ public class GUI {
 		SCALE_RATIO = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
 		scaleMatrix = new Matrix();
 		scaleMatrix.setScale(SCALE_RATIO, SCALE_RATIO);
-
-		hud = new HUD();
+		
+		if ((WINDOW_WIDTH * SCALE_RATIO) < FINAL_WINDOW_WIDTH)
+			CENTER_OFFSET = (FINAL_WINDOW_WIDTH - (int)(WINDOW_WIDTH * SCALE_RATIO))/2;
+		else CENTER_OFFSET = 0;
 
 		mPaint = new Paint();
 		mPaint.setTextSize(15);
@@ -172,6 +173,10 @@ public class GUI {
 		mPaint.setStrokeWidth(4);
 		mPaint.setColor(0XFFFFFFFF);
 
+	}
+	
+	public void initHUD() {
+		hud = new HUD();
 	}
 
 	public static GUI getInstance() {
@@ -182,18 +187,25 @@ public class GUI {
 	public Canvas getGraphics() {
 		return canvascpy;
 	}
+	public SurfaceHolder getSurfaceHolder() {
+		return mSurfaceHolder;
+	}
 
 	public void endDraw() {
 
 		// reescale the drawn bitmap to fit the sreen size
+		finalCanvas.drawColor(Color.BLACK);
+		finalCanvas.translate(CENTER_OFFSET, 0);
 		finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
-
+		finalCanvas.translate(-CENTER_OFFSET, 0);
+		
 		
 		Canvas canvas = null;
 		
 		try {
 			canvas = mSurfaceHolder.lockCanvas(null);
 			synchronized (mSurfaceHolder) {
+				
 				canvas.drawBitmap(finalBmp, 0, 0, null);
 
 				fps.draw(canvas);
@@ -207,6 +219,8 @@ public class GUI {
 				mSurfaceHolder.unlockCanvasAndPost(canvas);
 			}
 		}
+		
+		
 
 	}
 

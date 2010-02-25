@@ -6,21 +6,21 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.Window;
 import android.view.WindowManager;
 import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
+import es.eucm.eadandroid.common.gui.TC;
+import es.eucm.eadandroid.ecore.control.config.ConfigData;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 
 	public static String TAG = "ECoreActivity";
-
+	
 	private GameSurfaceView surfaceView;
 	private GameThread gameThread;
 
@@ -40,41 +40,25 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 		// tell system to use the layout defined in our XML file
 		setContentView(R.layout.game_activity_canvas);
 		
-		// get handles to the view from XML, and its LunarThread
-
 		surfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
 		
 		SurfaceHolder holder = surfaceView.getHolder();
+				
 		// register our interest in hearing about changes to our surface
 		holder.addCallback(this);
-						
-		DisplayMetrics displaymetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		int landscapeHeight = displaymetrics.heightPixels;
-		int landscapeWidth = displaymetrics.widthPixels;
 		
-		Log.w("Height",String.valueOf(landscapeHeight));
-		
-		Log.w("Width",String.valueOf(landscapeWidth));
-		
-		float scaleDensity = getResources().getDisplayMetrics().density;
-				
-		GUI.create(holder);
-		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
-		
-		gameThread = new GameThread(surfaceView.getHolder(), this, null);
-		
+								
+		gameThread = new GameThread(holder, this, null);
+	
 		String adventureName = (String) this.getIntent().getExtras().get(
 				"AdventureName");
-		
-		String advPath = Paths.eaddirectory.GAMES_PATH + adventureName+"/";
-
-		
-		Log.d(TAG, "PathToFile : " + advPath);
+		String advPath = Paths.eaddirectory.GAMES_PATH + adventureName +"/";	
 		
 		gameThread.setAdventurePath(advPath);
 
 	}
+	
+		
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -93,7 +77,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-	//	thread.setSurfaceSize(width, height);
+    
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {	

@@ -31,8 +31,8 @@ public class HiddenState extends HUDstate{
 	
 	private void process(MotionEvent e) {
 		if (e.getY() > Inventory.UNFOLD_REGION_POSY) 
-			stateContext.setState(HUDstate.MagnifierState);
-		else stateContext.setState(HUDstate.ShowingInventoryState);
+			stateContext.setState(HUDstate.MagnifierState,null);
+		else stateContext.setState(HUDstate.ShowingInventoryState,null);
 	}
 
 }

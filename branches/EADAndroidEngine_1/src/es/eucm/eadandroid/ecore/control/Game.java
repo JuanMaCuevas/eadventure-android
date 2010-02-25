@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
@@ -36,6 +35,7 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffect;
+import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 import es.eucm.eadandroid.ecore.control.gamestate.GameState;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateBook;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateLoading;
@@ -67,8 +67,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	private String advPath;
 	private boolean mRun = false;
 
-	/* VIEW HOLDER */
-	private SurfaceHolder mSurfaceHolder = null;
 	
 	/* DESKTOP FIELDS */
 	
@@ -330,9 +328,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     
     /*******/
 
-	private Game(SurfaceHolder surfaceHolder) {
-
-		this.mSurfaceHolder = surfaceHolder;
+	private Game() {
 		
 		createUIEventListeners();
 		
@@ -344,9 +340,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		
 	}
 
-	public static void create(SurfaceHolder mSurfaceHolder) {
+	public static void create() {
 
-		instance = new Game(mSurfaceHolder);
+		instance = new Game();
 
 	}
 
@@ -439,6 +435,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	            	
 	                loadCurrentChapter();
 	                
+	                GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse !! 
+	                
 	                while( !nextChapter && !gameOver ) {
 	                    time = System.currentTimeMillis( );
 	                    elapsedTime = time - oldTime;
@@ -479,7 +477,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 	        }
 	        catch( Exception e ) {
-	           Log.e("Game",e.getMessage());
+
 	           e.printStackTrace();
 	           
 	        }
@@ -488,7 +486,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	            stop( );
 	        }
 	        catch( Exception e ) {
-		           Log.e("Game",e.getMessage());
 		           e.printStackTrace();
 	        }
 
@@ -1403,7 +1400,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 currentState = new GameStateNextScene( );
                 break;
             case STATE_VIDEO_SCENE:
-           currentState = new GameStateVideoscene( );
+               currentState = new GameStateVideoscene( );
                 break;
             case STATE_RUN_EFFECTS:
                currentState = new GameStateRunEffects( this.isConvEffectsBlock.peek( ) );
@@ -1481,9 +1478,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	// HANDLING GLOBAL STATE //
 
 	private void setGlobalState(int state) {
-		synchronized (mSurfaceHolder) {
-			globalState = state;
-		}
+	
 	}
 	
 	public void unpause() {
@@ -1495,38 +1490,36 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	}
 
 	public Bundle saveState(Bundle map) {
-		synchronized (mSurfaceHolder) {
-		}
-		return map;
+		return null;
 	}
 
 	public synchronized void restoreState(Bundle savedState) {
 		setGlobalState(STATE_RUNNING);
 	}
 
-	public void setSurfaceSize(int width, int height) {
-		synchronized (mSurfaceHolder) {
-		}
-
-	}
-	
 	
 	// TIMER EVENT LISTENER INTERFACE IMPLEMENTATION//
 
-	public void cycleCompleted(int timerId, long elapsedTime) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void cycleCompleted( int timerId, long elapsedTime ) {
 
-	public void timerStarted(int timerId, long currentTime) {
-		// TODO Auto-generated method stub
-		
-	}
+        //System.out.println("Timer " + timerId + " expired, executing effects.");
+        Timer timer = gameTimers.get( new Integer( timerId ) );
+        FunctionalEffects.storeAllEffects( timer.getEffects( ) );
+    }
 
-	public void timerStopped(int timerId, long currentTime) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void timerStarted( int timerId, long currentTime ) {
+
+        //System.out.println("Timer " + timerId + " starting");
+        // Do nothing
+    }
+
+    public void timerStopped( int timerId, long currentTime ) {
+
+        //System.out.println("Timer " + timerId + " was stopped, executing effects");
+        Timer timer = gameTimers.get( new Integer( timerId ) );
+        FunctionalEffects.storeAllEffects( timer.getPostEffects( ) );
+        //timerManager.deleteTimer( timerId );
+    }
 	
     /**
      * Check if the Stack only have one empty FIFO

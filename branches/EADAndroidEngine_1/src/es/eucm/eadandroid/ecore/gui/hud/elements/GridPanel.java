@@ -11,7 +11,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.Inventory;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
 public class GridPanel {
@@ -25,7 +24,7 @@ public class GridPanel {
 
 	private static final int HORIZONTAL_ICON_SEPARATION = (int) (20 * GUI.DISPLAY_DENSITY_SCALE);
 
-	private static final int VERTICAL_ICON_SEPARATION = (int) (30 * GUI.DISPLAY_DENSITY_SCALE);
+	private static final int VERTICAL_ICON_SEPARATION = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
 
 	private static final int VERTICAL_TEXT_SEPARATION = (int) (5 * GUI.DISPLAY_DENSITY_SCALE);
 
@@ -37,17 +36,16 @@ public class GridPanel {
 	public static final int HORIZONTAL_ICON_SPACE = 2
 			* HORIZONTAL_ICON_SEPARATION + ICON_WIDTH;
 
-	private static final float HORIZONTAL_SEP_PERCENTAGE = (float)HORIZONTAL_ICON_SEPARATION
-			/ (float)HORIZONTAL_ICON_SPACE;
+	private static final float HORIZONTAL_SEP_PERCENTAGE = (float) HORIZONTAL_ICON_SEPARATION
+			/ (float) HORIZONTAL_ICON_SPACE;
 
-	private static final float VERTICAL_SEP_PERCENTAGE = (float)VERTICAL_ICON_SEPARATION
-			/ (float)VERTICAL_ICON_SPACE;
+	private static final float VERTICAL_SEP_PERCENTAGE = (float) VERTICAL_ICON_SEPARATION
+			/ (float) VERTICAL_ICON_SPACE;
 
 	int numRows;
 	int numColums;
 	private int centerOffset;
-	
-	
+
 	private Rect bounds;
 
 	private int height;
@@ -59,8 +57,6 @@ public class GridPanel {
 	Paint textP;
 
 	GradientDrawable rightGrad, leftGrad;
-
-	Inventory invModel;
 
 	/** SWIPE ANIMATION **/
 
@@ -74,20 +70,24 @@ public class GridPanel {
 	private static final int MILI = 1000;
 
 	private static final float DECCELERATION = 0.007f;
-	
+
 	/** ITEM SELECTION ANIMATION */
-	
-	RectF selectedItem ;
+
+	RectF selectedItem;
 	boolean itemSelected;
-	int selColumn , selRow;
+	int selColumn, selRow;
 	Paint pSelItem;
+
+	/** DATA MODEL **/
+
+	DataSet dataSet;
 
 	private static final float ROUNDED_SELECT_ITEM_RADIO = 10f * GUI.DISPLAY_DENSITY_SCALE;
 
 	public GridPanel(Rect r) {
-		
-	    bounds = r;
-		this.height = r.bottom -r.top ;
+
+		bounds = r;
+		this.height = r.bottom - r.top;
 		this.width = r.right - r.left;
 		swipeAnimating = false;
 		currentVelocityX = 0;
@@ -95,7 +95,7 @@ public class GridPanel {
 		lastDistance = 0;
 		selectedItem = new RectF();
 		itemSelected = false;
-		
+
 		pSelItem = new Paint();
 		pSelItem.setColor(Color.argb(190, 255, 255, 255));
 		pSelItem.setStyle(Style.FILL);
@@ -126,66 +126,70 @@ public class GridPanel {
 		leftGrad.setShape(GradientDrawable.RECTANGLE);
 		leftGrad.setBounds(0, 0, GRADIENT_TRANSPARENCY_WIDTH, height);
 
-		
+	}
+
+	public void setDataSet(DataSet ds) {
+
+		dataSet = ds;
 
 	}
-	
-	public Rect getBounds(){
+
+	public Rect getBounds() {
 		return bounds;
 	}
 
 	public void draw(Canvas c) {
 
-		invModel = Game.getInstance().getInventory();
+		if (dataSet != null && dataSet.getItemCount() > 0) {
 
-		c.clipRect(0, 0, width, height);
-		c.drawRoundRect(selectedItem,ROUNDED_SELECT_ITEM_RADIO,ROUNDED_SELECT_ITEM_RADIO, pSelItem);
-		c.save();
-		c.translate(leftLimit, 0);
-		c.save();
-		c.translate(0, centerOffset);
-		c.save();
+			c.clipRect(0, 0, width, height);
+			c.drawRoundRect(selectedItem, ROUNDED_SELECT_ITEM_RADIO,
+					ROUNDED_SELECT_ITEM_RADIO, pSelItem);
+			c.save();
+			c.translate(leftLimit, 0);
+			c.save();
+			c.translate(0, centerOffset);
+			c.save();
 
-		numColums = (invModel.getItemCount() / numRows) + 1;
-		boolean moreElems = invModel.getItemCount() > 0;
+			numColums = (dataSet.getItemCount() / numRows) + 1;
+			boolean moreElems = dataSet.getItemCount() > 0;
 
-		for (int j = 0; j < numColums; j++) {
-			int i = 0;
-			c.translate(HORIZONTAL_ICON_SEPARATION, 0);
+			for (int j = 0; j < numColums; j++) {
+				int i = 0;
+				c.translate(HORIZONTAL_ICON_SEPARATION, 0);
 
-			while (moreElems && i < numRows) {
+				while (moreElems && i < numRows) {
 
-				c.translate(0, VERTICAL_ICON_SEPARATION);
+					c.translate(0, VERTICAL_ICON_SEPARATION);
 
-				c.drawBitmap(
-						invModel.getItem((j * numRows) + i).getIconImage(), 0,
-						0, null);
+					c.drawBitmap(dataSet.getItemImageIcon((j * numRows) + i),
+							0, 0, null);
 
-				c.translate(ICON_WIDTH / 2, ICON_HEIGHT
-						+ VERTICAL_TEXT_SEPARATION + TEXT_HEIGHT);
-				c.drawText(invModel.getItem((j*numRows)+i).getItem().getName(), 0, 0, textP);
+					c.translate(ICON_WIDTH / 2, ICON_HEIGHT
+							+ VERTICAL_TEXT_SEPARATION + TEXT_HEIGHT);
+					c.drawText(dataSet.getItemName((j * numRows) + i), 0, 0,
+							textP);
 
-				c.translate(-(ICON_WIDTH / 2), VERTICAL_ICON_SEPARATION);
+					c.translate(-(ICON_WIDTH / 2), VERTICAL_ICON_SEPARATION);
 
-				i++;
-				moreElems = ((j * numRows) + i) < invModel.getItemCount();
+					i++;
+					moreElems = ((j * numRows) + i) < dataSet.getItemCount();
+
+				}
+				c.restore();
+				c.translate((ICON_WIDTH + 2 * HORIZONTAL_ICON_SEPARATION), 0);
+				c.save();
 
 			}
 			c.restore();
-			c.translate((ICON_WIDTH + 2 * HORIZONTAL_ICON_SEPARATION), 0);
-			c.save();
+			c.restore();
+			c.restore();
+
+			leftGrad.draw(c);
+			c.translate(width - GRADIENT_TRANSPARENCY_WIDTH, 0);
+			rightGrad.draw(c);
 
 		}
-		c.restore();
-		c.restore();
-		c.restore();
-		
-		leftGrad.draw(c);
-		c.translate(width - GRADIENT_TRANSPARENCY_WIDTH, 0);
-		rightGrad.draw(c);
-		
-		
-		
 
 	}
 
@@ -270,78 +274,74 @@ public class GridPanel {
 					leftLimit = swipeCorner + distance;
 
 			lastDistance = distance;
-			
+
 			updateSelectedItem();
 
 		}
 	}
 
-	public FunctionalElement selectItem(int posX, int posY) {
+	public Object selectItem(int posX, int posY) {
 
-		FunctionalElement element = null;
-		
-		posX-=bounds.left;
-		posY-= bounds.top ;
+		Object item = null;
 
-		int absoluteX = -leftLimit + posX ;
-		int absoluteY = posY;
-		
-		 int column = (absoluteX / HORIZONTAL_ICON_SPACE) + 1;
+		if (dataSet != null && dataSet.getItemCount() > 0) {
 
-		Log.w("column",String.valueOf(column));
-		
-	
-		float precisionX = (absoluteX % HORIZONTAL_ICON_SPACE)/ (float)(HORIZONTAL_ICON_SPACE);
+			posX -= bounds.left;
+			posY -= bounds.top;
 
-		
-		if (precisionX >= HORIZONTAL_SEP_PERCENTAGE
-				&& precisionX <= 1f - HORIZONTAL_SEP_PERCENTAGE) {
+			int absoluteX = -leftLimit + posX;
+			int absoluteY = posY;
 
-			int row = (absoluteY / VERTICAL_ICON_SPACE) + 1;
+			int column = (absoluteX / HORIZONTAL_ICON_SPACE) + 1;
 
-			float precisionY = (absoluteY % VERTICAL_ICON_SPACE)/(float)(VERTICAL_ICON_SPACE);
-			
-			Log.w("row",String.valueOf(row));
-			
+			Log.w("column", String.valueOf(column));
 
-			if (precisionY >= VERTICAL_SEP_PERCENTAGE
-					&& precisionY <= 1f - VERTICAL_SEP_PERCENTAGE) {
+			float precisionX = (absoluteX % HORIZONTAL_ICON_SPACE)
+					/ (float) (HORIZONTAL_ICON_SPACE);
 
-				int index = (column-1) * numRows + (row-1);
-				
-				Log.w("index",String.valueOf(index));
+			if (precisionX >= HORIZONTAL_SEP_PERCENTAGE
+					&& precisionX <= 1f - HORIZONTAL_SEP_PERCENTAGE) {
 
-				if (index < invModel.getItemCount()) {
-					
-					selColumn = column;
-					selRow = row;
-					updateSelectedItem();					
-					itemSelected = true;
-					
-					element = invModel.getItem(index);
+				int row = (absoluteY / VERTICAL_ICON_SPACE) + 1;
+
+				float precisionY = (absoluteY % VERTICAL_ICON_SPACE)
+						/ (float) (VERTICAL_ICON_SPACE);
+
+				Log.w("row", String.valueOf(row));
+
+				if (precisionY >= VERTICAL_SEP_PERCENTAGE
+						&& precisionY <= 1f - VERTICAL_SEP_PERCENTAGE) {
+
+					int index = (column - 1) * numRows + (row - 1);
+
+					Log.w("index", String.valueOf(index));
+
+					if (index < dataSet.getItemCount()) {
+
+						selColumn = column;
+						selRow = row;
+						updateSelectedItem();
+						itemSelected = true;
+
+						item = dataSet.getItem(index);
+					}
+
 				}
 
 			}
 
 		}
 
-		return element;
+		return item;
 	}
-	
-	private void updateSelectedItem(){
-		int left =  ((selColumn-1) * HORIZONTAL_ICON_SPACE) + leftLimit;
+
+	private void updateSelectedItem() {
+		int left = ((selColumn - 1) * HORIZONTAL_ICON_SPACE) + leftLimit;
 		int right = (left + HORIZONTAL_ICON_SPACE);
-		int top = (selRow-1) * VERTICAL_ICON_SPACE + centerOffset;
+		int top = (selRow - 1) * VERTICAL_ICON_SPACE + centerOffset;
 		int bottom = top + VERTICAL_ICON_SPACE;
 		selectedItem.set(left, top, right, bottom);
-		
-		Log.w("left",String.valueOf(left));
-		Log.w("right",String.valueOf(right));
-		Log.w("top",String.valueOf(top));
-		Log.w("bottom",String.valueOf(bottom));
+
 	}
-	
-
-
 
 }
