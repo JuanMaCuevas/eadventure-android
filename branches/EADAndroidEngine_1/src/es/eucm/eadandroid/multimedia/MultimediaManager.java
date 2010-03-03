@@ -331,7 +331,10 @@ public class MultimediaManager {
 		if (soundCache.containsKey(soundId)) {
 			Sound sound = soundCache.get(soundId);
 			if (sound != null)
-				sound.stopPlaying();
+				{sound.stopPlaying();
+				soundCache.remove(soundId);
+				
+				}
 		}
 	}
 
@@ -341,6 +344,7 @@ public class MultimediaManager {
 		for (Sound sound : sounds) {
 			if (sound.getId() == musicSoundId) {
 				sound.stopPlaying();
+				
 			}
 		}
 	}
