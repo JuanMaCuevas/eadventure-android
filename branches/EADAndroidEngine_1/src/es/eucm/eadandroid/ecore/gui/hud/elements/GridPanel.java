@@ -143,8 +143,8 @@ public class GridPanel {
 		if (dataSet != null && dataSet.getItemCount() > 0) {
 
 			c.clipRect(0, 0, width, height);
-			c.drawRoundRect(selectedItem, ROUNDED_SELECT_ITEM_RADIO,
-					ROUNDED_SELECT_ITEM_RADIO, pSelItem);
+//			c.drawRoundRect(selectedItem, ROUNDED_SELECT_ITEM_RADIO,
+//					ROUNDED_SELECT_ITEM_RADIO, pSelItem);
 			c.save();
 			c.translate(leftLimit, 0);
 			c.save();

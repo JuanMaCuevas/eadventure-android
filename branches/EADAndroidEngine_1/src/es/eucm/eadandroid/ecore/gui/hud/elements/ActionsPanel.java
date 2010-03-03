@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
@@ -44,6 +46,9 @@ public class ActionsPanel {
 	private static final float ROUNDED_RECT_ROUND_RADIO = 15f * GUI.DISPLAY_DENSITY_SCALE;
 
 	private static final int RPANEL_PADDING = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
+	
+	public  int CLOSE_X = TRANSPARENT_PADDING;
+	public  int CLOSE_Y ;
 
 	private RectF r;
 	private Paint p;
@@ -77,6 +82,10 @@ public class ActionsPanel {
     private ActionButton mouthButton;
 
     private ActionButton eyeButton;
+
+	private Paint textP;
+	
+	private Paint closeP;
 
 
 	public ActionsPanel() {
@@ -114,6 +123,19 @@ public class ActionsPanel {
         eyeButton = new ActionButton( ActionButton.EYE_BUTTON );
         
 		gridPanel.setDataSet(buttons);
+		
+		textP = new Paint(Paint.ANTI_ALIAS_FLAG);
+		textP .setColor(0xFFFFFFFF);
+		textP.setTextSize(25 * GUI.DISPLAY_DENSITY_SCALE);
+		textP.setTypeface(Typeface.SANS_SERIF);
+		textP.setTextAlign(Align.LEFT);
+		
+		closeP = new Paint(Paint.ANTI_ALIAS_FLAG);
+		closeP.setColor(Color.RED);
+		closeP.setStyle(Style.FILL_AND_STROKE);
+
+		CLOSE_Y =  APANEL_HEIGHT - TRANSPARENT_PADDING - RPANEL_PADDING - (int)r.height();
+
 
 	}
 	
@@ -255,12 +277,17 @@ public class ActionsPanel {
 				p);
 		c.drawRoundRect(r, ROUNDED_RECT_ROUND_RADIO, ROUNDED_RECT_ROUND_RADIO,
 				paintBorder);
-		c.translate(10 * GUI.DISPLAY_DENSITY_SCALE, 10 * GUI.DISPLAY_DENSITY_SCALE);
+		c.drawCircle(0, 0, 15f * GUI.DISPLAY_DENSITY_SCALE, closeP);
+		c.translate(10 * GUI.DISPLAY_DENSITY_SCALE, 20 * GUI.DISPLAY_DENSITY_SCALE);
 		
 		if( functionalElement instanceof FunctionalItem ) 
 
 			c.drawBitmap(((FunctionalItem)functionalElement).getIconImage(), 0, 0, null);
-
+		
+	    c.translate(80 * GUI.DISPLAY_DENSITY_SCALE,20 * GUI.DISPLAY_DENSITY_SCALE);
+		 
+	    c.drawText(functionalElement.getElement().getName(), 0, 0, textP);
+	     
 		actionsPicture.endRecording();
 		
 	}

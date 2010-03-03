@@ -1,6 +1,5 @@
 package es.eucm.eadandroid.ecore.gui.hud.elements;
 
-import es.eucm.eadandroid.ecore.gui.GUI;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -8,6 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.graphics.Typeface;
+import android.graphics.Paint.Align;
+import es.eucm.eadandroid.common.data.chapter.Exit;
+import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
+import es.eucm.eadandroid.ecore.gui.GUI;
 
 public class Magnifier {
 
@@ -56,6 +61,12 @@ public class Magnifier {
 	 */
 	
 	Rect windowBounds;
+	
+	/**
+	 * ITEM DESCRIPTION
+	 */
+	
+	Paint textP ;
 
 	public Magnifier(int radius, int frameWidth, float zoom , Bitmap bmp) {
 
@@ -78,6 +89,12 @@ public class Magnifier {
 		pFrame.setColor(0xFF000000);
 		pFrame.setStyle(Paint.Style.STROKE);
 		pFrame.setStrokeWidth(frameWidth);
+		
+		textP = new Paint(Paint.ANTI_ALIAS_FLAG);
+		textP .setColor(0xFFFFFFFF);
+		textP.setTextSize(20 * GUI.DISPLAY_DENSITY_SCALE);
+		textP.setTypeface(Typeface.SANS_SERIF);
+		textP.setTextAlign(Align.CENTER);
 		
 
 		createMagnifier();
@@ -131,6 +148,25 @@ public class Magnifier {
 
 		c.save();
 		c.translate(magBounds.left, magBounds.top); 
+		
+		c.save();
+		
+		c.translate(magBounds.width() / 2, -5 * GUI.DISPLAY_DENSITY_SCALE);
+		
+		FunctionalElement fe = Game.getInstance().getActionManager().getElementOver();
+		
+		String exit = Game.getInstance().getActionManager().getExit();
+		
+		if (fe != null) {
+			c.drawText(fe.getElement().getName(), 0, 0, textP );
+		}
+		
+		if (exit!=null) {
+			c.drawText(exit, 0, 0, textP );
+		}
+		
+		c.restore();
+		
 		mPath.reset();
 		mPath.addCircle(radius, radius , radius,
 				Path.Direction.CCW);

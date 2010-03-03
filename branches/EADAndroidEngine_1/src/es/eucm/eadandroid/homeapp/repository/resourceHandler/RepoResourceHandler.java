@@ -55,7 +55,7 @@ public class RepoResourceHandler {
 	public static void downloadFile(String url_from, String path_to,
 			String fileName, ProgressNotifier pt) {
 
-		URL u = null ;
+		URL u = null;
 
 		try {
 
@@ -138,75 +138,95 @@ public class RepoResourceHandler {
 
 	}
 
-	public static void downloadFileAndUnzip(String url_from,
-			String path_to, String fileName, ProgressNotifier pn) {
+	public static void downloadFileAndUnzip(String url_from, String path_to,
+			String fileName, ProgressNotifier pn) {
 
-			downloadFile(url_from, path_to, fileName, pn);
-			unzip(path_to + fileName);
+		downloadFile(url_from, path_to, fileName, pn);
+		unzip(path_to,fileName);
 
 	}
 
-	private static void unzip(String filePath) {
+	private static void unzip(String filePath, String name) {
+		// TODO la ruta a las carpetas me las tengo que crear cuando instalo
+		// pero por ahora lo dejo aqui
 
-		
-//		String pathfinal = filePath;
-//
-//		(new File(pathfinal)).mkdir();
-//
-//		Enumeration<? extends ZipEntry> entries = null;
-//		ZipFile zipFile = null;
-//
-//		try {
-//
-//			zipFile = new ZipFile(Paths.eaddirectory.ZIPPED_PATH + fileName);
-//
-//			entries = zipFile.entries();
-//
-//			// Vector<ZipEntry> elementos=ordena(entries);
-//
-//			//BufferedOutputStream prueba;
-//
-//			while (entries.hasMoreElements()) {
-//				ZipEntry entry = (ZipEntry) entries.nextElement();
-//
-//				numero = new StringTokenizer(entry.getName(), "/", true);
-//				actual = null;
-//				total = "";
-//
-//				while (numero.hasMoreElements()) {
-//
-//					actual = numero.nextToken();
-//					total = total + actual;
-//					if (!new File(entry.getName()).exists()) {
-//
-//						if (numero.hasMoreElements()) {
-//							total = total + numero.nextToken();
-//							(new File(pathfinal + total)).mkdir();
-//						} else {
-//							// fichero final
-//
-//							prueba = new BufferedOutputStream(
-//									new FileOutputStream(pathfinal + total));
-//
-//							System.err.println("Extracting file: "
-//									+ entry.getName());
-//							copyInputStream(zipFile.getInputStream(entry),
-//									prueba);
-//						}
-//					} else {
-//						total = total + numero.nextToken();
-//					}
-//				}
-//
-//			}
-//
-//			zipFile.close();
-//		} catch (IOException ioe) {
-//			ioe.printStackTrace();
-//			return;
-//		}
-//
-//		(new File(Paths.eaddirectory.ZIPPED_PATH + fileName)).delete();
+
+		StringTokenizer separator = new StringTokenizer(name, ".", true);
+		String game_name = separator.nextToken();
+
+		separator = new StringTokenizer(filePath + game_name, "/", true);
+
+		String partial_path = null;
+		String total_path = separator.nextToken();
+
+		while (separator.hasMoreElements()) {
+
+			partial_path = separator.nextToken();
+			total_path = total_path + partial_path;
+			if (!new File(total_path).exists()) {
+
+				if (separator.hasMoreElements())
+					total_path = total_path + separator.nextToken();
+				else
+					(new File(total_path)).mkdir();
+
+			} else
+				total_path = total_path + separator.nextToken();
+
+		}
+
+		Enumeration<? extends ZipEntry> entries = null;
+		ZipFile zipFile = null;
+
+		try {
+			String location_ead = filePath + name;
+			zipFile = new ZipFile(location_ead);
+
+			entries = zipFile.entries();
+
+			BufferedOutputStream file;
+
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) entries.nextElement();
+
+				separator = new StringTokenizer(entry.getName(), "/", true);
+				partial_path = null;
+				total_path = "";
+
+				while (separator.hasMoreElements()) {
+
+					partial_path = separator.nextToken();
+					total_path = total_path + partial_path;
+					if (!new File(entry.getName()).exists()) {
+
+						if (separator.hasMoreElements()) {
+							total_path = total_path + separator.nextToken();
+							(new File(filePath + game_name + "/" + total_path))
+									.mkdir();
+						} else {
+							
+							file = new BufferedOutputStream(
+									new FileOutputStream(filePath + game_name
+											+ "/" + total_path));
+
+							System.err.println("Extracting file: "
+									+ entry.getName());
+							copyInputStream(zipFile.getInputStream(entry), file);
+						}
+					} else {
+						total_path = total_path + separator.nextToken();
+					}
+				}
+
+			}
+
+			zipFile.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return;
+		}
+
+		(new File(filePath + name)).delete();
 
 	}
 
@@ -221,7 +241,7 @@ public class RepoResourceHandler {
 		in.close();
 		out.close();
 	}
-	
+
 	private static InputStream OpenHttpConnection(String urlString)
 
 	throws IOException {
