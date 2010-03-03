@@ -101,10 +101,7 @@ public abstract class Sound extends Thread {
     /**
      * Stops playing the sound.
      */
-    public void stopPlaying( ) {
-
-        stop = true;
-    }
+    public abstract void stopPlaying( );
 
     /**
      * Finalice and released the resources used for the sound
