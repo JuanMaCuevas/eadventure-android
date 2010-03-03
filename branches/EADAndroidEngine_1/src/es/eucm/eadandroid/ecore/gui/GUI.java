@@ -21,7 +21,7 @@ import es.eucm.eadandroid.ecore.gui.hud.HUD;
 
 public class GUI {
 
-	private static final double MAX_WIDTH_IN_TEXT = 30;
+	private static final double MAX_WIDTH_IN_TEXT = 300;
 	private Transition transition;
 
 	protected static int graphicConfig;
@@ -167,7 +167,7 @@ public class GUI {
 		else CENTER_OFFSET = 0;
 
 		mPaint = new Paint();
-		mPaint.setTextSize(15);
+		mPaint.setTextSize(25);
 		mPaint.setTypeface(Typeface
 				.create(Typeface.SANS_SERIF, Typeface.NORMAL));
 		mPaint.setStrokeWidth(4);
@@ -516,7 +516,7 @@ public class GUI {
 		}
 		// Draw the text
 		mPaint.setAntiAlias(true);
-		g.drawText(string, 50, 60, mPaint);
+		g.drawText(string, realX,realY, mPaint);
 		// g.drawText(string, realX, realY,mPaint);
 	}
 
@@ -727,7 +727,7 @@ public class GUI {
 		// Draw each line of the string array
 		for (String line : strings) {
 			drawString(g, line, x, realY);
-			realY += mPaint.getTextSize();
+			realY =(int) (realY + mPaint.getTextSize());
 		}
 	}
 
