@@ -332,8 +332,7 @@ public class MultimediaManager {
 			Sound sound = soundCache.get(soundId);
 			if (sound != null)
 				{sound.stopPlaying();
-				soundCache.remove(soundId);
-				
+				 soundCache.remove(soundId);			
 				}
 		}
 	}

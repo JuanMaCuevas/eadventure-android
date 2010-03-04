@@ -21,7 +21,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 
 	public static String TAG = "ECoreActivity";
 	
-	private GameSurfaceView surfaceView;
+	private GameSurfaceView gameSurfaceView;
+	private VideoSurfaceView videoSurfaceView;
 	private GameThread gameThread;
 
 	/** Called when the activity is first created. */
@@ -40,15 +41,21 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 		// tell system to use the layout defined in our XML file
 		setContentView(R.layout.game_activity_canvas);
 		
-		surfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
+		gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
 		
-		SurfaceHolder holder = surfaceView.getHolder();
+		SurfaceHolder canvasHolder = gameSurfaceView.getHolder();
 				
 		// register our interest in hearing about changes to our surface
-		holder.addCallback(this);
+		canvasHolder.addCallback(this);
 		
-								
-		gameThread = new GameThread(holder, this, null);
+		videoSurfaceView = (VideoSurfaceView) findViewById(R.id.video_surface);
+		
+		SurfaceHolder videoHolder = videoSurfaceView.getHolder();
+		
+		videoHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+				
+									
+		gameThread = new GameThread(canvasHolder,videoHolder, this, null);
 	
 		String adventureName = (String) this.getIntent().getExtras().get(
 				"AdventureName");

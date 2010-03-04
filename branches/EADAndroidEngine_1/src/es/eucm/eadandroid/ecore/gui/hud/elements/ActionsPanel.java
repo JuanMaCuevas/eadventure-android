@@ -3,6 +3,7 @@ package es.eucm.eadandroid.ecore.gui.hud.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,11 +16,12 @@ import android.graphics.Paint.Style;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
 import es.eucm.eadandroid.common.gui.TC;
-import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalNPC;
 import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.multimedia.MultimediaManager;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 
 public class ActionsPanel {
@@ -47,8 +49,7 @@ public class ActionsPanel {
 
 	private static final int RPANEL_PADDING = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
 	
-	public  int CLOSE_X = TRANSPARENT_PADDING;
-	public  int CLOSE_Y ;
+
 
 	private RectF r;
 	private Paint p;
@@ -56,7 +57,7 @@ public class ActionsPanel {
 
 	/** Grid panel */
 
-	GridPanel gridPanel ; 
+	private GridPanel gridPanel ; 
 	
 	int gridPanelHeight = GridPanel.VERTICAL_ICON_SPACE;
 
@@ -69,10 +70,23 @@ public class ActionsPanel {
 	
 	/** ELEMENT MODEL */
 	
-	FunctionalElement functionalElement = null;
+	private FunctionalElement functionalElement = null;
 	
 	/** BUTTONS **/
-	ActionButtons buttons;
+	private ActionButtons buttons;
+	
+	private Bitmap closeButton;
+	
+	private final static String closeButtonPath = Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/close1.png";
+	
+	private final static int closeButtonWidth = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
+	
+	private static final int CLOSE_X = TRANSPARENT_PADDING;
+	private static int CLOSE_Y ;
+	private static final int CLOSE_WIDTH = closeButtonWidth*2;
+	private static final int CLOSE_BOUNDS_OFFSET = (int) (5 * GUI.DISPLAY_DENSITY_SCALE);
+	
+	private Rect closeBounds ;
 	
     /*
      * Default action buttons, so they don't have to be generated each time
@@ -135,7 +149,12 @@ public class ActionsPanel {
 		closeP.setStyle(Style.FILL_AND_STROKE);
 
 		CLOSE_Y =  APANEL_HEIGHT - TRANSPARENT_PADDING - RPANEL_PADDING - (int)r.height();
+		
+		Bitmap auxCloseButton = MultimediaManager.getInstance( ).loadImage(closeButtonPath , MultimediaManager.IMAGE_MENU );
+		
+    	closeButton = Bitmap.createScaledBitmap(auxCloseButton , closeButtonWidth *2  ,  closeButtonWidth *2  , false);
 
+    	closeBounds = new Rect(CLOSE_X - CLOSE_BOUNDS_OFFSET,CLOSE_Y - CLOSE_BOUNDS_OFFSET ,CLOSE_X + CLOSE_WIDTH + CLOSE_BOUNDS_OFFSET , CLOSE_Y + CLOSE_WIDTH + CLOSE_BOUNDS_OFFSET);
 
 	}
 	
@@ -277,7 +296,10 @@ public class ActionsPanel {
 				p);
 		c.drawRoundRect(r, ROUNDED_RECT_ROUND_RADIO, ROUNDED_RECT_ROUND_RADIO,
 				paintBorder);
-		c.drawCircle(0, 0, 15f * GUI.DISPLAY_DENSITY_SCALE, closeP);
+		c.translate(-closeButtonWidth/2,-closeButtonWidth/2);
+		c.drawBitmap(closeButton, 0, 0, null);
+		c.translate(closeButtonWidth/2, closeButtonWidth/2);
+	//	c.drawCircle(0, 0, 15f * GUI.DISPLAY_DENSITY_SCALE, closeP);
 		c.translate(10 * GUI.DISPLAY_DENSITY_SCALE, 20 * GUI.DISPLAY_DENSITY_SCALE);
 		
 		if( functionalElement instanceof FunctionalItem ) 
@@ -341,4 +363,9 @@ public class ActionsPanel {
 		return functionalElement;
 	}
 
+	public boolean isInCloseButton(int srcX, int srcY) {
+
+		return closeBounds.contains(srcX, srcY);
+	}
+	
 }

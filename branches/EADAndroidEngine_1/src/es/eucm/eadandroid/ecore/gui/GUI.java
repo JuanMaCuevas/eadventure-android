@@ -68,7 +68,9 @@ public class GUI {
 	public static Matrix scaleMatrix;
 
 	/** Handle to the surface manager object we interact with */
-	private SurfaceHolder mSurfaceHolder;
+	private SurfaceHolder canvasSurfaceHolder;
+	private SurfaceHolder videoSurfaceHolder;
+	
 	/** Context of the activity creating the thread */
 	private Context mContext;
 
@@ -126,19 +128,21 @@ public class GUI {
 
 	private int loading;
 
+
 	public FPS getfps() {
 		return fps;
 	}
 
-	private GUI(SurfaceHolder mSurfaceHolder) {
-		this.mSurfaceHolder = mSurfaceHolder;
+	private GUI(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder) {
+		this.canvasSurfaceHolder = mSurfaceHolder;
+		this.videoSurfaceHolder = videoHolder;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
 	}
 
-	public static void create(SurfaceHolder mSurfaceHolder) {
+	public static void create(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder) {
 
-		instance = new GUI(mSurfaceHolder);
+		instance = new GUI(mSurfaceHolder,videoHolder);
 
 	}
 
@@ -187,8 +191,8 @@ public class GUI {
 	public Canvas getGraphics() {
 		return canvascpy;
 	}
-	public SurfaceHolder getSurfaceHolder() {
-		return mSurfaceHolder;
+	public SurfaceHolder getVideoSurfaceHolder() {
+		return videoSurfaceHolder;
 	}
 
 	public void endDraw() {
@@ -203,8 +207,8 @@ public class GUI {
 		Canvas canvas = null;
 		
 		try {
-			canvas = mSurfaceHolder.lockCanvas(null);
-			synchronized (mSurfaceHolder) {
+			canvas = canvasSurfaceHolder.lockCanvas(null);
+			synchronized (canvasSurfaceHolder) {
 				
 				canvas.drawBitmap(finalBmp, 0, 0, null);
 
@@ -216,7 +220,7 @@ public class GUI {
 			// during the above, we don't leave the Surface in an
 			// inconsistent state
 			if (canvas != null) {
-				mSurfaceHolder.unlockCanvasAndPost(canvas);
+				canvasSurfaceHolder.unlockCanvasAndPost(canvas);
 			}
 		}
 		

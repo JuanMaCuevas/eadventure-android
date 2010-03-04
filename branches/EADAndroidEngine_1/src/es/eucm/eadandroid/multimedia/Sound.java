@@ -69,13 +69,10 @@ public abstract class Sound extends Thread {
         stop = false;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Thread#run()
-     */
+
     @Override
     public void run( ) {
-//TODO AUDIO
+
         boolean playedAtLeastOnce = false;
         while( !stop && ( loop || !playedAtLeastOnce ) ) {
             playOnce( );

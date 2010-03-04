@@ -21,10 +21,7 @@
 		<activity android:name=".homeapp.repository.RepositoryActivity"></activity>
 		<activity android:name=".homeapp.repository.DetailedGameActivity"></activity>
 		
-	<activity android:name=".debug.tests"><intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter></activity>
+	
 <activity android:name=".ecore.ECoreActivity"  android:screenOrientation="landscape"></activity>
 </application>
 	

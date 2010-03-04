@@ -51,11 +51,7 @@ public class SoundAndroidMp3 extends Sound {
 	}
 
 	public synchronized void stopPlaying() {
-		mMediaPlayer.stop();
-		mMediaPlayer.release();
 		 stop = true;
-//		mMediaPlayer = null;
-
 	}
 
 	@Override

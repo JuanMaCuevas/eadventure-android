@@ -52,7 +52,7 @@ public class ActionsState extends HUDstate {
 			Game.getInstance().getActionManager().processAction(ab.getType() ,actionsPanel.getElementInfo());
 			stateContext.setState(HUDstate.HiddenState,null);
 		}
-		else if (srcX < 50 && srcY < 50)
+		else if (actionsPanel.isInCloseButton(srcX,srcY))
 			stateContext.setState(HUDstate.HiddenState,null);
 		
 		return true;

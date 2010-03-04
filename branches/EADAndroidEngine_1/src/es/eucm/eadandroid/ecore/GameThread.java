@@ -19,7 +19,7 @@ public class GameThread extends Thread {
 
 	private String advPath;
 
-	public GameThread(SurfaceHolder holder, Context context, Handler handler) {
+	public GameThread(SurfaceHolder holder, SurfaceHolder videoHolder, Context context, Handler handler) {
 
 //		ResourceHandler.createInstance();
 		Game.create();
@@ -35,7 +35,7 @@ public class GameThread extends Thread {
 		
 		float scaleDensity = displayMetrics.density;
 				
-		GUI.create(holder);
+		GUI.create(holder,videoHolder);
 		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 		
 	}
