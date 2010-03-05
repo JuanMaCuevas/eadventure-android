@@ -8,6 +8,7 @@ public class Polygon {
 
     // Polygon coodinates.
     private int[] polyY, polyX;
+    private int points;
 
     // Number of sides in the polygon.
     private int polySides;
@@ -20,9 +21,7 @@ public class Polygon {
      */
     
     
-    public Polygon() {
-		
-	}
+  
     
     
     public Polygon( int[] px, int[] py, int ps ) {
@@ -32,6 +31,15 @@ public class Polygon {
         polySides = ps;
     }
     
+	public Polygon(int maxSize) {
+		// TODO Auto-generated constructor stub
+		polyX = new int[maxSize];
+		polyY = new int[maxSize];
+		points = 0;
+		polySides = -1;
+	}
+
+
 	/**
      * Checks if the Polygon contains a point.
      * @see "http://alienryderflex.com/polygon/"
@@ -76,9 +84,10 @@ public class Polygon {
 
 	public void addPoint(int x, int y) {
 		
-		    polyX[0] = x;
-	        polyY[0] = y;
-	        polySides = 2;
+		    polyX[points] = x;
+	        polyY[points] = y;
+	        points++;
+	        polySides++;
 		
 	}  
 }

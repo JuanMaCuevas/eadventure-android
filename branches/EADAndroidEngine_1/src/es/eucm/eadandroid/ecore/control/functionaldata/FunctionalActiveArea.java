@@ -101,7 +101,7 @@ public class FunctionalActiveArea extends FunctionalItem {
         image = bImagenTransparente;
 
         if( !activeArea.isRectangular( ) ) {
-            polygon = new Polygon( );
+            polygon = new Polygon(activeArea.getPoints( ).size() );
             for( Point point : activeArea.getPoints( ) ) {
                 polygon.addPoint( point.x, point.y );
             }

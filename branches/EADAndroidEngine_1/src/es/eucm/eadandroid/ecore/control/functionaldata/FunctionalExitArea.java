@@ -99,7 +99,7 @@ public class FunctionalExitArea extends FunctionalItem {
         image = bImagenTransparente;
 
         if( !exit.isRectangular( ) ) {
-            polygon = new Polygon( );
+            polygon = new Polygon(exit.getPoints( ).size());
             for( Point point : exit.getPoints( ) ) {
                 polygon.addPoint( point.x, point.y );
             }

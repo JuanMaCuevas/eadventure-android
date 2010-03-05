@@ -548,7 +548,7 @@ public class Exit implements Cloneable, Documented, Rectangle, Positioned {
         if( rectangular )
             return x > getX0( ) && x < getX1( ) && y > getY0( ) && y < getY1( );
         else {
-            Polygon polygon = new Polygon( );
+            Polygon polygon = new Polygon(getPoints().size());
             for( Point point : getPoints( ) ) {
                 polygon.addPoint( point.x, point.y );
             }
