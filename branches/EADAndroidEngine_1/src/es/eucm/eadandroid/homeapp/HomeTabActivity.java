@@ -1,21 +1,17 @@
 package es.eucm.eadandroid.homeapp;
 
-import java.io.File;
-
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.TabHost;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity;
 import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 import es.eucm.eadandroid.homeapp.repository.RepositoryActivity;
-import es.eucm.eadandroid.res.filefilters.EADFileFilter;
 
 public class HomeTabActivity extends TabActivity {
 
-	String adventures[];
+
 	private TabHost mTabHost;
 
 	@Override
@@ -46,9 +42,6 @@ public class HomeTabActivity extends TabActivity {
 				new Intent(this, PreferencesActivity.class)));
 
 		mTabHost.setCurrentTab(0);
-
-		File sdCard = Environment.getExternalStorageDirectory();
-		adventures = sdCard.list(new EADFileFilter());
 
 	}
 

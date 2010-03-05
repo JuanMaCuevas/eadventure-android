@@ -86,9 +86,6 @@ public class LocalGamesActivity extends ListActivity {
 
 		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
 
-		// Inform the list we provide context menus for items
-		this.getListView().setOnCreateContextMenuListener(this);
-
 		searchForGames();
 
 	}

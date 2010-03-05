@@ -118,5 +118,14 @@ public class DetailedGameActivity extends Activity {
 		
 		
 	}
+	
+	
+	@Override
+	protected void onStop () {
+		super.onStop();
+		
+		ActivityPipe.add(this.game);
+		
+	}
 
 }
