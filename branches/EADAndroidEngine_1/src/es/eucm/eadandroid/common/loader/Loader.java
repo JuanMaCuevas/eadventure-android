@@ -156,6 +156,7 @@ public class Loader {
 
                 // Create a new factory
                 SAXParserFactory factory = SAXParserFactory.newInstance( );
+                //DTD_ISSUE
               //  factory.setValidating( true );
                 SAXParser saxParser = factory.newSAXParser();
 
@@ -243,7 +244,8 @@ public class Loader {
 
                     // Create a new factory
                     SAXParserFactory factory = SAXParserFactory.newInstance( );
-                   // factory.setValidating( validate );
+  //DTD_ISSUE
+  //                  factory.setValidating( validate );
                     SAXParser saxParser = factory.newSAXParser( );
 
                     // Parse the data and close the data
@@ -253,13 +255,13 @@ public class Loader {
 
             }
             catch( ParserConfigurationException e ) {
-            	Log.e(TAG+".loadChapterData",e.toString());
+            	e.printStackTrace();
             }
             catch( SAXException e ) {
-            	Log.e(TAG+".loadChapterData",e.toString());
+            	e.printStackTrace();
             }
             catch( IOException e ) {
-            	Log.e(TAG+".loadChapterData",e.toString());
+            	e.printStackTrace();
             }
         }
         return currentChapter;

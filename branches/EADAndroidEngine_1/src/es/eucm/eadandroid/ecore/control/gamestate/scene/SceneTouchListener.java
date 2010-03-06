@@ -141,6 +141,7 @@ public class SceneTouchListener implements TouchListener , TouchListener.CallBac
                 handled = this.onScrollPressed(mCurrentDownEvent, ev, scrollX, scrollY);
                 mLastMotionX = x;
                 mLastMotionY = y;
+                mPressedOrAndMoved=true; // A–adido para que tire el listener , partiendo de eventos on move , y no teniendo en cuenta que el primer evento sea DOWN.
             }
             break;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_games">No games found</string>
+    <string name="no_games">No SDCard mounted</string>
     <string name="app_name">&lt;e-Ad&gt;</string>
 
 <string name="menu_install">Install games</string>

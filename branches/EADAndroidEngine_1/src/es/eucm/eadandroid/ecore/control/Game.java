@@ -67,9 +67,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	private String advPath;
 	private boolean mRun = false;
 
-	
-	/* DESKTOP FIELDS */
-	
 	 /**
      * Constant for loading state
      */

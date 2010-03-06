@@ -1,8 +1,8 @@
-#Fri Feb 19 12:20:02 CET 2010
+#Sat Mar 06 17:42:55 CET 2010
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
 org.eclipse.jdt.core.compiler.compliance=1.5
 org.eclipse.jdt.core.compiler.source=1.5
 org.eclipse.jdt.core.compiler.taskCaseSensitive=enabled
-org.eclipse.jdt.core.compiler.taskPriorities=NORMAL,HIGH,NORMAL,NORMAL,NORMAL,LOW,LOW,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL
-org.eclipse.jdt.core.compiler.taskTags=TODO,FIXME,XXX,PORT,GUIPORT,PORTCOMMENT,NOTPORTED,HELPCODE,OLD,ADAPTATION,ASSESSMENT,BOOK,GAMESTATE,EVENTS,OPTIMIZE
+org.eclipse.jdt.core.compiler.taskPriorities=NORMAL,HIGH,NORMAL,NORMAL,NORMAL,LOW,LOW,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL,NORMAL
+org.eclipse.jdt.core.compiler.taskTags=TODO,FIXME,XXX,PORT,GUIPORT,PORTCOMMENT,NOTPORTED,HELPCODE,OLD,ADAPTATION,ASSESSMENT,BOOK,GAMESTATE,EVENTS,OPTIMIZE,DTD_ISSUE

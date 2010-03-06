@@ -148,7 +148,11 @@ public class ActiveAreaSubParser extends SubParser {
 
                 int x = 0, y = 0, width = 0, height = 0;
                 String id = null;
-                boolean rectangular = false;
+                //DTD_ISSUE
+              //  boolean rectangular = false; changed to
+                boolean rectangular = true;
+              ///////////////////////////////////////
+                
                 int influenceX = 0, influenceY = 0, influenceWidth = 0, influenceHeight = 0;
                 boolean hasInfluence = false;
 

@@ -17,6 +17,7 @@ import es.eucm.eadandroid.ecore.gui.GUI;
 public class Magnifier {
 
 
+
 	/**
 	 * MAGNIFIER SATIC DESC
 	 */
@@ -33,6 +34,7 @@ public class Magnifier {
 	private boolean showing;
 	private Rect magBounds;
 	private int radius;
+	public static int CENTER_OFFSET;
 
 
 	/**
@@ -71,6 +73,7 @@ public class Magnifier {
 	public Magnifier(int radius, int frameWidth, float zoom , Bitmap bmp) {
 
 		this.radius = radius;
+		CENTER_OFFSET = radius;
 		
 		magBounds = new Rect(0,0, radius * 2, radius * 2);
 		magBoundsIntersected = new Rect(0,0, radius * 2, radius * 2);

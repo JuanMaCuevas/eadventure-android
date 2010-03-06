@@ -35,6 +35,7 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffect;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalMoveObjectEffect;
@@ -84,7 +85,7 @@ public class GameStateRunEffects extends GameState {
         game.getActionManager( ).setExitCustomized( null);
         
         // Toggle the HUD off and set the default cursor
-        GUI.getInstance( ).toggleHud( false );
+   //     GUI.getInstance( ).toggleHud( false );
  //       GUI.getInstance( ).setDefaultCursor( );
 
         if( game.getFunctionalScene( ) != null )
@@ -133,7 +134,7 @@ public class GameStateRunEffects extends GameState {
                 FunctionalEffect currentEffect = game.getFirstElementOfTop( );
                 if( currentEffect == null ) {
                     System.gc( );
-                    GUI.getInstance( ).toggleHud( true );
+           //         GUI.getInstance( ).toggleHud( true );
                     stop = true;
                     // Look if there are some stored conversation state, and change to correct one.               
                     game.evaluateState( );
@@ -159,7 +160,7 @@ public class GameStateRunEffects extends GameState {
             //      || mouseClickedButton == MouseEvent.BUTTON3 )
             // Therefore you can skip effects with left button
             if ( skip && currentExecutingEffect.canSkip())  {
-                System.out.println( "!!!!! SKIPPING :"+currentExecutingEffect.getClass( ).getName( ) );
+                Log.d("SKIPING" , "!!!!! SKIPPING :"+currentExecutingEffect.getClass( ).getName( ) );
                 currentExecutingEffect.skip();
                 
             }
@@ -188,7 +189,7 @@ public class GameStateRunEffects extends GameState {
     @Override
 	public boolean processTouchEvent(MotionEvent event) {
 
-    	skip = (event.getAction() == MotionEvent.ACTION_DOWN);
+    	skip = (event.getAction() == MotionEvent.ACTION_UP);
     	
     	return true;	
     	

@@ -8,7 +8,7 @@
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
 		android:theme="@android:style/Theme.NoTitleBar" android:debuggable="true">
 		
-		<activity android:label="@string/app_name" android:name=".homeapp.InitSplashActivity">
+		<activity android:label="@string/app_name" android:name=".homeapp.InitSplashActivity" android:alwaysRetainTaskState="true">
 			
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -16,9 +16,9 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".homeapp.HomeTabActivity"></activity>
-		<activity android:name=".homeapp.localgames.LocalGamesActivity"></activity>
-		<activity android:name=".homeapp.preferences.PreferencesActivity"></activity>
-		<activity android:name=".homeapp.repository.RepositoryActivity"></activity>
+		<activity android:name=".homeapp.localgames.LocalGamesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true"></activity>
+		<activity android:name=".homeapp.preferences.PreferencesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true"></activity>
+		<activity android:name=".homeapp.repository.RepositoryActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true"></activity>
 		<activity android:name=".homeapp.repository.DetailedGameActivity"></activity>
 		
 	

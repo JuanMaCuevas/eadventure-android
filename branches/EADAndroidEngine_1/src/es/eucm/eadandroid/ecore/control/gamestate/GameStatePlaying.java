@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Queue;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.ecore.control.Game;
@@ -153,24 +154,35 @@ public class GameStatePlaying extends GameState {
 		while ((e = vEvents.poll()) != null) {
 			switch (e.getAction()) {
 			case UIEvent.PRESSED_ACTION:
-				GUI.getInstance().processPressed(e);
+				
+				game.getActionManager().setExitCustomized(null);
+		        game.getActionManager( ).setElementOver( null );
+				if (!GUI.getInstance().processPressed(e))
+					game.getActionManager( ).pressed(e);
+				Log.w("Events", "PRESSED");
 				break;
 			case UIEvent.SCROLL_PRESSED_ACTION:
+				
+				Log.w("Events", "SCROLL_PRESSED");
 				
 				game.getActionManager().setExitCustomized(null);
 		        game.getActionManager( ).setElementOver( null );
 				
 				if (!GUI.getInstance().processScrollPressed(e)) 
 					game.getActionManager( ).pressed(e);
-				break;
+				break;	
 			case UIEvent.UNPRESSED_ACTION:
+				
+				Log.w("Events", "UNPRESSED");
 				if (!GUI.getInstance().processUnPressed(e))
 					 game.getActionManager( ).unPressed(e);
 				break;		
 			case UIEvent.FLING_ACTION:
+				Log.w("Events", "FLING");
 				GUI.getInstance().processFling(e);
 				break;	
 			case UIEvent.TAP_ACTION: 
+				Log.w("Events", "TAP");
 				if (!GUI.getInstance().processTap(e)) {
 					game.getActionManager().tap((TapEvent)e);
 				}

@@ -47,6 +47,7 @@ import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.ecore.gui.hud.elements.ActionButton;
+import es.eucm.eadandroid.ecore.gui.hud.elements.Magnifier;
 
 /**
  * Updated feb 2008: cursors
@@ -273,9 +274,10 @@ public class ActionManager {
 
 		MotionEvent e = ((UnPressedEvent) ev).event;
 
-		Game.getInstance().getFunctionalScene().mouseClicked(
-				(int) ((e.getX() - GUI.CENTER_OFFSET) / GUI.SCALE_RATIO),
-				(int) ((e.getY()) / GUI.SCALE_RATIO));
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
+		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
+		
+		Game.getInstance().getFunctionalScene().mouseClicked(x,y);
 
 	}
 
@@ -295,18 +297,17 @@ public class ActionManager {
 			e = ((PressedEvent) ev).event;
 		else
 			e = ((ScrollPressedEvent) ev).eventDst;
-
-//		e.setLocation(e.getX() + Magnifier.CENTER_OFFSET , e.getY() + Magnifier.CENTER_OFFSET);
+				
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
+		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
 		
 		Game game = Game.getInstance();
 		FunctionalScene functionalScene = game.getFunctionalScene();
 		if (functionalScene == null)
 			return;
 
-		FunctionalElement elementInside = functionalScene.getElementInside(
-				(int) e.getX(), (int) e.getY(), dragElement);
-		Exit exit = functionalScene.getExitInside((int) e.getX(), (int) e
-				.getY());
+		FunctionalElement elementInside = functionalScene.getElementInside(x,y, dragElement);
+		Exit exit = functionalScene.getExitInside(x,y);
 		
 		if (elementInside !=null) 
 		Log.d("PRESSED",elementInside.getElement().getName());
@@ -316,8 +317,8 @@ public class ActionManager {
 		
 
 		if (dragElement != null) {
-			dragElement.setX(e.getX());
-			dragElement.setY(e.getY());
+			dragElement.setX(x);
+			dragElement.setY(y);
 		}
 
 		if (elementInside != null) {

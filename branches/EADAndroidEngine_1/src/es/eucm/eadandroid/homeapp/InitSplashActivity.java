@@ -13,7 +13,6 @@ import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class InitSplashActivity extends Activity {
 	
@@ -102,6 +101,11 @@ public class InitSplashActivity extends Activity {
 
 		Intent i = new Intent(this, HomeTabActivity.class);
 		startActivity(i);
+		
+		this.finish();
+		
+	//	overridePendingTransition(R.anim.fade, R.anim.hold);
+		overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 
 	}
 

@@ -1121,8 +1121,8 @@ public class GUI {
 		return WINDOW_HEIGHT;
 	}
 
-	public void toggleHud(boolean b) {
-
-	}
+//	public void toggleHud(boolean b) {
+//
+//	}
 
 }
