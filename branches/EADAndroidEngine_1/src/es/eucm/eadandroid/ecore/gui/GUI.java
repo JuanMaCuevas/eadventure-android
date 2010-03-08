@@ -22,6 +22,12 @@ import es.eucm.eadandroid.ecore.gui.hud.HUD;
 public class GUI {
 
 	private static final double MAX_WIDTH_IN_TEXT = 300;
+	
+	/**
+     * Number of response lines to display
+     */
+    private static final int RESPONSE_TEXT_NUMBER_LINES = 9;
+    
 	private Transition transition;
 
 	protected static int graphicConfig;
@@ -948,17 +954,20 @@ public class GUI {
 		return minY;
 	}
 
-	/*
-    *//**
+	
+	
+	/**
 	 * Returns the number of lines of the response text block
 	 * 
 	 * @return Number of response lines
 	 */
-	/*
-	 * public int getResponseTextNumberLines( ) {
-	 * 
-	 * return hud.getResponseTextNumberLines( ); }
-	 *//**
+	
+	  public int getResponseTextNumberLines( ) {
+	  
+	  return RESPONSE_TEXT_NUMBER_LINES; }
+	 
+	
+	/**
 	 * Returns the X point of the response block text
 	 * 
 	 * @return X point of the response block text
@@ -1119,6 +1128,11 @@ public class GUI {
 
 	public int getGameAreaHeight() {
 		return WINDOW_HEIGHT;
+	}
+
+	public int getAscent() {
+		// TODO Auto-generated method stub
+		return (int) mPaint.ascent();
 	}
 
 //	public void toggleHud(boolean b) {
