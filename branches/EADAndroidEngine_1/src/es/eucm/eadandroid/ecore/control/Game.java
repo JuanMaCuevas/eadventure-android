@@ -1425,6 +1425,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 break;
             case STATE_BOOK:
                currentState = new GameStateBook( );
+               currentState.registerTouchListener(sceneTouchListener);
+
                 break;
             case STATE_CONVERSATION:
                 currentState = new GameStateConversation( );

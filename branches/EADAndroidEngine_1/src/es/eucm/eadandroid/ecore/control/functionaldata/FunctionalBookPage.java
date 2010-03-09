@@ -182,9 +182,9 @@ public class FunctionalBookPage {
         //c.drawBitmap(background, 0, 0, null);
         //c.drawBitmap( background, 0, 0, background.getWidth(  ), background.getHeight(  ) );
         if( image != null )
-        	GUI.getInstance( ).addBackgroundToDraw( image, 0 );
+        	//GUI.getInstance( ).addForegroundToDraw(image, 0);
 
-            //c.drawBitmap(image, 0, 0,null);//c.drawImage( image, bookPage.getMargin( ), bookPage.getMarginTop( ), this.getWidth( ) - bookPage.getMarginEnd( ), this.getHeight( ) - bookPage.getMarginBottom( ), 0, 0, image.getWidth( null ), image.getHeight( null ), null );
+            c.drawBitmap(image, 0, 0,null);//c.drawImage( image, bookPage.getMargin( ), bookPage.getMarginTop( ), this.getWidth( ) - bookPage.getMarginEnd( ), this.getHeight( ) - bookPage.getMarginBottom( ), 0, 0, image.getWidth( null ), image.getHeight( null ), null );
        
         
     }
@@ -219,7 +219,7 @@ public class FunctionalBookPage {
 
 	public boolean isValid() {
 		// TODO Auto-generated method stub
-		return false;
+		return isValid;
 	}
 
 

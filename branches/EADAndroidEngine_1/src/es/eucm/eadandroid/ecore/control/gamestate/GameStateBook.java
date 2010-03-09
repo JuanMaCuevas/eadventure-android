@@ -39,8 +39,10 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.MotionEvent;
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
+import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalBook;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalStyledBook;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
@@ -85,10 +87,11 @@ public class GameStateBook extends GameState {
     	if( book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
             Canvas c = GUI.getInstance( ).getGraphics( );
             //c.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
+            
 
             ( (FunctionalStyledBook) book ).draw( c );
 
-            c.drawColor( Color.WHITE );
+            //c.drawColor( Color.WHITE );
             //g.drawString(Integer.toString( fps ), 780, 14);
 
             GUI.getInstance( ).endDraw( );
@@ -96,8 +99,49 @@ public class GameStateBook extends GameState {
            // c.dispose( );
     	}
     }
+    
+    
+    /**
+	 * Called to process touch screen events.
+	 * 
+	 * @param event
+	 * @return
+	 */
+    @Override
+	public boolean processTouchEvent(MotionEvent event) {
+		
+    	if( book.isInLastPage( ) ) {
+           // GUI.getInstance( ).restoreFrame( );
+            // this method also change the state to run effects
+            FunctionalEffects.storeAllEffects( new Effects( ) );
+            game.setState( Game.STATE_RUN_EFFECTS );
+        }
+        else
+            book.nextPage( );
+			
+			
+			/*
+			if( book.isInPreviousPage( e.getX( ), e.getY( ) ) )
+                book.previousPage( );
 
-       //EVENTS
+            else if( book.isInNextPage( e.getX( ), e.getY( ) ) ) {
+
+                if( book.isInLastPage( ) ) {
+                    GUI.getInstance( ).restoreFrame( );
+                    // this method also change the state to run effects
+                    FunctionalEffects.storeAllEffects( new Effects( ) );
+                    //game.setState( Game.STATE_RUN_EFFECTS );
+                }
+                else
+                    book.nextPage( );
+            }*/
+			
+			
+			
+
+		return true;
+	}
+      
   /*  @Override
     public void mouseClicked( MouseEvent e ) {
 

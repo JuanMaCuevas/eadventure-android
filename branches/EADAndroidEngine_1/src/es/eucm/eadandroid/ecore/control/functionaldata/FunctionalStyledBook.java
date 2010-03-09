@@ -131,11 +131,15 @@ public class FunctionalStyledBook extends FunctionalBook {
     
     
     public void draw( Canvas c ) {
-    	functionalPages.get(currentPage).paint(c);
     	
+    	//GUI.getInstance( ).addBackgroundToDraw( background, 0 );
+
     	
     	
     	c.drawBitmap(background, 0, 0, null);
+    	
+    	functionalPages.get(currentPage).paint(c);
+    	
         //g.drawImage( background, 0, 0, background.getWidth( null ), background.getHeight( null ), null );
 
     }
