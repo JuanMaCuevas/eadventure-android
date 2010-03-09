@@ -1,28 +1,28 @@
 package es.eucm.eadandroid.homeapp.localgames;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
+import android.widget.Toast;
 import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
-import es.eucm.eadandroid.common.data.adventure.DescriptorData;
-import es.eucm.eadandroid.common.data.chapter.Chapter;
-import es.eucm.eadandroid.common.loader.Loader;
-import es.eucm.eadandroid.common.loader.incidences.Incidence;
 import es.eucm.eadandroid.ecore.ECoreActivity;
-import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
+import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
 
 /**
  * @author Alvaro
@@ -30,17 +30,20 @@ import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
  */
 public class LocalGamesActivity extends ListActivity {
 
-
 	public static final String TAG = "LocalGamesActivity";
 
-	ProgressDialog dialog;
+	private String[] advList = null;
 
-	String[] advList = null;
+	private ArrayList<GameInfo> m_games;
+	private LocalGamesListAdapter m_adapter;
+
+	LayoutAnimationController controller;
+
+	private Menu mMenu;
 
 	/**
-	 * Local games activity handler messages . Handled by {@link
-	 * LGActivityHandler}
-	 * Defines the messages handled by this Activity
+	 * Local games activity handler messages . Handled by
+	 * {@link LGActivityHandler} Defines the messages handled by this Activity
 	 */
 	public class LGAHandlerMessages {
 
@@ -57,9 +60,6 @@ public class LocalGamesActivity extends ListActivity {
 		@Override
 		/**    * Called when a message is sent to Engines Handler Queue **/
 		public void handleMessage(Message msg) {
-
-			dialog.dismiss();
-			setContentView(R.layout.local_games_activity);
 
 			switch (msg.what) {
 
@@ -86,38 +86,68 @@ public class LocalGamesActivity extends ListActivity {
 
 		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
 
+		setLayout();
+
 		searchForGames();
 
+	}
+	
+	private void setLayout() {
+		setContentView(R.layout.local_games_activity);
+
+		m_games = new ArrayList<GameInfo>();
+		m_adapter = new LocalGamesListAdapter(this,
+				R.layout.local_games_actvitiy_listitem, m_games);
+		setListAdapter(m_adapter);
+
+		AnimationSet set = new AnimationSet(true);
+
+		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+		animation.setDuration(500);
+		set.addAnimation(animation);
+
+		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		animation.setDuration(100);
+		set.addAnimation(animation);
+
+		controller = new LayoutAnimationController(set, 0.5f);
+
+		getListView().setLayoutAnimation(controller);
+		getListView().setTextFilterEnabled(true);
+		
+	
 	}
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		
-		String selectedAdventure = this.getListView().getItemAtPosition(position)
-		.toString();
-		
+
+		GameInfo selectedAdventure = (GameInfo) this.getListView()
+				.getItemAtPosition(position);
+
 		Intent i = new Intent(this, ECoreActivity.class);
-		i.putExtra("AdventureName", selectedAdventure);
-		
-		Log.d("Path",selectedAdventure);
+		i.putExtra("AdventureName", selectedAdventure.getGameTitle());
+
 		this.startActivity(i);
-		
 
 	}
 
 	private void insertAdventuresToList(String[] advList) {
 
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, advList));
-		getListView().setTextFilterEnabled(true);
+		setLayout();
+		
+		for (int i = 0; i < advList.length; i++)
+			m_games.add(new GameInfo(advList[i], "", "", null, null));
+
+		m_adapter.notifyDataSetChanged();
 
 	}
 
 	/** Starts SearchGamesThread -> searches for ead games */
 	private void searchForGames() {
 
-		dialog = ProgressDialog.show(this, "", "Searching for ead games...",
-				true);
+		m_games.clear();
 		SearchGamesThread t = new SearchGamesThread(this, LGActivityHandler);
 		t.start();
 
@@ -125,8 +155,28 @@ public class LocalGamesActivity extends ListActivity {
 
 	private void showAlert(String msg) {
 
-		new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
-				null).show();
+		// new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
+		// null).show();
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Hold on to this
+		mMenu = menu;
+
+		// Inflate the currently selected menu XML resource.
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.title_icon, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		searchForGames();
+		return true;
 
 	}
 

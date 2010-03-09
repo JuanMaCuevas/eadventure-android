@@ -13,16 +13,18 @@ public class GameInfo implements Comparable<GameInfo> , Serializable {
 	private String gameTitle = "";
 	private String gameDescription = "";
 	private String eadUrl;
+	private Bitmap imageIcon;
 	private Bitmap image;
 	private String gameFileName;
 
 
-	public GameInfo(String ti, String desc, String eadURL, Bitmap imageBitmap) {
+	public GameInfo(String ti, String desc, String eadURL, Bitmap imageIcon, Bitmap image) {
 
 		gameDescription = desc;
 		gameTitle = ti;
 		eadUrl = eadURL;
-		image = imageBitmap;
+		this.imageIcon = imageIcon;
+		this.image = image;
 		
 		int last = eadURL.lastIndexOf("/");
 		gameFileName = eadURL.substring(last + 1);
@@ -63,6 +65,10 @@ public class GameInfo implements Comparable<GameInfo> , Serializable {
 	}
 
 
+	public Bitmap getImageIcon() {
+		return imageIcon;
+	}
+	
 	public Bitmap getImage() {
 		return image;
 	}

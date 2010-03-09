@@ -1,67 +1,97 @@
 package es.eucm.eadandroid.homeapp.repository;
 
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.homeapp.localgames.LocalGamesListAdapter;
 import es.eucm.eadandroid.homeapp.repository.connection.RepositoryServices;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
 import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier.ProgressMessage;
-import es.eucm.eadandroid.utils.ActivityPipe;
 
 public class RepositoryActivity extends ListActivity {
-	
+
 	static final int DIALOG_UPDATING_REPO_ID = 0;
 	static final int DIALOG_ERROR_ID = 1;
 
 	private RepositoryDatabase db;
 	private RepositoryServices rs;
+
+	private ProgressDialog pd;
+
+	private LocalGamesListAdapter m_adapter;
+
+	ViewFlipper mFlipper;
 	
-	private  ProgressDialog pd;
+	private GameInfo selectedGame = null;
+	
+	private Menu mMenu;
+	
+	ProgressDialog progressDialog;
 
 	private Handler RAHandler = new Handler() {
 		@Override
-		/*   * Called when a message is sent to Engines Handler Queue */
+		/*    * Called when a message is sent to Engines Handler Queue */
 		public void handleMessage(Message msg) {
 
 			String m = null;
-			int p;
-
+			int perc;
+			
+			ProgressDialog p = null;
+			
+			if (pd.isShowing())
+				p = pd;
+			else if (progressDialog.isShowing())
+				p = progressDialog;
+				 
+				 
 			switch (msg.what) {
 
 			case ProgressMessage.PROGRESS_PERCENTAGE:
 
-				pd.show();
+
+				p.show();
 				m = msg.getData().getString("msg");
-				p = msg.getData().getInt("ptg");
-				Log.d("progressDialog", String.valueOf(p));
-				pd.setProgress(p);
-				pd.setMessage(m);
+				perc = msg.getData().getInt("ptg");
+				p.setProgress(perc);
+				p.setMessage(m);
 				break;
 
 			case ProgressMessage.PROGRESS_FINISHED:
 
 				m = msg.getData().getString("msg");
-				pd.setProgress(100);
-				pd.setMessage(m);
+				p.setProgress(100);
+				p.setMessage(m);
 				databaseUpdated();
-				pd.dismiss();
+				p.dismiss();
 				break;
 
 			case ProgressMessage.PROGRESS_ERROR:
 
 				m = msg.getData().getString("msg");
-				pd.setProgress(100);
-				pd.setMessage(m);
-				pd.dismiss();
+				p.setProgress(100);
+				p.setMessage(m);
+				p.dismiss();
 
 				break;
 
@@ -71,73 +101,158 @@ public class RepositoryActivity extends ListActivity {
 
 	};
 
+
+
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		
-		this.showDialog(RepositoryActivity.DIALOG_UPDATING_REPO_ID);
-			
+
+		pd = ProgressDialog.show(this, "Please wait...", "Retrieving data ...",
+				false);
+		
+
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		progressDialog.setCancelable(false);
+
 		db = new RepositoryDatabase();
 		rs = new RepositoryServices();
-
+		
 		rs.updateDatabase(this, RAHandler, db);
 
 	}
-
+	
+		
 	private void databaseUpdated() {
+	
+		setLayout();
+		
+		m_adapter.notifyDataSetChanged();
+
+	}
+	
+	private void setLayout() {
 
 		setContentView(R.layout.repository_activity);
 
-		ListGameAdapter listAd = new ListGameAdapter(this, db.getRepoData());
-		
-		setListAdapter(listAd);
-		
-	//	this.getListView().setOnCreateContextMenuListener(this);
+		mFlipper = ((ViewFlipper) this
+				.findViewById(R.id.repository_activity_flipper));
+		mFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
+				R.anim.zoom_enter));
+		mFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
+				R.anim.zoom_exit));
 
+
+
+		m_adapter = new LocalGamesListAdapter(this,
+				R.layout.local_games_actvitiy_listitem, db.getRepoData());
+
+		setListAdapter(m_adapter);
+
+		AnimationSet set = new AnimationSet(true);
+
+		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+		animation.setDuration(500);
+		set.addAnimation(animation);
+
+		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		animation.setDuration(100);
+		set.addAnimation(animation);
+
+		LayoutAnimationController controller = new LayoutAnimationController(
+				set, 0.5f);
+
+		getListView().setLayoutAnimation(controller);
+		getListView().setTextFilterEnabled(true);
+		
+		Button button = (Button) this.findViewById(R.id.detailed_game_download_button);
+		
+		button.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View arg0) {
+				downloadGame();
+			}
+			
+		});
+	}
+	
+	private void downloadGame() {
+		
+
+		progressDialog.setTitle("Please wait");
+		progressDialog.setMessage("Starting donwload");
+		progressDialog.show();
+		
+		RepositoryServices rs = new RepositoryServices() ;
+		rs.downloadGame(this, RAHandler, selectedGame);
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 
 		GameInfo selectedGame = (GameInfo) this.getListView()
 				.getItemAtPosition(position);
-	
-		String key = ActivityPipe.add(selectedGame);
-
-		Intent i = new Intent(this, DetailedGameActivity.class);
-		i.putExtra(GameInfo.TAG,key);
-
-		startActivity(i);
-
-	}
-
-	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-		case DIALOG_UPDATING_REPO_ID:
-			dialog = new ProgressDialog(this);
-			break;
-		case DIALOG_ERROR_ID:
-			
-			break;
-		default:
-			dialog = null;
-		}
-		return dialog;
-	}
-	
-	protected void onPrepareDialog (int id, Dialog dialog) {
-		switch (id) {
-		case DIALOG_UPDATING_REPO_ID:
-			((ProgressDialog) dialog).setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			((ProgressDialog) dialog).setMessage("Updating Repository...");
-			((ProgressDialog) dialog).setCancelable(false);
-			pd = (ProgressDialog) dialog;
-			break;
-		case DIALOG_ERROR_ID:
-			
-			break;
-		}
 		
+		TextView title = (TextView)this.findViewById(R.id.detailed_game_title);
+		TextView description = (TextView)this.findViewById(R.id.detailed_game_description);
+		ImageView image = (ImageView)this.findViewById(R.id.detailed_game_image_icon);
+		
+		title.setText(selectedGame.getGameTitle());
+		description.setText(selectedGame.getGameDescription());
+		if (selectedGame.getImageIcon()!=null)		
+			image.setImageBitmap(selectedGame.getImageIcon());
+		else image.setImageDrawable(this.getResources().getDrawable(R.drawable.icon));
+		
+		
+		
+		mFlipper.showNext();
+		
+		this.selectedGame = selectedGame;
+		
+
+		// String key = ActivityPipe.add(selectedGame);
+		//
+		// Intent i = new Intent(this, DetailedGameActivity.class);
+		// i.putExtra(GameInfo.TAG,key);
+		//
+		// startActivity(i);
+
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK && mFlipper.getDisplayedChild()==1) {
+	    	mFlipper.showPrevious();
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Hold on to this
+		mMenu = menu;
+
+		// Inflate the currently selected menu XML resource.
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.title_icon, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		db.clear();
+		pd = ProgressDialog.show(this, "Please wait...", "Retrieving data ...",
+				true);
+		rs.updateDatabase(this, RAHandler, db);
+		return true;
+
+	}
+	
+	
 
 }

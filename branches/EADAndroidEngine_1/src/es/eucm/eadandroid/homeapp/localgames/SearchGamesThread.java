@@ -37,12 +37,6 @@ public class SearchGamesThread extends Thread {
 	@Override
 	public void run() {
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		Message msg = handler.obtainMessage();
 		

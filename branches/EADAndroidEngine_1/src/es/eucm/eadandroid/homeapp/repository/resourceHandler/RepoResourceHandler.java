@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
@@ -20,7 +19,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class RepoResourceHandler {
 
@@ -28,7 +26,7 @@ public class RepoResourceHandler {
 
 	public static Bitmap DownloadImage(String url_from, ProgressNotifier pn) {
 
-		pn.notifyProgress(0, "Downloading image " + url_from);
+//		pn.notifyProgress(0, "Downloading image " + url_from);
 		Bitmap bitmap = null;
 		InputStream in = null;
 		try {
@@ -39,13 +37,7 @@ public class RepoResourceHandler {
 			e1.printStackTrace();
 		}
 
-		pn.notifyProgress(100, "Image downloaded");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		pn.notifyProgress(100, "Image downloaded");
 
 		// pn.notifyFinished("Image downloaded");
 
@@ -113,11 +105,6 @@ public class RepoResourceHandler {
 					fos.close();
 					in.close();
 
-					// pt.notifyProgress(progress.intValue(), "Downloading " +
-					// fileName);
-
-					// TODO a pincho
-					pt.notifyFinished(fileName + " downloaded succesfully");
 
 				} catch (IOException e) {
 

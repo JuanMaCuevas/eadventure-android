@@ -40,6 +40,7 @@ import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
+import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
@@ -48,12 +49,12 @@ public class ActionButton {
     /**
      * Width of an action button
      */
-    public static final int ACTIONBUTTON_WIDTH = 40;
+    public static final int ACTIONBUTTON_WIDTH = (int) ( 48 * GUI.DISPLAY_DENSITY_SCALE );
 
     /**
      * Height of an action button
      */
-    public static final int ACTIONBUTTON_HEIGHT = 40;
+    public static final int ACTIONBUTTON_HEIGHT = (int) ( 48 * GUI.DISPLAY_DENSITY_SCALE );
 
     /**
      * Constant that represent the hand button

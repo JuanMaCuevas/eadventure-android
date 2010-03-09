@@ -7,14 +7,13 @@ public final class Paths {
 	public static final class repository {
 
 		public static final String DEFAULT_PATH = "http://eadventure-android.googlecode.com/files/";
-		public static final String SOURCE_XML = "clasificadorjuegos.xml";
+		public static final String SOURCE_XML = "repository.xml";
 
 	}
 
 	public static final class eaddirectory {
 		
 		public static final String ROOT_PATH = Paths.device.EXTERNAL_STORAGE + "EadAndroid/" ;
-//		public static final String ZIPPED_PATH="/sdcard/";
 		public static final String GAMES_PATH = ROOT_PATH + "games/" ;
 
 	}

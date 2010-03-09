@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_games">No SDCard mounted</string>
-    <string name="app_name">&lt;e-Ad&gt;</string>
+    <string name="no_sd">No SD Card found</string>
+    <string name="app_name">&lt;e-Ad&gt; mobile</string>
 
-<string name="menu_install">Install games</string>
-<string name="menu_uninstall">Uninstall games</string>
 
+
+
+
+<string name="no_connection">No internet connection</string>
+
+<string name="no_games">No games installed</string>
 
 </resources>

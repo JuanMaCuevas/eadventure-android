@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 import es.eucm.eadandroid.R;
@@ -21,9 +22,11 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 
 	public static String TAG = "ECoreActivity";
 	
-	private GameSurfaceView gameSurfaceView;
-	private VideoSurfaceView videoSurfaceView;
+	private static GameSurfaceView gameSurfaceView;
+	private static VideoSurfaceView videoSurfaceView;
 	private GameThread gameThread;
+	
+	private static boolean swap = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -53,6 +56,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 		SurfaceHolder videoHolder = videoSurfaceView.getHolder();
 		
 		videoHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		
+//		videoSurfaceView.setVisibility(SurfaceView.INVISIBLE);
+		
 				
 									
 		gameThread = new GameThread(canvasHolder,videoHolder, this, null);
@@ -63,6 +69,19 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback{
 		
 		gameThread.setAdventurePath(advPath);
 
+	}
+	
+	public static void swapSurfaces() {
+		
+		if (swap) {
+			gameSurfaceView.requestFocus();
+		}
+		else {
+		    videoSurfaceView.requestFocus();
+		}
+		
+		swap = !swap;
+		
 	}
 	
 		

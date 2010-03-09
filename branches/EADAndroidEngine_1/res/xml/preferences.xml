@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="Engine preferences">
+
+		<CheckBoxPreference android:key="checkbox_preference"
+			android:title="Enable audio" android:summary="Enable or disable audio" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="Moodle account preferences">
+
+		<EditTextPreference android:key="Account settings"
+			android:title="Account settings" android:summary="Set your moodle account"
+			android:dialogTitle="Moodle account" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="Contact">
+
+		<PreferenceScreen android:title="e-Adventure website"
+			android:summary="Contact us">
+
+			<intent android:action="android.intent.action.VIEW"
+				android:data="http://e-adventure.e-ucm.es/" />
+
+		</PreferenceScreen>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

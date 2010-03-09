@@ -11,11 +11,11 @@ import org.xml.sax.SAXException;
 
 import android.content.Context;
 import android.os.Handler;
+import es.eucm.eadandroid.common.auxiliar.File;
 import es.eucm.eadandroid.homeapp.repository.connection.parser.RepositoryDataHandler;
 import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressTask;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class UpdateDatabaseThread extends Thread {
@@ -65,6 +65,11 @@ public class UpdateDatabaseThread extends Thread {
 
 //		ProgressTask downloadPt = pt.createChildTask("Downlaod file", "Download "+REPO_FULLPATH+" to "+EXTERNAL_STORAGE,70);
 		
+		File f = new File(LOCAL_REPO_XML);
+		
+		if (f != null)
+			f.delete();
+		
 		RepoResourceHandler.downloadFile(REPO_XML_FULLPATH, Paths.eaddirectory.ROOT_PATH , Paths.repository.SOURCE_XML , pn);
 
 	}
@@ -75,12 +80,15 @@ public class UpdateDatabaseThread extends Thread {
 		
 		try {
 			FileInputStream fIn = new FileInputStream(LOCAL_REPO_XML);
+			
+			if (fIn !=null) {
+			
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			RepositoryDataHandler rsaxh = new RepositoryDataHandler(rd,pn);
 			saxParser.parse(fIn, rsaxh);
-
-			pn.notifyFinished("Repository xml parsed");
+			
+			}
 			
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -92,6 +100,10 @@ public class UpdateDatabaseThread extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		pn.notifyFinished("");
+		
 	}
 
 }

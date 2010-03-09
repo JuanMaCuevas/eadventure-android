@@ -70,40 +70,40 @@ public class DetailedGameActivity extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.detailed_game_activity);
-		
-		pd = new ProgressDialog(this);
-		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		pd.setMessage("Downloading game...");
-		pd.setCancelable(false);
-
-		String key = (String) this.getIntent().getExtras().get(GameInfo.TAG);
-
-		this.game = (GameInfo) ActivityPipe.remove(key);
-
-		ImageView img;
-		img = (ImageView) findViewById(R.id.Viewdetallado);
-
-		img.setImageBitmap(game.getImage());
-
-		TextView title;
-		title = (TextView) findViewById(R.id.titulodetallado);
-		title.setText(game.getGameTitle());
-
-		TextView details;
-		details = (TextView) findViewById(R.id.textodetallado);
-		details.setText(game.getGameDescription());
-
-		Button button = (Button) findViewById(R.id.botondetallado);
-		
-		button.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				buttonClicked();
-			}
-
-		});
+//
+//		setContentView(R.layout.detailed_game_activity);
+//		
+//		pd = new ProgressDialog(this);
+//		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//		pd.setMessage("Downloading game...");
+//		pd.setCancelable(false);
+//
+//		String key = (String) this.getIntent().getExtras().get(GameInfo.TAG);
+//
+//		this.game = (GameInfo) ActivityPipe.remove(key);
+//
+//		ImageView img;
+//		img = (ImageView) findViewById(R.id.Viewdetallado);
+//
+//		img.setImageBitmap(game.getImage());
+//
+//		TextView title;
+//		title = (TextView) findViewById(R.id.titulodetallado);
+//		title.setText(game.getGameTitle());
+//
+//		TextView details;
+//		details = (TextView) findViewById(R.id.textodetallado);
+//		details.setText(game.getGameDescription());
+//
+//		Button button = (Button) findViewById(R.id.botondetallado);
+//		
+//		button.setOnClickListener(new OnClickListener() {
+//
+//			public void onClick(View v) {
+//				buttonClicked();
+//			}
+//
+//		});
 
 	}
 

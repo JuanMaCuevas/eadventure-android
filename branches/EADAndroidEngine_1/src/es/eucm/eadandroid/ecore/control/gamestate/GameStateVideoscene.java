@@ -3,11 +3,13 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Cutscene;
 import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
+import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
@@ -44,6 +46,9 @@ public class GameStateVideoscene extends GameState {
 	public GameStateVideoscene() {
 
 		super();
+		
+		ECoreActivity.swapSurfaces();
+		
 		videoscene = (Videoscene) game.getCurrentChapterData().getGeneralScene(
 				game.getNextScene().getNextSceneId());
 

@@ -65,7 +65,7 @@ public class ZipURLConnection extends URLConnection {
     private String zipFile;
 
     /**
-     * @param url
+     * @param hasUrl
      * @throws MalformedURLException
      */
     public ZipURLConnection( URL assetURL, String zipFile, String assetPath ) {
@@ -76,7 +76,7 @@ public class ZipURLConnection extends URLConnection {
     }
 
     /**
-     * @param url
+     * @param hasUrl
      * @throws MalformedURLException
      */
     public ZipURLConnection( URL assetURL, String assetPath ) {

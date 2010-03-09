@@ -3,6 +3,7 @@ package es.eucm.eadandroid.homeapp;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.TabHost;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity;
@@ -22,7 +23,6 @@ public class HomeTabActivity extends TabActivity {
 
 	private void init() {
 
-		setContentView(R.layout.home_tab_activity);
 
 		mTabHost = getTabHost();
 
@@ -44,6 +44,7 @@ public class HomeTabActivity extends TabActivity {
 		mTabHost.setCurrentTab(0);
 
 	}
+
 
 	
 }

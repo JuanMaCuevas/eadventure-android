@@ -2,4 +2,5 @@
 <resources>
 <color name="Marron">#db7b21</color>
 <color name="White">#FFFFFFFF</color>
+<color name="GRAY">#848484</color>
 </resources>

@@ -23,13 +23,15 @@ public class RepositoryDataHandler extends DefaultHandler {
 	
 	RepositoryActivity aux;
 
-	boolean titulo = false;
-	boolean imagen = false;
-	boolean descripcion = false;
-	boolean codigo = false;
+	boolean hasTitle = false;
+	boolean hasImageIcon = false;
+	boolean hasDescription = false;
+	boolean hasUrl = false;
+	boolean hasImage;
 
-	String tit, des, cod;
-	Bitmap img ;
+	String tit, des, url;
+	Bitmap imgIcon ;
+	Bitmap image;
 
 	/**
 	 * Constructor
@@ -55,20 +57,24 @@ public class RepositoryDataHandler extends DefaultHandler {
 	public void startElement(String namespaceURI, String sName, String qName,
 			Attributes attrs) throws SAXException {
 
-		if (sName.equals("titulo")) {
-			titulo = true;
+		if (sName.equals("title")) {
+			hasTitle = true;
 		}
 
-		if (sName.equals("imagen")) {
-			imagen = true;			
+		if (sName.equals("imageIcon")) {
+			hasImageIcon = true;			
+		}
+		
+		if (sName.equals("image")) {
+			hasImage = true;
 		}
 
-		if (sName.equals("descripcion")) {
-			descripcion = true;
+		if (sName.equals("description")) {
+			hasDescription = true;
 		}
 
-		if (sName.equals("codigo")) {
-			codigo = true;
+		if (sName.equals("url")) {
+			hasUrl = true;
 		}
 	}
 
@@ -79,27 +85,31 @@ public class RepositoryDataHandler extends DefaultHandler {
 		Log.d("EndElement", "XMLNS : " + namespaceURI + " SNAME : " + sName
 				+ " QNAME : " + qName);
 
-		if (sName.equals("titulo")) {
-			titulo = false;
+		if (sName.equals("title")) {
+			hasTitle = false;
 		}
 
-		if (sName.equals("imagen")) {
-			imagen = false;
+		if (sName.equals("imageIcon")) {
+			hasImageIcon = false;
+		}
+		
+		if (sName.equals("image")) {
+			hasImage = false;
 		}
 
-		if (sName.equals("descripcion")) {
-			descripcion = false;
+		if (sName.equals("description")) {
+			hasDescription = false;
 		}
 
-		if (sName.equals("codigo")) {
-			codigo = false;
+		if (sName.equals("url")) {
+			hasUrl = false;
 		}
 
-		if (sName.equals("juego")) {
-			descripcion = false;
+		if (sName.equals("game")) {
+			hasDescription = false;
 			
 			Log.d(tit, "Text : " + des);
-			this.repositoryInfo.addGameInfo(new GameInfo(tit, des, cod, img));
+			this.repositoryInfo.addGameInfo(new GameInfo(tit, des, url, imgIcon,image));
 		}
 
 	}
@@ -110,24 +120,32 @@ public class RepositoryDataHandler extends DefaultHandler {
 
 		Log.d("Characters", "Text : " + new String(buf, offset, len));
 
-		if (titulo) {
+		if (hasTitle) {
 			tit = new String(new String(buf, offset, len));
 		}
 
-		if (imagen) {
+		if (hasImageIcon) {
 			String im = new String(new String(buf, offset, len));
 			Log.d("Characters", "Text : " + new String(buf, offset, len));
 			
-			img = RepoResourceHandler.DownloadImage(im,pn);
+			imgIcon = RepoResourceHandler.DownloadImage(im,pn);
+			
+		}
+		
+		if (hasImage) {
+			String im = new String(new String(buf, offset, len));
+			Log.d("Characters", "Text : " + new String(buf, offset, len));
+			
+			image = RepoResourceHandler.DownloadImage(im,pn);
 			
 		}
 
-		if (descripcion) {
+		if (hasDescription) {
 			des = new String(new String(buf, offset, len));
 		}
 
-		if (codigo) {
-			cod = new String(new String(buf, offset, len));
+		if (hasUrl) {
+			url = new String(new String(buf, offset, len));
 		}
 
 	}
