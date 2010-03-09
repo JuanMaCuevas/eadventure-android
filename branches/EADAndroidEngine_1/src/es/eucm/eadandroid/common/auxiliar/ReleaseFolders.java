@@ -58,7 +58,7 @@ public class ReleaseFolders {
 
     private static String EXPORTS_FOLDER = "../Exports";
 
-    private static String REPORTS_FOLDER = "../Reports";
+    private static String REPORTS_FOLDER = Paths.eaddirectory.ROOT_PATH+ "Reports";
 
     private static final String WEB_FOLDER = Paths.eaddirectory.ROOT_PATH + "web";
 

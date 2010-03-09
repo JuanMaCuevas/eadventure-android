@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import es.eucm.eadandroid.assessment.AssessmentEngine;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
+import es.eucm.eadandroid.common.data.assessment.AssessmentProfile;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.InfluenceArea;
@@ -146,13 +148,14 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * Var summary
      */
     private VarSummary vars;
-/* ADAPTATION & ASSESSMENT
-    *//**
+/**
      * Assessment engine
-     *//*
+     */
     private AssessmentEngine assessmentEngine;
 
-    *//**
+    /* ADAPTATION 
+     */ 
+    /**
      * Adaptation engine
      *//*
     private AdaptationEngine adaptationEngine;
@@ -206,9 +209,18 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     /**
      * State of the game
      */
-    private GameState currentState;
+    //TODO esto es solo una prueba
+    private  GameState currentState;
 
-    /**
+    public GameState getCurrentState() {
+		return currentState;
+	}
+
+	public void setCurrentState(GameState currentState) {
+		this.currentState = currentState;
+	}
+
+	/**
      * Store if each arraylist of effects in effectsQueue comes from a
      * conversation, to manage stackOfStates properly
      */
@@ -373,120 +385,122 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 	//TODO assessment
 	//TODO adaptation 
-	public void start() {
-		
-	        try {
-	            this.timerManager = TimerManager.getInstance( );
-	            totalTime = 0;
-	            long elapsedTime = 0;
-	            long oldTime = System.currentTimeMillis( );
-	            long lastFps = 0;
-	            long time;
-	            int fps = 0;
-	            int oldFps = 0;
+    public void start() {
 
-	            // Load the game descriptor (it holds the info of the GUI and the player)
-	            gameDescriptor = Loader.loadDescriptorData( ResourceHandler.getInstance( ) );
+    	try {
+    		this.timerManager = TimerManager.getInstance( );
+    		totalTime = 0;
+    		long elapsedTime = 0;
+    		long oldTime = System.currentTimeMillis( );
+    		long lastFps = 0;
+    		long time;
+    		int fps = 0;
+    		int oldFps = 0;
 
-	            if( gameDescriptor == null ) {
-	                // TODO possibly add dialog to tell player the game couldn't get loaded
-	                return;
-	            }
-	            gameDescriptor.setProjectName( adventureName );
+    		// Load the game descriptor (it holds the info of the GUI and the player)
+    		gameDescriptor = Loader.loadDescriptorData( ResourceHandler.getInstance( ) );
 
-	        //    GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
+    		if( gameDescriptor == null ) {
+    			// TODO possibly add dialog to tell player the game couldn't get loaded
+    			return;
+    		}
+    		gameDescriptor.setProjectName( adventureName );
 
-	      //      GUI.create(mSurfaceHolder);
+    		//    GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
 
-	            currentState = new GameStateLoading( );
+    		//      GUI.create(mSurfaceHolder);
 
-	   //         GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
+    		currentState = new GameStateLoading( );
 
-	            // Load the options
-	            options = new Options( );
-	            options.loadOptions( adventurePath, adventureName );
+    		//         GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
 
-	            // Init the assessment and adaptation engines
-	  //         adaptationEngine = new AdaptationEngine( );
-	  //         assessmentEngine = new AssessmentEngine( );
-	            
-	            
-	            currentChapter = 0;
+    		// Load the options
+    		options = new Options( );
+    		options.loadOptions( adventurePath, adventureName );
 
-/*	            boolean needsName = false;
+    		// Init the assessment and adaptation engines
+    		//         adaptationEngine = new AdaptationEngine( );
+    		assessmentEngine = new AssessmentEngine( );
 
-	            for( ChapterSummary chapter : gameDescriptor.getChapterSummaries( ) ) {
-	                AssessmentProfile ap = AssessmentEngine.loadAssessmentProfile( chapter.getAssessmentName( ) );
-	                if( !needsName && ap != null && ap.isSendByEmail( ) )
-	                    needsName = true;
-	            }
 
-	            if( needsName ) {
-	                DebugLog.general( "Asks for player name" );
-	                String name = JOptionPane.showInputDialog( null, TC.get( "Reports.InputReportName" ), TC.get( "Reports.NameInput" ), JOptionPane.QUESTION_MESSAGE );
-	                gameDescriptor.setPlayerName( name );
-	                assessmentEngine.setPlayerName( name );
-	            }*/
-	            
-	            while( !gameOver ) {
-	            	
-	                loadCurrentChapter();
-	                
-	                GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse !! 
-	                
-	                while( !nextChapter && !gameOver ) {
-	                    time = System.currentTimeMillis( );
-	                    elapsedTime = time - oldTime;
-	                    oldTime = time;
-	                    totalTime += elapsedTime;
-	                    if( time - lastFps < 1000 ) {
-	                        fps++;
-	                    }
-	                    else {
-	                        lastFps = time;
-	                        oldFps = fps;
-	                        fps = 1;
-	                    }
-	                    
-	                    GUI.getInstance().drawFPS(oldFps);
+    		currentChapter = 0;
 
-	                    
-	                    currentState.mainLoop( elapsedTime, oldFps );
-	                                       
-	                               
-	                    MultimediaManager.getInstance( ).update( );
-	                    
-	                    try {
-	                        Thread.sleep( Math.max((10 - (System.currentTimeMillis( ) - time)), 0) );
-	                    }
-	                    catch( InterruptedException e ) {
-	                    }
-	                }
+    		boolean needsName = false;
 
-	/*                //If there is an assessment profile, show the "Save Report" dialog
-	                while( !assessmentEngine.isEndOfChapterFeedbackDone( ) ) {
-	                    Thread.sleep( 100 );
-	                }*/
+    		for( ChapterSummary chapter : gameDescriptor.getChapterSummaries( ) ) {
+    			AssessmentProfile ap = AssessmentEngine.loadAssessmentProfile( chapter.getAssessmentName( ) );
+    			if( !needsName && ap != null && ap.isSendByEmail( ) )
+    				needsName = true;
+    		}
 
-	                if( currentChapter == gameDescriptor.getChapterSummaries( ).size( ) )
-	                    gameOver = true;
-	            }
+    		if( needsName ) {
+    			// DebugLog.general( "Asks for player name" );
+    			//   String name = JOptionPane.showInputDialog( null, TC.get( "Reports.InputReportName" ), TC.get( "Reports.NameInput" ), JOptionPane.QUESTION_MESSAGE );
+    			//ASSESSMENT
+    			String name="player1";
+    			gameDescriptor.setPlayerName( name );
+    			assessmentEngine.setPlayerName( name );
+    		}
 
-	        }
-	        catch( Exception e ) {
+    		while( !gameOver ) {
 
-	           e.printStackTrace();
-	           
-	        }
+    			loadCurrentChapter();
 
-	        try {
-	            stop( );
-	        }
-	        catch( Exception e ) {
-		           e.printStackTrace();
-	        }
+    			GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse !! 
 
-	}
+    			while( !nextChapter && !gameOver ) {
+    				time = System.currentTimeMillis( );
+    				elapsedTime = time - oldTime;
+    				oldTime = time;
+    				totalTime += elapsedTime;
+    				if( time - lastFps < 1000 ) {
+    					fps++;
+    				}
+    				else {
+    					lastFps = time;
+    					oldFps = fps;
+    					fps = 1;
+    				}
+
+    				GUI.getInstance().drawFPS(oldFps);
+
+
+    				currentState.mainLoop( elapsedTime, oldFps );
+
+
+    				MultimediaManager.getInstance( ).update( );
+
+    				try {
+    					Thread.sleep( Math.max((10 - (System.currentTimeMillis( ) - time)), 0) );
+    				}
+    				catch( InterruptedException e ) {
+    				}
+    			}
+
+    			//If there is an assessment profile, show the "Save Report" dialog
+    			while( !assessmentEngine.isEndOfChapterFeedbackDone( ) ) {
+    				Thread.sleep( 100 );
+    			}
+
+    			if( currentChapter == gameDescriptor.getChapterSummaries( ).size( ) )
+    				gameOver = true;
+    		}
+
+    	}
+    	catch( Exception e ) {
+
+    		e.printStackTrace();
+
+    	}
+
+    	try {
+    		stop( );
+    	}
+    	catch( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    }
 	
 	 /**
      * Init the game parameters
@@ -525,26 +539,29 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         timerManager = TimerManager.getInstance( );
         timerManager.reset( );
         
-/* ASSESSMENT       if (gameData.getAdaptationName()!="")
+/* ADAPTATION       if (gameData.getAdaptationName()!="")
         chapter.setAdaptationName(gameData.getAdaptationName());
+ */       
+        
         if (gameData.getAssessmentName()!="")
         chapter.setAssessmentName(gameData.getAssessmentName());
         
-        AdaptedState initialState=null;
+        /* ADAPTATION       AdaptedState initialState=null;
         // Load the assessment rules and adaptation data 
         if (gameData.hasAdaptationProfile())
             initialState = adaptationEngine.init( gameData.getSelectedAdaptationProfile() );
-       
+       */
         if (gameData.hasAssessmentProfile())
-            assessmentEngine.loadAssessmentRules( gameData.getSelectedAssessmentProfile() );
+        	assessmentEngine.loadAssessmentRules( gameData.getSelectedAssessmentProfile() );
         
-        
+        	  /* ADAPTATION 
         // Load the assessment rules and adaptation data (from chapter xml file)
         if (!gameData.hasAdaptationProfile()&&chapter.hasAdaptationProfile())
             initialState  = adaptationEngine.init( chapter.getSelectedAdaptationProfile() );
-        
+        */
+        	
         if (!gameData.hasAssessmentProfile()&&chapter.hasAssessmentProfile())
-            assessmentEngine.loadAssessmentRules( chapter.getSelectedAssessmentProfile() );*/
+            assessmentEngine.loadAssessmentRules( chapter.getSelectedAssessmentProfile() );
      
         // Initialize the required elements of the game
         actionManager = new ActionManager( );
@@ -575,7 +592,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         Exit firstScene = new Exit( true, 0, 0, 40, 40 );
         firstScene.setNextSceneId( gameData.getInitialGeneralScene( ).getId( ) );
 
-/* ASSESSMENT      // process the initial adapted state
+/* ADAPTATION     // process the initial adapted state
         processAdaptedState( firstScene, initialState );
         // process the adaptedStateOfExecute (this var will has value if any adaptation rule has been achieve)
         processAdaptedState( firstScene, adaptedStateToExecute );*/
@@ -832,8 +849,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         timerManager.update( notifyTimerCycles );
         functionalScene.updateScene( );
         if( gameData.hasAssessmentProfile( ) )
-      // ASSESSMENT      assessmentEngine.processRules( );
-;
+    assessmentEngine.processRules( );
+
     }
     
     /**
@@ -1062,8 +1079,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                             // If it is assessment timer, set the correct values in assessmentEngine
                             if( isAssessment ) {
                                 // current time - the time in second that has been
-//  ASSESSMENT                              if( assessmentEngine.getTimedAssessmentRule( new Integer( i ) ) != null )
-//                                    assessmentEngine.getTimedAssessmentRule( new Integer( i ) ).setStartTime( System.currentTimeMillis( ) / 1000 - Integer.valueOf( aux[2] ).longValue( ) );
+                             if( assessmentEngine.getTimedAssessmentRule( new Integer( i ) ) != null )
+                                  assessmentEngine.getTimedAssessmentRule( new Integer( i ) ).setStartTime( System.currentTimeMillis( ) / 1000 - Integer.valueOf( aux[2] ).longValue( ) );
                             }
 
                         }
@@ -1532,14 +1549,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * 
      * @return Assessment engine
      */
-    //ASSESSMENT
-//    public AssessmentEngine getAssessmentEngine( ) {
-//
-//        return assessmentEngine;
-//    }
+  
+    public AssessmentEngine getAssessmentEngine( ) {
+
+        return assessmentEngine;
+    }
     
 	public void finish() {
-		
 	}
     
 	

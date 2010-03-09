@@ -1,29 +1,33 @@
 package es.eucm.eadandroid.ecore;
 
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class GameThread extends Thread {
 
-	
-
 	private String advPath;
+	Handler handler;
 
 	public GameThread(SurfaceHolder holder, SurfaceHolder videoHolder, Context context, Handler handler) {
 
+		this.handler =handler;
 //		ResourceHandler.createInstance();
 		Game.create();
 		
+
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
 		
 		int landscapeHeight = displayMetrics.heightPixels;
@@ -35,7 +39,7 @@ public class GameThread extends Thread {
 		
 		float scaleDensity = displayMetrics.density;
 				
-		GUI.create(holder,videoHolder);
+		GUI.create(holder,videoHolder,handler);
 		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 		
 	}
@@ -52,8 +56,28 @@ public class GameThread extends Thread {
 		ResourceHandler.delete();
 	//	ConfigData.storeToXML();
 		
+		finishThread();
+		
 	}
 	
+
+	private void finishThread() {
+		
+		//handler.dispatchMessage(new Message())
+		
+		//Handler handler=activity.ActivityHandler;
+        
+        Message msg = handler.obtainMessage();
+        
+        
+        Bundle b = new Bundle();
+		//b.putString("html", text);
+		msg.what = ActivityHandlerMessages.GAME_OVER;
+		msg.setData(b);
+		
+		msg.sendToTarget();
+		
+	}
 
 	public boolean processTouchEvent(MotionEvent e) {
 		return Game.getInstance().processTouchEvent(e);
@@ -89,6 +113,7 @@ public class GameThread extends Thread {
 	}
 	
 	public void finish() {
+		if(Game.getInstance()!=null)
 		Game.getInstance().finish();
 	}
 
@@ -109,6 +134,8 @@ public class GameThread extends Thread {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 	
 
 }

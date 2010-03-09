@@ -2,15 +2,32 @@
 
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    
-    <es.eucm.eadandroid.ecore.GameSurfaceView
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent" android:id="@+id/canvas_surface"/>
-      
-    <es.eucm.eadandroid.ecore.VideoSurfaceView
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent" android:id="@+id/video_surface"/>
-      
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<es.eucm.eadandroid.ecore.GameSurfaceView
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:id="@+id/canvas_surface" />
+
+	<es.eucm.eadandroid.ecore.VideoSurfaceView
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:id="@+id/video_surface" />
+
+
+	<LinearLayout android:id="@+id/hidecontainer"
+		android:orientation="vertical" android:visibility="gone"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<WebView android:id="@+id/webview" android:layout_width="fill_parent"
+			android:layout_height="270dip" android:scrollbars="vertical" />
+
+		<Button android:id="@+id/hideme1" android:layout_height="wrap_content" android:visibility="gone" android:layout_width="fill_parent" android:text="Continue"/>
+
+	</LinearLayout>
+
+
+
+
+
+
 </FrameLayout>

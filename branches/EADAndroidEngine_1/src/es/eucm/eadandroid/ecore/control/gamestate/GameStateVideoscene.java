@@ -2,14 +2,17 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Cutscene;
 import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
@@ -46,14 +49,27 @@ public class GameStateVideoscene extends GameState {
 	public GameStateVideoscene() {
 
 		super();
-		
-		ECoreActivity.swapSurfaces();
-		
 		videoscene = (Videoscene) game.getCurrentChapterData().getGeneralScene(
 				game.getNextScene().getNextSceneId());
 
-		stop = true;
+		stop =false;;
 		this.prefetched = false;
+		
+	        
+        
+        Handler handler=GUI.getInstance().getActivity();
+        Message msg = handler.obtainMessage();
+               Bundle b = new Bundle();
+			//b.putString("html", text);
+			msg.what = ActivityHandlerMessages.VIDEO;
+			msg.setData(b);
+				msg.sendToTarget();
+			//stop=false;
+		
+		
+		
+		
+	/*	
 
 		try {
 
@@ -88,7 +104,7 @@ public class GameStateVideoscene extends GameState {
 		} catch (Exception e) {
 			loadNextScene();
 		}
-
+*/
 	}
 
 	private void loadNextScene() {
@@ -202,4 +218,43 @@ public class GameStateVideoscene extends GameState {
 		return newResources;
 	}
 
+	
+	
+	public void play()
+	{
+		try {
+
+			this.holder = GUI.getInstance().getVideoSurfaceHolder();
+
+			this.mediaPlayer = new MediaPlayer();
+
+			final Resources resources = createResourcesBlock( );
+			
+			try {
+				mediaPlayer.setDataSource(ResourceHandler.getInstance().getMediaPath(resources.getAssetPath( Videoscene.RESOURCE_TYPE_VIDEO)));
+				mediaPlayer.setDisplay(holder);
+				mediaPlayer.prepare();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+				public void onCompletion(MediaPlayer mp) {
+					mediaPlayer.release();
+				}
+			});
+
+			// TODO creo q no lo vamos a necesitar
+			// this.blockingPrefetch( );
+			stop = false;
+
+			mediaPlayer.start();
+			// mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+		} catch (Exception e) {
+			loadNextScene();
+		}
+	}
+	
 }

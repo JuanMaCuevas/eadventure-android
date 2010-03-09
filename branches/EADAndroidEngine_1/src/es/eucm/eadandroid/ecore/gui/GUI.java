@@ -3,6 +3,7 @@ package es.eucm.eadandroid.ecore.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,7 +12,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.view.SurfaceHolder;
+import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.control.TimerManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
@@ -133,22 +136,37 @@ public class GUI {
 	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();;
 
 	private int loading;
+	private Handler Handleractivity;
 
+
+	public  Handler getActivity() {
+		return Handleractivity;
+	}
 
 	public FPS getfps() {
 		return fps;
 	}
 
-	private GUI(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder) {
+	
+	public SurfaceHolder getCanvasSurfaceHolder() {
+		return canvasSurfaceHolder;
+	}
+
+	public void setCanvasSurfaceHolder(SurfaceHolder canvasSurfaceHolder) {
+		this.canvasSurfaceHolder = canvasSurfaceHolder;
+	}
+
+	private GUI(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder, Handler handler) {
+		this.Handleractivity=handler;
 		this.canvasSurfaceHolder = mSurfaceHolder;
 		this.videoSurfaceHolder = videoHolder;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
 	}
 
-	public static void create(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder) {
+	public static void create(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder, Handler handler) {
 
-		instance = new GUI(mSurfaceHolder,videoHolder);
+		instance = new GUI(mSurfaceHolder,videoHolder,handler);
 
 	}
 
@@ -177,7 +195,7 @@ public class GUI {
 		else CENTER_OFFSET = 0;
 
 		mPaint = new Paint();
-		mPaint.setTextSize(25);
+		mPaint.setTextSize(28);
 		mPaint.setTypeface(Typeface
 				.create(Typeface.SANS_SERIF, Typeface.NORMAL));
 		mPaint.setStrokeWidth(4);
@@ -504,28 +522,24 @@ public class GUI {
 				realY = (int) height;
 			}
 		}
+		mPaint.setAntiAlias(true);
 		// If the text has border, draw it
-		mPaint.setColor(textColor);
+		
 		if (border) {
 
-			// FIXME no lo entiendo intenta darle efecto 3d al texto, si lo hago
-			// es q directamente me va a 1 el texto
-			// g.setColor(borderColor);
-
-			// mPaint.setColor(borderColor);
-			// g.drawText(string, realX - 1, realY - 1,mPaint);
-			// g.drawText(string, realX - 1, realY + 1,mPaint);
-			// g.drawText(string, realX + 1, realY - 1,mPaint);
-			// g.drawText(string, realX + 1, realY + 1,mPaint);
-
-			// g.setColor(textColor);
+			
+			 mPaint.setColor(borderColor);
+			 g.drawText(string, realX - 1, realY - 1,mPaint);
+			g.drawText(string, realX - 1, realY + 1,mPaint);
+			 g.drawText(string, realX + 1, realY - 1,mPaint);
+			 g.drawText(string, realX + 1, realY + 1,mPaint);
 
 			// FIXME el color CORRECTO
 			// mPaint.setColor(Color.RED);
 			// g.drawRoundRect(rect, rx, ry, paint)
 		}
 		// Draw the text
-		mPaint.setAntiAlias(true);
+		mPaint.setColor(textColor);
 		g.drawText(string, realX,realY, mPaint);
 		// g.drawText(string, realX, realY,mPaint);
 	}
@@ -662,8 +676,7 @@ public class GUI {
 	public static void delete() {
 		// TODO habra que eliminar todo
 		GUI.instance = null;
-
-	};
+};
 
 	/**
 	 * Draws the string specified centered (in X and Y) in the given position
@@ -954,9 +967,8 @@ public class GUI {
 		return minY;
 	}
 
-	
-	
-	/**
+	/*
+    *//**
 	 * Returns the number of lines of the response text block
 	 * 
 	 * @return Number of response lines
