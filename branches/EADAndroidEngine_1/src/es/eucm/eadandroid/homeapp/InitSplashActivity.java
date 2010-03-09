@@ -99,7 +99,7 @@ public class InitSplashActivity extends Activity {
 	/** Starts GameLauncher and finishes current Engine Activity */
 	private void startEngineHomeActivity() {
 
-		Intent i = new Intent(this, HomeTabActivity.class);
+		Intent i = new Intent(this,ActivityVideoIntro.class);
 		startActivity(i);
 		
 		this.finish();

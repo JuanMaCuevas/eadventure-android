@@ -23,6 +23,7 @@
 		
 	
 <activity android:name=".ecore.ECoreActivity"  android:screenOrientation="landscape"></activity>
+<activity android:name=".homeapp.ActivityVideoIntro" android:screenOrientation="portrait"></activity>
 </application>
 	
 	<uses-sdk android:minSdkVersion="5" />
