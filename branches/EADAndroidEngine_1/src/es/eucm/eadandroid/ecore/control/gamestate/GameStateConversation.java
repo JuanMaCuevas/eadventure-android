@@ -37,9 +37,12 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
+import android.view.MotionEvent;
 
 import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNode;
@@ -52,6 +55,10 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
 /**
@@ -139,6 +146,8 @@ public class GameStateConversation extends GameState {
      */
     private String convID;
 
+	private static boolean skip;
+
     /**
      * Creates a new GameStateConversation
      */
@@ -148,7 +157,7 @@ public class GameStateConversation extends GameState {
         RESPONSE_TEXT_NUMBER_LINES = GUI.getInstance( ).getResponseTextNumberLines( );
         
         RESPONSE_TEXT_ASCENT = GUI.getInstance( ).getAscent( );
-        RESPONSE_TEXT_HEIGHT = RESPONSE_TEXT_ASCENT + 2;
+        RESPONSE_TEXT_HEIGHT = RESPONSE_TEXT_ASCENT * 3 ;
 
         currentNode = game.getConversation( ).getRootNode( );
         currentLine = 0;
@@ -156,12 +165,14 @@ public class GameStateConversation extends GameState {
         optionHighlighted = -1;
         optionsToShow = new ArrayList<ConversationLine>( );
         isOptionSelected = false;
+        skip = false;
         convID = new String( );
 
     }
 
     @Override
     public synchronized void mainLoop( long elapsedTime, int fps ) {
+    	handleUIEvents();
 
         Canvas c = setUpGUI( elapsedTime );
 
@@ -212,6 +223,12 @@ public class GameStateConversation extends GameState {
     	if( game.getCharacterCurrentlyTalking( ) == null || ( game.getCharacterCurrentlyTalking( ) != null && !game.getCharacterCurrentlyTalking( ).isTalking( ) ) ) {
             playNextLine( );
         }
+    	
+    	if (skip){
+    		playNextLine( );
+    		skip = false;
+    		
+    	}
 //    	
 //        if( mouseClickedButton == MouseEvent.NOBUTTON ) {
 //            
@@ -322,11 +339,11 @@ public class GameStateConversation extends GameState {
             textColor = Color.argb(255, 255 - red, 255 - green, 255 - blue);
           //  textColor = new Color( 255 - red, 255 - green, 255 - blue );
         }
-        //FIXME
-        int y = /*GUI.getInstance( ).getResponseTextY( )*/ 10 + optionIndex * RESPONSE_TEXT_HEIGHT + RESPONSE_TEXT_ASCENT;
-        int x = /*GUI.getInstance( ).getResponseTextX( )*/ 450;
+       
+        int y = GUI.getInstance( ).getResponseTextY( ) + optionIndex * RESPONSE_TEXT_HEIGHT + RESPONSE_TEXT_ASCENT;
+        int x = GUI.getInstance( ).getResponseTextX( );
         String fullText = ( lineIndex + 1 ) + ".- " + text;
-        GUI.drawStringOnto( c, fullText, x, y, false, textColor, Game.getInstance( ).getFunctionalPlayer( ).getTextBorderColor( ), true );
+        GUI.drawStringOnto( c, fullText, x, y, false, textColor,  Game.getInstance( ).getFunctionalPlayer( ).getTextBorderColor( ), true );
     }
 
     /**
@@ -339,7 +356,12 @@ public class GameStateConversation extends GameState {
     private void optionNodeWithOptionSelected( ) {
 
         if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) ) {
-            
+            if (skip){
+
+                game.getCharacterCurrentlyTalking( ).stopTalking( );
+                skip = false;
+            	
+            }
         	/*if( mouseClickedButton == MouseEvent.BUTTON1) {
                 DebugLog.user( "Skipped line in conversation" );
                 game.getCharacterCurrentlyTalking( ).stopTalking( );
@@ -427,53 +449,47 @@ public class GameStateConversation extends GameState {
         else
             selectDisplayedOption( );
     }
-/*
-    @Override
-    public synchronized void mouseClicked( MouseEvent e ) {
+    
 
+
+    public synchronized void mouseClicked( UIEvent e ) {
+    	int y;
+    	if (e.getAction()==UIEvent.TAP_ACTION){
+       		 y = (int) ((TapEvent) e).event.getY();
+    	}
+    	else  y = (int) ((UnPressedEvent) e).event.getY();
+    	
         if( currentNode.getType( ) == ConversationNodeView.OPTION &&
-                GUI.getInstance( ).getResponseTextY( ) <= e.getY( ) &&
-                GUI.getInstance( ).getResponseTextY( ) + currentNode.getLineCount( ) * RESPONSE_TEXT_HEIGHT + RESPONSE_TEXT_ASCENT >= e.getY( ) &&
+                GUI.getInstance( ).getResponseTextY( ) <= y &&
+                GUI.getInstance( ).getResponseTextY( ) + currentNode.getLineCount( ) * RESPONSE_TEXT_HEIGHT /*+ RESPONSE_TEXT_ASCENT*/ >= y &&
                 !isOptionSelected) {
-            optionSelected = ( e.getY( ) - GUI.getInstance( ).getResponseTextY( ) ) / RESPONSE_TEXT_HEIGHT;
+            optionSelected = ( y - GUI.getInstance( ).getResponseTextY( ) ) / RESPONSE_TEXT_HEIGHT;
             if( optionsToShow.size( ) <= RESPONSE_TEXT_NUMBER_LINES )
                 selectDisplayedOption( );
             else
                 selectNoAllDisplayedOption( );
+            skip = false;
         }
         else if( currentNode.getType( ) == ConversationNodeView.DIALOGUE || isOptionSelected) {
-            if( e.getButton( ) == MouseEvent.BUTTON1 )
-                mouseClickedButton = MouseEvent.BUTTON1;
-            else if( e.getButton( ) == MouseEvent.BUTTON3 )
-                mouseClickedButton = MouseEvent.BUTTON3;
+        	skip = true;
         }
     }
 
-    @Override
-    public void keyPressed( KeyEvent e ) {
+    
 
-        if( currentNode.getType( ) == ConversationNodeView.OPTION && !isOptionSelected ) {
-            if( e.getKeyCode( ) >= KeyEvent.VK_1 && e.getKeyCode( ) <= KeyEvent.VK_9 )
-                optionSelected = e.getKeyCode( ) - KeyEvent.VK_1;
-            else
-                optionSelected = -1;
-            keyPressed = true;
-
-            if( this.optionsToShow.size( ) <= RESPONSE_TEXT_NUMBER_LINES )
-                selectDisplayedOption( );
-            else if( optionSelected >= firstLineDisplayed && optionSelected <= numberDisplayedOptions + firstLineDisplayed )
-                selectNoAllDisplayedOption( );
-        }
-    }
-
-    @Override
-    public void mouseMoved( MouseEvent e ) {
-
-        if( GUI.getInstance( ).getResponseTextY( ) <= e.getY( ) )
-            optionHighlighted = ( e.getY( ) - GUI.getInstance( ).getResponseTextY( ) ) / RESPONSE_TEXT_HEIGHT;
+    
+    public void mouseMoved( UIEvent e ) {
+    	
+    	ScrollPressedEvent ev = (ScrollPressedEvent) e;
+    	
+		int y = (int)ev.eventDst.getY();
+		//int x = (int)ev.eventSrc.getX();
+		
+        if( GUI.getInstance( ).getResponseTextY( ) <= y )
+            optionHighlighted = ( y - GUI.getInstance( ).getResponseTextY( ) ) / RESPONSE_TEXT_HEIGHT;
         else
             optionHighlighted = -1;
-    }*/
+    }
 
     /**
      * Jumps to the next conversation line. If the current line was the last,
@@ -532,9 +548,8 @@ public class GameStateConversation extends GameState {
         if( currentNode.hasValidEffect( ) && !currentNode.isEffectConsumed( ) ) {
             currentNode.consumeEffect( );
             game.pushCurrentState( this );
-            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );
-        //HUD    GUI.getInstance( ).toggleHud( true );
-        }
+            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );}
+       
         else if( ( !currentNode.hasValidEffect( ) || currentNode.isEffectConsumed( ) ) && currentNode.isTerminal( ) ) {
             endConversation( );
         }
@@ -543,7 +558,9 @@ public class GameStateConversation extends GameState {
             firstLineDisplayed = 0;
             currentLine = 0;
         }
+        
     }
+    
 
     /**
      * @param convName
@@ -561,4 +578,29 @@ public class GameStateConversation extends GameState {
 
         return convID;
     }
+    
+    private void handleUIEvents() {
+		UIEvent e;
+		Queue<UIEvent> vEvents = touchListener.getEventQueue();
+		while ((e = vEvents.poll()) != null) {
+			switch (e.getAction()) {
+			case UIEvent.PRESSED_ACTION:				
+				Log.w("Events", "PRESSED");
+				mouseMoved(  e );
+				break;
+			case UIEvent.SCROLL_PRESSED_ACTION:				
+				Log.w("Events", "SCROLL_PRESSED");
+				mouseMoved(  e );
+				break;	
+			case UIEvent.UNPRESSED_ACTION:				
+				Log.w("Events", "UNPRESSED");
+				mouseClicked(e);
+				break;			
+			case UIEvent.TAP_ACTION: 
+				Log.w("Events", "TAP");
+				mouseClicked(e);
+			}
+
+		}
+	}
 }

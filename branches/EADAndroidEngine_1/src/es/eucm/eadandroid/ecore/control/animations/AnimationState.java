@@ -34,7 +34,12 @@
 package es.eucm.eadandroid.ecore.control.animations;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
+import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
+import es.eucm.eadandroid.ecore.gui.GUI;
 
 /**
  * Abstract class that has a set of animations, with functions to react to mouse
@@ -161,18 +166,26 @@ public abstract class AnimationState {
      */
     public void draw( int x, int y, float scale, int depth, FunctionalElement fe ) {
 //TODO falta por hacer el draw
-  /*      Bitmap image = getCurrentAnimation( ).getImage( );
-        int realX = (int) ( x - ( image.getWidth( null ) * scale / 2 ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ) );
-        int realY = (int) ( y - ( image.getHeight( null ) * scale ) );
+        Bitmap image = getCurrentAnimation( ).getImage( );
+        int realX = (int) ( x - ( image.getWidth(  ) * scale / 2 ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ) );
+        int realY = (int) ( y - ( image.getHeight(  ) * scale ) );
 
         if( image == oldOriginalImage && scale == oldScale ) {
             image = oldImage;
         }
         else if( scale != 1 ) {
             oldOriginalImage = image;
+            
             //image = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
-            BufferedImage temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( null ) * scale ),  Math.round( image.getHeight( null ) * scale ), Transparency.BITMASK );
-            ((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+            Bitmap temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+          //  ((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+           
+            Canvas c = new Canvas(temp);
+            
+            Matrix m = new Matrix();
+            m.setScale(scale,scale);
+            
+            c.drawBitmap(temp, m, null);            
             image = temp;
         }
         else {
@@ -185,7 +198,7 @@ public abstract class AnimationState {
         if( depth == Scene.PLAYER_WITHOUT_LAYER || depth == Scene.PLAYER_NO_ALLOWED )
             GUI.getInstance( ).addPlayerToDraw( image, realX, realY, Math.round( y ), Math.round( y ) );
         else
-            GUI.getInstance( ).addElementToDraw( image, realX, realY, depth, Math.round( y ), null , fe);*/
+            GUI.getInstance( ).addElementToDraw( image, realX, realY, depth, Math.round( y ), null , fe);
     }
 
     /**

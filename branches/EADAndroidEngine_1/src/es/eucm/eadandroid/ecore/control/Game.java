@@ -40,6 +40,7 @@ import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.Functio
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 import es.eucm.eadandroid.ecore.control.gamestate.GameState;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateBook;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateConversation;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateLoading;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateNextScene;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
@@ -817,7 +818,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         if( numberConv < stackOfState.size( ) ) {
             currentState = stackOfState.pop( );
             // set the game attribute conversation to stored conversation
-  //GAMESTATE          setConversation( ( (GameStateConversation) currentState ).getConvID( ) );
+            setConversation( ( (GameStateConversation) currentState ).getConvID( ) );
 
         }
         else if( !isEmptyFIFOinStack( ) )
@@ -967,7 +968,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
         // store the name of the conversation for future conversation restoring. It will be needed to
         // restore the effects in nodes of this conversation.
-   //GAMESTATE     ( (GameStateConversation) currentState ).setConvID( conversation.getId( ) );
+        ( (GameStateConversation) currentState ).setConvID( conversation.getId( ) );
 
     }
     
@@ -1426,7 +1427,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                currentState = new GameStateBook( );
                 break;
             case STATE_CONVERSATION:
- //GAMESTATE               currentState = new GameStateConversation( );
+                currentState = new GameStateConversation( );
+                currentState.registerTouchListener(sceneTouchListener);
                 break;
             case STATE_OPTIONS:
  // GAMESTATE               currentState = new GameStateOptions( );

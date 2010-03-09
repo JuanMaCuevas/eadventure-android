@@ -53,6 +53,18 @@ public class GUI {
 	public static float DISPLAY_DENSITY_SCALE;
 	
 	public static int CENTER_OFFSET;
+	
+	 /**
+     * Left most point of the response text block
+     */
+    private static final int RESPONSE_TEXT_X =   10;
+
+    /**
+     * Upper most point of the response text block
+     */
+    private static final int RESPONSE_TEXT_Y =  10;
+
+	private static final int TEXT_SIZE = 40;
 
 	/**
 	 * HUD
@@ -195,7 +207,7 @@ public class GUI {
 		else CENTER_OFFSET = 0;
 
 		mPaint = new Paint();
-		mPaint.setTextSize(28);
+		mPaint.setTextSize(TEXT_SIZE);
 		mPaint.setTypeface(Typeface
 				.create(Typeface.SANS_SERIF, Typeface.NORMAL));
 		mPaint.setStrokeWidth(4);
@@ -473,7 +485,7 @@ public class GUI {
 		// Get the current text font metrics (width and hegiht)
 
 		double width = mPaint.measureText(string);
-		double height = mPaint.ascent();
+		double height = - mPaint.ascent();
 		int realX = x;
 		int realY = y;
 
@@ -499,17 +511,17 @@ public class GUI {
 			// Check if the text don't go out of the window horizontally
 			// and if it do correct it so it's in the window
 			// FIXME nuevo, a ver si funciona
-
+			/*
 			if (realX + width > WINDOW_WIDTH) {
 				realX = (int) (WINDOW_WIDTH - width);
 			} else if (realX < 0) {
 				realX = 0;
 			}
-
+*/
 			if (realX + width > WINDOW_WIDTH) {
-				realX = 0;
+				//realX = 0;
 				// To know the width of one character
-				double w = mPaint.measureText(new String("A"));
+				double w = mPaint.measureText(new String("m"));
 				int position = (int) (WINDOW_WIDTH / w) + 18;
 				string = string.substring(0, position);
 				string = string + "...";
@@ -522,9 +534,9 @@ public class GUI {
 				realY = (int) height;
 			}
 		}
-		mPaint.setAntiAlias(true);
 		// If the text has border, draw it
-		
+		mPaint.setAntiAlias(true);
+
 		if (border) {
 
 			
@@ -540,6 +552,7 @@ public class GUI {
 		}
 		// Draw the text
 		mPaint.setColor(textColor);
+
 		g.drawText(string, realX,realY, mPaint);
 		// g.drawText(string, realX, realY,mPaint);
 	}
@@ -568,11 +581,11 @@ public class GUI {
 
 		int textBlockHeight = (int) (mPaint.getTextSize() * strings.length - mPaint
 				.getFontMetrics().leading);
-
+		int ascent = (int) - mPaint.ascent();
 		// This is the y lower position of the first line
-		int realY = (int) (y - textBlockHeight + mPaint.ascent());
-		if (realY < mPaint.ascent())
-			realY = (int) mPaint.ascent();
+		int realY = y - textBlockHeight + ascent;
+		if (realY < ascent )
+			realY = ascent;
 		// realY=y;
 
 		// Draw each line of the string array
@@ -676,7 +689,8 @@ public class GUI {
 	public static void delete() {
 		// TODO habra que eliminar todo
 		GUI.instance = null;
-};
+
+	};
 
 	/**
 	 * Draws the string specified centered (in X and Y) in the given position
@@ -697,7 +711,7 @@ public class GUI {
 
 		double width = mPaint.measureText(string);
 		;
-		double height = mPaint.ascent();
+		double height = - mPaint.ascent();
 
 		int realX = x;
 		int realY = y;
@@ -745,7 +759,8 @@ public class GUI {
 				- mPaint.getFontMetrics().leading - mPaint.descent());
 
 		// This is the y center position of the first line
-		int realY = (int) (y - textBlockHeight / 2 + mPaint.ascent() / 2);
+		
+		int realY = (int) (y - textBlockHeight / 2 + (-mPaint.ascent()) / 2);
 
 		// Draw each line of the string array
 		for (String line : strings) {
@@ -967,8 +982,9 @@ public class GUI {
 		return minY;
 	}
 
-	/*
-    *//**
+	
+	
+	/**
 	 * Returns the number of lines of the response text block
 	 * 
 	 * @return Number of response lines
@@ -984,20 +1000,22 @@ public class GUI {
 	 * 
 	 * @return X point of the response block text
 	 */
-	/*
-	 * public int getResponseTextX( ) {
-	 * 
-	 * return hud.getResponseTextX( ); }
-	 *//**
+	
+	  public int getResponseTextX( ) {
+	 
+	 
+	  return RESPONSE_TEXT_X; }
+	 
+	 /**
 	 * Returns the Y point of the response block text
 	 * 
 	 * @return Y point of the response block text
 	 */
-	/*
-	 * public int getResponseTextY( ) {
-	 * 
-	 * return hud.getResponseTextY( ); }
-	 */
+	
+	  public int getResponseTextY( ) {
+	  
+	  return RESPONSE_TEXT_X; }
+	 
 	public boolean hasTransition() {
 
 		return transition != null && !transition.hasFinished(0);
@@ -1144,7 +1162,7 @@ public class GUI {
 
 	public int getAscent() {
 		// TODO Auto-generated method stub
-		return (int) mPaint.ascent();
+		return (int) - mPaint.ascent();
 	}
 
 //	public void toggleHud(boolean b) {
