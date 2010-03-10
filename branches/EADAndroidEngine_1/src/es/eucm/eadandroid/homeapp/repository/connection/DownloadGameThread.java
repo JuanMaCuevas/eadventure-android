@@ -27,7 +27,7 @@ public class DownloadGameThread extends Thread {
 
 		RepoResourceHandler.downloadFileAndUnzip(game.getEadUrl(),Paths.eaddirectory.GAMES_PATH , game.getFileName() , pn);
 
-		pn.notifyFinished("finished");
+		pn.finalFinish();
 		
 	}
 

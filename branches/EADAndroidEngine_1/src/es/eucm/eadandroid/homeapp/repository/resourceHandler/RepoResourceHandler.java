@@ -129,6 +129,7 @@ public class RepoResourceHandler {
 			String fileName, ProgressNotifier pn) {
 
 		downloadFile(url_from, path_to, fileName, pn);
+		pn.notifyIndeterminate("Insalling "+fileName);
 		unzip(path_to,fileName);
 
 	}

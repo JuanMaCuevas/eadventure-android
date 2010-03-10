@@ -13,6 +13,8 @@ public class ProgressNotifier extends TaskNode {
 		public static final int PROGRESS_ERROR = -1;
 		public static final int PROGRESS_PERCENTAGE = 0;
 		public static final int PROGRESS_FINISHED = 1;
+		public static final int INDETERMINATE = 2;
+		public static final int FINAL_FINISH = 3;
 
 	}
 
@@ -73,6 +75,33 @@ public class ProgressNotifier extends TaskNode {
 
 		handler.sendMessage(msg);
 
+	}
+
+	public void notifyIndeterminate(String string) {
+		
+		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		Message msg = handler.obtainMessage();
+		msg.what = ProgressMessage.INDETERMINATE;
+		Bundle b = new Bundle();
+		b.putString("msg", string);
+
+		msg.setData(b);
+
+		handler.sendMessage(msg);
+		
+	}
+	
+	public void finalFinish(){
+		
+		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		Message msg = handler.obtainMessage();
+		msg.what = ProgressMessage.FINAL_FINISH;
+		Bundle b = new Bundle();
+
+		msg.setData(b);
+
+		handler.sendMessage(msg);
+		
 	}
 
 }

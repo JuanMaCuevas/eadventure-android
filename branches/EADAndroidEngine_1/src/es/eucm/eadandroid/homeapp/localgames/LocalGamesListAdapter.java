@@ -38,7 +38,7 @@ public class LocalGamesListAdapter  extends ArrayAdapter<GameInfo> {
                         if (tt != null) {
                               tt.setText("Name: "+game.getGameTitle());                            }
                         if(bt != null){
-                              bt.setText("Status: "+ game.getGameDescription());
+                              bt.setText("Desc: "+ game.getGameDescription());
                         }
                         if(iv != null){
                         	if (game.getImageIcon()!=null)

@@ -2,6 +2,7 @@ package es.eucm.eadandroid.homeapp.repository;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.homeapp.HomeTabActivity;
+import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesListAdapter;
 import es.eucm.eadandroid.homeapp.repository.connection.RepositoryServices;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
@@ -69,7 +72,7 @@ public class RepositoryActivity extends ListActivity {
 
 			case ProgressMessage.PROGRESS_PERCENTAGE:
 
-
+				p.setIndeterminate(false);
 				p.show();
 				m = msg.getData().getString("msg");
 				perc = msg.getData().getInt("ptg");
@@ -79,9 +82,10 @@ public class RepositoryActivity extends ListActivity {
 
 			case ProgressMessage.PROGRESS_FINISHED:
 
-				m = msg.getData().getString("msg");
+				p.setIndeterminate(false);
+//				m = msg.getData().getString("msg");
 				p.setProgress(100);
-				p.setMessage(m);
+//				p.setMessage(m);
 				databaseUpdated();
 				p.dismiss();
 				break;
@@ -89,19 +93,44 @@ public class RepositoryActivity extends ListActivity {
 			case ProgressMessage.PROGRESS_ERROR:
 
 				m = msg.getData().getString("msg");
-				p.setProgress(100);
+				p.setProgress(0);
 				p.setMessage(m);
 				p.dismiss();
 
 				break;
 
+			case ProgressMessage.INDETERMINATE:
+
+				p.setIndeterminate(true);
+				m = msg.getData().getString("msg");
+				p.setMessage(m);
+
+
+				break;
+				
+			case ProgressMessage.FINAL_FINISH:
+
+				p.setIndeterminate(false);
+				p.dismiss();
+				
+				goToLocalGames();
+			
+				break;
+				
 			}
 
 		}
 
 	};
-
-
+	
+	private void goToLocalGames() {
+		
+		Intent i = new Intent(this, HomeTabActivity.class);
+		startActivity(i);
+		
+		this.finish();
+		
+	}
 
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -249,6 +278,8 @@ public class RepositoryActivity extends ListActivity {
 		pd = ProgressDialog.show(this, "Please wait...", "Retrieving data ...",
 				true);
 		rs.updateDatabase(this, RAHandler, db);
+
+		
 		return true;
 
 	}
