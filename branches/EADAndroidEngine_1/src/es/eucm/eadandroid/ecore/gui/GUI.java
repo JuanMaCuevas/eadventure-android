@@ -249,7 +249,7 @@ public class GUI {
 				
 				canvas.drawBitmap(finalBmp, 0, 0, null);
 
-				fps.draw(canvas);
+			//	fps.draw(canvas);
 				hud.doDraw(canvas);
 			}
 		} finally {

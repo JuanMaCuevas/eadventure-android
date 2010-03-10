@@ -2,6 +2,9 @@ package es.eucm.eadandroid.homeapp;
 
 
 import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
+import es.eucm.eadandroid.common.gui.TC;
+import es.eucm.eadandroid.ecore.control.config.ConfigData;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import android.app.Activity;
 import android.content.Intent;
@@ -35,13 +38,15 @@ public class ActivityVideoIntro extends Activity implements
 	VideoView surfacevideo = null;
 	MediaPlayer video = null;
 	SurfaceHolder holder = null;
+	
+    private static String languageFile = ReleaseFolders.LANGUAGE_UNKNOWN;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+
 		setContentView(R.layout.introduction_video);
 		this.surfacevideo = (VideoView) findViewById(R.id.VideoView01);
 		this.holder = surfacevideo.getHolder();
@@ -75,8 +80,34 @@ public class ActivityVideoIntro extends Activity implements
 				video.release();
 			}
 		});
+		
+		
+        // Load the configuration
+        ConfigData.loadFromXML(ReleaseFolders.configFileEngineRelativePath( ) );
+
+        /* We«e got to set the language from the device locale ;D */       
+        setLanguage(ReleaseFolders.getLanguageFromPath( ConfigData.getLanguangeFile( ) ) );
 
 	}
+	
+    /**
+     * Sets the current language of the editor. Accepted values are
+     * {@value #LANGUAGE_ENGLISH} & {@value #LANGUAGE_ENGLISH}. This method
+     * automatically updates the about, language strings, and loading image
+     * parameters.
+     * 
+     * The method will reload the main window if reloadData is true
+     * 
+     * @param language
+     */
+    public static void setLanguage( String language ) {
+
+        if( true ) {
+            ConfigData.setLanguangeFile(ReleaseFolders.getLanguageFilePath( language ),ReleaseFolders.getAboutFilePath( language ) );
+            languageFile = language;
+            TC.loadStrings( ReleaseFolders.getLanguageFilePath4Engine( languageFile ) );
+        }
+    }
 
 	public void surfaceCreated(SurfaceHolder holder2) {
 		video = new MediaPlayer();
