@@ -125,7 +125,8 @@ public class ActivityVideoIntro extends Activity implements
 		startActivity(i);
 		
 		this.finish();
-		
+		Runtime r = Runtime.getRuntime();
+		r.gc();
 	//	overridePendingTransition(R.anim.fade, R.anim.hold);
 	//	overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 

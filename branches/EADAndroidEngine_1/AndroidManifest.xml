@@ -7,15 +7,15 @@
 	
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
 		android:debuggable="true" android:theme="@android:style/Theme.NoTitleBar">
+		<activity android:label="@string/app_name" android:name=".homeapp.ActivityVideoIntro" android:screenOrientation="portrait">
 		
-		<activity android:label="@string/app_name" android:name=".homeapp.InitSplashActivity" android:alwaysRetainTaskState="true" android:screenOrientation="portrait">
 			
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".homeapp.HomeTabActivity" android:screenOrientation="portrait"></activity>
+		<activity  android:name=".homeapp.InitSplashActivity" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.localgames.LocalGamesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.preferences.PreferencesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.repository.RepositoryActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
@@ -23,7 +23,7 @@
 		
 	
 <activity android:name=".ecore.ECoreActivity"  android:screenOrientation="landscape"></activity>
-<activity android:name=".homeapp.ActivityVideoIntro" android:screenOrientation="portrait"></activity>
+<activity android:name=".homeapp.HomeTabActivity" android:screenOrientation="portrait"></activity>
 </application>
 	
 	<uses-sdk android:minSdkVersion="5" />

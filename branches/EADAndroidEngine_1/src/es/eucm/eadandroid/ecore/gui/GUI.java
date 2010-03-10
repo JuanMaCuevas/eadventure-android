@@ -212,6 +212,7 @@ public class GUI {
 				.create(Typeface.SANS_SERIF, Typeface.NORMAL));
 		mPaint.setStrokeWidth(4);
 		mPaint.setColor(0XFFFFFFFF);
+		mPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
 
 	}
 	
@@ -540,11 +541,11 @@ public class GUI {
 		if (border) {
 
 			
-			 mPaint.setColor(borderColor);
-			 g.drawText(string, realX - 1, realY - 1,mPaint);
-			g.drawText(string, realX - 1, realY + 1,mPaint);
-			 g.drawText(string, realX + 1, realY - 1,mPaint);
-			 g.drawText(string, realX + 1, realY + 1,mPaint);
+			// mPaint.setColor(borderColor);
+			 //g.drawText(string, realX - 1, realY - 1,mPaint);
+			//g.drawText(string, realX - 1, realY + 1,mPaint);
+			// g.drawText(string, realX + 1, realY - 1,mPaint);
+			 //g.drawText(string, realX + 1, realY + 1,mPaint);
 
 			// FIXME el color CORRECTO
 			// mPaint.setColor(Color.RED);
