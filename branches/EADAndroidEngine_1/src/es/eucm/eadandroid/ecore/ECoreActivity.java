@@ -355,10 +355,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		if (Game.getInstance().getCurrentState() instanceof GameStatePlaying )
 		{menu.add(0, 0, 0, "Save").setIcon(android.R.drawable.ic_menu_save);
 		}
+		
+		if(Game.getInstance().getFunctionalScene( )!=null)
 		if (options.isMusicActive())
 		menu.add(0, 1, 0, "Music off").setIcon(android.R.drawable.ic_lock_silent_mode);
 		else menu.add(0, 1, 0, "Music on").setIcon(android.R.drawable.ic_lock_silent_mode_off);
 		
+		if(Game.getInstance().getFunctionalScene( )!=null)
 		if (options.isEffectsActive())
 		menu.add(0, 2, 0, "Effects off").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		else menu.add(0, 2, 0, "Effects on").setIcon(android.R.drawable.ic_menu_view);
