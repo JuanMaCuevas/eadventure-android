@@ -18,7 +18,11 @@ import java.util.zip.ZipFile;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import es.eucm.eadandroid.homeapp.loadsavedgames.InfoExpandabletable;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
+import es.eucm.eadandroid.res.filefilters.EADFileFilter;
+import es.eucm.eadandroid.res.filefilters.TxtFilter;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class RepoResourceHandler {
 
@@ -132,6 +136,66 @@ public class RepoResourceHandler {
 		pn.notifyIndeterminate("Insalling "+fileName);
 		unzip(path_to,fileName);
 
+	}
+	
+	public void getexpandablelist(InfoExpandabletable info)
+	{
+		String path= Paths.eaddirectory.SAVED_GAMES_PATH;
+		String games[]=null;
+		String [][] finalarray;
+		
+		if(!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
+		{
+			finalarray=new String[1][1];
+			games=new String[1];
+			 games[0]="No Games";
+			 finalarray[0][0]="";
+		}
+		else
+	{
+		
+		File gamesfolders = new File(Paths.eaddirectory.SAVED_GAMES_PATH);
+		
+		if(gamesfolders.exists())
+		games = gamesfolders.list(new EADFileFilter());
+		
+		
+		if (games.length<1)
+		{
+			finalarray=new String[1][1];
+			games=new String[1];
+			 games[0]="No Games";
+			 finalarray[0][0]="";
+		}
+		else {finalarray=new String[games.length][];
+		
+	
+		
+			for (int i=0; i<games.length; i++){
+			
+				String files[]=null;
+				File gamefolder = new File(Paths.eaddirectory.SAVED_GAMES_PATH+games[i]+"/");
+				if(gamefolder.exists())
+					files = gamefolder.list(new TxtFilter());
+					finalarray[i]=new String[files.length];
+			
+					if (files.length<1)
+					{finalarray[i]=new String[1];
+					finalarray[i][0]="Saved but deleted";
+						
+					}else	{finalarray[i]=new String[files.length];
+								for(int j=0;j<files.length;j++)
+								finalarray[i][j]=files[j];
+							}
+			
+				}
+		}
+	}	
+		
+		
+		info.setChildren(finalarray);
+		info.setGroup(games);
+	
 	}
 
 	private static void unzip(String filePath, String name) {

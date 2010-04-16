@@ -154,6 +154,7 @@ public class ActivityVideoIntro extends Activity implements
 	public void startEngineHomeActivity() {
 
 		Intent i = new Intent(this, HomeTabActivity.class);
+		i.putExtra("tabstate", 0);
 		startActivity(i);
 		
 		this.finish();

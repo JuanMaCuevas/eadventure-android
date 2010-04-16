@@ -90,7 +90,7 @@ public class GUI {
 
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder canvasSurfaceHolder;
-	private SurfaceHolder videoSurfaceHolder;
+	
 	
 	/** Context of the activity creating the thread */
 	private Context mContext;
@@ -167,18 +167,19 @@ public class GUI {
 	public void setCanvasSurfaceHolder(SurfaceHolder canvasSurfaceHolder) {
 		this.canvasSurfaceHolder = canvasSurfaceHolder;
 	}
+	
+	
 
-	private GUI(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder, Handler handler) {
+	private GUI(SurfaceHolder mSurfaceHolder, Handler handler) {
 		this.Handleractivity=handler;
 		this.canvasSurfaceHolder = mSurfaceHolder;
-		this.videoSurfaceHolder = videoHolder;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
 	}
 
-	public static void create(SurfaceHolder mSurfaceHolder, SurfaceHolder videoHolder, Handler handler) {
+	public static void create(SurfaceHolder mSurfaceHolder,Handler handler) {
 
-		instance = new GUI(mSurfaceHolder,videoHolder,handler);
+		instance = new GUI(mSurfaceHolder,handler);
 
 	}
 
@@ -228,9 +229,7 @@ public class GUI {
 	public Canvas getGraphics() {
 		return canvascpy;
 	}
-	public SurfaceHolder getVideoSurfaceHolder() {
-		return videoSurfaceHolder;
-	}
+
 
 	public void endDraw() {
 

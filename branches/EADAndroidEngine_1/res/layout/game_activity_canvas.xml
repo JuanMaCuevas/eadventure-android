@@ -8,9 +8,7 @@
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:id="@+id/canvas_surface" />
 
-	<es.eucm.eadandroid.ecore.VideoSurfaceView
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:id="@+id/video_surface" />
+	
 
 
 	<LinearLayout android:id="@+id/hidecontainer"

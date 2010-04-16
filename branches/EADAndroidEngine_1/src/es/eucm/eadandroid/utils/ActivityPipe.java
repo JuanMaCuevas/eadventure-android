@@ -20,6 +20,18 @@ public class ActivityPipe {
 
 	}
 
+	
+	public static void add(Object e,String key) {
+
+		synchronized (pipe) {
+
+			pipe.put(key, e);
+
+		}
+
+	}
+	
+	
 	public static Object remove(String key) {
 
 		synchronized (pipe) {
@@ -27,7 +39,14 @@ public class ActivityPipe {
 			return pipe.remove(key);
 
 		}
-
 	}
+	
+	public static boolean exists(String key) {
 
+		synchronized (pipe) {
+
+			return pipe.containsKey(key);
+
+		}
+	}
 }

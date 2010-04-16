@@ -20,12 +20,19 @@ public class GameThread extends Thread {
 
 	private String advPath;
 	Handler handler;
-
-	public GameThread(SurfaceHolder holder, SurfaceHolder videoHolder, Context context, Handler handler) {
-
+	//boolean starteado=false;
+	boolean loadActivityGames=false;
+	
+	
+	private static GameThread instance = null;
+	
+	public static final String TAG ="GameThread";
+	
+	private GameThread(SurfaceHolder holder,Context context, Handler handler,String loadingGame)
+	{
 		this.handler =handler;
 //		ResourceHandler.createInstance();
-		Game.create();
+		Game.create(loadingGame);
 		
 
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -39,10 +46,17 @@ public class GameThread extends Thread {
 		
 		float scaleDensity = displayMetrics.density;
 				
-		GUI.create(holder,videoHolder,handler);
+		GUI.create(holder,handler);
 		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 		
+		
 	}
+
+	public static void create(SurfaceHolder holder,Context context, Handler handler,String loadingGame) 
+		{
+	instance=new GameThread(holder,context,handler,loadingGame);
+	
+		}
 	
 	public void run() {
 
@@ -60,7 +74,7 @@ public class GameThread extends Thread {
 		
 	}
 	
-
+//last function it will be done from GameThread not activitythread
 	private void finishThread() {
 		
 		//handler.dispatchMessage(new Message())
@@ -72,8 +86,11 @@ public class GameThread extends Thread {
         
         Bundle b = new Bundle();
 		//b.putString("html", text);
-		msg.what = ActivityHandlerMessages.GAME_OVER;
+        if (this.loadActivityGames)
+        	msg.what = ActivityHandlerMessages.LOAD_GAMES;	
+        else msg.what = ActivityHandlerMessages.GAME_OVER;
 		msg.setData(b);
+		this.instance=null;
 		
 		msg.sendToTarget();
 		
@@ -102,19 +119,33 @@ public class GameThread extends Thread {
 
 	public void pause() {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	public void unpause() {
-		
 		if (Game.getInstance()!=null) {
-		Game.getInstance().unpause();
+		Game.getInstance().pause();
 		}
 	}
 	
-	public void finish() {
+	
+	
+	
+
+	public static GameThread getInstance() {
+		return instance;
+	}
+
+	public void unpause(SurfaceHolder canvasHolder) {
+		
+		if (Game.getInstance()!=null) {
+		Game.getInstance().unpause(canvasHolder);
+		}
+	}
+	
+	public void finish(boolean loadactivitygames) {
+		
+		this.loadActivityGames=loadactivitygames;
 		if(Game.getInstance()!=null)
 		Game.getInstance().finish();
+		
+		
 	}
 
 
@@ -133,6 +164,15 @@ public class GameThread extends Thread {
 	public void setSurfaceSize(int width, int height) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void setSurfacevideo(SurfaceHolder videoholder) {
+		GUI.getInstance().setCanvasSurfaceHolder(videoholder);
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void setHandler(Handler handler) {
+		this.handler = handler;
 	}
 	
 	

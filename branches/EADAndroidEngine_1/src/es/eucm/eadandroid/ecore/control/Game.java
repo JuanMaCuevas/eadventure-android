@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import es.eucm.eadandroid.assessment.AssessmentEngine;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
@@ -55,6 +56,7 @@ import es.eucm.eadandroid.ecore.data.SaveTimer;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
+import es.eucm.eadandroid.utils.ActivityPipe;
 
 public class Game implements TimerEventListener , SpecialAssetPaths{
 
@@ -63,7 +65,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	/* GAME GLOBAL STATES */
 	public static final int STATE_PAUSE = 0;
 	public static final int STATE_RUNNING = 1;
-	int globalState;
+	int globalState=STATE_RUNNING;
 
 	private static Game instance = null;
 
@@ -119,6 +121,10 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * Constant for options state
      */
     public static final int STATE_OPTIONS = 8;
+    /**
+     * Constant for options state
+     */
+    public static final int STATE_VIDEO = 10;
 
     /**
      * Path of the file containing the adventure
@@ -153,6 +159,12 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      * Assessment engine
      */
     private AssessmentEngine assessmentEngine;
+    
+    /*
+     * if the game is going to be loaded from a saved game
+     */
+    private boolean LoadedGame=false;
+    private String LoadingGame;
 
     /* ADAPTATION 
      */ 
@@ -338,9 +350,16 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     
     /*******/
 
-	private Game() {
+	private Game(String LoadingGame) {
 		
 		createUIEventListeners();
+		
+		if (LoadingGame!=null)
+		{
+			this.LoadedGame=true;
+			this.LoadingGame=LoadingGame;
+		}
+			
 		
 	}
 	
@@ -350,9 +369,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		
 	}
 
-	public static void create() {
+	public static void create(String LoadingGame) {
 
-		instance = new Game();
+		instance = new Game(LoadingGame);
 
 	}
 
@@ -444,12 +463,23 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     		}
 
     		while( !gameOver ) {
-
+    			//TODO esto es solo para probar que caga bien el juego
+    			//FIXME habra que cambiar varias cosas
+    			//2) que no haga un loadcurrentchapter, si lo pongo despues me peta xq algo no esta inicializado
+    			//3)intetar hacerlo fuera de alguna manera
     			loadCurrentChapter();
+    			if(this.LoadedGame)
+    			{
+    				this.LoadedGame=false;
+    				this.load(this.LoadingGame);
+    			} 
 
     			GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse !! 
 
     			while( !nextChapter && !gameOver ) {
+    				
+    			if(this.globalState==STATE_RUNNING)
+    			{	
     				time = System.currentTimeMillis( );
     				elapsedTime = time - oldTime;
     				oldTime = time;
@@ -464,22 +494,22 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     				}
 
     				GUI.getInstance().drawFPS(oldFps);
-
-
     				currentState.mainLoop( elapsedTime, oldFps );
-
-
     				MultimediaManager.getInstance( ).update( );
-
     				try {
     					Thread.sleep( Math.max((10 - (System.currentTimeMillis( ) - time)), 0) );
     				}
     				catch( InterruptedException e ) {
     				}
+    			}else{
+    					Thread.sleep( 1000);
+    				}
+    				
     			}
 
     			//If there is an assessment profile, show the "Save Report" dialog
-    			while( !assessmentEngine.isEndOfChapterFeedbackDone( ) ) {
+    			if (!gameOver)
+    			while(!assessmentEngine.isEndOfChapterFeedbackDone( )) {
     				Thread.sleep( 100 );
     			}
 
@@ -1416,6 +1446,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 break;
             case STATE_VIDEO_SCENE:
                currentState = new GameStateVideoscene( );
+              // ((GameStateVideoscene)currentState).begin();
                 break;
             case STATE_RUN_EFFECTS:
                currentState = new GameStateRunEffects( this.isConvEffectsBlock.peek( ) );
@@ -1423,15 +1454,23 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
             case STATE_RUN_EFFECTS_FROM_CONVERSATION:
                currentState = new GameStateRunEffects( true );
                 break;
+                           
             case STATE_BOOK:
-               currentState = new GameStateBook( );
-               currentState.registerTouchListener(sceneTouchListener);
+                currentState = new GameStateBook( );
+                currentState.registerTouchListener(sceneTouchListener);
 
-                break;
+                 break;    
             case STATE_CONVERSATION:
                 currentState = new GameStateConversation( );
                 currentState.registerTouchListener(sceneTouchListener);
                 break;
+                
+            case STATE_VIDEO:
+                currentState = new GameStateBook( );
+                currentState.registerTouchListener(sceneTouchListener);
+
+                 break;    
+                
             case STATE_OPTIONS:
  // GAMESTATE               currentState = new GameStateOptions( );
                 break;
@@ -1496,10 +1535,12 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	// HANDLING GLOBAL STATE //
 
 	private void setGlobalState(int state) {
-	
+	this.globalState=state;
 	}
 	
-	public void unpause() {
+	public void unpause(SurfaceHolder canvasHolder) {
+		GUI.getInstance().setCanvasSurfaceHolder(canvasHolder);
+		
 		setGlobalState(STATE_RUNNING);
 	}
 
@@ -1560,6 +1601,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     }
     
 	public void finish() {
+		this.gameOver=true;
 	}
     
 	
@@ -1577,6 +1619,11 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		
 	public boolean processSensorEvent(SensorEvent e) {
 		return currentState.processSensorEvent(e);
+	}
+
+	public void setvideostatefinish() {
+		((GameStateVideoscene) currentState).setstop(true);
+		
 	}
 
 

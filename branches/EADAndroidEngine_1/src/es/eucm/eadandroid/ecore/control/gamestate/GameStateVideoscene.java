@@ -49,8 +49,7 @@ public class GameStateVideoscene extends GameState {
 	public GameStateVideoscene() {
 
 		super();
-		videoscene = (Videoscene) game.getCurrentChapterData().getGeneralScene(
-				game.getNextScene().getNextSceneId());
+		videoscene = (Videoscene) game.getCurrentChapterData().getGeneralScene(	game.getNextScene().getNextSceneId());
 
 		stop =false;;
 		this.prefetched = false;
@@ -64,7 +63,7 @@ public class GameStateVideoscene extends GameState {
 			msg.what = ActivityHandlerMessages.VIDEO;
 			msg.setData(b);
 				msg.sendToTarget();
-			//stop=false;
+			stop=false;
 		
 		
 		
@@ -109,22 +108,22 @@ public class GameStateVideoscene extends GameState {
 
 	private void loadNextScene() {
 
-		if (mediaPlayer != null) {
+/*		if (mediaPlayer != null) {
 			mediaPlayer.stop();
 
 			// GUI.getInstance( ).getFrame( ).remove( video );
 
-			/*
+			
 			 * GUI.getInstance( ).getFrame( ).createBufferStrategy( 2 );
 			 * GUI.getInstance( ).getFrame( ).validate( ); GUI.getInstance(
 			 * ).restoreFrame( );
 			 * 
 			 * mediaPlayer.deallocate( );
-			 */
+			 
 			mediaPlayer.release();
 			mediaPlayer = null;
 			System.gc();
-		}
+		}*/
 
 		if (videoscene.getNext() == Cutscene.ENDCHAPTER)
 			game.goToNextChapter();
@@ -173,7 +172,7 @@ public class GameStateVideoscene extends GameState {
 	 * 
 	 * stop = true; }
 	 */
-	public synchronized void blockingPrefetch() {
+/*	public synchronized void blockingPrefetch() {
 
 		if (mediaPlayer != null) {
 			// mediaPlayer.prefetch( );
@@ -187,7 +186,7 @@ public class GameStateVideoscene extends GameState {
 				}
 			}
 		}
-	}
+	}*/
 
 	/*
 	 * public synchronized void controllerUpdate( ControllerEvent event ) {
@@ -198,10 +197,12 @@ public class GameStateVideoscene extends GameState {
 	 * true; notify( ); } else if( event instanceof PrefetchCompleteEvent ) {
 	 * prefetched = true; notify( ); } //(else if (event instanceof ) }
 	 */
+	
+	
 	/**
 	 * Creates the current resource block to be used
 	 */
-	public Resources createResourcesBlock() {
+/*	public Resources createResourcesBlock() {
 
 		// Get the active resources block
 		Resources newResources = null;
@@ -217,9 +218,9 @@ public class GameStateVideoscene extends GameState {
 		}
 		return newResources;
 	}
-
+*/
 	
-	
+	/*
 	public void play()
 	{
 		try {
@@ -256,5 +257,10 @@ public class GameStateVideoscene extends GameState {
 			loadNextScene();
 		}
 	}
+	*/
 	
+	public void setstop(boolean stop)
+	{
+		this.stop=stop;
+	}
 }
