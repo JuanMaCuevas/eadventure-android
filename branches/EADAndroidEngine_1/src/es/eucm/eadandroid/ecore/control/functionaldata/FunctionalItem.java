@@ -126,12 +126,12 @@ public class FunctionalItem extends FunctionalElement {
         // Load the resources
         MultimediaManager multimediaManager = MultimediaManager.getInstance( );
         if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
-            tempimage = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
+            tempimage = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
             removeTransparentParts(tempimage);
 
         }
         if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
-            icon = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_ICON ), MultimediaManager.IMAGE_SCENE );
+            icon = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_ICON ), MultimediaManager.IMAGE_SCENE );
     }
 
     private void removeTransparentParts(Bitmap tempimage) {
@@ -156,7 +156,7 @@ public class FunctionalItem extends FunctionalElement {
             boolean x_clear = true;
             for (int j = 0; j < tempHeight; j++) {
                 boolean y_clear = true;
-                int alpha = Color.alpha(temp[(j * tempWidth) + i ]);
+                int alpha = Color.alpha(temp[(j * tempWidth) + i ]);  //ojitooo
                 if (alpha >128) {
                     if (x_clear)
                         x1 = Math.min( x1, i );
@@ -202,7 +202,7 @@ public class FunctionalItem extends FunctionalElement {
         // draw the transformed image
         Canvas c = new Canvas(image);       
         c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
-        
+        tempimage = null;
 
         //GRAPHICS       
         
@@ -238,6 +238,7 @@ public class FunctionalItem extends FunctionalElement {
             if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
                 tempimage = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
                 removeTransparentParts(tempimage);
+                
             }
             if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
                 icon = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_ICON ), MultimediaManager.IMAGE_SCENE );
@@ -350,8 +351,10 @@ public class FunctionalItem extends FunctionalElement {
 
         if( ( mousex >= 0 ) && ( mousex < (x2 - x1) * scale ) && ( mousey >= 0 ) && ( mousey < (y2 - y1) * scale ) ) {
             Bitmap bufferedImage = image;
-            int xx = ( mousex / (int)scale );
-            int yy =  ( mousey / (int)scale ) ;
+            
+            int xx = (int)( mousex / scale );
+            int yy =   (int)( mousey /scale ) ;
+            
             int color= bufferedImage.getPixel(xx,yy);
             int alpha = Color.alpha(color);
             isInside = alpha > 128;

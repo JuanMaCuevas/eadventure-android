@@ -1,6 +1,7 @@
 package es.eucm.eadandroid.ecore.gui.hud.elements;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -24,6 +25,7 @@ public class Magnifier {
 
 	private Bitmap magBmp;
 	private Canvas canvasMag;
+	private Bitmap bmpmagaux;
 
 	Paint pFrame;
 
@@ -88,6 +90,8 @@ public class Magnifier {
 		this.bmpsrc = bmp;
 		this.matrix = new Matrix();
 		this.zoom = zoom;
+		
+		bmpmagaux = null;
 
 		pFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
 		pFrame.setColor(0xFF000000);
@@ -139,8 +143,9 @@ public class Magnifier {
 		// Bitmap bmpmagaux =
 		// Bitmap.createBitmap(bmpsrc,fBounds.left,fBounds.top,
 		// fBounds.width(), fBounds.height());
-
-		Bitmap bmpmagaux = Bitmap.createBitmap(bmpsrc,
+		//bmpmagaux=BitmapFactory.Options
+		
+		 bmpmagaux = Bitmap.createBitmap(bmpsrc,
 				magBoundsIntersected.left, magBoundsIntersected.top,
 				magBoundsIntersected.width(), magBoundsIntersected.height());
 
@@ -150,6 +155,10 @@ public class Magnifier {
 				magBoundsIntersected.top - magBounds.top);
 		canvasMag.drawBitmap(bmpmagaux, matrix, null);
 		canvasMag.restore();
+		bmpmagaux = null;
+	/*	bmpmagaux.recycle();
+		System.gc();
+		*/
 
 	}
 

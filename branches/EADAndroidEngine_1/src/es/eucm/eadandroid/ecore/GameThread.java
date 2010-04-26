@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
@@ -59,10 +60,13 @@ public class GameThread extends Thread {
 		}
 	
 	public void run() {
+		
+	//	Debug.startAllocCounting();
+		//startMethodTracing("thread");
 
 
 		Game.getInstance().setAdventurePath(advPath);
-		ResourceHandler.getInstance().setZipFile(Game.getInstance().getAdventurePath());
+		ResourceHandler.getInstance().setGamePath(Game.getInstance().getAdventurePath());
 
 		Game.getInstance().start();
 		Game.delete();
@@ -72,6 +76,8 @@ public class GameThread extends Thread {
 		
 		finishThread();
 		
+		//Debug.stopMethodTracing();
+	
 	}
 	
 //last function it will be done from GameThread not activitythread

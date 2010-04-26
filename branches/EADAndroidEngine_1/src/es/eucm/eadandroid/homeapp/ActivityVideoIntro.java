@@ -73,8 +73,12 @@ public class ActivityVideoIntro extends Activity implements
 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (video.isPlaying())
-					video.stop();
+				if (video != null){
+					if (video.isPlaying())
+						video.stop();
+					video.release();
+				}
+
 				
 
 				video.release();

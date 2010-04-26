@@ -18,6 +18,7 @@ import java.util.zip.ZipFile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Debug;
 import android.util.Log;
 import es.eucm.eadandroid.common.loader.InputStreamCreator;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
@@ -68,7 +69,7 @@ public class ResourceHandler implements InputStreamCreator {
 	/**
 	 * Stores the zip file containing the needed files for the game
 	 */
-	protected static String zipPath = null;
+	public static String gamePath = null;
 
 	private static ResourceHandler INSTANCE = null;
 
@@ -128,13 +129,13 @@ public class ResourceHandler implements InputStreamCreator {
 	 * @param zipFilename
 	 *            Filename of the zip
 	 */
-	public void setZipFile(String zipFilename) {
+	public void setGamePath(String gamePath) {
 
 	
 
-			Log.d("ZipFileName", "Nombre Zip " + zipFilename);
+			Log.d("GameFolderName", "Nombre " + gamePath);
 			
-			ResourceHandler.zipPath = zipFilename;
+			ResourceHandler.gamePath = gamePath;
 		//	zipFile = new ZipFile(zipFilename);
 
 
@@ -143,7 +144,7 @@ public class ResourceHandler implements InputStreamCreator {
 	
 	public String getMediaPath(String a)
 	{
-		return ResourceHandler.zipPath+a;
+		return ResourceHandler.gamePath+a;
 	}
 	
 
@@ -199,12 +200,10 @@ public class ResourceHandler implements InputStreamCreator {
 
 		InputStream is = null;
 
-		if (path.startsWith("/")) {
-			path = path.substring(1);
-		}
+		
 
 		try {
-			is = new FileInputStream(path);
+			is = new FileInputStream( path);
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -226,24 +225,35 @@ public class ResourceHandler implements InputStreamCreator {
 
 		Bitmap image = null;
 
-		if (!path.startsWith("/")) {
+	/*	if (!path.startsWith("/")) {
 			path = "/" + path;
 		}
-		
+		*/
 		Log.d("Path",path);
 
-		try {
-			InputStream inputStream = getResourceAsStream(path);
-			if (inputStream != null) {
-				image = BitmapFactory.decodeStream(inputStream);
-				inputStream.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		if (!path.startsWith("/sdcard"))
+			 path=gamePath+path;
+			//Here we should decode the images properly
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inPurgeable = true;
+			options.inInputShareable = true;
+			//options.inDensity = 120; //temporaly minimal quality
+			options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+			// end added
+			image = BitmapFactory.decodeFile(path, options);//decodeStream(inputStream, null, options);
+			
+			
+			/*String memory = "Free,"+Long.toString(Debug.getNativeHeapFreeSize())+
+							", Allocated:, "+Long.toString(Debug.getNativeHeapAllocatedSize())+
+							", Size:, "+Long.toString(Debug.getNativeHeapSize())+","+path;
+			Log.i("Memory usage",memory);*/
+
 
 		return image;
 	}
+	
+	
 
 	/**
 	 * Loads a file as an input stream from the Zip file
@@ -253,6 +263,7 @@ public class ResourceHandler implements InputStreamCreator {
 	 * @return The file as an input stream
 	 */
 
+	/*
 	public InputStream getResourceAsStreamFromZip(String path) {
 
 		InputStream inputStream = null;
@@ -270,7 +281,7 @@ public class ResourceHandler implements InputStreamCreator {
 	
 
 		return inputStream;
-	}
+	}*/
 
 	/**
 	 * 
@@ -281,26 +292,26 @@ public class ResourceHandler implements InputStreamCreator {
 	 * @return The file as a Bitmap image
 	 */
 
-	public Bitmap getResourceAsImageFromZip(String path) {
+/*	public Bitmap getResourceAsImageFromZip(String path) {
 
 		Bitmap image = null;
 
 		if (path.startsWith("/")) {
 			path = path.substring(1);
 		}
-/*
-		try {
-			InputStream inputStream = getResourceAsStreamFromZip(path);
-			if (inputStream != null) {
-				image = BitmapFactory.decodeStream(inputStream);
-				inputStream.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 
-		return this.getResourceAsImage(ResourceHandler.zipPath+path);
-	}
+//		try {
+//			InputStream inputStream = getResourceAsStreamFromZip(path);
+//			if (inputStream != null) {
+//				image = BitmapFactory.decodeStream(inputStream);
+//				inputStream.close();
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
+		return this.getResourceAsImage(ResourceHandler.gamePath+path);
+	}*/
 	
 	
 	public URL buildURL(String path) {
@@ -309,11 +320,11 @@ public class ResourceHandler implements InputStreamCreator {
 	}
 
 	public InputStream buildInputStream(String filePath) {
-		return getResourceAsStreamFromZip(filePath);
+		return getResourceAsStream(gamePath + filePath);
 	}
 
 	public String[] listNames(String filePath) {
-		File dir = new File(zipPath, filePath);
+		File dir = new File(gamePath, filePath);
 		return dir.list();
 	}
 
@@ -332,7 +343,7 @@ public class ResourceHandler implements InputStreamCreator {
 	public URL getResourceAsURLFromZip(String path) {
 
 		try {
-			return ZipURL.createAssetURL(zipPath, path);
+			return ZipURL.createAssetURL(gamePath, path);
 		} catch (MalformedURLException e) {
 			return null;
 		}
@@ -343,7 +354,7 @@ public class ResourceHandler implements InputStreamCreator {
 
 		URL toReturn = null;
 		try {
-			InputStream is = this.getResourceAsStreamFromZip(assetPath);
+			InputStream is = this.getResourceAsStream(assetPath);
 			String filePath = generateTempFileAbsolutePath(getExtension(assetPath));
 			// File sourceFile = new File( zipPath, assetPath );
 			File destinyFile = new File(filePath);
@@ -457,6 +468,8 @@ public class ResourceHandler implements InputStreamCreator {
 		private static final long serialVersionUID = 896282044492374745L;
 
 	}
+
+	
 
 
 }

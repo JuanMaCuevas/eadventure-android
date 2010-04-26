@@ -1,5 +1,6 @@
 package es.eucm.eadandroid.multimedia;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class MultimediaManager {
 	 */
 	public static final int IMAGE_PLAYER = 2;
 
-	private HashMap<String, Bitmap>[] imageCache;
+	private HashMap<String, WeakReference<Bitmap>>[] imageCache;
 
 	/**
 	 * Mirrored images cache
@@ -85,7 +86,7 @@ public class MultimediaManager {
 
 		imageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
-			imageCache[i] = new HashMap<String, Bitmap>();
+			imageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
 		mirrorImageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
 			mirrorImageCache[i] = new HashMap<String, Bitmap>();
@@ -107,13 +108,14 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
-		Bitmap image = imageCache[category].get(bitmapPath);
-
+		WeakReference wrImg = imageCache[category].get(bitmapPath);
+		
+		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		if (image == null) {
 			 image = getScaledImage( ResourceHandler.getInstance(
 			 ).getResourceAsImage( bitmapPath ), 1, 1 );
 			if (image != null)
-				imageCache[category].put(bitmapPath, image);
+				imageCache[category].put(bitmapPath, new WeakReference(image));
 		}
 		return image;
 
@@ -130,14 +132,16 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImageFromZip(String imagePath, int category) {
-       
-		Bitmap image = imageCache[category].get( imagePath );
+		
+		WeakReference wrImg = imageCache[category].get(imagePath);
+		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
+		
         // If the image is in cache, don't load it
         if( image == null ) {
             // Load the image and store it in cache
-            image = getScaledImage( ResourceHandler.getInstance( ).getResourceAsImageFromZip( imagePath ), 1, 1 );
+            image = getScaledImage( ResourceHandler.getInstance( ).getResourceAsImage( imagePath ), 1, 1 );
             if( image != null ) {
-                imageCache[category].put( imagePath, image );
+                imageCache[category].put( imagePath, new WeakReference(image) );
             }
         }
         return image;
@@ -160,7 +164,7 @@ public class MultimediaManager {
 		if (image == null) {
 			// Load the image and store it in cache
 
-			 image = getScaledImage( loadImageFromZip( imagePath, category ),
+			 image = getScaledImage( loadImage( imagePath, category ),
 			 -1, 1 );
 			if (image != null) {
 				mirrorImageCache[category].put(imagePath, image);
@@ -483,7 +487,7 @@ public class MultimediaManager {
 					currentFrame = loadMirroredImageFromZip(animationPath + "_"
 							+ leadingZeros(i) + ".png", category);
 				else
-					currentFrame = loadImageFromZip(animationPath + "_"
+					currentFrame = loadImage(animationPath + "_"
 							+ leadingZeros(i) + ".png", category);
 
 				if (currentFrame != null) {
@@ -547,6 +551,56 @@ public class MultimediaManager {
 
 		return imageSet;
 	}
+	
+	/**
+	 * Returns a animation with frames animationPath_xy.jpg, with xy from 01 to
+	 * the last existing file with that format (also the extension can be .png).
+	 * <p>
+	 * For example, loadAnimation( "path" ) will return an animation with frames
+	 * path_01.jpg, path_02.jpg, path_03.jpg, if path_04.jpg doesn't exists.
+	 * 
+	 * @param slidesPath
+	 *            base path to the animation frames
+	 * @param category
+	 *            Category of the animation
+	 * @return an Animation with frames animationPath_xy.jpg
+	 */
+
+
+	public Animation loadSlidesReference(String slidesPath, int category) {
+
+		ImageSet imageSet = null;
+		if (slidesPath.endsWith(".eaa")) {
+			FrameAnimation animation = new FrameAnimation(Loader.loadAnimation(
+					ResourceHandler.getInstance(), slidesPath,
+					new EngineImageLoader()));
+			animation.setFullscreen(true);
+			return animation;
+		} else {
+			int i = 1;
+			List<Bitmap> slides = new ArrayList<Bitmap>();
+			Bitmap currentSlide = null;
+			boolean end = false;
+
+			while (!end) {
+				currentSlide = loadImageFromZip(slidesPath + "_"
+						+ leadingZeros(i) + ".jpg", category);
+
+				if (currentSlide != null) {
+					slides.add(getFullscreenImage(currentSlide));
+					i++;
+				} else
+					end = true;
+			}
+
+			imageSet = new ImageSet();
+			imageSet.setImages(slides.toArray(new Bitmap[] {}));
+		}
+
+		return imageSet;
+	}
+	
+	
 
 	/**
 	 * @param n

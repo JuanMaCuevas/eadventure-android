@@ -207,7 +207,8 @@ public class FunctionalScene implements Renderable {
                         bufferedForeground.setPixel( i, j, bufferedBackground.getPixel(i, j) );
                 }
             }
-
+            foregroundHardMap = null;
+            bufferedBackground = null;
             foreground = bufferedForeground;
         }
 

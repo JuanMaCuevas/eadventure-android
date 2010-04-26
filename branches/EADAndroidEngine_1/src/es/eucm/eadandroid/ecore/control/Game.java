@@ -9,6 +9,7 @@ import java.util.Stack;
 
 import android.hardware.SensorEvent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -408,6 +409,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     public void start() {
 
     	try {
+    		
+    		
     		this.timerManager = TimerManager.getInstance( );
     		totalTime = 0;
     		long elapsedTime = 0;
@@ -494,6 +497,15 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     				}
 
     				GUI.getInstance().drawFPS(oldFps);
+    				
+    				//generation of log data about the usage of native heap allocation
+    				// csv file with the fields: free memory, allocated memory, heap size
+    				String memory = ","+currentState.toString()+","+Long.toString(Debug.getNativeHeapFreeSize())+
+					","+Long.toString(Debug.getNativeHeapAllocatedSize())+
+					","+Long.toString(Debug.getNativeHeapSize())+",";
+    				Log.i("MemoryUsage",memory);
+    				currentState.toString();
+    				
     				currentState.mainLoop( elapsedTime, oldFps );
     				MultimediaManager.getInstance( ).update( );
     				try {
@@ -560,7 +572,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         
  //       GUI.getInstance( ).loading( 60 );
         
-        preLoadAnimations( );
+     //   preLoadAnimations( );
 
         // Create the flags & vars summaries and the assessment engine
         flags = new FlagSummary( gameData.getFlags( ), false );
@@ -1446,7 +1458,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 break;
             case STATE_VIDEO_SCENE:
                currentState = new GameStateVideoscene( );
-              // ((GameStateVideoscene)currentState).begin();
                 break;
             case STATE_RUN_EFFECTS:
                currentState = new GameStateRunEffects( this.isConvEffectsBlock.peek( ) );
@@ -1456,10 +1467,10 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 break;
                            
             case STATE_BOOK:
-                currentState = new GameStateBook( );
-                currentState.registerTouchListener(sceneTouchListener);
+               currentState = new GameStateBook( );
+               currentState.registerTouchListener(sceneTouchListener);
 
-                 break;    
+                break;
             case STATE_CONVERSATION:
                 currentState = new GameStateConversation( );
                 currentState.registerTouchListener(sceneTouchListener);
@@ -1524,8 +1535,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      *            New functional scene
      */
     public void setFunctionalScene( FunctionalScene scene ) {
+    	
+        this.functionalScene = null;
+        System.gc();
+        System.runFinalization();
 
-        this.functionalScene = scene;
+        System.gc();
+        this.functionalScene=scene;
     }
 
     public void setGameOver( ) {

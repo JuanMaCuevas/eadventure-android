@@ -41,6 +41,7 @@ import java.util.Properties;
 import android.util.Log;
 import es.eucm.eadandroid.debug.ReportDialog;
 import es.eucm.eadandroid.ecore.data.GameText;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 /**
@@ -103,7 +104,7 @@ public class Options {
      */
     public void loadOptions( String optionsPath, String optionsFile ) {
 
-        InputStream is = ResourceHandler.getInstance( ).getResourceAsStream( optionsPath + optionsFile + "-opt.xml" );
+        InputStream is = ResourceHandler.getInstance( ).getResourceAsStream(ResourceHandler.gamePath + optionsPath + optionsFile + "-opt.xml" );
         if( is != null ) {
             try {
                 options.loadFromXML( is );

@@ -39,7 +39,7 @@ import es.eucm.eadandroid.common.data.animation.ImageLoaderFactory;
 public class EngineImageLoader implements ImageLoaderFactory {
 
     public Bitmap getImageFromPath( String uri ) {
-        return ResourceHandler.getInstance( ).getResourceAsImageFromZip( uri );
+        return ResourceHandler.getInstance( ).getResourceAsImage( uri );
     }
 
     public void showErrorDialog( String title, String message ) {

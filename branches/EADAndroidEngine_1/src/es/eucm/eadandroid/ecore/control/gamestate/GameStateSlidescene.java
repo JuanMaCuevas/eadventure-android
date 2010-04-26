@@ -90,7 +90,7 @@ public class GameStateSlidescene extends GameState {
         super( );
         
         
-        bkg = Bitmap.createBitmap( GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, Bitmap.Config.ARGB_4444);
+        bkg = Bitmap.createBitmap( GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, Bitmap.Config.RGB_565);
         canvas = new Canvas(bkg);
         
         slidescene = (Slidescene) game.getCurrentChapterData( ).getGeneralScene( game.getNextScene( ).getNextSceneId( ) );
@@ -149,7 +149,7 @@ public class GameStateSlidescene extends GameState {
     	handleUIEvents();
     	
         // Paint the current slide
-       //TODO = falta por limpiarlo ... :S
+      
         canvas.clipRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
         slides.update( elapsedTime );
         if( !slides.isPlayingForFirstTime( ) )
@@ -160,6 +160,7 @@ public class GameStateSlidescene extends GameState {
         //        GUI.getInstance().addElementToDraw(slides.getImage(), 0, 0, 0, 0);
         GUI.getInstance( ).endDraw( );
         GUI.getInstance( ).drawScene( GUI.getInstance( ).getGraphics( ), elapsedTime );
+        
 
     }
 
@@ -220,7 +221,7 @@ public class GameStateSlidescene extends GameState {
 			case UIEvent.TAP_ACTION: 
 		        // Display the next slide 
 		        boolean endSlides = slides.nextImage( );
-
+		        //System.gc();
 		        // If the slides have ended
 		        if( endSlides ) {
 		            finishedSlides( );

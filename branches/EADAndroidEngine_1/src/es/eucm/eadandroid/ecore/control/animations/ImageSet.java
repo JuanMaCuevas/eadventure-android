@@ -85,7 +85,6 @@ public class ImageSet implements Animation {
         boolean noMoreFrames = false;
 
         currentFrameIndex++;
-
         if( currentFrameIndex >= imageSet.length ) {
             currentFrameIndex %= imageSet.length;
             noMoreFrames = true;
