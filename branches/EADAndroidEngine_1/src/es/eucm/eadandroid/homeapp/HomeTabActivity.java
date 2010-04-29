@@ -12,6 +12,11 @@ import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 import es.eucm.eadandroid.homeapp.repository.RepositoryActivity;
 
 public class HomeTabActivity extends TabActivity {
+	
+	public static final int GAMES = 0;
+	public static final int LOAD_GAMES = 2;
+	public static final int REPOSITORY = 1;
+	public static final int PREFERENCES = 3;
 
 
 	private TabHost mTabHost;

@@ -126,7 +126,7 @@ public class RepositoryActivity extends ListActivity {
 	private void goToLocalGames() {
 		
 		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", 0);
+		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		startActivity(i);
 		
 		this.finish();

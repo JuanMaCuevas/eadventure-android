@@ -45,13 +45,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	 */
 	private Videoscene videoscene;
 	
-	public class ActivityHandlerMessages {
 
-		public static final int ASSESSMENT = 0;
-		public static final int VIDEO = 1;
-		public static final int GAME_OVER = 2;
-
-	}
 
 	/**
 	 * activity Handler
@@ -64,7 +58,11 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 			switch (msg.what) {
 
 			case ActivityHandlerMessages.GAME_OVER:
-				finishapplication();
+				finishapplication(false);
+				
+				break;
+			case ActivityHandlerMessages.LOAD_GAMES:
+				finishapplication(true);
 				
 				break;
 			}
@@ -197,6 +195,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		menu.add(0, 3, 0, "Quit Game").setIcon(android.R.drawable.ic_menu_add);
+		menu.add(0, 4, 0, "Load game").setIcon(android.R.drawable.ic_menu_directions);
 
 		return true;
 	}
@@ -205,8 +204,15 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		switch (item.getItemId()) {
 		case 3:
 			
-			this.finishthread();
+			this.finishthread(false);
 			mediaPlayer.release();
+			mediaPlayer=null;
+				return true;
+		case 4:
+			
+			this.finishthread(true);
+			mediaPlayer.release();
+			mediaPlayer=null;
 				return true;
 		}
 
@@ -247,25 +253,31 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		return time;
 	}
 	
-	public void finishthread()
+	public void finishthread(boolean load)
 	{
 		
 	
 		  boolean retry = true;
 		  if (GameThread.getInstance()!=null) {
-			  GameThread.getInstance().finish(false);
-		/*  while (retry) 
-		  { try { GameThread.getInstance().join(); retry = false; } catch
-		  (InterruptedException e) { } } }
-		  */
+			  GameThread.getInstance().finish(load);
+		
 		  }
 		  
 		 	
 	}
-	private void finishapplication()
+	private void finishapplication(boolean loadgames)
 	{
-		Intent i = new Intent(this, HomeTabActivity.class);
+		if(!loadgames)
+		{		Intent i = new Intent(this, HomeTabActivity.class);
+		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		startActivity(i);
+		}
+		else 
+		{
+			Intent i = new Intent(this, HomeTabActivity.class);
+			i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
+			startActivity(i);
+		}
 	}
 
 	

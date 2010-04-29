@@ -138,7 +138,7 @@ public class RepoResourceHandler {
 
 	}
 	
-	public void getexpandablelist(InfoExpandabletable info)
+	public static void getexpandablelist(InfoExpandabletable info)
 	{
 		String path= Paths.eaddirectory.SAVED_GAMES_PATH;
 		String games[]=null;

@@ -3,7 +3,6 @@ package es.eucm.eadandroid.homeapp;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.gui.TC;
-import es.eucm.eadandroid.ecore.EcoreVideo.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
 import es.eucm.eadandroid.homeapp.apkinstalling.InstallingResources;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
@@ -207,7 +206,7 @@ public class ActivityVideoIntro extends Activity implements
 	public void startEngineHomeActivity() {
 
 		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", 0);
+		i.putExtra("tabstate",HomeTabActivity.GAMES);
 		startActivity(i);
 
 		this.finish();

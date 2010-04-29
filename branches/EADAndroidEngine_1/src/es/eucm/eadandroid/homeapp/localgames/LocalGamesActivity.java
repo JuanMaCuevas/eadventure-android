@@ -188,5 +188,7 @@ public class LocalGamesActivity extends ListActivity {
 		return true;
 
 	}
+	
+	
 
 }

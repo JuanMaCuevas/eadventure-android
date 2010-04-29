@@ -2,13 +2,17 @@ package es.eucm.eadandroid.homeapp.loadsavedgames;
 
 
 
+import java.io.File;
+
 import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +39,8 @@ import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 public class LoadSavedGames extends ExpandableListActivity  {
 
     ExpandableListAdapter mAdapter;
-    InfoExpandabletable info;
+    InfoExpandabletable info=null;
+    int groupPos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,15 +49,16 @@ public class LoadSavedGames extends ExpandableListActivity  {
         
         
         
-        RepoResourceHandler handler=new RepoResourceHandler();
+        
               
          info=new InfoExpandabletable();
-        handler.getexpandablelist(info);
+         RepoResourceHandler.getexpandablelist(info);
         
         mAdapter = new MyExpandableListAdapter(this,info);
         setListAdapter(mAdapter);
         registerForContextMenu(getExpandableListView());
     
+        
      
         
        
@@ -78,35 +84,101 @@ public class LoadSavedGames extends ExpandableListActivity  {
 		return false;
     	
     }
-/*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Sample menu");
-        menu.add(0, 0, 0,"option");
+        menu.setHeaderTitle("Different options");
+        menu.add(0, 0, 0, "play");
+        menu.add(0, 1, 0, "delete");
     }
-  */  
+    
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item.getMenuInfo();
+        ExpandableListContextMenuInfo information = (ExpandableListContextMenuInfo) item.getMenuInfo();
 
-        String title = ((TextView) info.targetView).getText().toString();
-        Log.d(title, "XXXXXXXXXXXXXXXXXXXXXX");
+        //String title = ((TextView) information.targetView).getText().toString();
         
-        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        
+        
+        int type = ExpandableListView.getPackedPositionType(information.packedPosition);
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition); 
-            int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition); 
-            Toast.makeText(this, title + ": Child " + childPos + " clicked in group " + groupPos,
-                    Toast.LENGTH_SHORT).show();
+        	
+        	
+             groupPos = ExpandableListView.getPackedPositionGroup(information.packedPosition); 
+            int childPos = ExpandableListView.getPackedPositionChild(information.packedPosition); 
+           
+           switch (item.getItemId()) {
+            case 0:
+            	if((!info.getGroup()[groupPos].equals("No Games"))&&(!info.getChildren()[groupPos][childPos].equals("Saved but deleted")))
+            	{Intent i = new Intent(this, ECoreActivity.class);
+        		i.putExtra("AdventureName",info.getGroup()[groupPos] );
+        		i.putExtra("restoredGame",Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][childPos] );
+        		i.putExtra("savedgame", true);
+        		this.startActivity(i);
+            	}
+            	break;
+            case 1:
+            	(new File(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][childPos])).delete();
+            	  Toast.makeText(this, "The saved game "+info.getChildren()[groupPos][childPos]+" has been suscesfully deleted",
+                          Toast.LENGTH_SHORT).show();
+            	break;
+            }
             return true;
         } else if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
-            int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition); 
-            Toast.makeText(this, title + ": Group " + groupPos + " clicked", Toast.LENGTH_SHORT).show();
-            return true;
+            groupPos = ExpandableListView.getPackedPositionGroup(information.packedPosition);
+            
+            switch (item.getItemId()) {   
+        case 0:
+        	
+        	Toast.makeText(this,"You have to select a specific game to play not a group of games", Toast.LENGTH_SHORT).show();
+        	break;
+        case 1:
+        	
+        	
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to delete all saved games?")
+                   .setCancelable(false)
+                   .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                            for (int i=0;i<info.getGroup().length;i++)
+                            {
+                            	(new File(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][i])).delete();	
+                            }
+                            puttoast();
+                       }
+
+                   })
+                   .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                       }
+                   });
+            AlertDialog alert = builder.create();
+            alert.show();
+            
+            
+           
+        	break;
+        } 
+            
+            
+            
+            
+            
+            
+            
         }
         
         return false;
     }
+    
+    
+
+	private void puttoast() {
+		// TODO Auto-generated method stub
+		 Toast.makeText(this, "All games deleted", Toast.LENGTH_SHORT).show();
+		
+	}
+
 
     /**
      * A simple adapter which maintains an ArrayList of photo resource Ids. 

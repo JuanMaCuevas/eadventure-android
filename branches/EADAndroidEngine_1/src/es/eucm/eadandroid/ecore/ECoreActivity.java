@@ -125,7 +125,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void StartLoadApplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		//FIXME tendre que mirar xq si cambiamos el orden de tabs cogera otro
-		i.putExtra("tabstate", 2);
+		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
 		startActivity(i);
 		
 	}
@@ -139,7 +139,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void finishapplication()
 	{
 		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", 0);
+		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		startActivity(i);
 	}
 
@@ -364,11 +364,11 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		menu.add(0, 1, 0, "Music off").setIcon(android.R.drawable.ic_lock_silent_mode);
 		else menu.add(0, 1, 0, "Music on").setIcon(android.R.drawable.ic_lock_silent_mode_off);
 		
-		if(Game.getInstance().getFunctionalScene( )!=null)
+	/*	if(Game.getInstance().getFunctionalScene( )!=null)
 		if (options.isEffectsActive())
 		menu.add(0, 2, 0, "Effects off").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		else menu.add(0, 2, 0, "Effects on").setIcon(android.R.drawable.ic_menu_view);
-		
+		*/
 		
 		menu.add(0, 3, 0, "Quit Game").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		menu.add(0, 4, 0, "Load game").setIcon(android.R.drawable.ic_menu_directions);
@@ -410,14 +410,14 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		
 	        break;
 			
-		case 2:
+	/*	case 2:
 		//TODO change effects
 			if( options.isEffectsActive( ) )
 	            options.setEffectsActive( false );
 	        else
 	            options.setEffectsActive( true );
 			break;
-			
+		*/	
 		case 3:
 			//TODO exit game
 		/*	getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
