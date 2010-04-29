@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -40,6 +42,13 @@ public class LocalGamesActivity extends ListActivity {
 	LayoutAnimationController controller;
 
 	private Menu mMenu;
+	
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle("Sample menu");
+        menu.add(0, 0, 0, "probando");
+    }
+    
 
 	/**
 	 * Local games activity handler messages . Handled by

@@ -38,17 +38,19 @@ public class HomeTabActivity extends TabActivity {
 				getResources().getDrawable(R.drawable.cloud))
 				.setContent(new Intent(this, RepositoryActivity.class)));
 
+		
+		
+		mTabHost.addTab(mTabHost.newTabSpec("load_games").setIndicator(
+				"Load",
+				getResources().getDrawable(
+						android.R.drawable.ic_menu_save)).setContent(
+				new Intent(this, LoadSavedGames.class)));
+		
 		mTabHost.addTab(mTabHost.newTabSpec("tab_preferences").setIndicator(
 				"Preferences",
 				getResources().getDrawable(
 						R.drawable.equalizer)).setContent(
 				new Intent(this, PreferencesActivity.class)));
-		
-		mTabHost.addTab(mTabHost.newTabSpec("load_games").setIndicator(
-				"SavedGames",
-				getResources().getDrawable(
-						android.R.drawable.ic_menu_save)).setContent(
-				new Intent(this, LoadSavedGames.class)));
 
 		//is used if we want to restart finish the game and launch saved games
 		

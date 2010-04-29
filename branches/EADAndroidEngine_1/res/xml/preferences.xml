@@ -9,13 +9,7 @@
 
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="Moodle account preferences">
-
-		<EditTextPreference android:key="Account settings"
-			android:title="Account settings" android:summary="Set your moodle account"
-			android:dialogTitle="Moodle account" />
-
-	</PreferenceCategory>
+	
 
 	<PreferenceCategory android:title="Contact">
 

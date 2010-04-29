@@ -6,7 +6,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -122,7 +125,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void StartLoadApplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		//FIXME tendre que mirar xq si cambiamos el orden de tabs cogera otro
-		i.putExtra("tabstate", 3);
+		i.putExtra("tabstate", 2);
 		startActivity(i);
 		
 	}
@@ -377,6 +380,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		Options options=Game.getInstance().getOptions();
+		AlertDialog.Builder builder;
+		AlertDialog alert;
 		
 		switch (item.getItemId()) {
 		case 0:
@@ -415,11 +420,45 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			
 		case 3:
 			//TODO exit game
-			this.finishthread(false);
+		/*	getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+		             WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+			builder = new AlertDialog.Builder(this);
+			builder.setMessage("Are you sure you want to exit?")
+			       .setCancelable(false)
+			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   
+			           }
+			       })
+			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                dialog.cancel();
+			           }
+			       });
+			alert = builder.create();
+		*/	finishthread(false);
+			
 		  return true;
 		case 4:
-			//TODO exit game
-			this.finishthread(true);
+		/*	getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+		             WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+			//TODO go to load games
+			builder = new AlertDialog.Builder(this);
+			builder.setMessage("Are you sure you want to exit and go to load games?")
+			       .setCancelable(false)
+			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	   finishthread(true);
+			           }
+			       })
+			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                dialog.cancel();
+			           }
+			       });
+			alert = builder.create();
+			
+			*/finishthread(true);
 			return true;		
 				
 		}
@@ -487,6 +526,24 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		  }
 		  
 		 	
+	}
+	
+	static final int DIALOG_PAUSED_ID = 0;
+	static final int DIALOG_GAMEOVER_ID = 1;
+	
+	protected Dialog onCreateDialog(int id) {
+	    Dialog dialog = null;
+	    switch(id) {
+	    case DIALOG_PAUSED_ID:
+	        // do the work to define the pause Dialog
+	        break;
+	    case DIALOG_GAMEOVER_ID:
+	        // do the work to define the game over Dialog
+	        break;
+	    default:
+	        dialog = null;
+	    }
+	    return dialog;
 	}
 	
 

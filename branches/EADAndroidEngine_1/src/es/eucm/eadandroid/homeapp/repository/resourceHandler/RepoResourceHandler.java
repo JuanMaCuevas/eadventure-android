@@ -198,7 +198,7 @@ public class RepoResourceHandler {
 	
 	}
 
-	private static void unzip(String filePath, String name) {
+	public static void unzip(String filePath, String name) {
 		// TODO la ruta a las carpetas me las tengo que crear cuando instalo
 		// pero por ahora lo dejo aqui
 
@@ -235,6 +235,8 @@ public class RepoResourceHandler {
 			zipFile = new ZipFile(location_ead);
 
 			entries = zipFile.entries();
+			
+			
 
 			BufferedOutputStream file;
 
@@ -282,7 +284,7 @@ public class RepoResourceHandler {
 
 	}
 
-	private static final void copyInputStream(InputStream in, OutputStream out)
+	public static final void copyInputStream(InputStream in, OutputStream out)
 			throws IOException {
 		byte[] buffer = new byte[1024];
 		int len;
@@ -322,5 +324,13 @@ public class RepoResourceHandler {
 		}
 		return in;
 	}
+	
+	public static boolean doesfileexists(String path)
+	{
+		if (new File(path).exists()) {
+			return true;
+		}else return false;
+	}
+	
 
 }

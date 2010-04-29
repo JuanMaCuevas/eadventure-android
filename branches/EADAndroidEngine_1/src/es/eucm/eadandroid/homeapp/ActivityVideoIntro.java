@@ -1,12 +1,15 @@
 package es.eucm.eadandroid.homeapp;
 
-
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.gui.TC;
+import es.eucm.eadandroid.ecore.EcoreVideo.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
+import es.eucm.eadandroid.homeapp.apkinstalling.InstallingResources;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -14,6 +17,8 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,16 +43,60 @@ public class ActivityVideoIntro extends Activity implements
 	VideoView surfacevideo = null;
 	MediaPlayer video = null;
 	SurfaceHolder holder = null;
+
+	private static String languageFile = ReleaseFolders.LANGUAGE_UNKNOWN;
+
+	public class ActivityHandlerInstalling {
+
+		public static final int FINISHISTALLING = 0;
+
+	}
 	
-    private static String languageFile = ReleaseFolders.LANGUAGE_UNKNOWN;
+	
+	ProgressDialog dialog;
+	public Handler ActivityHandler = new Handler() {
+		@Override
+		/**    * Called when a message is sent to Engines Handler Queue **/
+		public void handleMessage(Message msg) {
+
+			switch (msg.what) {
+
+			case ActivityHandlerInstalling.FINISHISTALLING:
+				dialog.setIndeterminate(false);
+				//startactivity();
+				dialog.dismiss();
+				break;
+			}
+
+		}
+
+	};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		startactivity();
+		
 		
 
+		if (!RepoResourceHandler.doesfileexists(Paths.eaddirectory.ROOT_PATH)) {
+			InstallingResources is = new InstallingResources(this,
+					ActivityHandler);
+			is.start();
+			dialog = ProgressDialog.show(this, "<E-adventure> Android", "Installing Engine",true);
+		} //else 	startactivity();
+
+		
+
+	}
+
+	private void startactivity() {
+		// TODO Auto-generated method stub
+
+		
 		setContentView(R.layout.introduction_video);
+		
 		this.surfacevideo = (VideoView) findViewById(R.id.VideoView01);
 		this.holder = surfacevideo.getHolder();
 		holder.addCallback(this);
@@ -73,52 +122,53 @@ public class ActivityVideoIntro extends Activity implements
 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (video != null){
+				if (video != null) {
 					if (video.isPlaying())
 						video.stop();
 					video.release();
 				}
 
-				
-
 				video.release();
 				startEngineHomeActivity();
 			}
 		});
-		
-		
-        // Load the configuration
-        ConfigData.loadFromXML(ReleaseFolders.configFileEngineRelativePath( ) );
 
-        /* We«e got to set the language from the device locale ;D */       
-        setLanguage(ReleaseFolders.getLanguageFromPath( ConfigData.getLanguangeFile( ) ) );
+		// Load the configuration
+		ConfigData.loadFromXML(ReleaseFolders.configFileEngineRelativePath());
+
+		/* We«e got to set the language from the device locale ;D */
+		setLanguage(ReleaseFolders.getLanguageFromPath(ConfigData
+				.getLanguangeFile()));
 
 	}
-	
-    /**
-     * Sets the current language of the editor. Accepted values are
-     * {@value #LANGUAGE_ENGLISH} & {@value #LANGUAGE_ENGLISH}. This method
-     * automatically updates the about, language strings, and loading image
-     * parameters.
-     * 
-     * The method will reload the main window if reloadData is true
-     * 
-     * @param language
-     */
-    public static void setLanguage( String language ) {
 
-        if( true ) {
-            ConfigData.setLanguangeFile(ReleaseFolders.getLanguageFilePath( language ),ReleaseFolders.getAboutFilePath( language ) );
-            languageFile = language;
-            TC.loadStrings( ReleaseFolders.getLanguageFilePath4Engine( languageFile ) );
-        }
-    }
+	/**
+	 * Sets the current language of the editor. Accepted values are
+	 * {@value #LANGUAGE_ENGLISH} & {@value #LANGUAGE_ENGLISH}. This method
+	 * automatically updates the about, language strings, and loading image
+	 * parameters.
+	 * 
+	 * The method will reload the main window if reloadData is true
+	 * 
+	 * @param language
+	 */
+	public static void setLanguage(String language) {
+
+		if (true) {
+			ConfigData.setLanguangeFile(ReleaseFolders
+					.getLanguageFilePath(language), ReleaseFolders
+					.getAboutFilePath(language));
+			languageFile = language;
+			TC.loadStrings(ReleaseFolders
+					.getLanguageFilePath4Engine(languageFile));
+		}
+	}
 
 	public void surfaceCreated(SurfaceHolder holder2) {
 		video = new MediaPlayer();
 		video.setScreenOnWhilePlaying(true);
 		try {
-			video.setDataSource(Paths.eaddirectory.ROOT_PATH+"intro_ead.mp4");
+			video.setDataSource(Paths.eaddirectory.ROOT_PATH + "intro_ead.mp4");
 			video.setDisplay(holder);
 			video.prepare();
 
@@ -153,14 +203,13 @@ public class ActivityVideoIntro extends Activity implements
 		// llama al siguiente activity
 
 	}
-	
-	
+
 	public void startEngineHomeActivity() {
 
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", 0);
 		startActivity(i);
-		
+
 		this.finish();
 
 	}
