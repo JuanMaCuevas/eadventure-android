@@ -225,13 +225,6 @@ public class ResourceHandler implements InputStreamCreator {
 
 		Bitmap image = null;
 
-	/*	if (!path.startsWith("/")) {
-			path = "/" + path;
-		}
-		*/
-		Log.d("Path",path);
-
-		
 		if (!path.startsWith("/sdcard"))
 			 path=gamePath+path;
 			//Here we should decode the images properly

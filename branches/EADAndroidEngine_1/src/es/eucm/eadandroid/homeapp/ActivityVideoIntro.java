@@ -151,7 +151,7 @@ public class ActivityVideoIntro extends Activity implements
 	 * 
 	 * @param language
 	 */
-	public static void setLanguage(String language) {
+	private static void setLanguage(String language) {
 
 		if (true) {
 			ConfigData.setLanguangeFile(ReleaseFolders

@@ -277,7 +277,7 @@ public class ActionManager {
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
 		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
 		
-		Game.getInstance().getFunctionalScene().mouseClicked(x,y);
+		Game.getInstance().getFunctionalScene().unpressed(x,y);
 
 	}
 
@@ -378,8 +378,14 @@ public class ActionManager {
 		return customActionName;
 	}
 
-	public void tap(TapEvent e) {
-		// TODO Auto-generated method stub
+	public void tap(UIEvent ev) {
+		
+		MotionEvent e = ((TapEvent) ev).event;
+
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
+		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
+		
+		Game.getInstance().getFunctionalScene().tap(x,y);
 		
 	}
 

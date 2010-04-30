@@ -54,9 +54,9 @@ public class TransitionSubParser extends DefaultHandler {
     @Override
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) {
 
-        if( qName.equals( "transition" ) ) {
+        if( sName.equals( "transition" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "type" ) ) {
+                if( attrs.getLocalName( i ).equals( "type" ) ) {
                     if( attrs.getValue( i ).equals( "none" ) )
                         transition.setType( Transition.TYPE_NONE );
                     else if( attrs.getValue( i ).equals( "fadein" ) )
@@ -66,7 +66,7 @@ public class TransitionSubParser extends DefaultHandler {
                     else if( attrs.getValue( i ).equals( "horizontal" ) )
                         transition.setType( Transition.TYPE_HORIZONTAL );
                 }
-                else if( attrs.getQName( i ).equals( "time" ) ) {
+                else if( attrs.getLocalName( i ).equals( "time" ) ) {
                     transition.setTime( Long.parseLong( attrs.getValue( i ) ) );
                 }
             }
@@ -76,7 +76,7 @@ public class TransitionSubParser extends DefaultHandler {
     @Override
     public void endElement( String namespaceURI, String sName, String qName ) {
 
-        if( qName.equals( "transition" ) ) {
+        if( sName.equals( "transition" ) ) {
             animation.getTransitions( ).add( transition );
         }
     }

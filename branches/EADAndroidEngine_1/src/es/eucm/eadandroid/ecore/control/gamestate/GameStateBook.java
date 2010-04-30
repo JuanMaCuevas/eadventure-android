@@ -109,6 +109,8 @@ public class GameStateBook extends GameState {
 	 */
     @Override
 	public boolean processTouchEvent(MotionEvent event) {
+    	
+    	if((event.getAction()==MotionEvent.ACTION_UP)) {
 		
     	if( book.isInLastPage( ) ) {
            // GUI.getInstance( ).restoreFrame( );
@@ -119,6 +121,7 @@ public class GameStateBook extends GameState {
         else
             book.nextPage( );
 			
+    	}
 			
 			/*
 			if( book.isInPreviousPage( e.getX( ), e.getY( ) ) )

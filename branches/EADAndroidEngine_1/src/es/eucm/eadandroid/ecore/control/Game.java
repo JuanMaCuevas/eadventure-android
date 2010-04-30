@@ -1,5 +1,7 @@
 package es.eucm.eadandroid.ecore.control;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -56,8 +58,8 @@ import es.eucm.eadandroid.ecore.data.SaveGameException;
 import es.eucm.eadandroid.ecore.data.SaveTimer;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
-import es.eucm.eadandroid.utils.ActivityPipe;
 
 public class Game implements TimerEventListener , SpecialAssetPaths{
 
@@ -350,6 +352,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     private SceneTouchListener sceneTouchListener;
     
     /*******/
+    
+    private int totalElapsedTime=0 ;
 
 	private Game(String LoadingGame) {
 		
@@ -464,6 +468,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     			gameDescriptor.setPlayerName( name );
     			assessmentEngine.setPlayerName( name );
     		}
+    		
+            FileWriter file = new FileWriter(Paths.eaddirectory.ROOT_PATH+"memoryLog.csv");
+
 
     		while( !gameOver ) {
     			//TODO esto es solo para probar que caga bien el juego
@@ -500,10 +507,12 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     				
     				//generation of log data about the usage of native heap allocation
     				// csv file with the fields: free memory, allocated memory, heap size
-    				String memory = ","+currentState.toString()+","+Long.toString(Debug.getNativeHeapFreeSize())+
-					","+Long.toString(Debug.getNativeHeapAllocatedSize())+
-					","+Long.toString(Debug.getNativeHeapSize())+",";
-    				Log.i("MemoryUsage",memory);
+    				
+
+    				
+    				writeMemoryUsageLog(file,elapsedTime);
+    				
+
     				currentState.toString();
     				
     				currentState.mainLoop( elapsedTime, oldFps );
@@ -512,6 +521,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     					Thread.sleep( Math.max((10 - (System.currentTimeMillis( ) - time)), 0) );
     				}
     				catch( InterruptedException e ) {
+
     				}
     			}else{
     					Thread.sleep( 1000);
@@ -528,12 +538,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     			if( currentChapter == gameDescriptor.getChapterSummaries( ).size( ) )
     				gameOver = true;
     		}
+    		
+            file.close();
 
     	}
     	catch( Exception e ) {
 
     		e.printStackTrace();
-
     	}
 
     	try {
@@ -545,7 +556,38 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
     }
 	
-	 /**
+	 private void writeMemoryUsageLog(FileWriter file,long elapsedTime) {
+
+		 final long refresh = 1000;
+		 
+		 totalElapsedTime+=elapsedTime;
+		 
+		 if (totalElapsedTime>refresh) {
+			 
+			totalElapsedTime=0; 
+		 
+	        PrintWriter pw = null;
+	        try
+	        {
+	            pw = new PrintWriter(file);
+
+				String memorylog = currentState.toString()+","+Long.toString(Debug.getNativeHeapFreeSize())+
+				","+Long.toString(Debug.getNativeHeapAllocatedSize())+
+				","+Long.toString(Debug.getNativeHeapSize());
+
+	                pw.println(memorylog);
+
+	                Log.i("Memory",memorylog);
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+		 }
+		
+	}
+
+	/**
      * Init the game parameters
      */
     private void loadCurrentChapter() {

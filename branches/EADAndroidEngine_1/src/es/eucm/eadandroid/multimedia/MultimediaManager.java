@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import es.eucm.eadandroid.ecore.control.animations.Animation;
+import android.util.Log;
 import es.eucm.eadandroid.common.loader.Loader;
+import es.eucm.eadandroid.ecore.control.animations.Animation;
 import es.eucm.eadandroid.ecore.control.animations.FrameAnimation;
 import es.eucm.eadandroid.ecore.control.animations.ImageAnimation;
 import es.eucm.eadandroid.ecore.control.animations.ImageSet;
@@ -108,15 +108,23 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
-		WeakReference wrImg = imageCache[category].get(bitmapPath);
+		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);
+		
 		
 		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		if (image == null) {
+			Log.e("", "0 "+bitmapPath);
+			Log.e("","1 Primero nula");
 			 image = getScaledImage( ResourceHandler.getInstance(
 			 ).getResourceAsImage( bitmapPath ), 1, 1 );
-			if (image != null)
-				imageCache[category].put(bitmapPath, new WeakReference(image));
+		if (image != null) {
+				Log.e("","2 Luego no nula");
+				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
+			}
+		else Log.e("","2 Finalmente nula");
 		}
+		
+
 		return image;
 
 	}
@@ -477,6 +485,8 @@ public class MultimediaManager {
 					new EngineImageLoader()));
 			animation.setMirror(mirror);
 			temp = animation;
+            Log.e("NPC",animationPath+"Variable :"+ animation);
+			
 		} else {
 			int i = 1;
 			List<Bitmap> frames = new ArrayList<Bitmap>();

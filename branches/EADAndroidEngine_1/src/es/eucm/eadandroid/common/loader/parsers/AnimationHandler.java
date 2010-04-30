@@ -111,22 +111,22 @@ public class AnimationHandler extends DefaultHandler {
 
         if( this.reading == READING_NONE ) {
 
-            if( qName.equals( "animation" ) ) {
+            if( sName.equals( "animation" ) ) {
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "id" ) ) {
+                    if( attrs.getLocalName( i ).equals( "id" ) ) {
                         animation = new Animation( attrs.getValue( i ), factory );
                         animation.getFrames( ).clear( );
                         animation.getTransitions( ).clear( );
                     }
 
-                    if( attrs.getQName( i ).equals( "slides" ) ) {
+                    if( attrs.getLocalName( i ).equals( "slides" ) ) {
                         if( attrs.getValue( i ).equals( "yes" ) )
                             animation.setSlides( true );
                         else
                             animation.setSlides( false );
                     }
 
-                    if( attrs.getQName( i ).equals( "usetransitions" ) ) {
+                    if( attrs.getLocalName( i ).equals( "usetransitions" ) ) {
                         if( attrs.getValue( i ).equals( "yes" ) )
                             animation.setUseTransitions( true );
                         else
@@ -135,39 +135,39 @@ public class AnimationHandler extends DefaultHandler {
                 }
             }
 
-            if( qName.equals( "documentation" ) ) {
+            if( sName.equals( "documentation" ) ) {
                 currentString = new StringBuffer( );
             }
 
-            if( qName.equals( "resources" ) ) {
+            if( sName.equals( "resources" ) ) {
                 currentResources = new Resources( );
                 
                 for (int i = 0; i < attrs.getLength( ); i++) {
-                    if (attrs.getQName( i ).equals( "name" ))
+                    if (attrs.getLocalName( i ).equals( "name" ))
                         currentResources.setName( attrs.getValue( i ) );
                 }
             }
 
-            else if( qName.equals( "asset" ) ) {
+            else if( sName.equals( "asset" ) ) {
                 String type = "";
                 String path = "";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getQName( i ).equals( "type" ) )
+                    if( attrs.getLocalName( i ).equals( "type" ) )
                         type = attrs.getValue( i );
-                    if( attrs.getQName( i ).equals( "uri" ) )
+                    if( attrs.getLocalName( i ).equals( "uri" ) )
                         path = attrs.getValue( i );
                 }
 
                 currentResources.addAsset( type, path );
             }
 
-            if( qName.equals( "frame" ) ) {
+            if( sName.equals( "frame" ) ) {
                 subParser = new FrameSubParser( animation );
                 reading = READING_FRAME;
             }
 
-            if( qName.equals( "transition" ) ) {
+            if( sName.equals( "transition" ) ) {
                 subParser = new TransitionSubParser( animation );
                 reading = READING_TRANSITION;
             }
@@ -181,11 +181,11 @@ public class AnimationHandler extends DefaultHandler {
     @Override
     public void endElement( String namespaceURI, String sName, String qName ) {
 
-        if( qName.equals( "documentation" ) ) {
+        if( sName.equals( "documentation" ) ) {
             if( reading == READING_NONE )
                 animation.setDocumentation( currentString.toString( ).trim( ) );
         }
-        else if( qName.equals( "resources" ) ) {
+        else if( sName.equals( "resources" ) ) {
             animation.addResources( currentResources );
         }
 

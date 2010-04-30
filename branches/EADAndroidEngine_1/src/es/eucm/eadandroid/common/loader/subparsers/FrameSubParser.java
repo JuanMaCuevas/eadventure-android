@@ -57,46 +57,46 @@ public class FrameSubParser extends DefaultHandler {
     @Override
     public void startElement( String namespaceURI, String sName, String qName, Attributes attrs ) {
 
-        if( qName.equals( "frame" ) ) {
+        if( sName.equals( "frame" ) ) {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "uri" ) )
+                if( attrs.getLocalName( i ).equals( "uri" ) )
                     frame.setUri( attrs.getValue( i ) );
-                if( attrs.getQName( i ).equals( "type" ) ) {
+                if( attrs.getLocalName( i ).equals( "type" ) ) {
                     if( attrs.getValue( i ).equals( "image" ) )
                         frame.setType( Frame.TYPE_IMAGE );
                     if( attrs.getValue( i ).equals( "video" ) )
                         frame.setType( Frame.TYPE_VIDEO );
                 }
-                if( attrs.getQName( i ).equals( "time" ) ) {
+                if( attrs.getLocalName( i ).equals( "time" ) ) {
                     frame.setTime( Long.parseLong( attrs.getValue( i ) ) );
                 }
-                if( attrs.getQName( i ).equals( "waitforclick" ) )
+                if( attrs.getLocalName( i ).equals( "waitforclick" ) )
                     frame.setWaitforclick( attrs.getValue( i ).equals( "yes" ) );
-                if( attrs.getQName( i ).equals( "soundUri" ) )
+                if( attrs.getLocalName( i ).equals( "soundUri" ) )
                     frame.setSoundUri( attrs.getValue( i ) );
-                if( attrs.getQName( i ).equals( "maxSoundTime" ) )
+                if( attrs.getLocalName( i ).equals( "maxSoundTime" ) )
                     frame.setMaxSoundTime( Integer.parseInt( attrs.getValue( i ) ) );
             }
         }
 
-        if( qName.equals( "resources" ) ) {
+        if( sName.equals( "resources" ) ) {
             currentResources = new Resources( );
             
             for (int i = 0; i < attrs.getLength( ); i++) {
-                if (attrs.getQName( i ).equals( "name" ))
+                if (attrs.getLocalName( i ).equals( "name" ))
                     currentResources.setName( attrs.getValue( i ) );
             }
 
         }
 
-        if( qName.equals( "asset" ) ) {
+        if( sName.equals( "asset" ) ) {
             String type = "";
             String path = "";
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
-                if( attrs.getQName( i ).equals( "type" ) )
+                if( attrs.getLocalName( i ).equals( "type" ) )
                     type = attrs.getValue( i );
-                if( attrs.getQName( i ).equals( "uri" ) )
+                if( attrs.getLocalName( i ).equals( "uri" ) )
                     path = attrs.getValue( i );
             }
 
@@ -109,11 +109,11 @@ public class FrameSubParser extends DefaultHandler {
     @Override
     public void endElement( String namespaceURI, String sName, String qName ) {
 
-        if( qName.equals( "frame" ) ) {
+        if( sName.equals( "frame" ) ) {
             animation.getFrames( ).add( frame );
         }
 
-        if( qName.equals( "resources" ) ) {
+        if( sName.equals( "resources" ) ) {
             frame.addResources( currentResources );
         }
     }

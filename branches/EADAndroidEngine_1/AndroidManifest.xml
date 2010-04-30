@@ -15,7 +15,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity  android:name=".homeapp.InitSplashActivity" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
+		
 		<activity android:name=".homeapp.localgames.LocalGamesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.preferences.PreferencesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.repository.RepositoryActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>

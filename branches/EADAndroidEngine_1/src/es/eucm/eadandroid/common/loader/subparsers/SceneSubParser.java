@@ -378,7 +378,7 @@ public class SceneSubParser extends SubParser {
                 String idTarget = "";
                 int x = 0, y = 0;
                 float scale = 0;
-                int layer = -1;
+                int layer = 0;
                 int influenceX = 0, influenceY = 0, influenceWidth = 0, influenceHeight = 0;
                 boolean hasInfluence = false;
 
@@ -404,6 +404,9 @@ public class SceneSubParser extends SubParser {
                     if( attrs.getLocalName( i ).equals( "influenceHeight" ) )
                         influenceHeight = Integer.parseInt( attrs.getValue( i ) );
                 }
+                
+                if (layer==-1)
+                	layer=0;
 
                 currentElementReference = new ElementReference( idTarget, x, y, layer );
                 if( hasInfluence ) {

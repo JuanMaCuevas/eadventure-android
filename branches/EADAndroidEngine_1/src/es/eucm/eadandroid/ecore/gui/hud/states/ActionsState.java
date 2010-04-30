@@ -4,7 +4,7 @@ package es.eucm.eadandroid.ecore.gui.hud.states;
 import android.graphics.Canvas;
 import android.util.Log;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
@@ -27,7 +27,7 @@ public class ActionsState extends HUDstate {
 	}
 	
 	public void setItem(Object item) {
-		actionsPanel.setElementInfo((FunctionalItem)item);	
+		actionsPanel.setElementInfo((FunctionalElement)item);	
 	}
 	
 	@Override

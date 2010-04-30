@@ -440,7 +440,7 @@ public class Loader {
 
         // Create a new factory
         SAXParserFactory factory = SAXParserFactory.newInstance( );
-        factory.setValidating( true );
+  //      factory.setValidating( true );
         SAXParser saxParser;
         try {
             saxParser = factory.newSAXParser( );

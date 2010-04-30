@@ -755,62 +755,94 @@ public class FunctionalScene implements Renderable {
     }
 
     /**
-     * Notify that the user has clicked the scene
-     * 
-     * @param x
-     *            the horizontal position of the click
-     * @param y
-     *            the vertical position of the click
-     * @param actionSelected
-     *            the current action selected (use, give, grab, look, ...)
-     */
-    public void mouseClicked( int x, int y ) {
+	 * Notify that the user has unpressed on the scene
+	 * 
+	 * @param x
+	 *            the horizontal position of the click
+	 * @param y
+	 *            the vertical position of the click
+	 * @param actionSelected
+	 *            the current action selected (use, give, grab, look, ...)
+	 */
+	public void unpressed(int x, int y) {
 
-        // FIXME Francis: Aclarar el uso del offset, ya que se añade en sitios que no deberia y viceversa
-        if( isInsideOffsetArrow( x, y ) ) {
-            System.out.println( "Is inside offset arrow" );
-            if( moveOffsetRight )
-                updateOffset( true );
-            if( moveOffsetLeft )
-                updateOffset( false );
-        }
+		// FIXME Francis: Aclarar el uso del offset, ya que se añade en sitios
+		// que no deberia y viceversa
+		// if( isInsideOffsetArrow( x, y ) ) {
+		// System.out.println( "Is inside offset arrow" );
+		// if( moveOffsetRight )
+		// updateOffset( true );
+		// if( moveOffsetLeft )
+		// updateOffset( false );
+		// }
 
-        FunctionalElement element = getElementInside( x + offsetX, y , null);
-        if( Game.getInstance( ).getActionManager( ).getActionSelected( ) == ActionManager.ACTION_GOTO || element == null ) {
-            int destX = x + offsetX;
-            int destY = y;
-            FunctionalGoTo functionalGoTo = new FunctionalGoTo( null, destX, destY );
-            int finalX = functionalGoTo.getPosX( );
-            int finalY = functionalGoTo.getPosY( );
-            Exit exit = getExitInside( finalX - offsetX, finalY );
-            player.cancelActions( );
-            if( exit == null && !player.isTransparent( ) ) {
-                player.addAction( functionalGoTo );
-            }
-            else {
-                if( !player.isTransparent( ) && this.getTrajectory( ).hasTrajectory( ) ) {
-                    functionalGoTo = new FunctionalGoTo( null, destX, destY, Game.getInstance( ).getFunctionalPlayer( ), new FunctionalExitArea( exit, exit.getInfluenceArea( ) ) );
-                    if( functionalGoTo.canGetTo( ) ) {
-                        player.addAction( new FunctionalExit( exit ) );
-                        player.addAction( functionalGoTo );
-                    }
-                }
-                else {
-                    if( !player.isTransparent( ) && functionalGoTo.canGetTo( ) ) {
-                        player.addAction( new FunctionalExit( exit ) );
-                        player.addAction( functionalGoTo );
-                    }
-                    else if( player.isTransparent( ) ) {
-                        player.addAction( new FunctionalExit( exit ) );
-                    }
-                }
-            }
-            Game.getInstance( ).getActionManager( ).setActionSelected( ActionManager.ACTION_GOTO );
-        }
-        else {
-            Game.getInstance( ).getFunctionalPlayer( ).performActionInElement( element );
-        }
-    }
+		FunctionalElement element = getElementInside(x + offsetX, y, null);
+		if (Game.getInstance().getActionManager().getActionSelected() == ActionManager.ACTION_GOTO) {
+			int destX = x + offsetX;
+			int destY = y;
+			FunctionalGoTo functionalGoTo = new FunctionalGoTo(null, destX,
+					destY);
+			int finalX = functionalGoTo.getPosX();
+			int finalY = functionalGoTo.getPosY();
+			Exit exit = getExitInside(finalX - offsetX, finalY);
+			if (exit != null) {
+				player.cancelActions();
+				if (!player.isTransparent()
+						&& this.getTrajectory().hasTrajectory()) {
+					functionalGoTo = new FunctionalGoTo(null, destX, destY,
+							Game.getInstance().getFunctionalPlayer(),
+							new FunctionalExitArea(exit, exit
+									.getInfluenceArea()));
+					if (functionalGoTo.canGetTo()) {
+						player.addAction(new FunctionalExit(exit));
+						player.addAction(functionalGoTo);
+					}
+				} else {
+					if (!player.isTransparent() && functionalGoTo.canGetTo()) {
+						player.addAction(new FunctionalExit(exit));
+						player.addAction(functionalGoTo);
+					} else if (player.isTransparent()) {
+						player.addAction(new FunctionalExit(exit));
+					}
+				}
+			}
+
+			Game.getInstance().getActionManager().setActionSelected(
+					ActionManager.ACTION_GOTO);
+		} else if (element != null) {
+			Game.getInstance().getFunctionalPlayer().performActionInElement(
+					element);
+		}
+	}
+
+	public void tap(int x, int y) {
+
+		if (isInsideOffsetArrow(x, y)) {
+			System.out.println("Is inside offset arrow");
+			if (moveOffsetRight)
+				updateOffset(true);
+			if (moveOffsetLeft)
+				updateOffset(false);
+		}
+
+		FunctionalElement element = getElementInside(x + offsetX, y, null);
+		if (Game.getInstance().getActionManager().getActionSelected() == ActionManager.ACTION_GOTO
+				|| element == null) {
+			int destX = x + offsetX;
+			int destY = y;
+			FunctionalGoTo functionalGoTo = new FunctionalGoTo(null, destX,
+					destY);
+			int finalX = functionalGoTo.getPosX();
+			int finalY = functionalGoTo.getPosY();
+			player.cancelActions();
+			if (!player.isTransparent()) {
+				player.addAction(functionalGoTo);
+			}
+		}
+
+		Game.getInstance().getActionManager().setActionSelected(
+				ActionManager.ACTION_GOTO);
+	}
 
     //private static final float SEC_GAP = 5;
 

@@ -36,6 +36,7 @@ package es.eucm.eadandroid.ecore.control.animations;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
@@ -175,7 +176,6 @@ public abstract class AnimationState {
         }
         else if( scale != 1 ) {
             oldOriginalImage = image;
-            
             //image = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
             Bitmap temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
           //  ((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
@@ -185,7 +185,7 @@ public abstract class AnimationState {
             Matrix m = new Matrix();
             m.setScale(scale,scale);
             
-            c.drawBitmap(temp, m, null);            
+            c.drawBitmap(image, m, null);            
             image = temp;
         }
         else {
@@ -195,10 +195,12 @@ public abstract class AnimationState {
         oldScale = scale;
         oldImage = image;
 
-        if( depth == Scene.PLAYER_WITHOUT_LAYER || depth == Scene.PLAYER_NO_ALLOWED )
+        if( depth == Scene.PLAYER_WITHOUT_LAYER || depth == Scene.PLAYER_NO_ALLOWED ) {
             GUI.getInstance( ).addPlayerToDraw( image, realX, realY, Math.round( y ), Math.round( y ) );
-        else
+        }
+        else {
             GUI.getInstance( ).addElementToDraw( image, realX, realY, depth, Math.round( y ), null , fe);
+        }
     }
 
     /**

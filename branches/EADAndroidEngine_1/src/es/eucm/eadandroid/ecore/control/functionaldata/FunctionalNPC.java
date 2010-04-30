@@ -37,6 +37,7 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
@@ -305,11 +306,14 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
      * @see es.eucm.eadventure.engine.core.control.functionaldata.Renderable#draw(java.awt.Graphics2D)
      */
     public void draw( ) {
-
-        if( layer == -1 )
+    	
+        if( layer == -1 ){
             currentState.draw( Math.round( x ), Math.round( y ), scale, -1, this );
-        else
+        }
+        else {
             currentState.draw( Math.round( x ), Math.round( y ), scale, layer, this );
+ 
+        }
     }
 
     /*
