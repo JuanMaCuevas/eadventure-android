@@ -2,6 +2,7 @@ package es.eucm.eadandroid.homeapp.preferences;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.widget.CheckBox;
 import es.eucm.eadandroid.R;
 
 public class PreferencesActivity extends PreferenceActivity {
@@ -10,7 +11,8 @@ public class PreferencesActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
-        
+       
+                
 	}
 
 }

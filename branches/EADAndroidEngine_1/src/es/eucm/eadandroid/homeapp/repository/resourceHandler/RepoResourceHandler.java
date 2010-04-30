@@ -30,7 +30,7 @@ public class RepoResourceHandler {
 
 	public static Bitmap DownloadImage(String url_from, ProgressNotifier pn) {
 
-//		pn.notifyProgress(0, "Downloading image " + url_from);
+		// pn.notifyProgress(0, "Downloading image " + url_from);
 		Bitmap bitmap = null;
 		InputStream in = null;
 		try {
@@ -41,7 +41,7 @@ public class RepoResourceHandler {
 			e1.printStackTrace();
 		}
 
-//		pn.notifyProgress(100, "Image downloaded");
+		// pn.notifyProgress(100, "Image downloaded");
 
 		// pn.notifyFinished("Image downloaded");
 
@@ -109,7 +109,6 @@ public class RepoResourceHandler {
 					fos.close();
 					in.close();
 
-
 				} catch (IOException e) {
 
 					pt.notifyError("Error while downloading");
@@ -133,75 +132,49 @@ public class RepoResourceHandler {
 			String fileName, ProgressNotifier pn) {
 
 		downloadFile(url_from, path_to, fileName, pn);
-		pn.notifyIndeterminate("Insalling "+fileName);
-		unzip(path_to,fileName);
+		pn.notifyIndeterminate("Insalling " + fileName);
+		unzip(path_to, fileName);
 
 	}
-	
-	public static void getexpandablelist(InfoExpandabletable info)
-	{
-		String path= Paths.eaddirectory.SAVED_GAMES_PATH;
-		String games[]=null;
-		String [][] finalarray;
-		
-		if(!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
-		{
-			finalarray=new String[1][1];
-			games=new String[1];
-			 games[0]="No Games";
-			 finalarray[0][0]="";
+
+	public static void getexpandablelist(InfoExpandabletable info) {
+		String path = Paths.eaddirectory.SAVED_GAMES_PATH;
+		String games[] = null;
+		String[][] finalarray = null;
+
+		if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists()) {
+			new File(Paths.eaddirectory.SAVED_GAMES_PATH).mkdir();
+		} else {
+			File gamesfolders = new File(Paths.eaddirectory.SAVED_GAMES_PATH);
+			games = gamesfolders.list(new EADFileFilter());
+
+			if (games.length>0)
+			{
+				//aqui ya se que hay un resultado xq no puede haber una carpeta sin un archivo guardado
+				finalarray = new String[games.length][];
+				for (int i = 0; i < games.length; i++) {
+						String files[] = null;
+							File gamefolder = new File(Paths.eaddirectory.SAVED_GAMES_PATH
+									+ games[i] + "/");
+			//	if (gamefolder.exists())
+							files = gamefolder.list(new TxtFilter());
+							finalarray[i] = new String[files.length];
+							for (int j = 0; j < files.length; j++)
+								finalarray[i][j] = files[j];
+				
+
+			}
+			}
 		}
-		else
-	{
-		
-		File gamesfolders = new File(Paths.eaddirectory.SAVED_GAMES_PATH);
-		
-		if(gamesfolders.exists())
-		games = gamesfolders.list(new EADFileFilter());
-		
-		
-		if (games.length<1)
-		{
-			finalarray=new String[1][1];
-			games=new String[1];
-			 games[0]="No Games";
-			 finalarray[0][0]="";
-		}
-		else {finalarray=new String[games.length][];
-		
-	
-		
-			for (int i=0; i<games.length; i++){
-			
-				String files[]=null;
-				File gamefolder = new File(Paths.eaddirectory.SAVED_GAMES_PATH+games[i]+"/");
-				if(gamefolder.exists())
-					files = gamefolder.list(new TxtFilter());
-					finalarray[i]=new String[files.length];
-			
-					if (files.length<1)
-					{finalarray[i]=new String[1];
-					finalarray[i][0]="Saved but deleted";
-						
-					}else	{finalarray[i]=new String[files.length];
-								for(int j=0;j<files.length;j++)
-								finalarray[i][j]=files[j];
-							}
-			
-				}
-		}
-	}	
-		
-		
+
 		info.setChildren(finalarray);
 		info.setGroup(games);
-	
+
 	}
 
 	public static void unzip(String filePath, String name) {
 		// TODO la ruta a las carpetas me las tengo que crear cuando instalo
 		// pero por ahora lo dejo aqui
-
 
 		StringTokenizer separator = new StringTokenizer(name, ".", true);
 		String game_name = separator.nextToken();
@@ -235,8 +208,6 @@ public class RepoResourceHandler {
 			zipFile = new ZipFile(location_ead);
 
 			entries = zipFile.entries();
-			
-			
 
 			BufferedOutputStream file;
 
@@ -258,7 +229,7 @@ public class RepoResourceHandler {
 							(new File(filePath + game_name + "/" + total_path))
 									.mkdir();
 						} else {
-							
+
 							file = new BufferedOutputStream(
 									new FileOutputStream(filePath + game_name
 											+ "/" + total_path));
@@ -324,13 +295,33 @@ public class RepoResourceHandler {
 		}
 		return in;
 	}
-	
-	public static boolean doesfileexists(String path)
-	{
+
+	public static boolean doesfileexists(String path) {
 		if (new File(path).exists()) {
 			return true;
-		}else return false;
+		} else
+			return false;
 	}
-	
+
+	public static void updatesavedgames() {
+
+		String[] gameswithsaved = new File(Paths.eaddirectory.SAVED_GAMES_PATH)
+				.list();
+
+		for (int i = 0; i < gameswithsaved.length; i++) {
+
+			if (new File(Paths.eaddirectory.SAVED_GAMES_PATH
+					+ gameswithsaved[i]).list().length == 0)
+				new File(Paths.eaddirectory.SAVED_GAMES_PATH
+						+ gameswithsaved[i]).delete();
+		}
+	}
+
+	public static void deletesavedgame(String path) {
+		
+		(new File(path)).delete();
+    	
+		
+	}
 
 }

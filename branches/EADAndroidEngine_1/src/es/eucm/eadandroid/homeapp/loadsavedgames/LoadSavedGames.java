@@ -5,8 +5,10 @@ package es.eucm.eadandroid.homeapp.loadsavedgames;
 import java.io.File;
 
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
+import es.eucm.eadandroid.utils.ActivityPipe;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
@@ -15,6 +17,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -41,44 +45,73 @@ public class LoadSavedGames extends ExpandableListActivity  {
     ExpandableListAdapter mAdapter;
     InfoExpandabletable info=null;
     int groupPos;
+    
+	public class SavedGamesHandlerMessages {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+		public static final int GAMES = 0;
+		public static final int NOGAMES = 1;
 
-        
-        
-        
-        
-              
-         info=new InfoExpandabletable();
-         RepoResourceHandler.getexpandablelist(info);
-        
-        mAdapter = new MyExpandableListAdapter(this,info);
+	}
+
+	/**
+	 * activity Handler
+	 */
+    public Handler ActivityHandler = new Handler() {
+		@Override
+				public void handleMessage(Message msg) {
+		
+			
+			switch (msg.what) {
+			case SavedGamesHandlerMessages.GAMES:
+				Bundle b = msg.getData();
+				String text = b.getString("loadingsavedgames");
+				info=(InfoExpandabletable) ActivityPipe.remove(text);
+				createlist();
+				break;
+				
+			case SavedGamesHandlerMessages.NOGAMES:
+				nogames();
+				
+				
+				break;
+				
+			}
+			
+			
+		}
+};	
+	
+protected void createlist() {
+	// TODO Auto-generated method stub
+	 mAdapter = new MyExpandableListAdapter(this,info);
         setListAdapter(mAdapter);
         registerForContextMenu(getExpandableListView());
-    
-        
-     
-        
-       
-        
+	
+}
+
+protected void nogames() {
+	setListAdapter(null);
+	 Toast.makeText(this, "no games",  Toast.LENGTH_LONG).show();
+	
+}
+
+@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Searchingsavedgames gettingdata=new Searchingsavedgames(ActivityHandler);
+        gettingdata.start();
     }
-    @Override
+    
+	@Override
     public boolean onChildClick (ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
     {
-    	Log.d("vamos", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    	Log.d("padre", info.getGroup()[groupPosition]);
-    	Log.d("padre", info.getChildren()[groupPosition][childPosition]);
-    	
     	if((!info.getGroup()[groupPosition].equals("No Games"))&&(!info.getChildren()[groupPosition][childPosition].equals("Saved but deleted")))
     	{Intent i = new Intent(this, ECoreActivity.class);
 		i.putExtra("AdventureName",info.getGroup()[groupPosition] );
 		i.putExtra("restoredGame",Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPosition]+"/"+info.getChildren()[groupPosition][childPosition] );
 		i.putExtra("savedgame", true);
-		
-
 		this.startActivity(i);
+		return true;
     	}
     	
 		return false;
@@ -95,10 +128,6 @@ public class LoadSavedGames extends ExpandableListActivity  {
     public boolean onContextItemSelected(MenuItem item) {
         ExpandableListContextMenuInfo information = (ExpandableListContextMenuInfo) item.getMenuInfo();
 
-        //String title = ((TextView) information.targetView).getText().toString();
-        
-        
-        
         int type = ExpandableListView.getPackedPositionType(information.packedPosition);
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
         	
@@ -117,9 +146,11 @@ public class LoadSavedGames extends ExpandableListActivity  {
             	}
             	break;
             case 1:
-            	(new File(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][childPos])).delete();
+            	RepoResourceHandler.deletesavedgame(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][childPos]);
             	  Toast.makeText(this, "The saved game "+info.getChildren()[groupPos][childPos]+" has been suscesfully deleted",
                           Toast.LENGTH_SHORT).show();
+            	  
+            	  refresh();
             	break;
             }
             return true;
@@ -139,11 +170,14 @@ public class LoadSavedGames extends ExpandableListActivity  {
                    .setCancelable(false)
                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                        public void onClick(DialogInterface dialog, int id) {
-                            for (int i=0;i<info.getGroup().length;i++)
+                    	   int a=info.getChildren()[groupPos].length;
+                            for (int i=0;i<info.getChildren()[groupPos].length;i++)
                             {
-                            	(new File(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][i])).delete();	
+                            	RepoResourceHandler.deletesavedgame(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][i]);
+                            	
                             }
-                            puttoast();
+                          //  puttoast();
+                            refresh();
                        }
 
                    })
@@ -154,18 +188,8 @@ public class LoadSavedGames extends ExpandableListActivity  {
                    });
             AlertDialog alert = builder.create();
             alert.show();
-            
-            
-           
-        	break;
+            break;
         } 
-            
-            
-            
-            
-            
-            
-            
         }
         
         return false;
@@ -173,6 +197,11 @@ public class LoadSavedGames extends ExpandableListActivity  {
     
     
 
+	protected void refresh() {
+		Searchingsavedgames gettingdata=new Searchingsavedgames(ActivityHandler);
+        gettingdata.start();
+		
+	}
 	private void puttoast() {
 		// TODO Auto-generated method stub
 		 Toast.makeText(this, "All games deleted", Toast.LENGTH_SHORT).show();
