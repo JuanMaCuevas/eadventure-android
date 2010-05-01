@@ -25,7 +25,7 @@
 <activity android:name=".ecore.ECoreActivity" android:alwaysRetainTaskState="true"  android:screenOrientation="landscape"></activity>
 <activity android:name=".homeapp.HomeTabActivity" android:screenOrientation="portrait"></activity>
 <activity android:name=".ecore.EcoreVideo" android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>
-<activity android:name=".homeapp.loadsavedgames.LoadSavedGames" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
+<activity android:name=".homeapp.loadsavedgames.LoadSavedGames"  android:screenOrientation="portrait"></activity>
 </application>
 	
 	<uses-sdk android:minSdkVersion="5" />

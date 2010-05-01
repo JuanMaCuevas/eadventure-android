@@ -317,11 +317,48 @@ public class RepoResourceHandler {
 		}
 	}
 
-	public static void deletesavedgame(String path) {
-		
-		(new File(path)).delete();
-    	
-		
+	public static void deleteFile(String path) {
+
+		File f = new File(path);
+
+		if (f.exists())
+
+			if (!f.isDirectory())
+				f.delete();
+			else
+				removeDirectory(f);
+
 	}
+
+	
+	
+	public static boolean removeDirectory(File directory) {
+
+		if (directory == null)
+			return false;
+		if (!directory.exists())
+			return true;
+		if (!directory.isDirectory())
+			return false;
+
+		String[] list = directory.list();
+
+		if (list != null) {
+			for (int i = 0; i < list.length; i++) {
+				File entry = new File(directory, list[i]);
+
+				if (entry.isDirectory()) {
+					if (!removeDirectory(entry))
+						return false;
+				} else {
+					if (!entry.delete())
+						return false;
+				}
+			}
+		}
+
+		return directory.delete();
+	}
+
 
 }

@@ -119,9 +119,9 @@ protected void nogames() {
     }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Different options");
-        menu.add(0, 0, 0, "play");
-        menu.add(0, 1, 0, "delete");
+        menu.setHeaderTitle("Options");
+        menu.add(0, 0, 0, "Play");
+        menu.add(0, 1, 0, "Delete");
     }
     
     @Override
@@ -146,8 +146,8 @@ protected void nogames() {
             	}
             	break;
             case 1:
-            	RepoResourceHandler.deletesavedgame(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][childPos]);
-            	  Toast.makeText(this, "The saved game "+info.getChildren()[groupPos][childPos]+" has been suscesfully deleted",
+            	RepoResourceHandler.deleteFile(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][childPos]);
+            	  Toast.makeText(this, "Saved game suscesfully removed",
                           Toast.LENGTH_SHORT).show();
             	  
             	  refresh();
@@ -173,7 +173,7 @@ protected void nogames() {
                     	   int a=info.getChildren()[groupPos].length;
                             for (int i=0;i<info.getChildren()[groupPos].length;i++)
                             {
-                            	RepoResourceHandler.deletesavedgame(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][i]);
+                            	RepoResourceHandler.deleteFile(Paths.eaddirectory.SAVED_GAMES_PATH+info.getGroup()[groupPos]+"/"+info.getChildren()[groupPos][i]);
                             	
                             }
                           //  puttoast();

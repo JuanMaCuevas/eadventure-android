@@ -3,6 +3,7 @@ package es.eucm.eadandroid.homeapp.localgames;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +21,19 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.homeapp.loadsavedgames.InfoExpandabletable;
+import es.eucm.eadandroid.homeapp.loadsavedgames.LoadSavedGames.SavedGamesHandlerMessages;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
+import es.eucm.eadandroid.utils.ActivityPipe;
 
 /**
  * @author Alvaro
@@ -42,13 +51,55 @@ public class LocalGamesActivity extends ListActivity {
 	LayoutAnimationController controller;
 
 	private Menu mMenu;
+	ProgressDialog dialog;
+	
+	
+
+
+
 	
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Sample menu");
-        menu.add(0, 0, 0, "probando");
+        menu.setHeaderTitle("Options");
+        menu.add(0, 0, 0, "Play");
+        menu.add(0, 1, 0, "Uninstall");
     }
     
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+    	AdapterContextMenuInfo information =  (AdapterContextMenuInfo) item.getMenuInfo();
+    	
+    	
+    	
+    	Log.d("el boton del menu","este es "+item.getItemId());
+    	Log.d("el boton del menu","este es "+Paths.eaddirectory.GAMES_PATH+m_games.get(information.position).getGameTitle()+"/");
+    	
+    	 switch (item.getItemId()) {
+         case 0:
+        	 
+        	 GameInfo selectedAdventure = (GameInfo) this.getListView()
+				.getItemAtPosition(information.position);
+
+		Intent i = new Intent(this, ECoreActivity.class);
+		i.putExtra("AdventureName", selectedAdventure.getGameTitle());
+
+		this.startActivity(i);
+        break;
+         case 1:
+        	 String[] paths=new String[2];
+        	 paths[0]=Paths.eaddirectory.GAMES_PATH+m_games.get(information.position).getGameTitle()+"/";
+        	 paths[1]=Paths.eaddirectory.SAVED_GAMES_PATH+m_games.get(information.position).getGameTitle()+"/";
+        	 DeletingGame instance=new DeletingGame(LGActivityHandler,paths);
+        	 instance.start();
+        	 dialog = ProgressDialog.show(this, "<E-adventure> Android", "Removing Game",true);
+        	 break;	 
+        	 
+    	 }
+    	
+    	
+		return true;
+    	
+    }
 
 	/**
 	 * Local games activity handler messages . Handled by
@@ -59,6 +110,7 @@ public class LocalGamesActivity extends ListActivity {
 		public static final int GAMES_FOUND = 0;
 		public static final int NO_GAMES_FOUND = 1;
 		public static final int NO_SD_CARD = 2;
+		public static final int DELETING_GAME = 3;
 
 	}
 
@@ -83,6 +135,12 @@ public class LocalGamesActivity extends ListActivity {
 			case LGAHandlerMessages.NO_SD_CARD:
 				showAlert("No SD card mounted");
 				break;
+			case LGAHandlerMessages.DELETING_GAME:
+				dialog.setIndeterminate(false);
+				dialog.dismiss();
+				searchForGames();
+				break;	
+				
 
 			}
 		}
@@ -96,6 +154,7 @@ public class LocalGamesActivity extends ListActivity {
 		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
 
 		setLayout();
+		 
 
 		searchForGames();
 
@@ -125,6 +184,7 @@ public class LocalGamesActivity extends ListActivity {
 
 		getListView().setLayoutAnimation(controller);
 		getListView().setTextFilterEnabled(true);
+		registerForContextMenu(getListView());
 		
 	
 	}
