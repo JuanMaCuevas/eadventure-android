@@ -530,7 +530,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     			}
 
     			//If there is an assessment profile, show the "Save Report" dialog
-    			if (!gameOver)
+    			
     			while(!assessmentEngine.isEndOfChapterFeedbackDone( )) {
     				Thread.sleep( 100 );
     			}
