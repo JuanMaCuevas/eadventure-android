@@ -51,8 +51,9 @@ public class MagnifierState extends HUDstate{
 		magnifier.hide();
 		
 		FunctionalElement elementOver = Game.getInstance().getActionManager().getElementOver();
+		FunctionalElement elementInCursor = Game.getInstance().getActionManager().getElementInCursor();
 		
-		if (elementOver!=null)  {
+		if (elementOver!=null && elementInCursor==null)  {
 			stateContext.setState(HUDstate.ActionsState, elementOver);
 		}
 		else stateContext.setState(HUDstate.HiddenState,null);

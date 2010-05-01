@@ -49,7 +49,7 @@ public class ActionsState extends HUDstate {
 		ActionButton ab = (ActionButton)actionsPanel.selectItemFromGrid(srcX, srcY);
 		
 		if (ab != null ) {
-			Game.getInstance().getActionManager().processAction(ab.getType() ,actionsPanel.getElementInfo());
+			Game.getInstance().getActionManager().processAction(ab,actionsPanel.getElementInfo());
 			stateContext.setState(HUDstate.HiddenState,null);
 		}
 		else if (actionsPanel.isInCloseButton(srcX,srcY))

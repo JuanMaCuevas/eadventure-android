@@ -159,11 +159,9 @@ public class GameStatePlaying extends GameState {
 		        game.getActionManager( ).setElementOver( null );
 				if (!GUI.getInstance().processPressed(e))
 					game.getActionManager( ).pressed(e);
-				Log.w("Events", "PRESSED");
 				break;
 			case UIEvent.SCROLL_PRESSED_ACTION:
-				
-				Log.w("Events", "SCROLL_PRESSED");
+
 				
 				game.getActionManager().setExitCustomized(null);
 		        game.getActionManager( ).setElementOver( null );
@@ -172,17 +170,16 @@ public class GameStatePlaying extends GameState {
 					game.getActionManager( ).pressed(e);
 				break;	
 			case UIEvent.UNPRESSED_ACTION:
-				
-				Log.w("Events", "UNPRESSED");
+
 				if (!GUI.getInstance().processUnPressed(e))
 					 game.getActionManager( ).unPressed(e);
 				break;		
 			case UIEvent.FLING_ACTION:
-				Log.w("Events", "FLING");
+
 				GUI.getInstance().processFling(e);
 				break;	
 			case UIEvent.TAP_ACTION: 
-				Log.w("Events", "TAP");
+				
 				if (!GUI.getInstance().processTap(e)) {
 					game.getActionManager().tap((TapEvent)e);
 				}

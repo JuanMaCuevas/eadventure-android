@@ -70,6 +70,7 @@ public class Magnifier {
 	Paint pointPaint;
 	
 	int elementColor = Color.parseColor("#F4FA58");
+	int combinedElementColor = Color.parseColor("#5858FA");
 	int exitColor = Color.parseColor("#81F781");
 	
 
@@ -176,20 +177,28 @@ public class Magnifier {
 				.getElementOver();
 
 		String exit = Game.getInstance().getActionManager().getExit();
+		
+		FunctionalElement feInCursor = Game.getInstance().getActionManager().getElementInCursor();
 
-		if (fe != null) {
+		
+		
+		if (feInCursor!=null && fe!=null) {
+			
+			pFrame.setColor(combinedElementColor);
+			pointPaint.setColor(combinedElementColor);
+		    c.drawText(feInCursor.getElement().getName()+" + "+fe.getElement().getName(), 0, 0, textP);
+			
+		}
+		
+		else if (fe != null) {
 
 			pFrame.setColor(elementColor);
-	//		pFrame.setShadowLayer(4f, -4, 4, elementColor);
-	//		textP.setShadowLayer(4f, 0, 0, elementColor);
 			pointPaint.setColor(elementColor);
 			c.drawText(fe.getElement().getName(), 0, 0, textP);
 		}
 
 		else if (exit != null && exit !="") {
 			pFrame.setColor(exitColor);
-//			pFrame.setShadowLayer(4f, -4, 4, exitColor);
-//			textP.setShadowLayer(4f, 0, 0, exitColor);
 			pointPaint.setColor(exitColor);
 			c.drawText(exit, 0, 0, textP);
 		}

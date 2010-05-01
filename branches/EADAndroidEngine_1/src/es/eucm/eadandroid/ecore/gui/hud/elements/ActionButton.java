@@ -102,6 +102,11 @@ public class ActionButton {
      * Name of the action represented by the button
      */
     private String actionName;
+    
+    /**
+     * Custom action of the button
+     */
+    private CustomAction customAction;
 
     /**
      * The type of the button
@@ -178,6 +183,7 @@ public class ActionButton {
     public ActionButton( CustomAction action ) {
 
         actionName = action.getName( );
+        customAction = action;
 
         Resources resources = null;
         for( int i = 0; i < action.getResources( ).size( ) && resources == null; i++ )
@@ -253,6 +259,11 @@ public class ActionButton {
     public void setName( String string ) {
 
         actionName = string;
+    }
+    
+    public CustomAction getCustomAction( ) {
+
+        return customAction;
     }
 
 }

@@ -35,6 +35,7 @@ package es.eucm.eadandroid.ecore.control;
 
 import android.util.Log;
 import android.view.MotionEvent;
+import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.scenes.GeneralScene;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
@@ -121,6 +122,11 @@ public class ActionManager {
 	 * Functional element in which the cursor is placed.
 	 */
 	private FunctionalElement elementOver;
+	
+    /**
+     * Element selected and current cursor
+     */
+    private FunctionalElement elementInCursor;
 
 	/**
 	 * Current action selected.
@@ -277,8 +283,50 @@ public class ActionManager {
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
 		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
 		
-		Game.getInstance().getFunctionalScene().unpressed(x,y);
+		
+		if (elementInCursor!=null && elementOver!=null)
+		   processElementClick();
+		else {
+			
+			elementInCursor=null;
+			Game.getInstance().getFunctionalScene().unpressed(x,y);
+		
+		}
 
+	}
+	
+	public boolean processElementClick() {
+		
+		Game game = Game.getInstance();
+		
+		if( elementInCursor != null ) {
+            if( game.getFunctionalPlayer( ).getCurrentAction( ).getType( ) == Action.CUSTOM_INTERACT ) {
+                setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
+            }
+            else if (game.getFunctionalPlayer( ).getCurrentAction( ).getType( ) == Action.DRAG_TO) {
+                setActionSelected( ActionManager.ACTION_DRAG_TO );
+            }
+            else {
+                if( this.elementOver.canPerform( ActionManager.ACTION_GIVE_TO ) ) {
+                    setActionSelected( ActionManager.ACTION_GIVE );
+                    game.getFunctionalPlayer( ).performActionInElement( elementInCursor );
+                    setActionSelected( ActionManager.ACTION_GIVE_TO );
+                }
+                else {
+                    setActionSelected( ActionManager.ACTION_USE );
+                    game.getFunctionalPlayer( ).performActionInElement( elementInCursor );
+                    setActionSelected( ActionManager.ACTION_USE_WITH );
+                }
+            }
+            game.getFunctionalPlayer( ).performActionInElement( this.elementOver );
+            elementInCursor = null;
+      //      gui.setDefaultCursor( );
+        }
+        else {
+            setActionSelected( ActionManager.ACTION_LOOK );
+            game.getFunctionalPlayer( ).performActionInElement( this.elementOver );
+        }
+        return true;
 	}
 
 	/**
@@ -388,14 +436,17 @@ public class ActionManager {
 		Game.getInstance().getFunctionalScene().tap(x,y);
 		
 	}
+	
 
-	public void processAction(int type , FunctionalElement elementAction) {
+
+	public void processAction(ActionButton ab, FunctionalElement elementAction) {
 		
+		int type = ab.getType();
 		Game game = Game.getInstance();
 		
 		 switch( type ) {
          case ActionButton.HAND_BUTTON:
-         //    elementInCursor = null;
+             elementInCursor = null;
          //    gui.setDefaultCursor( );
              if( elementAction.canBeUsedAlone( ) ) {
                  setActionSelected( ActionManager.ACTION_USE );
@@ -407,7 +458,7 @@ public class ActionManager {
                      game.getFunctionalPlayer( ).performActionInElement( elementAction );
                  }
                  else {
-             //        elementInCursor = elementAction;
+                       elementInCursor = elementAction;
              //        gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
                  }
              }
@@ -428,24 +479,28 @@ public class ActionManager {
 //             pressedX = (int) this.originalDragX;
 //             pressedY = (int) this.originalDragY - this.draggingElement.getHeight( ) / 2;
              break;
-//         case ActionButton.CUSTOM_BUTTON:
-//             if( actionButtons.getButtonPressed( ).getCustomAction( ).getType( ) == Action.CUSTOM ) {
-//                 actionManager.setActionSelected( ActionManager.ACTION_CUSTOM );
-//                 actionManager.setCustomActionName( actionButtons.getButtonPressed( ).getName( ) );
-//                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
-//                 break;
-//             }
-//             else {
-//             //    elementInCursor = elementAction;
-//                 gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
-//                 setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
-//                 .setCustomActionName( actionButtons.getButtonPressed( ).getName( ) );
-//                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
-//                 break;
-//             }
+         case ActionButton.CUSTOM_BUTTON:
+             if( ab.getCustomAction( ).getType( ) == Action.CUSTOM ) {
+                 this.setActionSelected( ActionManager.ACTION_CUSTOM );
+                 this.setCustomActionName( ab.getName( ) );
+                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
+                 break;
+             }
+             else {
+                 elementInCursor = elementAction;
+            //     gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
+                 this.setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
+                 this.setCustomActionName( ab.getName( ) );
+                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
+                 break;
+             }
      }
      setActionSelected( ActionManager.ACTION_GOTO );
 
+	}
+
+	public FunctionalElement getElementInCursor() {
+		return elementInCursor;
 	}
 
 }

@@ -839,6 +839,10 @@ public class FunctionalScene implements Renderable {
 				player.addAction(functionalGoTo);
 			}
 		}
+		else if (element != null) {
+			Game.getInstance().getFunctionalPlayer().performActionInElement(
+					element);
+		}
 
 		Game.getInstance().getActionManager().setActionSelected(
 				ActionManager.ACTION_GOTO);
