@@ -39,6 +39,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import es.eucm.eadandroid.common.auxiliar.CreateImage;
 import es.eucm.eadandroid.common.data.Documented;
 import es.eucm.eadandroid.common.data.HasId;
@@ -484,6 +485,8 @@ public class Animation implements Cloneable, Documented, HasId {
 
         Bitmap start = frames.get( i ).getImage( mirror, fullscreen, where );
         Bitmap end = frames.get( i + 1 ).getImage( mirror, fullscreen, where );
+        
+        Log.e("Animation", "Uso de animaciones combinedFrames no implementadas");
         
         /*TODO Falta por implementar las transiciones de animaciones en Android
         long time = transitions.get( i + 1 ).getTime( );

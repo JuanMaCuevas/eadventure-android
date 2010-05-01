@@ -42,6 +42,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import es.eucm.eadandroid.common.auxiliar.CreateImage;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.gui.TC;
@@ -329,7 +330,6 @@ public class Frame implements Cloneable, Timed {
 
             temp = this.uri.split( "/" );
             filename += temp[temp.length - 1];
-
             if( new File( filename ).exists( ) )
                 inputStream = new FileInputStream( filename );
 //PORTCOMMENT
@@ -366,32 +366,13 @@ public class Frame implements Cloneable, Timed {
      */
     private Bitmap getScaledImage( Bitmap image, float x, float y ) {
 
-        Bitmap newImage = null;
+        Bitmap scaledImage = null;
          
-
-        if( image != null ) {
-
-        	newImage= Bitmap.createScaledBitmap(image, (int)x, (int)y, true);
-        	
- // PORTCOMMENT
- /*           // set up the transform
-            AffineTransform transform = new AffineTransform( );
-            transform.scale( x, y );
-            transform.translate( ( x - 1 ) * image.getWidth( null ) / 2, ( y - 1 ) * image.getHeight( null ) / 2 );
-
-            // create a transparent (not translucent) image
-            newImage = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( image.getWidth( null ), image.getHeight( null ), Transparency.BITMASK );
-
-            // draw the transformed image
-            Graphics2D g = (Graphics2D) newImage.getGraphics( );
-
-            g.drawImage( image, transform, null );
-            g.dispose( );
-            */
-            
-        }
-
-        return newImage;
+  		  if( image != null ) {	  
+  			 scaledImage = Bitmap.createScaledBitmap(image, (int) (image.getWidth() * x),(int) (image.getHeight() * y), false);
+  		  }
+  		          
+		return scaledImage;
     }
 
     /**

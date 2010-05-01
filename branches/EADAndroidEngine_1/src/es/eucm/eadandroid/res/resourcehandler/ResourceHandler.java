@@ -236,7 +236,6 @@ public class ResourceHandler implements InputStreamCreator {
 			// end added
 			image = BitmapFactory.decodeFile(path, options);//decodeStream(inputStream, null, options);
 			
-			
 			/*String memory = "Free,"+Long.toString(Debug.getNativeHeapFreeSize())+
 							", Allocated:, "+Long.toString(Debug.getNativeHeapAllocatedSize())+
 							", Size:, "+Long.toString(Debug.getNativeHeapSize())+","+path;

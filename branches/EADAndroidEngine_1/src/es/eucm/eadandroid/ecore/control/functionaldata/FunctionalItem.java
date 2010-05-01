@@ -303,7 +303,7 @@ public class FunctionalItem extends FunctionalElement {
         x_image+=x1;
         y_image+=y1;
         if( scale != 1 ) {
-            Bitmap temp;
+            Bitmap temp=null;
             if( image == oldOriginalImage && scale == oldScale ) {
                 temp = oldImage;
             }
@@ -316,7 +316,7 @@ public class FunctionalItem extends FunctionalElement {
                 m.setScale(scale,scale);
                 //GRAPHICS
 
-                c.translate(100,100);
+      //          c.translate(100,100);
                 c.drawBitmap(image, m, null);
 
                 
