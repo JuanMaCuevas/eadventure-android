@@ -3,6 +3,7 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 
 import android.graphics.Color;
+import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
 import es.eucm.eadandroid.common.data.chapter.InfluenceArea;
@@ -185,17 +186,19 @@ public abstract class FunctionalElement implements Renderable {
      
     protected int generateColor( String colorText ) {
     	
-    	//FIXME En java se traga el #00000 aqui no , con lo que si salta execpcion pongo el bueno #000000
     	
-    	int color = Color.WHITE;
+    	
+    
     	
     	try {
-    		Color.parseColor(colorText);
+    		int color=Color.parseColor(colorText);
+    		return color;
     	}
     	catch(Exception e) {
+    		Log.d("el color peta", "dentro de functionalElement generacolor()  ");
     	}
     	
-		return color;
+		return Color.WHITE;
     }
     
 

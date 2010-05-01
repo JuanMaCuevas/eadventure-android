@@ -192,6 +192,10 @@ public class NPCTalking extends NPCState {
         super.draw( x, y, scale, depth, fe );
         // If there is a line to speak, draw it
         if( text.length >= 1 && !text[0].equals( "" ) ) {
+        	
+        	double colorletra=npc.getTextFrontColor( );
+        	double colorbordeletra=npc.getTextBorderColor( );
+        	
             if( npc.getShowsSpeechBubbles( ) )
                 GUI.getInstance( ).addTextToDraw( text, x - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), y - Math.round( npc.getHeight( ) * scale ) - 15, npc.getTextFrontColor( ), npc.getTextBorderColor( ), npc.getBubbleBkgColor( ), npc.getBubbleBorderColor( ) );
             else
