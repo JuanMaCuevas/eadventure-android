@@ -51,6 +51,7 @@ import es.eucm.eadandroid.common.data.assessment.TimedAssessmentRule;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.FlagSummary;
 import es.eucm.eadandroid.ecore.control.Game;
@@ -472,9 +473,9 @@ public class AssessmentEngine implements TimerEventListener {
                   //  es.eucm.eadventure.common.auxiliar.ReportDialog.sendReport(subject + "\n\r" + message + "\n\r" + text);
                     
                     
-                                
+                            
                     
-                   Handler handler=GUI.getInstance().getActivity();
+                   Handler handler=GameThread.getInstance().getHandler();
                     
                     Message msg = handler.obtainMessage();
                     
