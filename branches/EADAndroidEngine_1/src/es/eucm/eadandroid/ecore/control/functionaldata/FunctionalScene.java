@@ -70,7 +70,7 @@ public class FunctionalScene implements Renderable {
      */
     private final static int MAX_OFFSET_X = 300;
 
-    private final static int OFFSET_ARROW_AREA_RADIUS = 30;
+    
 
     /**
      * Scene data
@@ -578,6 +578,9 @@ public class FunctionalScene implements Renderable {
 
         // Update the player
         player.update( elapsedTime );
+        
+      
+        updateOffset( );
 
         // Update the offset
         /*//EVENT
@@ -714,9 +717,9 @@ public class FunctionalScene implements Renderable {
         moveOffsetLeft = false;
 
         if( showsOffsetArrows ) {
-            int ypos = GUI.WINDOW_HEIGHT / 2;
-            if( y >= ypos - OFFSET_ARROW_AREA_RADIUS && y <= ypos + OFFSET_ARROW_AREA_RADIUS ) {
-                int max_x = (int) Math.ceil( Math.sqrt( OFFSET_ARROW_AREA_RADIUS * OFFSET_ARROW_AREA_RADIUS - Math.pow( y - ypos, 2 ) ) );
+            int ypos = (int) (GUI.WINDOW_HEIGHT*GUI.SCALE_RATIOY / 2);
+            if( y >= ypos - GUI.OFFSET_ARROW_AREA_RADIUS && y <= ypos + GUI.OFFSET_ARROW_AREA_RADIUS ) {
+                int max_x = (int) Math.ceil( Math.sqrt( GUI.OFFSET_ARROW_AREA_RADIUS * GUI.OFFSET_ARROW_AREA_RADIUS - Math.pow( y - ypos, 2 ) ) );
                 if( x <= max_x )
                     moveOffsetLeft = true;
                 if( x >= GUI.WINDOW_WIDTH - max_x )
