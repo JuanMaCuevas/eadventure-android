@@ -32,7 +32,7 @@ public class InstallingResources extends Thread {
 	}
 
 	public void run() {
-		this.iniciating();
+		this.initiating();
 
 		Message msg = han.obtainMessage();
 		Bundle b = new Bundle();
@@ -42,7 +42,7 @@ public class InstallingResources extends Thread {
 
 	}
 
-	private void iniciating() {
+	private void initiating() {
 		if (!new File(Paths.eaddirectory.ROOT_PATH).exists()) {
 
 			try {

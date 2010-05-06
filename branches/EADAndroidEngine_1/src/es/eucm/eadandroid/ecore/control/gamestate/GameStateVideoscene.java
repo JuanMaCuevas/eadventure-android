@@ -12,6 +12,7 @@ import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Cutscene;
 import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
@@ -56,7 +57,7 @@ public class GameStateVideoscene extends GameState {
 		
 	        
         
-        Handler handler=GUI.getInstance().getActivity();
+        Handler handler=GameThread.getInstance().getHandler();
         Message msg = handler.obtainMessage();
                Bundle b = new Bundle();
 			//b.putString("html", text);
@@ -108,22 +109,7 @@ public class GameStateVideoscene extends GameState {
 
 	private void loadNextScene() {
 
-/*		if (mediaPlayer != null) {
-			mediaPlayer.stop();
 
-			// GUI.getInstance( ).getFrame( ).remove( video );
-
-			
-			 * GUI.getInstance( ).getFrame( ).createBufferStrategy( 2 );
-			 * GUI.getInstance( ).getFrame( ).validate( ); GUI.getInstance(
-			 * ).restoreFrame( );
-			 * 
-			 * mediaPlayer.deallocate( );
-			 
-			mediaPlayer.release();
-			mediaPlayer = null;
-			System.gc();
-		}*/
 
 		if (videoscene.getNext() == Cutscene.ENDCHAPTER)
 			game.goToNextChapter();

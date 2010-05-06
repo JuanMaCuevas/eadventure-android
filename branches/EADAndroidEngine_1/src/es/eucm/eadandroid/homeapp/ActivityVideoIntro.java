@@ -83,7 +83,7 @@ public class ActivityVideoIntro extends Activity implements
 			InstallingResources is = new InstallingResources(this,
 					ActivityHandler);
 			is.start();
-			dialog = ProgressDialog.show(this, "<E-adventure> Android", "Installing Engine",true);
+			dialog = ProgressDialog.show(this, "Welcome to <e-Adventure>", "Please wait...\nSetting up engine resources",true);
 		} //else 	startactivity();
 
 		

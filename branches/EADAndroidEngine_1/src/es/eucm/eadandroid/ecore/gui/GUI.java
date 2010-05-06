@@ -1,5 +1,6 @@
 package es.eucm.eadandroid.ecore.gui;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.control.TimerManager;
@@ -20,6 +23,7 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.hud.HUD;
+
 
 
 public class GUI {
@@ -52,7 +56,9 @@ public class GUI {
 
 	public static float DISPLAY_DENSITY_SCALE;
 	
-	public static int CENTER_OFFSET;
+	
+	
+	
 	
 	 /**
      * Left most point of the response text block
@@ -81,7 +87,8 @@ public class GUI {
 	/**
 	 * scaleRatio
 	 */
-	public static float SCALE_RATIO;
+	public static float SCALE_RATIOY;
+	public static float SCALE_RATIOX;
 
 	/**
 	 * scaleMatrix
@@ -141,6 +148,9 @@ public class GUI {
 	private boolean moveOffsetRight;
 
 	private boolean moveOffsetLeft;
+	
+	public static int CENTER_OFFSET;
+	public final static int OFFSET_ARROW_AREA_RADIUS = 40;
 
 	/**
 	 * The GraphicsConfiguration class
@@ -148,12 +158,10 @@ public class GUI {
 	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();;
 
 	private int loading;
-	private Handler Handleractivity;
+	
 
 
-	public  Handler getActivity() {
-		return Handleractivity;
-	}
+	
 
 	public FPS getfps() {
 		return fps;
@@ -170,16 +178,16 @@ public class GUI {
 	
 	
 
-	private GUI(SurfaceHolder mSurfaceHolder, Handler handler) {
-		this.Handleractivity=handler;
+	private GUI(SurfaceHolder mSurfaceHolder) {
+		//this.Handleractivity=handler;
 		this.canvasSurfaceHolder = mSurfaceHolder;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
 	}
 
-	public static void create(SurfaceHolder mSurfaceHolder,Handler handler) {
+	public static void create(SurfaceHolder mSurfaceHolder) {
 
-		instance = new GUI(mSurfaceHolder,handler);
+		instance = new GUI(mSurfaceHolder);
 
 	}
 
@@ -197,15 +205,15 @@ public class GUI {
 		finalBmp = Bitmap.createBitmap(FINAL_WINDOW_WIDTH, FINAL_WINDOW_HEIGHT,
 				Bitmap.Config.RGB_565);
 		finalCanvas = new Canvas(finalBmp);
-
-		// Set the scale
-		SCALE_RATIO = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
-		scaleMatrix = new Matrix();
-		scaleMatrix.setScale(SCALE_RATIO, SCALE_RATIO);
 		
-		if ((WINDOW_WIDTH * SCALE_RATIO) < FINAL_WINDOW_WIDTH)
-			CENTER_OFFSET = (FINAL_WINDOW_WIDTH - (int)(WINDOW_WIDTH * SCALE_RATIO))/2;
-		else CENTER_OFFSET = 0;
+		// Set the scale
+		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
+		SCALE_RATIOX=WINDOW_WIDTH/FINAL_WINDOW_WIDTH;
+		scaleMatrix = new Matrix();
+		scaleMatrix.setScale(SCALE_RATIOX,SCALE_RATIOY);
+		CENTER_OFFSET = 0;
+		
+		
 
 		mPaint = new Paint();
 		mPaint.setTextSize(TEXT_SIZE);
@@ -233,12 +241,21 @@ public class GUI {
 
 	public void endDraw() {
 
-		// reescale the drawn bitmap to fit the sreen size
+	//	 reescale the drawn bitmap to fit the sreen size
+		
+		
+		
+		Log.d("centeroffset",""+CENTER_OFFSET );
+		Log.d("matriz escalado alto",""+SCALE_RATIOY );
+		Log.d("escalado al ancho", ""+SCALE_RATIOX);
+		
+		
+		
 		finalCanvas.drawColor(Color.BLACK);
 		finalCanvas.translate(CENTER_OFFSET, 0);
 		finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
 		finalCanvas.translate(-CENTER_OFFSET, 0);
-		
+	
 		
 		Canvas canvas = null;
 		
@@ -259,6 +276,8 @@ public class GUI {
 				canvasSurfaceHolder.unlockCanvasAndPost(canvas);
 			}
 		}
+		
+		
 		
 		
 
@@ -867,38 +886,37 @@ public class GUI {
 			foreground = null;
 		}
 
-		for (int i = 0; i < this.textToDraw.size(); i++) {
-			this.textToDraw.get(i).draw(canvascpy);
-		}
-		this.textToDraw.clear();
+		if( showsOffsetArrows ) {
+			  mPaint.setColor( Color.BLACK );
+			  int ytemp = GUI.WINDOW_HEIGHT / 2;
+			  RectF ovalleft= new RectF(-OFFSET_ARROW_AREA_RADIUS,ytemp+OFFSET_ARROW_AREA_RADIUS,OFFSET_ARROW_AREA_RADIUS,ytemp-OFFSET_ARROW_AREA_RADIUS);
+			  canvascpy.drawOval(ovalleft, mPaint);
+		 RectF ovalright= new RectF(GUI.WINDOW_WIDTH - OFFSET_ARROW_AREA_RADIUS,ytemp+OFFSET_ARROW_AREA_RADIUS,GUI.WINDOW_WIDTH+OFFSET_ARROW_AREA_RADIUS,ytemp-OFFSET_ARROW_AREA_RADIUS);
+			  canvascpy.drawOval(ovalright, mPaint);
+			  mPaint.setColor( Color.WHITE );
+			  
+			  //float startX, float startY, float stopX, float stopY, Paint paint
+			  int widtharrow=(int) (OFFSET_ARROW_AREA_RADIUS*0.6);
+			  int heightarrow=OFFSET_ARROW_AREA_RADIUS/2;
+			  mPaint.setAntiAlias(true);
+			 canvascpy.drawLine(2, ytemp+2, 2+widtharrow, ytemp+2+heightarrow, mPaint);
+			 canvascpy.drawLine(2, ytemp-2, 2+widtharrow, ytemp-2-heightarrow, mPaint);
+			 
+			 canvascpy.drawLine(GUI.WINDOW_WIDTH-2, ytemp+2, GUI.WINDOW_WIDTH-2-widtharrow, ytemp+2+heightarrow, mPaint);
+			 canvascpy.drawLine(GUI.WINDOW_WIDTH-2, ytemp-2, GUI.WINDOW_WIDTH-2-widtharrow,ytemp-2-heightarrow ,mPaint);
+		
+		  }
+		 
+		  
+		  for (int i = 0; i < this.textToDraw.size(); i++) {
+				this.textToDraw.get(i).draw(canvascpy);
+			}
+			this.textToDraw.clear();
 
-		TimerManager timerManager = TimerManager.getInstance();
-		if (timerManager != null) {
-			timerManager.draw(canvascpy);
-		}
-
-		// TODO arrows
-
-		/*
-		 * if( showsOffsetArrows ) { g.setColor( Color.BLACK ); int ytemp =
-		 * GUI.WINDOW_HEIGHT / 2; Composite old = g.getComposite( );
-		 * AlphaComposite alphaComposite = AlphaComposite.getInstance(
-		 * AlphaComposite.SRC_OVER, 0.6f );
-		 * 
-		 * if( !this.moveOffsetLeft ) g.setComposite( alphaComposite );
-		 * g.fillOval( -30, ytemp - 30, 60, 60 );
-		 * 
-		 * if( this.moveOffsetRight ) g.setComposite( old ); else
-		 * g.setComposite( alphaComposite ); g.fillOval( GUI.WINDOW_WIDTH - 30,
-		 * ytemp - 30, 60, 60 );
-		 * 
-		 * g.setComposite( old ); g.setColor( Color.WHITE ); Stroke oldStroke =
-		 * g.getStroke( ); g.setStroke( new BasicStroke( 5 ) ); g.drawLine( 5,
-		 * ytemp, 15, ytemp - 15 ); g.drawLine( 5, ytemp, 15, ytemp + 15 );
-		 * g.drawLine( GUI.WINDOW_WIDTH - 5, ytemp, GUI.WINDOW_WIDTH - 15, ytemp
-		 * - 15 ); g.drawLine( GUI.WINDOW_WIDTH - 5, ytemp, GUI.WINDOW_WIDTH -
-		 * 15, ytemp + 15 ); g.setStroke( oldStroke ); }
-		 */
+			TimerManager timerManager = TimerManager.getInstance();
+			if (timerManager != null) {
+				timerManager.draw(canvascpy);
+			}
 
 	}
 
@@ -1163,9 +1181,33 @@ public class GUI {
 		// TODO Auto-generated method stub
 		return (int) - mPaint.ascent();
 	}
+	
+public void resize(boolean onescaled)
+{
+	
+	if (!onescaled)
+	{
+		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
+		scaleMatrix = new Matrix();
+		SCALE_RATIOX=SCALE_RATIOY;
+		CENTER_OFFSET = (FINAL_WINDOW_WIDTH - (int)(WINDOW_WIDTH * SCALE_RATIOY))/2;
+		
+		scaleMatrix.setScale(SCALE_RATIOX,SCALE_RATIOY);
+		
+	}else{
+		CENTER_OFFSET = 0;
+		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
+		scaleMatrix = new Matrix();
+		
+		//FIXME ponemos dos escalados distintos a la imagen para asi no quitar espacio utilizable
+		SCALE_RATIOX=WINDOW_WIDTH/FINAL_WINDOW_WIDTH;
+		scaleMatrix.setScale(SCALE_RATIOX,SCALE_RATIOY);
+		
+	}
+	
 
-//	public void toggleHud(boolean b) {
-//
-//	}
+	
+}
+
 
 }
