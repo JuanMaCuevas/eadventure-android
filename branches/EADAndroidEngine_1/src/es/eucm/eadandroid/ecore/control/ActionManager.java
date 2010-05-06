@@ -280,8 +280,8 @@ public class ActionManager {
 
 		MotionEvent e = ((UnPressedEvent) ev).event;
 
-		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
-		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
+		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
 		
 		
 		if (elementInCursor!=null && elementOver!=null)
@@ -346,8 +346,8 @@ public class ActionManager {
 		else
 			e = ((ScrollPressedEvent) ev).eventDst;
 				
-		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
-		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
+		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
 		
 		Game game = Game.getInstance();
 		FunctionalScene functionalScene = game.getFunctionalScene();
@@ -430,8 +430,8 @@ public class ActionManager {
 		
 		MotionEvent e = ((TapEvent) ev).event;
 
-		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIO);
-		int y = (int) (e.getY() / GUI.SCALE_RATIO) - Magnifier.CENTER_OFFSET;
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
+		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
 		
 		Game.getInstance().getFunctionalScene().tap(x,y);
 		
