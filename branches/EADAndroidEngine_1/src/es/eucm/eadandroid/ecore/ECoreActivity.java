@@ -46,27 +46,29 @@ import es.eucm.eadandroid.utils.ActivityPipe; //TODO esto a lo mejor aqui no
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateVideoscene;
 
-
 public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	public static String TAG = "ECoreActivity";
 
 	private GameSurfaceView gameSurfaceView = null;
-	
+
 	private WindowManager window;
 
 	private View assesmentLayout;
 	private View mbutton;
 	private WebView webview;
-	
 
 	private String adventureName;
-	private boolean fromvideo=false;
-	private boolean continueAudio=false;
-	
-	
-	
+	private boolean fromvideo = false;
+	private boolean continueAudio = false;
 
+	
+	
+	//prueba solo para ver
+//	SurfaceHolder holder;
+	boolean onescaled=false; 
+	
+	
 	/**
 	 * Local games activity handler messages . Handled by
 	 * {@link LGActivityHandler} Defines the messages handled by this Activity
@@ -106,38 +108,35 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			case ActivityHandlerMessages.GAME_OVER:
 				finishapplication();
 				finish();
-				
+
 				break;
-				
+
 			case ActivityHandlerMessages.LOAD_GAMES:
 				StartLoadApplication();
 				finish();
-				
-				break;	
-			}
- 
-		}
 
-		
+				break;
+			}
+
+		}
 
 	};
 
 	private void StartLoadApplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
-		//FIXME tendre que mirar xq si cambiamos el orden de tabs cogera otro
+		// FIXME tendre que mirar xq si cambiamos el orden de tabs cogera otro
 		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
 		startActivity(i);
-		
+
 	}
-	
+
 	private void activityvideo() {
-		this.continueAudio=true;
+		this.continueAudio = true;
 		Intent i = new Intent(this, EcoreVideo.class);
 		startActivity(i);
 	}
-	
-	private void finishapplication()
-	{
+
+	private void finishapplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		startActivity(i);
@@ -162,13 +161,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		// tell system to use the layout defined in our XML file
 		setContentView(R.layout.game_activity_canvas);
-		
-		//to know if we are going to load a saved game
-		boolean loadingfromsavedgame=this.getIntent().getExtras().getBoolean("savedgame");
-		
-		
 
-		// we will create our main thread always except when the thread is already
+		// to know if we are going to load a saved game
+		boolean loadingfromsavedgame = this.getIntent().getExtras().getBoolean(
+				"savedgame");
+
+		// we will create our main thread always except when the thread is
+		// already
 		// created and comes from another videoactivity
 		if (!this.getIntent().getExtras().getBoolean("before_video")) {
 			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
@@ -176,14 +175,16 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			// register our interest in hearing about changes to our surface
 			// TODO tengo que descomentar esta linea
 			canvasHolder.addCallback(this);
-			
 
-			if (loadingfromsavedgame)
-			{
-				String loadfile=this.getIntent().getExtras().getString("restoredGame");
-				GameThread.create(canvasHolder, this,ActivityHandler,loadfile);
-			}else GameThread.create(canvasHolder, this,ActivityHandler,null);
-			
+			if (loadingfromsavedgame) {
+				String loadfile = this.getIntent().getExtras().getString(
+						"restoredGame");
+				GameThread
+						.create(canvasHolder, this, ActivityHandler, loadfile);
+			} else
+				GameThread.create(canvasHolder, this, ActivityHandler, null);
+
+	//		holder=canvasHolder;
 			
 			// GameThread.getInstance();
 			adventureName = (String) this.getIntent().getExtras().get(
@@ -191,9 +192,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			String advPath = Paths.eaddirectory.GAMES_PATH + adventureName
 					+ "/";
 			GameThread.getInstance().setAdventurePath(advPath);
-		}else {this.fromvideo=true;
-				GameThread.getInstance().setHandler(ActivityHandler);
-				}
+		} else {
+			this.fromvideo = true;
+			GameThread.getInstance().setHandler(ActivityHandler);
+		}
 
 		assesmentLayout = findViewById(R.id.hidecontainer);
 		mbutton = findViewById(R.id.hideme1);
@@ -220,27 +222,28 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		// gameSurfaceView will only be null when the application is restored
 		if (gameSurfaceView == null) {
-				gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
-				gameSurfaceView.setFocusable(true);
-				SurfaceHolder canvasHolder = gameSurfaceView.getHolder();
-				canvasHolder.addCallback(this);
-				GameThread.getInstance().unpause(canvasHolder);
-				
-				Options options=Game.getInstance().getOptions();
-				if(Game.getInstance().getFunctionalScene()!=null)
-				if( options.isMusicActive( ) )
-		            Game.getInstance().getFunctionalScene( ).playBackgroundMusic( );
-		        else
-		        	Game.getInstance().getFunctionalScene( ).stopBackgroundMusic( );
+			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
+			gameSurfaceView.setFocusable(true);
+			SurfaceHolder canvasHolder = gameSurfaceView.getHolder();
+			canvasHolder.addCallback(this);
+//			holder=canvasHolder;
+GameThread.getInstance().unpause(canvasHolder);
+			Options options = Game.getInstance().getOptions();
+			if (Game.getInstance().getFunctionalScene() != null)
+				if (options.isMusicActive())
+					Game.getInstance().getFunctionalScene()
+							.playBackgroundMusic();
+				else
+					Game.getInstance().getFunctionalScene()
+							.stopBackgroundMusic();
 		}
 
 	}
 
-	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//Log.d("acaba la aplicacion","XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    ");
+		// Log.d("acaba la aplicacion","XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    ");
 	}
 
 	/**
@@ -249,47 +252,49 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
-		//to control if the game has finish or the user has done a quick exit
-		//making the game capable of being restored
-		if (GameThread.getInstance()!=null)
-		{	
-		GameThread.getInstance().pause(); // pause game when Activity pauses
-		this.gameSurfaceView = null;
+
+		// to control if the game has finish or the user has done a quick exit
+		// making the game capable of being restored
+		if (GameThread.getInstance() != null) {
+			GameThread.getInstance().pause(); // pause game when Activity pauses
+			this.gameSurfaceView = null;
 		}
-		//we have to be aware of two circumstances
-		//1) the game can be quiting bacase the user wants to go to menu so there is not game instance
-		//2)we are going to pause the thread but can be recovered, 
-		//in this case not all states have functional scenes so we have to control them
-		if (Game.getInstance()!=null)
-		if(Game.getInstance().getFunctionalScene( )!=null)
-		// es una ñapa pero es q no hay otra, esto es xq
-		//hay video que tienen el sonido aparte entonces no podemos 
-		//quitarle el sonido solo en este caso
-		if (!this.continueAudio)	
-		Game.getInstance().getFunctionalScene( ).stopBackgroundMusic( );
+		// we have to be aware of two circumstances
+		// 1) the game can be quiting bacase the user wants to go to menu so
+		// there is not game instance
+		// 2)we are going to pause the thread but can be recovered,
+		// in this case not all states have functional scenes so we have to
+		// control them
+		if (Game.getInstance() != null)
+			if (Game.getInstance().getFunctionalScene() != null)
+				// es una ñapa pero es q no hay otra, esto es xq
+				// hay video que tienen el sonido aparte entonces no podemos
+				// quitarle el sonido solo en este caso
+				if (!this.continueAudio)
+					Game.getInstance().getFunctionalScene()
+							.stopBackgroundMusic();
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		//Log.d("cambiandooooooooo", "XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		// Log.d("cambiandooooooooo", "XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		
-		
-		//to control if the thread is already started
+
+		// to control if the thread is already started
 		if (!GameThread.getInstance().isAlive())
 			GameThread.getInstance().start();
-		
-		//to change currentstate
-		if(this.fromvideo)
-		{
-			fromvideo=false;
+
+		// to change currentstate
+		if (this.fromvideo) {
+			fromvideo = false;
 			Game.getInstance().setvideostatefinish();
 		}
-		
-		
+		//para recuperar el juego cuando este creado el surcaceview
+	//	if (GameThread.getInstance()!=null)
+	//	GameThread.getInstance().unpause(holder);
+
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -345,206 +350,217 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		return GameThread.getInstance().processSensorEvent(event);
 	}
 
-	
-	public boolean onPrepareOptionsMenu (Menu menu)
-	{
-		Options options=Game.getInstance().getOptions();
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		Options options = Game.getInstance().getOptions();
 		menu.removeItem(0);
 		menu.removeItem(1);
 		menu.removeItem(2);
 		menu.removeItem(3);
 		menu.removeItem(4);
+		menu.removeItem(5);
 
-		if (Game.getInstance().getCurrentState() instanceof GameStatePlaying )
-		{menu.add(0, 0, 0, "Save").setIcon(android.R.drawable.ic_menu_save);
+		if (Game.getInstance().getCurrentState() instanceof GameStatePlaying) {
+			menu.add(0, 0, 0, "Save").setIcon(android.R.drawable.ic_menu_save);
 		}
-		
-		if(Game.getInstance().getFunctionalScene( )!=null)
-		if (options.isMusicActive())
-		menu.add(0, 1, 0, "Music off").setIcon(android.R.drawable.ic_lock_silent_mode);
-		else menu.add(0, 1, 0, "Music on").setIcon(android.R.drawable.ic_lock_silent_mode_off);
-		
-	/*	if(Game.getInstance().getFunctionalScene( )!=null)
-		if (options.isEffectsActive())
-		menu.add(0, 2, 0, "Effects off").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
-		else menu.add(0, 2, 0, "Effects on").setIcon(android.R.drawable.ic_menu_view);
-		*/
-		
-		menu.add(0, 3, 0, "Quit Game").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
-		menu.add(0, 4, 0, "Load game").setIcon(android.R.drawable.ic_menu_directions);
-		
 
-		return true;	
-	}
+		if (Game.getInstance().getFunctionalScene() != null)
+			if (options.isMusicActive())
+				menu.add(0, 1, 0, "Music off").setIcon(
+						android.R.drawable.ic_lock_silent_mode);
+			else
+				menu.add(0, 1, 0, "Music on").setIcon(
+						android.R.drawable.ic_lock_silent_mode_off);
 
-	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		Options options=Game.getInstance().getOptions();
-		AlertDialog.Builder builder;
-		AlertDialog alert;
-		
-		switch (item.getItemId()) {
-		case 0:
-			
-			//TODO tendremos que decir que solo salva si estas en stateplaying
-			GameThread.getInstance().pause();
-			if(!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
-				(new File(Paths.eaddirectory.SAVED_GAMES_PATH)).mkdir();
-			
-			if(!new File(Paths.eaddirectory.SAVED_GAMES_PATH+adventureName+"/").exists())
-				(new File(Paths.eaddirectory.SAVED_GAMES_PATH+adventureName+"/")).mkdir();
-			
-			String time=this.time();
-			Game.getInstance().save(Paths.eaddirectory.SAVED_GAMES_PATH+adventureName+"/"+time+".txt");
-			GameThread.getInstance().unpause(this.gameSurfaceView.getHolder());
-			
-			
-			return true;
+		/*
+		 * if(Game.getInstance().getFunctionalScene( )!=null) if
+		 * (options.isEffectsActive()) menu.add(0, 2, 0,
+		 * "Effects off").setIcon(android
+		 * .R.drawable.ic_menu_close_clear_cancel); else menu.add(0, 2, 0,
+		 * "Effects on").setIcon(android.R.drawable.ic_menu_view);
+		 */
 
-		case 1:
-			//TODO change music
-	        if( options.isMusicActive( ) )
-	            options.setMusicActive( false );
-	        else
-	            options.setMusicActive( true );
-		
-	        break;
-			
-	/*	case 2:
-		//TODO change effects
-			if( options.isEffectsActive( ) )
-	            options.setEffectsActive( false );
-	        else
-	            options.setEffectsActive( true );
-			break;
-		*/	
-		case 3:
-			//TODO exit game
-		/*	getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-		             WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-			builder = new AlertDialog.Builder(this);
-			builder.setMessage("Are you sure you want to exit?")
-			       .setCancelable(false)
-			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			        	   
-			           }
-			       })
-			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			                dialog.cancel();
-			           }
-			       });
-			alert = builder.create();
-		*/	finishthread(false);
-			
-		  return true;
-		case 4:
-		/*	getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-		             WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-			//TODO go to load games
-			builder = new AlertDialog.Builder(this);
-			builder.setMessage("Are you sure you want to exit and go to load games?")
-			       .setCancelable(false)
-			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			        	   finishthread(true);
-			           }
-			       })
-			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			                dialog.cancel();
-			           }
-			       });
-			alert = builder.create();
-			
-			*/finishthread(true);
-			return true;		
-				
-		}
-		
-		
-		Game.getInstance().saveOptions( );
-		if( options.isMusicActive( ) )
-            Game.getInstance().getFunctionalScene( ).playBackgroundMusic( );
-        else
-        	Game.getInstance().getFunctionalScene( ).stopBackgroundMusic( );
-
-        if( !options.isEffectsActive( ) )
-        	MultimediaManager.getInstance().stopAllSounds( );
-           
+		menu.add(0, 3, 0, "Quit Game").setIcon(
+				android.R.drawable.ic_menu_close_clear_cancel);
+		menu.add(0, 4, 0, "Load game").setIcon(
+				android.R.drawable.ic_menu_directions);
+		menu.add(0, 5, 0, "Resize").setIcon(
+				android.R.drawable.ic_menu_directions);
 
 		return true;
 	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		Options options = Game.getInstance().getOptions();
+		AlertDialog.Builder builder;
+		AlertDialog alert;
+
+		switch (item.getItemId()) {
+		case 0:
+
+			// TODO tendremos que decir que solo salva si estas en stateplaying
+			GameThread.getInstance().pause();
+			if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
+				(new File(Paths.eaddirectory.SAVED_GAMES_PATH)).mkdir();
+
+			String adventurename = GameThread.getInstance().getAdventurePath()
+					.split("/")[GameThread.getInstance().getAdventurePath()
+					.split("/").length - 1];
+			File folder = new File(Paths.eaddirectory.SAVED_GAMES_PATH
+					+ adventurename + "/");
+
+			if (!folder.exists())
+				folder.mkdir();
+
+			String time = this.time();
+			Game.getInstance().save(
+					Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
+							+ time + ".txt");
+			GameThread.getInstance().unpause(this.gameSurfaceView.getHolder());
+
+			return true;
+
+		case 1:
+			// TODO change music
+			if (options.isMusicActive())
+				options.setMusicActive(false);
+			else
+				options.setMusicActive(true);
+			
+			Game.getInstance().saveOptions();
+			
+			if (options.isMusicActive())
+				Game.getInstance().getFunctionalScene().playBackgroundMusic();
+			else
+				Game.getInstance().getFunctionalScene().stopBackgroundMusic();
+			
+			if (!options.isEffectsActive())
+				MultimediaManager.getInstance().stopAllSounds();
+
+			break;
+
 	
-	
-	public String  time()
-	{
+		case 3:
+			// TODO exit game
+			/*
+			 * getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+			 * , WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); builder =
+			 * new AlertDialog.Builder(this);
+			 * builder.setMessage("Are you sure you want to exit?")
+			 * .setCancelable(false) .setPositiveButton("Yes", new
+			 * DialogInterface.OnClickListener() { public void
+			 * onClick(DialogInterface dialog, int id) {
+			 * 
+			 * } }) .setNegativeButton("No", new
+			 * DialogInterface.OnClickListener() { public void
+			 * onClick(DialogInterface dialog, int id) { dialog.cancel(); } });
+			 * alert = builder.create();
+			 */
+			finishthread(false);
+
+			return true;
+		case 4:
+			/*
+			 * getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+			 * , WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //TODO go to
+			 * load games builder = new AlertDialog.Builder(this);
+			 * builder.setMessage
+			 * ("Are you sure you want to exit and go to load games?")
+			 * .setCancelable(false) .setPositiveButton("Yes", new
+			 * DialogInterface.OnClickListener() { public void
+			 * onClick(DialogInterface dialog, int id) { finishthread(true); }
+			 * }) .setNegativeButton("No", new DialogInterface.OnClickListener()
+			 * { public void onClick(DialogInterface dialog, int id) {
+			 * dialog.cancel(); } }); alert = builder.create();
+			 */
+			finishthread(true);
+			return true;
+			
+		case 5:
+			
+		GameThread.getInstance().resize(onescaled);
+			if (onescaled)
+			onescaled=false;
+			else onescaled=true;
+			
+			break;	
+			
+
+		}
+		
+
+		
+		
+
+		
+
+		return true;
+	}
+
+	public String time() {
 		String finalresult;
 		Date now = new Date();
-		String day="none";
-		 switch( now.getDay() ) {
-		 case 0:
-			 day="sun";
-			 break;
-		 case 1:
-			 day="mon";
-			 break;
-		 case 2:
-			 day="tues";
-			 break;
-		 case 3:
-			 day="wed";
-			 break;
-		 case 4:
-			 day="thurs";
-			 break;
-		 case 5:
-			 day="fri";
-			 break;
-		 case 6:
-			 day="sat";
-			 break;
-		 
-		 }
-		 int month=now.getMonth()+1;
-         String time=new String("MONTH_"+month+"_DAY_"+day+"_HOUR_"+now.getHours()+"_MIN_"+now.getMinutes()+"_SEC_"+now.getSeconds());
+		String day = "none";
+		switch (now.getDay()) {
+		case 0:
+			day = "sun";
+			break;
+		case 1:
+			day = "mon";
+			break;
+		case 2:
+			day = "tues";
+			break;
+		case 3:
+			day = "wed";
+			break;
+		case 4:
+			day = "thurs";
+			break;
+		case 5:
+			day = "fri";
+			break;
+		case 6:
+			day = "sat";
+			break;
+
+		}
+		int month = now.getMonth() + 1;
+		String time = new String("MONTH_" + month + "_DAY_" + day + "_HOUR_"
+				+ now.getHours() + "_MIN_" + now.getMinutes() + "_SEC_"
+				+ now.getSeconds());
 		return time;
 	}
-	
-	public void finishthread(boolean loadactivitygames)
-	{
-		
-	
-		 // boolean retry = true;
-		  if (GameThread.getInstance()!=null) {
-			  GameThread.getInstance().finish(loadactivitygames);
-		/*  while (retry) 
-		  { try { GameThread.getInstance().join(); retry = false; } catch
-		  (InterruptedException e) { } } }
-		  */
-		  }
-		  
-		 	
+
+	public void finishthread(boolean loadactivitygames) {
+
+		// boolean retry = true;
+		if (GameThread.getInstance() != null) {
+			GameThread.getInstance().finish(loadactivitygames);
+			/*
+			 * while (retry) { try { GameThread.getInstance().join(); retry =
+			 * false; } catch (InterruptedException e) { } } }
+			 */
+		}
+
 	}
-	
+
 	static final int DIALOG_PAUSED_ID = 0;
 	static final int DIALOG_GAMEOVER_ID = 1;
-	
+
 	protected Dialog onCreateDialog(int id) {
-	    Dialog dialog = null;
-	    switch(id) {
-	    case DIALOG_PAUSED_ID:
-	        // do the work to define the pause Dialog
-	        break;
-	    case DIALOG_GAMEOVER_ID:
-	        // do the work to define the game over Dialog
-	        break;
-	    default:
-	        dialog = null;
-	    }
-	    return dialog;
+		Dialog dialog = null;
+		switch (id) {
+		case DIALOG_PAUSED_ID:
+			// do the work to define the pause Dialog
+			break;
+		case DIALOG_GAMEOVER_ID:
+			// do the work to define the game over Dialog
+			break;
+		default:
+			dialog = null;
+		}
+		return dialog;
 	}
-	
 
 }
