@@ -1,25 +1,23 @@
 package es.eucm.eadandroid.ecore;
 
 import java.io.File;
-import java.util.Calendar;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,20 +29,13 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
-import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.Options;
-import es.eucm.eadandroid.ecore.control.config.ConfigData;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
-import es.eucm.eadandroid.homeapp.loadsavedgames.LoadSavedGames;
-import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity.LGAHandlerMessages;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
-import es.eucm.eadandroid.utils.ActivityPipe; //TODO esto a lo mejor aqui no
-import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStateVideoscene;
 
 public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
@@ -62,12 +53,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private boolean fromvideo = false;
 	private boolean continueAudio = false;
 
-	
-	
-	//prueba solo para ver
-//	SurfaceHolder holder;
 	boolean onescaled=false; 
-	
 	
 	/**
 	 * Local games activity handler messages . Handled by
@@ -124,9 +110,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	private void StartLoadApplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
-		// FIXME tendre que mirar xq si cambiamos el orden de tabs cogera otro
 		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
 		startActivity(i);
+		overridePendingTransition(R.anim.fade, R.anim.hold);
+
 
 	}
 
@@ -134,12 +121,14 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		this.continueAudio = true;
 		Intent i = new Intent(this, EcoreVideo.class);
 		startActivity(i);
+		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
 
 	private void finishapplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		startActivity(i);
+		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
 
 	/** Called when the activity is first created. */
@@ -147,7 +136,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// gets information from the intent to solve the nexts questions
+		// gets information from the intent to solve next questions
 		// are you starting the game?
 		// are you loading a saved game?
 		// are you returning from the videoscene?
@@ -184,8 +173,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			} else
 				GameThread.create(canvasHolder, this, ActivityHandler, null);
 
-	//		holder=canvasHolder;
-			
 			// GameThread.getInstance();
 			adventureName = (String) this.getIntent().getExtras().get(
 					"AdventureName");
@@ -226,8 +213,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			gameSurfaceView.setFocusable(true);
 			SurfaceHolder canvasHolder = gameSurfaceView.getHolder();
 			canvasHolder.addCallback(this);
-//			holder=canvasHolder;
-GameThread.getInstance().unpause(canvasHolder);
+			GameThread.getInstance().unpause(canvasHolder);
+
 			Options options = Game.getInstance().getOptions();
 			if (Game.getInstance().getFunctionalScene() != null)
 				if (options.isMusicActive())
@@ -291,9 +278,6 @@ GameThread.getInstance().unpause(canvasHolder);
 			fromvideo = false;
 			Game.getInstance().setvideostatefinish();
 		}
-		//para recuperar el juego cuando este creado el surcaceview
-	//	if (GameThread.getInstance()!=null)
-	//	GameThread.getInstance().unpause(holder);
 
 	}
 
@@ -392,13 +376,11 @@ GameThread.getInstance().unpause(canvasHolder);
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		Options options = Game.getInstance().getOptions();
-		AlertDialog.Builder builder;
-		AlertDialog alert;
 
 		switch (item.getItemId()) {
 		case 0:
 
-			// TODO tendremos que decir que solo salva si estas en stateplaying
+
 			GameThread.getInstance().pause();
 			if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
 				(new File(Paths.eaddirectory.SAVED_GAMES_PATH)).mkdir();
@@ -413,9 +395,30 @@ GameThread.getInstance().unpause(canvasHolder);
 				folder.mkdir();
 
 			String time = this.time();
+			
 			Game.getInstance().save(
-					Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
+					Paths.eaddirectory.SAVED_GAMES_PATH + adventureName + "/"
 							+ time + ".txt");
+			
+		
+			FileOutputStream sshot;
+			try {
+				sshot = new FileOutputStream(Paths.eaddirectory.SAVED_GAMES_PATH + adventureName + "/"
+						+ time + ".txt.png");
+				
+				int width = 200;
+				int height = (GUI.FINAL_WINDOW_HEIGHT * 200)/GUI.FINAL_WINDOW_WIDTH;
+				
+				Bitmap temp = Bitmap.createScaledBitmap(GUI.getInstance().getBmpCpy(),width,height,false);
+				
+				temp.compress(CompressFormat.PNG, 50, sshot);
+				
+				temp=null;
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
 			GameThread.getInstance().unpause(this.gameSurfaceView.getHolder());
 
 			return true;
@@ -438,8 +441,6 @@ GameThread.getInstance().unpause(canvasHolder);
 				MultimediaManager.getInstance().stopAllSounds();
 
 			break;
-
-	
 		case 3:
 			// TODO exit game
 			/*
@@ -485,20 +486,24 @@ GameThread.getInstance().unpause(canvasHolder);
 			
 			break;	
 			
+		
 
 		}
-		
 
-		
-		
+		Game.getInstance().saveOptions();
+		if (options.isMusicActive())
+			Game.getInstance().getFunctionalScene().playBackgroundMusic();
+		else
+			Game.getInstance().getFunctionalScene().stopBackgroundMusic();
 
-		
+		if (!options.isEffectsActive())
+			MultimediaManager.getInstance().stopAllSounds();
 
 		return true;
 	}
 
 	public String time() {
-		String finalresult;
+
 		Date now = new Date();
 		String day = "none";
 		switch (now.getDay()) {

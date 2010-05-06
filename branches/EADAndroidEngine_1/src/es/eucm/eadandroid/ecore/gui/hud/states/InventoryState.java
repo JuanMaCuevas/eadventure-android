@@ -2,6 +2,7 @@ package es.eucm.eadandroid.ecore.gui.hud.states;
 
 import android.graphics.Canvas;
 import android.util.Log;
+import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
@@ -32,23 +33,32 @@ public class InventoryState extends HUDstate {
 	}
 	
 	@Override
-	public boolean processTap(UIEvent e){
-		
+	public boolean processTap(UIEvent e) {
+
 		TapEvent ev = (TapEvent) e;
-		int dstX = (int)ev.event.getX();
-		int dstY = (int)ev.event.getY();
-		
+		int dstX = (int) ev.event.getX();
+		int dstY = (int) ev.event.getY();
+
 		FunctionalElement fe = null;
-		
-		if (inventory.pointInGrid(dstX,dstY)) {
-		  fe = (FunctionalElement) inventory.selectItemFromGrid((int)ev.event.getX(),(int)ev.event.getY());
+
+		if (inventory.pointInGrid(dstX, dstY)) {
+			fe = (FunctionalElement) inventory.selectItemFromGrid(
+					(int) ev.event.getX(), (int) ev.event.getY());
 		}
-		
-		if (fe!=null) {
-			stateContext.setState(HUDstate.ActionsState,fe);
+
+		FunctionalElement elementInCursor = Game.getInstance()
+				.getActionManager().getElementInCursor();
+
+		if (fe != null && elementInCursor == null) {
+			stateContext.setState(HUDstate.ActionsState, fe);
+			return true;
+		} else {
+			Game.getInstance()
+			.getActionManager().setElementOver(fe);
+			stateContext.setState(HUDstate.HiddenState, null);
+			return false;
 		}
-		
-		return true;
+
 	}
 
 	@Override

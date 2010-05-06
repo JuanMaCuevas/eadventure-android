@@ -37,9 +37,9 @@ public class LocalGamesListAdapter  extends ArrayAdapter<GameInfo> {
                         TextView bt = (TextView) v.findViewById(R.id.bottomtext);
                         ImageView iv = (ImageView) v.findViewById(R.id.icon);
                         if (tt != null) {
-                              tt.setText("Name: "+game.getGameTitle());                            }
+                              tt.setText(game.getGameTitle());                            }
                         if(bt != null){
-                              bt.setText("Desc: "+ game.getGameDescription());
+                              bt.setText("Installed");
                         }
                         if(iv != null){
                         	if (game.getImageIcon()!=null)

@@ -41,20 +41,17 @@ import java.util.Queue;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
-import android.view.MotionEvent;
-
 import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNode;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNodeView;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.OptionConversationNode;
 import es.eucm.eadandroid.common.gui.TC;
-import es.eucm.eadandroid.ecore.control.DebugLog;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
@@ -478,18 +475,26 @@ public class GameStateConversation extends GameState {
     
 
     
-    public void mouseMoved( UIEvent e ) {
-    	
-    	ScrollPressedEvent ev = (ScrollPressedEvent) e;
-    	
-		int y = (int)ev.eventDst.getY();
-		//int x = (int)ev.eventSrc.getX();
-		
-        if( GUI.getInstance( ).getResponseTextY( ) <= y )
-            optionHighlighted = ( y - GUI.getInstance( ).getResponseTextY( ) ) / RESPONSE_TEXT_HEIGHT;
-        else
-            optionHighlighted = -1;
-    }
+	public void mouseMoved(UIEvent e) {
+
+		int y;
+
+		if (e instanceof ScrollPressedEvent) {
+			ScrollPressedEvent ev = (ScrollPressedEvent) e;
+			y = (int) ev.eventDst.getY();
+
+		} else {
+			PressedEvent ev = (PressedEvent) e;
+			y = (int) ev.event.getY();
+		}
+
+		if (GUI.getInstance().getResponseTextY() <= y)
+			optionHighlighted = (y - GUI.getInstance().getResponseTextY())
+					/ RESPONSE_TEXT_HEIGHT;
+		else
+			optionHighlighted = -1;
+
+	}
 
     /**
      * Jumps to the next conversation line. If the current line was the last,
@@ -585,19 +590,15 @@ public class GameStateConversation extends GameState {
 		while ((e = vEvents.poll()) != null) {
 			switch (e.getAction()) {
 			case UIEvent.PRESSED_ACTION:				
-				Log.w("Events", "PRESSED");
 				mouseMoved(  e );
 				break;
 			case UIEvent.SCROLL_PRESSED_ACTION:				
-				Log.w("Events", "SCROLL_PRESSED");
 				mouseMoved(  e );
 				break;	
 			case UIEvent.UNPRESSED_ACTION:				
-				Log.w("Events", "UNPRESSED");
 				mouseClicked(e);
 				break;			
 			case UIEvent.TAP_ACTION: 
-				Log.w("Events", "TAP");
 				mouseClicked(e);
 			}
 

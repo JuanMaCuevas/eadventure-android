@@ -108,7 +108,7 @@ public class RepositoryDataHandler extends DefaultHandler {
 		if (sName.equals("game")) {
 			hasDescription = false;
 			
-			Log.d(tit, "Text : " + des);
+			
 			this.repositoryInfo.addGameInfo(new GameInfo(tit, des, url, imgIcon,image));
 		}
 
@@ -118,7 +118,6 @@ public class RepositoryDataHandler extends DefaultHandler {
 
 		currentString.append(new String(buf, offset, len));
 
-		Log.d("Characters", "Text : " + new String(buf, offset, len));
 
 		if (hasTitle) {
 			tit = new String(new String(buf, offset, len));

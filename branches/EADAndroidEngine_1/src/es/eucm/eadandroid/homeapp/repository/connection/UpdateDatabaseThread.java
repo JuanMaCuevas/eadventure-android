@@ -54,6 +54,8 @@ public class UpdateDatabaseThread extends Thread {
 		try {
 			downloadXML();
 			parseXML();
+			pn.notifyFinished("");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,9 +102,7 @@ public class UpdateDatabaseThread extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		pn.notifyFinished("");
+
 		
 	}
 

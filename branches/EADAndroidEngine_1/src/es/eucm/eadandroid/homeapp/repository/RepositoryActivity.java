@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
-import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesListAdapter;
 import es.eucm.eadandroid.homeapp.repository.connection.RepositoryServices;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
@@ -47,14 +46,11 @@ public class RepositoryActivity extends ListActivity {
 	ViewFlipper mFlipper;
 	
 	private GameInfo selectedGame = null;
-	
-	private Menu mMenu;
-	
+		
 	ProgressDialog progressDialog;
 
 	private Handler RAHandler = new Handler() {
 		@Override
-		/*    * Called when a message is sent to Engines Handler Queue */
 		public void handleMessage(Message msg) {
 
 			String m = null;
@@ -83,9 +79,7 @@ public class RepositoryActivity extends ListActivity {
 			case ProgressMessage.PROGRESS_FINISHED:
 
 				p.setIndeterminate(false);
-//				m = msg.getData().getString("msg");
 				p.setProgress(100);
-//				p.setMessage(m);
 				databaseUpdated();
 				p.dismiss();
 				break;
@@ -234,20 +228,10 @@ public class RepositoryActivity extends ListActivity {
 		if (selectedGame.getImageIcon()!=null)		
 			image.setImageBitmap(selectedGame.getImageIcon());
 		else image.setImageDrawable(this.getResources().getDrawable(R.drawable.icon));
-		
-		
-		
+				
 		mFlipper.showNext();
 		
 		this.selectedGame = selectedGame;
-		
-
-		// String key = ActivityPipe.add(selectedGame);
-		//
-		// Intent i = new Intent(this, DetailedGameActivity.class);
-		// i.putExtra(GameInfo.TAG,key);
-		//
-		// startActivity(i);
 
 	}
 	
@@ -262,10 +246,7 @@ public class RepositoryActivity extends ListActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Hold on to this
-		mMenu = menu;
 
-		// Inflate the currently selected menu XML resource.
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.title_icon, menu);
 
@@ -279,7 +260,6 @@ public class RepositoryActivity extends ListActivity {
 		pd = ProgressDialog.show(this, "Please wait...", "Retrieving data ...",
 				true);
 		rs.updateDatabase(this, RAHandler, db);
-
 		
 		return true;
 

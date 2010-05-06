@@ -2,7 +2,6 @@ package es.eucm.eadandroid.homeapp.repository.database;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 
 public class RepositoryDatabase implements Iterable<GameInfo> {
 	

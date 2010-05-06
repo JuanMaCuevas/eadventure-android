@@ -21,6 +21,7 @@ import android.util.Log;
 import es.eucm.eadandroid.homeapp.loadsavedgames.InfoExpandabletable;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
 import es.eucm.eadandroid.res.filefilters.EADFileFilter;
+import es.eucm.eadandroid.res.filefilters.PNGFilter;
 import es.eucm.eadandroid.res.filefilters.TxtFilter;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
@@ -134,41 +135,6 @@ public class RepoResourceHandler {
 		downloadFile(url_from, path_to, fileName, pn);
 		pn.notifyIndeterminate("Insalling " + fileName);
 		unzip(path_to, fileName);
-
-	}
-
-	public static void getexpandablelist(InfoExpandabletable info) {
-		String path = Paths.eaddirectory.SAVED_GAMES_PATH;
-		String games[] = null;
-		String[][] finalarray = null;
-
-		if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists()) {
-			new File(Paths.eaddirectory.SAVED_GAMES_PATH).mkdir();
-		} else {
-			File gamesfolders = new File(Paths.eaddirectory.SAVED_GAMES_PATH);
-			games = gamesfolders.list(new EADFileFilter());
-
-			if (games.length>0)
-			{
-				//aqui ya se que hay un resultado xq no puede haber una carpeta sin un archivo guardado
-				finalarray = new String[games.length][];
-				for (int i = 0; i < games.length; i++) {
-						String files[] = null;
-							File gamefolder = new File(Paths.eaddirectory.SAVED_GAMES_PATH
-									+ games[i] + "/");
-			//	if (gamefolder.exists())
-							files = gamefolder.list(new TxtFilter());
-							finalarray[i] = new String[files.length];
-							for (int j = 0; j < files.length; j++)
-								finalarray[i][j] = files[j];
-				
-
-			}
-			}
-		}
-
-		info.setChildren(finalarray);
-		info.setGroup(games);
 
 	}
 
@@ -317,6 +283,71 @@ public class RepoResourceHandler {
 		}
 	}
 
+	public static InfoExpandabletable getexpandablelist() {
+
+		InfoExpandabletable info = new InfoExpandabletable();
+
+		String games[] = null;
+		String[][] finalarray = null;
+		Bitmap[][] screen_shots = null;
+
+		if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists()) {
+
+			new File(Paths.eaddirectory.SAVED_GAMES_PATH).mkdir();
+
+		} else {
+
+			File gamesfolders = new File(Paths.eaddirectory.SAVED_GAMES_PATH);
+			games = gamesfolders.list(new EADFileFilter());
+
+			if (games.length > 0) {
+
+				finalarray = new String[games.length][];
+				screen_shots = new Bitmap[games.length][];
+
+				for (int i = 0; i < games.length; i++) {
+
+					File gamefolder = new File(
+							Paths.eaddirectory.SAVED_GAMES_PATH + games[i]
+									+ "/");
+
+					String files[] = gamefolder.list(new TxtFilter());
+
+					String screen_shots_bitmaps[] = gamefolder
+							.list(new PNGFilter());
+
+					finalarray[i] = new String[files.length];
+					screen_shots[i] = new Bitmap[files.length];
+
+					for (int j = 0; j < files.length; j++) {
+						finalarray[i][j] = files[j];
+
+						if (screen_shots_bitmaps.length > j
+								&& screen_shots_bitmaps[j] != null) {
+
+							Log.e("Path", screen_shots_bitmaps[j]);
+
+							screen_shots[i][j] = BitmapFactory.decodeFile(
+									Paths.eaddirectory.SAVED_GAMES_PATH
+											+ games[i] + "/"
+											+ screen_shots_bitmaps[j], null);
+
+						}
+
+					}
+
+				}
+			}
+		}
+
+		info.setChildren(finalarray);
+		info.setGroup(games);
+		info.setScreenShots(screen_shots);
+
+		return info;
+
+	}
+
 	public static void deleteFile(String path) {
 
 		File f = new File(path);
@@ -330,8 +361,6 @@ public class RepoResourceHandler {
 
 	}
 
-	
-	
 	public static boolean removeDirectory(File directory) {
 
 		if (directory == null)
@@ -359,6 +388,5 @@ public class RepoResourceHandler {
 
 		return directory.delete();
 	}
-
 
 }

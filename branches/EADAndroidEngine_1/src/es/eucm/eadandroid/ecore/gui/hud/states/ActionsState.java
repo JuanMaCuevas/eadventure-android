@@ -2,13 +2,13 @@ package es.eucm.eadandroid.ecore.gui.hud.states;
 
 
 import android.graphics.Canvas;
-import android.util.Log;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 import es.eucm.eadandroid.ecore.gui.hud.HUD;
 import es.eucm.eadandroid.ecore.gui.hud.HUDstate;
 import es.eucm.eadandroid.ecore.gui.hud.elements.ActionButton;
@@ -61,9 +61,7 @@ public class ActionsState extends HUDstate {
 
 	@Override
 	public boolean processScrollPressed(UIEvent e) {
-		
-		
-			
+				
 		ScrollPressedEvent ev = (ScrollPressedEvent) e;
 		
 		int dstX = (int)ev.eventDst.getX();
@@ -85,10 +83,7 @@ public class ActionsState extends HUDstate {
 		int srcX = (int)ev.eventSrc.getX();
 		int srcY = (int)ev.eventSrc.getY();
 		
-		Log.w("SWIPE",String.valueOf( ev.velocityX));
-			
 		if (actionsPanel.pointInGrid(srcX,srcY)) {
-			Log.w("SWIPE","Siiii");
 			actionsPanel.gridSwipe(ev.eventDst.getEventTime(),(int) ev.velocityX);
 		}
 		
@@ -97,7 +92,21 @@ public class ActionsState extends HUDstate {
 
 	@Override
 	public boolean processUnPressed(UIEvent e) {
+		
+		UnPressedEvent ev = (UnPressedEvent) e;
 				
+		int srcX = (int)ev.event.getX();
+		int srcY = (int)ev.event.getY();
+		
+		ActionButton ab = (ActionButton)actionsPanel.selectItemFromGrid(srcX, srcY);
+		
+		if (ab != null ) {
+			Game.getInstance().getActionManager().processAction(ab,actionsPanel.getElementInfo());
+			stateContext.setState(HUDstate.HiddenState,null);
+		}
+		else if (actionsPanel.isInCloseButton(srcX,srcY))
+			stateContext.setState(HUDstate.HiddenState,null);
+		
 		return true;
 		
 	}

@@ -169,7 +169,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     private boolean LoadedGame=false;
     private String LoadingGame;
 
-    /*
+    /* ADAPTATION 
      */ 
     /**
      * Adaptation engine
@@ -1037,7 +1037,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     }
 	
     
-    // GameStateConversation methods //
+ 
     /**
      * Push in the state stack the GameState gs
      * 

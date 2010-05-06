@@ -269,13 +269,83 @@ public class ActionManager {
 		setExit(exit);
 
 	}
+	
+	public void tap(UIEvent ev) {
+		
+		MotionEvent e = ((TapEvent) ev).event;
 
-	/**
-	 * Called when a mouse click event has been triggered
-	 * 
-	 * @param e
-	 *            Mouse event
-	 */
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
+		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
+		
+		if (elementInCursor!=null && elementOver!=null)
+			   processElementClick();
+			else {				
+				elementInCursor=null;
+				Game.getInstance().getFunctionalScene().tap(x,y);
+			}
+		
+	}
+	
+public void pressed(UIEvent ev) {
+
+		
+		MotionEvent e = null;
+
+		if (ev instanceof PressedEvent)
+			e = ((PressedEvent) ev).event;
+		else
+			e = ((ScrollPressedEvent) ev).eventDst;
+				
+		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
+		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
+		
+		Game game = Game.getInstance();
+		FunctionalScene functionalScene = game.getFunctionalScene();
+		if (functionalScene == null)
+			return;
+
+		FunctionalElement elementInside = functionalScene.getElementInside(x,y, dragElement);
+		Exit exit = functionalScene.getExitInside(x,y);
+		
+		if (elementInside !=null) 
+		Log.d("PRESSED",elementInside.getElement().getName());
+		if (exit!=null)
+		Log.d("PRESSED",exit.getNextSceneId());
+		
+		
+
+		if (dragElement != null) {
+			dragElement.setX(x);
+			dragElement.setY(y);
+		}
+
+		if (elementInside != null) {
+			setElementOver(elementInside);
+		} else if (exit != null && actionSelected == ACTION_GOTO) {
+			// SET EXIT CURSOR ;
+
+			GeneralScene nextScene = null;
+
+			// Pick the FIRST valid next-scene structure
+			for (int i = 0; i < exit.getNextScenes().size()
+					&& nextScene == null; i++)
+				if (new FunctionalConditions(exit.getNextScenes().get(i)
+						.getConditions()).allConditionsOk())
+					nextScene = game.getCurrentChapterData().getGeneralScene(
+							exit.getNextScenes().get(i).getTargetId());
+
+			// Check the text (customized or not)
+			if (getExitText(exit) != null && !getExitText(exit).equals("")) {
+				setExit(getExitText(exit));
+			} else if (getExitText(exit) != null) {
+				setExit(" ");
+			} else if (nextScene != null)
+				setExit(nextScene.getName());
+		}
+
+	}
+
+
 	public void unPressed(UIEvent ev) {
 
 		MotionEvent e = ((UnPressedEvent) ev).event;
@@ -336,64 +406,7 @@ public class ActionManager {
 	 *            Mouse event
 	 */
 
-	public void pressed(UIEvent ev) {
-
-		
-		MotionEvent e = null;
-
-		if (ev instanceof PressedEvent)
-			e = ((PressedEvent) ev).event;
-		else
-			e = ((ScrollPressedEvent) ev).eventDst;
-				
-		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
-		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
-		
-		Game game = Game.getInstance();
-		FunctionalScene functionalScene = game.getFunctionalScene();
-		if (functionalScene == null)
-			return;
-
-		FunctionalElement elementInside = functionalScene.getElementInside(x,y, dragElement);
-		Exit exit = functionalScene.getExitInside(x,y);
-		
-		if (elementInside !=null) 
-		Log.d("PRESSED",elementInside.getElement().getName());
-		if (exit!=null)
-		Log.d("PRESSED",exit.getNextSceneId());
-		
-		
-
-		if (dragElement != null) {
-			dragElement.setX(x);
-			dragElement.setY(y);
-		}
-
-		if (elementInside != null) {
-			setElementOver(elementInside);
-		} else if (exit != null && actionSelected == ACTION_GOTO) {
-			// SET EXIT CURSOR ;
-
-			GeneralScene nextScene = null;
-
-			// Pick the FIRST valid next-scene structure
-			for (int i = 0; i < exit.getNextScenes().size()
-					&& nextScene == null; i++)
-				if (new FunctionalConditions(exit.getNextScenes().get(i)
-						.getConditions()).allConditionsOk())
-					nextScene = game.getCurrentChapterData().getGeneralScene(
-							exit.getNextScenes().get(i).getTargetId());
-
-			// Check the text (customized or not)
-			if (getExitText(exit) != null && !getExitText(exit).equals("")) {
-				setExit(getExitText(exit));
-			} else if (getExitText(exit) != null) {
-				setExit(" ");
-			} else if (nextScene != null)
-				setExit(nextScene.getName());
-		}
-
-	}
+	
 
 	public String getExitText(Exit exit) {
 
@@ -425,19 +438,7 @@ public class ActionManager {
 
 		return customActionName;
 	}
-
-	public void tap(UIEvent ev) {
-		
-		MotionEvent e = ((TapEvent) ev).event;
-
-		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
-		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
-		
-		Game.getInstance().getFunctionalScene().tap(x,y);
-		
-	}
 	
-
 
 	public void processAction(ActionButton ab, FunctionalElement elementAction) {
 		

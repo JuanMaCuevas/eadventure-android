@@ -208,7 +208,7 @@ public class ActivityVideoIntro extends Activity implements
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate",HomeTabActivity.GAMES);
 		startActivity(i);
-
+        overridePendingTransition(R.anim.fade, R.anim.hold);
 		this.finish();
 
 	}

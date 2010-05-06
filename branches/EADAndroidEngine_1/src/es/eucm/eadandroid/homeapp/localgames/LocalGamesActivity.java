@@ -2,13 +2,13 @@ package es.eucm.eadandroid.homeapp.localgames;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,22 +18,14 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.ecore.ECoreActivity;
-import es.eucm.eadandroid.homeapp.loadsavedgames.InfoExpandabletable;
-import es.eucm.eadandroid.homeapp.loadsavedgames.LoadSavedGames.SavedGamesHandlerMessages;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
-import es.eucm.eadandroid.utils.ActivityPipe;
 
 /**
  * @author Alvaro
@@ -50,56 +42,51 @@ public class LocalGamesActivity extends ListActivity {
 
 	LayoutAnimationController controller;
 
-	private Menu mMenu;
 	ProgressDialog dialog;
-	
-	
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		menu.setHeaderTitle("Options");
+		menu.add(0, 0, 0, "Play");
+		menu.add(0, 1, 0, "Uninstall");
+	}
 
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo information = (AdapterContextMenuInfo) item
+				.getMenuInfo();
 
-	
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Options");
-        menu.add(0, 0, 0, "Play");
-        menu.add(0, 1, 0, "Uninstall");
-    }
-    
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-    	AdapterContextMenuInfo information =  (AdapterContextMenuInfo) item.getMenuInfo();
-    	
-    	
-    	
-    	Log.d("el boton del menu","este es "+item.getItemId());
-    	Log.d("el boton del menu","este es "+Paths.eaddirectory.GAMES_PATH+m_games.get(information.position).getGameTitle()+"/");
-    	
-    	 switch (item.getItemId()) {
-         case 0:
-        	 
-        	 GameInfo selectedAdventure = (GameInfo) this.getListView()
-				.getItemAtPosition(information.position);
+		switch (item.getItemId()) {
 
-		Intent i = new Intent(this, ECoreActivity.class);
-		i.putExtra("AdventureName", selectedAdventure.getGameTitle());
+		case 0:
 
-		this.startActivity(i);
-        break;
-         case 1:
-        	 String[] paths=new String[2];
-        	 paths[0]=Paths.eaddirectory.GAMES_PATH+m_games.get(information.position).getGameTitle()+"/";
-        	 paths[1]=Paths.eaddirectory.SAVED_GAMES_PATH+m_games.get(information.position).getGameTitle()+"/";
-        	 DeletingGame instance=new DeletingGame(LGActivityHandler,paths);
-        	 instance.start();
-        	 dialog = ProgressDialog.show(this, "<E-adventure> Android", "Removing Game",true);
-        	 break;	 
-        	 
-    	 }
-    	
-    	
+			GameInfo selectedAdventure = (GameInfo) this.getListView()
+					.getItemAtPosition(information.position);
+
+			Intent i = new Intent(this, ECoreActivity.class);
+			i.putExtra("AdventureName", selectedAdventure.getGameTitle());
+
+			this.startActivity(i);
+			break;
+
+		case 1:
+			String[] paths = new String[2];
+			paths[0] = Paths.eaddirectory.GAMES_PATH
+					+ m_games.get(information.position).getGameTitle() + "/";
+			paths[1] = Paths.eaddirectory.SAVED_GAMES_PATH
+					+ m_games.get(information.position).getGameTitle() + "/";
+			DeletingGame instance = new DeletingGame(LGActivityHandler, paths);
+			instance.start();
+			dialog = ProgressDialog.show(this, "<E-adventure> Android",
+					"Removing Game", true);
+			break;
+
+		}
+
 		return true;
-    	
-    }
+
+	}
 
 	/**
 	 * Local games activity handler messages . Handled by
@@ -139,8 +126,7 @@ public class LocalGamesActivity extends ListActivity {
 				dialog.setIndeterminate(false);
 				dialog.dismiss();
 				searchForGames();
-				break;	
-				
+				break;
 
 			}
 		}
@@ -151,15 +137,11 @@ public class LocalGamesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
-
 		setLayout();
-		 
-
 		searchForGames();
 
 	}
-	
+
 	private void setLayout() {
 		setContentView(R.layout.local_games_activity);
 
@@ -185,8 +167,7 @@ public class LocalGamesActivity extends ListActivity {
 		getListView().setLayoutAnimation(controller);
 		getListView().setTextFilterEnabled(true);
 		registerForContextMenu(getListView());
-		
-	
+
 	}
 
 	@Override
@@ -205,7 +186,7 @@ public class LocalGamesActivity extends ListActivity {
 	private void insertAdventuresToList(String[] advList) {
 
 		setLayout();
-		
+
 		for (int i = 0; i < advList.length; i++)
 			m_games.add(new GameInfo(advList[i], "", "", null, null));
 
@@ -224,17 +205,14 @@ public class LocalGamesActivity extends ListActivity {
 
 	private void showAlert(String msg) {
 
-		// new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
-		// null).show();
+		new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
+				null).show();
 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Hold on to this
-		mMenu = menu;
 
-		// Inflate the currently selected menu XML resource.
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.title_icon, menu);
 
@@ -248,7 +226,5 @@ public class LocalGamesActivity extends ListActivity {
 		return true;
 
 	}
-	
-	
 
 }

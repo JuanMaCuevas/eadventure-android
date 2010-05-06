@@ -84,7 +84,7 @@ public class GameStateBook extends GameState {
     public void mainLoop( long elapsedTime, int fps ) {
 
     	
-    	if( book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
+    	if( book!=null && book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
             Canvas c = GUI.getInstance( ).getGraphics( );
             //c.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
             
@@ -97,6 +97,10 @@ public class GameStateBook extends GameState {
             GUI.getInstance( ).endDraw( );
 
            // c.dispose( );
+    	}
+    	else {
+            FunctionalEffects.storeAllEffects( new Effects( ) );
+            game.setState( Game.STATE_RUN_EFFECTS ); 
     	}
     }
     

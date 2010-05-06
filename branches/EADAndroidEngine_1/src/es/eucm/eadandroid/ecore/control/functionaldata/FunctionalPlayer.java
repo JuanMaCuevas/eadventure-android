@@ -524,7 +524,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 Canvas c = new Canvas(image);
                 Matrix m = new Matrix();
                 m.setScale(scale,scale);
-                c.drawBitmap(image, m, null);
+                c.drawBitmap(oldOriginalImage, m, null);
                 
             }
             else {

@@ -19,15 +19,16 @@
 		<activity android:name=".homeapp.localgames.LocalGamesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.preferences.PreferencesActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.repository.RepositoryActivity" android:launchMode="singleTask" android:alwaysRetainTaskState="true" android:screenOrientation="portrait"></activity>
-		<activity android:name=".homeapp.repository.DetailedGameActivity"></activity>
+		
 		
 	
 <activity android:name=".ecore.ECoreActivity" android:alwaysRetainTaskState="true"  android:screenOrientation="landscape"></activity>
 <activity android:name=".homeapp.HomeTabActivity" android:screenOrientation="portrait"></activity>
-<activity android:name=".ecore.EcoreVideo" android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>
+<activity android:name=".ecore.EcoreVideo" android:screenOrientation="landscape"></activity>
 <activity android:name=".homeapp.loadsavedgames.LoadSavedGames"  android:screenOrientation="portrait"></activity>
 </application>
 	
 	<uses-sdk android:minSdkVersion="5" />
+
 
 </manifest> 
