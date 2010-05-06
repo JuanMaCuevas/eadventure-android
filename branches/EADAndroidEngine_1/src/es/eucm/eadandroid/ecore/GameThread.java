@@ -47,7 +47,7 @@ public class GameThread extends Thread {
 		
 		float scaleDensity = displayMetrics.density;
 				
-		GUI.create(holder,handler);
+		GUI.create(holder);
 		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 		
 		
@@ -122,6 +122,10 @@ public class GameThread extends Thread {
 	public void setAdventurePath(String advPath) {
 		this.advPath = advPath;
 	}
+	
+	public String getAdventurePath() {
+		return advPath;
+	}
 
 	public void pause() {
 		// TODO Auto-generated method stub
@@ -179,6 +183,18 @@ public class GameThread extends Thread {
 	
 	public void setHandler(Handler handler) {
 		this.handler = handler;
+	}
+	
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void resize(boolean onescaled) {
+		// TODO Auto-generated method stub
+		Game.getInstance().pause();
+		GUI.getInstance().resize(onescaled);
+		Game.getInstance().unpause();
+		
 	}
 	
 	
