@@ -169,7 +169,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     private boolean LoadedGame=false;
     private String LoadingGame;
 
-    /* ADAPTATION 
+    /*
      */ 
     /**
      * Adaptation engine
@@ -225,7 +225,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     /**
      * State of the game
      */
-    //TODO esto es solo una prueba
+    
     private  GameState currentState;
 
     public GameState getCurrentState() {
@@ -408,8 +408,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         this.adventureName = adventureName;
     }
 
-	//TODO assessment
-	//TODO adaptation 
+	
     public void start() {
 
     	try {
@@ -1599,6 +1598,10 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	public void unpause(SurfaceHolder canvasHolder) {
 		GUI.getInstance().setCanvasSurfaceHolder(canvasHolder);
 		
+		setGlobalState(STATE_RUNNING);
+	}
+	
+	public void unpause() {
 		setGlobalState(STATE_RUNNING);
 	}
 
