@@ -24,17 +24,15 @@ import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.Func
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.hud.HUD;
 
-
-
 public class GUI {
 
 	private static final double MAX_WIDTH_IN_TEXT = 300;
-	
+
 	/**
-     * Number of response lines to display
-     */
-    private static final int RESPONSE_TEXT_NUMBER_LINES = 9;
-    
+	 * Number of response lines to display
+	 */
+	private static final int RESPONSE_TEXT_NUMBER_LINES = 9;
+
 	private Transition transition;
 
 	protected static int graphicConfig;
@@ -55,20 +53,16 @@ public class GUI {
 	public static int FINAL_WINDOW_WIDTH;
 
 	public static float DISPLAY_DENSITY_SCALE;
-	
-	
-	
-	
-	
-	 /**
-     * Left most point of the response text block
-     */
-    private static final int RESPONSE_TEXT_X =   10;
 
-    /**
-     * Upper most point of the response text block
-     */
-    private static final int RESPONSE_TEXT_Y =  10;
+	/**
+	 * Left most point of the response text block
+	 */
+	private static final int RESPONSE_TEXT_X = 10;
+
+	/**
+	 * Upper most point of the response text block
+	 */
+	private static final int RESPONSE_TEXT_Y = 10;
 
 	private static final int TEXT_SIZE = 40;
 
@@ -97,8 +91,7 @@ public class GUI {
 
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder canvasSurfaceHolder;
-	
-	
+
 	/** Context of the activity creating the thread */
 	private Context mContext;
 
@@ -148,7 +141,7 @@ public class GUI {
 	private boolean moveOffsetRight;
 
 	private boolean moveOffsetLeft;
-	
+
 	public static int CENTER_OFFSET;
 	public final static int OFFSET_ARROW_AREA_RADIUS = 40;
 
@@ -158,16 +151,11 @@ public class GUI {
 	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();;
 
 	private int loading;
-	
-
-
-	
 
 	public FPS getfps() {
 		return fps;
 	}
 
-	
 	public SurfaceHolder getCanvasSurfaceHolder() {
 		return canvasSurfaceHolder;
 	}
@@ -175,11 +163,9 @@ public class GUI {
 	public void setCanvasSurfaceHolder(SurfaceHolder canvasSurfaceHolder) {
 		this.canvasSurfaceHolder = canvasSurfaceHolder;
 	}
-	
-	
 
 	private GUI(SurfaceHolder mSurfaceHolder) {
-		//this.Handleractivity=handler;
+		// this.Handleractivity=handler;
 		this.canvasSurfaceHolder = mSurfaceHolder;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
@@ -195,7 +181,7 @@ public class GUI {
 
 		FINAL_WINDOW_HEIGHT = landscapeHeight;
 		FINAL_WINDOW_WIDTH = landscapeWidth;
-		
+
 		DISPLAY_DENSITY_SCALE = scaleDensity;
 
 		bitmapcpy = Bitmap.createBitmap(WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -205,15 +191,13 @@ public class GUI {
 		finalBmp = Bitmap.createBitmap(FINAL_WINDOW_WIDTH, FINAL_WINDOW_HEIGHT,
 				Bitmap.Config.RGB_565);
 		finalCanvas = new Canvas(finalBmp);
-		
+
 		// Set the scale
 		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
-		SCALE_RATIOX=WINDOW_WIDTH/FINAL_WINDOW_WIDTH;
+		SCALE_RATIOX = WINDOW_WIDTH / FINAL_WINDOW_WIDTH;
 		scaleMatrix = new Matrix();
-		scaleMatrix.setScale(SCALE_RATIOX,SCALE_RATIOY);
+		scaleMatrix.setScale(SCALE_RATIOX, SCALE_RATIOY);
 		CENTER_OFFSET = 0;
-		
-		
 
 		mPaint = new Paint();
 		mPaint.setTextSize(TEXT_SIZE);
@@ -221,10 +205,10 @@ public class GUI {
 				.create(Typeface.SANS_SERIF, Typeface.NORMAL));
 		mPaint.setStrokeWidth(4);
 		mPaint.setColor(0XFFFFFFFF);
-	//	mPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
+		// mPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
 
 	}
-	
+
 	public void initHUD() {
 		hud = new HUD();
 	}
@@ -238,34 +222,36 @@ public class GUI {
 		return canvascpy;
 	}
 
-
 	public void endDraw() {
 
-	//	 reescale the drawn bitmap to fit the sreen size
+		// reescale the drawn bitmap to fit the sreen size
+
 		
-		
-		
-		Log.d("centeroffset",""+CENTER_OFFSET );
-		Log.d("matriz escalado alto",""+SCALE_RATIOY );
-		Log.d("escalado al ancho", ""+SCALE_RATIOX);
-		
-		
-		
-		finalCanvas.drawColor(Color.BLACK);
-		finalCanvas.translate(CENTER_OFFSET, 0);
-		finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
-		finalCanvas.translate(-CENTER_OFFSET, 0);
-	
+		 synchronized(GUI.class) {
+			
+			 finalCanvas.drawColor(Color.BLACK);
+			 
+			 Log.d("centeroffset", "" + CENTER_OFFSET);
+			Log.d("matriz escalado alto", "" + SCALE_RATIOY);
+			Log.d("escalado al ancho", "" + SCALE_RATIOX);
+
+			finalCanvas.translate(CENTER_OFFSET, 0);
+			finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
+			finalCanvas.translate(-CENTER_OFFSET, 0);
+			 
+			 
+			 
+		 }
 		
 		Canvas canvas = null;
-		
+
 		try {
 			canvas = canvasSurfaceHolder.lockCanvas(null);
 			synchronized (canvasSurfaceHolder) {
-				
+
 				canvas.drawBitmap(finalBmp, 0, 0, null);
 
-			//	fps.draw(canvas);
+				// fps.draw(canvas);
 				hud.doDraw(canvas);
 			}
 		} finally {
@@ -276,10 +262,6 @@ public class GUI {
 				canvasSurfaceHolder.unlockCanvasAndPost(canvas);
 			}
 		}
-		
-		
-		
-		
 
 	}
 
@@ -504,7 +486,7 @@ public class GUI {
 		// Get the current text font metrics (width and hegiht)
 
 		double width = mPaint.measureText(string);
-		double height = - mPaint.ascent();
+		double height = -mPaint.ascent();
 		int realX = x;
 		int realY = y;
 
@@ -531,14 +513,11 @@ public class GUI {
 			// and if it do correct it so it's in the window
 			// FIXME nuevo, a ver si funciona
 			/*
+			 * if (realX + width > WINDOW_WIDTH) { realX = (int) (WINDOW_WIDTH -
+			 * width); } else if (realX < 0) { realX = 0; }
+			 */
 			if (realX + width > WINDOW_WIDTH) {
-				realX = (int) (WINDOW_WIDTH - width);
-			} else if (realX < 0) {
-				realX = 0;
-			}
-*/
-			if (realX + width > WINDOW_WIDTH) {
-				//realX = 0;
+				// realX = 0;
 				// To know the width of one character
 				double w = mPaint.measureText(new String("m"));
 				int position = (int) (WINDOW_WIDTH / w) + 18;
@@ -558,20 +537,19 @@ public class GUI {
 
 		if (border) {
 
-			
-			 mPaint.setColor(borderColor);
-			 g.drawText(string, realX - 2, realY - 2,mPaint);
-			g.drawText(string, realX - 2, realY + 2,mPaint);
-			 g.drawText(string, realX + 2, realY - 2,mPaint);
-			g.drawText(string, realX + 2, realY + 2,mPaint);
+			mPaint.setColor(borderColor);
+			g.drawText(string, realX - 2, realY - 2, mPaint);
+			g.drawText(string, realX - 2, realY + 2, mPaint);
+			g.drawText(string, realX + 2, realY - 2, mPaint);
+			g.drawText(string, realX + 2, realY + 2, mPaint);
 
 			// FIXME el color CORRECTO
-			
+
 		}
 		// Draw the text
 		mPaint.setColor(textColor);
 
-		g.drawText(string, realX,realY, mPaint);
+		g.drawText(string, realX, realY, mPaint);
 		// g.drawText(string, realX, realY,mPaint);
 	}
 
@@ -599,10 +577,10 @@ public class GUI {
 
 		int textBlockHeight = (int) (mPaint.getTextSize() * strings.length - mPaint
 				.getFontMetrics().leading);
-		int ascent = (int) - mPaint.ascent();
+		int ascent = (int) -mPaint.ascent();
 		// This is the y lower position of the first line
 		int realY = y - textBlockHeight + ascent;
-		if (realY < ascent )
+		if (realY < ascent)
 			realY = ascent;
 		// realY=y;
 
@@ -729,7 +707,7 @@ public class GUI {
 
 		double width = mPaint.measureText(string);
 		;
-		double height = - mPaint.ascent();
+		double height = -mPaint.ascent();
 
 		int realX = x;
 		int realY = y;
@@ -777,13 +755,13 @@ public class GUI {
 				- mPaint.getFontMetrics().leading - mPaint.descent());
 
 		// This is the y center position of the first line
-		
+
 		int realY = (int) (y - textBlockHeight / 2 + (-mPaint.ascent()) / 2);
 
 		// Draw each line of the string array
 		for (String line : strings) {
 			drawString(g, line, x, realY);
-			realY =(int) (realY + mPaint.getTextSize());
+			realY = (int) (realY + mPaint.getTextSize());
 		}
 	}
 
@@ -795,12 +773,52 @@ public class GUI {
 	 *            String that contains all the text to be used
 	 * @return String[] with the various lines splited from the text
 	 */
+	
+	
+/*
+	      //  FontMetrics fontMetrics = getGraphics( ).getFontMetrics( );
+
+	        do {
+	           
+
+	            if( width > MAX_WIDTH_IN_TEXT ) {
+	                int lineNumber = (int) Math.ceil( (double) width / (double) MAX_WIDTH_IN_TEXT );
+	                int index = currentLine.lastIndexOf( ' ', text.length( ) / lineNumber );
+
+	                if( index == -1 ) {
+	                    index = currentLine.indexOf( ' ' );
+	                }
+
+	                if( index == -1 ) {
+	                    index = currentLine.length( );
+	                    exit = true;
+	                }
+
+	                line = currentLine.substring( 0, index );
+	                currentLine = currentLine.substring( index ).trim( );
+
+	            }
+	            else {
+	                line = currentLine;
+	                exit = true;
+	            }
+
+	            lines.add( line );
+	        } while( !exit );
+	        return lines.toArray( new String[ 1 ] );
+	    }
+
+	*/
+	
+	
+	
 	public String[] splitText(String text) {
 
 		ArrayList<String> lines = new ArrayList<String>();
 		String currentLine = text;
 		boolean exit = false;
 		String line;
+		
 
 		int width;
 
@@ -886,37 +904,48 @@ public class GUI {
 			foreground = null;
 		}
 
-		if( showsOffsetArrows ) {
-			  mPaint.setColor( Color.BLACK );
-			  int ytemp = GUI.WINDOW_HEIGHT / 2;
-			  RectF ovalleft= new RectF(-OFFSET_ARROW_AREA_RADIUS,ytemp+OFFSET_ARROW_AREA_RADIUS,OFFSET_ARROW_AREA_RADIUS,ytemp-OFFSET_ARROW_AREA_RADIUS);
-			  canvascpy.drawOval(ovalleft, mPaint);
-		 RectF ovalright= new RectF(GUI.WINDOW_WIDTH - OFFSET_ARROW_AREA_RADIUS,ytemp+OFFSET_ARROW_AREA_RADIUS,GUI.WINDOW_WIDTH+OFFSET_ARROW_AREA_RADIUS,ytemp-OFFSET_ARROW_AREA_RADIUS);
-			  canvascpy.drawOval(ovalright, mPaint);
-			  mPaint.setColor( Color.WHITE );
-			  
-			  //float startX, float startY, float stopX, float stopY, Paint paint
-			  int widtharrow=(int) (OFFSET_ARROW_AREA_RADIUS*0.6);
-			  int heightarrow=OFFSET_ARROW_AREA_RADIUS/2;
-			  mPaint.setAntiAlias(true);
-			 canvascpy.drawLine(2, ytemp+2, 2+widtharrow, ytemp+2+heightarrow, mPaint);
-			 canvascpy.drawLine(2, ytemp-2, 2+widtharrow, ytemp-2-heightarrow, mPaint);
-			 
-			 canvascpy.drawLine(GUI.WINDOW_WIDTH-2, ytemp+2, GUI.WINDOW_WIDTH-2-widtharrow, ytemp+2+heightarrow, mPaint);
-			 canvascpy.drawLine(GUI.WINDOW_WIDTH-2, ytemp-2, GUI.WINDOW_WIDTH-2-widtharrow,ytemp-2-heightarrow ,mPaint);
-		
-		  }
-		 
-		  
-		  for (int i = 0; i < this.textToDraw.size(); i++) {
-				this.textToDraw.get(i).draw(canvascpy);
-			}
-			this.textToDraw.clear();
+		if (showsOffsetArrows) {
+			mPaint.setColor(Color.BLACK);
+			int ytemp = GUI.WINDOW_HEIGHT / 2;
+			RectF ovalleft = new RectF(-OFFSET_ARROW_AREA_RADIUS, ytemp
+					+ OFFSET_ARROW_AREA_RADIUS, OFFSET_ARROW_AREA_RADIUS, ytemp
+					- OFFSET_ARROW_AREA_RADIUS);
+			canvascpy.drawOval(ovalleft, mPaint);
+			RectF ovalright = new RectF(GUI.WINDOW_WIDTH
+					- OFFSET_ARROW_AREA_RADIUS, ytemp
+					+ OFFSET_ARROW_AREA_RADIUS, GUI.WINDOW_WIDTH
+					+ OFFSET_ARROW_AREA_RADIUS, ytemp
+					- OFFSET_ARROW_AREA_RADIUS);
+			canvascpy.drawOval(ovalright, mPaint);
+			mPaint.setColor(Color.WHITE);
 
-			TimerManager timerManager = TimerManager.getInstance();
-			if (timerManager != null) {
-				timerManager.draw(canvascpy);
-			}
+			// float startX, float startY, float stopX, float stopY, Paint paint
+			int widtharrow = (int) (OFFSET_ARROW_AREA_RADIUS * 0.6);
+			int heightarrow = OFFSET_ARROW_AREA_RADIUS / 2;
+			mPaint.setAntiAlias(true);
+			canvascpy.drawLine(2, ytemp + 2, 2 + widtharrow, ytemp + 2
+					+ heightarrow, mPaint);
+			canvascpy.drawLine(2, ytemp - 2, 2 + widtharrow, ytemp - 2
+					- heightarrow, mPaint);
+
+			canvascpy.drawLine(GUI.WINDOW_WIDTH - 2, ytemp + 2,
+					GUI.WINDOW_WIDTH - 2 - widtharrow, ytemp + 2 + heightarrow,
+					mPaint);
+			canvascpy.drawLine(GUI.WINDOW_WIDTH - 2, ytemp - 2,
+					GUI.WINDOW_WIDTH - 2 - widtharrow, ytemp - 2 - heightarrow,
+					mPaint);
+
+		}
+
+		for (int i = 0; i < this.textToDraw.size(); i++) {
+			this.textToDraw.get(i).draw(canvascpy);
+		}
+		this.textToDraw.clear();
+
+		TimerManager timerManager = TimerManager.getInstance();
+		if (timerManager != null) {
+			timerManager.draw(canvascpy);
+		}
 
 	}
 
@@ -999,40 +1028,39 @@ public class GUI {
 		return minY;
 	}
 
-	
-	
 	/**
 	 * Returns the number of lines of the response text block
 	 * 
 	 * @return Number of response lines
 	 */
-	
-	  public int getResponseTextNumberLines( ) {
-	  
-	  return RESPONSE_TEXT_NUMBER_LINES; }
-	 
-	
+
+	public int getResponseTextNumberLines() {
+
+		return RESPONSE_TEXT_NUMBER_LINES;
+	}
+
 	/**
 	 * Returns the X point of the response block text
 	 * 
 	 * @return X point of the response block text
 	 */
-	
-	  public int getResponseTextX( ) {
-	 
-	 
-	  return RESPONSE_TEXT_X; }
-	 
-	 /**
+
+	public int getResponseTextX() {
+
+		return RESPONSE_TEXT_X;
+	}
+
+	/**
 	 * Returns the Y point of the response block text
 	 * 
 	 * @return Y point of the response block text
 	 */
-	
-	  public int getResponseTextY( ) {
-	  
-	  return RESPONSE_TEXT_X; }
-	 
+
+	public int getResponseTextY() {
+
+		return RESPONSE_TEXT_X;
+	}
+
 	public boolean hasTransition() {
 
 		return transition != null && !transition.hasFinished(0);
@@ -1179,35 +1207,34 @@ public class GUI {
 
 	public int getAscent() {
 		// TODO Auto-generated method stub
-		return (int) - mPaint.ascent();
+		return (int) -mPaint.ascent();
 	}
-	
-public void resize(boolean onescaled)
-{
-	
-	if (!onescaled)
-	{
-		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
-		scaleMatrix = new Matrix();
-		SCALE_RATIOX=SCALE_RATIOY;
-		CENTER_OFFSET = (FINAL_WINDOW_WIDTH - (int)(WINDOW_WIDTH * SCALE_RATIOY))/2;
+
+	public  void resize(boolean onescaled) {
 		
-		scaleMatrix.setScale(SCALE_RATIOX,SCALE_RATIOY);
 		
-	}else{
-		CENTER_OFFSET = 0;
-		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
-		scaleMatrix = new Matrix();
+		synchronized(GUI.class) {
 		
-		//FIXME ponemos dos escalados distintos a la imagen para asi no quitar espacio utilizable
-		SCALE_RATIOX=WINDOW_WIDTH/FINAL_WINDOW_WIDTH;
-		scaleMatrix.setScale(SCALE_RATIOX,SCALE_RATIOY);
-		
+			
+			if (!onescaled) {
+				SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT
+						/ (float) WINDOW_HEIGHT;
+				scaleMatrix = new Matrix();
+				SCALE_RATIOX = SCALE_RATIOY;
+				CENTER_OFFSET = (FINAL_WINDOW_WIDTH - (int) (WINDOW_WIDTH * SCALE_RATIOY)) / 2;
+
+				scaleMatrix.setScale(SCALE_RATIOX, SCALE_RATIOY);
+
+			} else {
+				CENTER_OFFSET = 0;
+				SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT
+						/ (float) WINDOW_HEIGHT;
+				scaleMatrix = new Matrix();
+				SCALE_RATIOX = WINDOW_WIDTH / FINAL_WINDOW_WIDTH;
+				scaleMatrix.setScale(SCALE_RATIOX, SCALE_RATIOY);
+			}
+
+		}	
 	}
-	
-
-	
-}
-
 
 }

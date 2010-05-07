@@ -12,6 +12,8 @@ import java.util.Stack;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -35,6 +37,8 @@ import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.common.gui.JOptionPane;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
+import es.eucm.eadandroid.ecore.GameThread;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalNPC;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
@@ -73,8 +77,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	private static Game instance = null;
 
 	private String advPath;
-	private boolean mRun = false;
-
+	
 	 /**
      * Constant for loading state
      */
@@ -169,7 +172,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     private boolean LoadedGame=false;
     private String LoadingGame;
 
-    /* ADAPTATION 
+    /*
      */ 
     /**
      * Adaptation engine
@@ -438,7 +441,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
     		currentState = new GameStateLoading( );
 
-    		//         GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
+    		//  GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
 
     		// Load the options
     		options = new Options( );
@@ -482,7 +485,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     				this.LoadedGame=false;
     				this.load(this.LoadingGame);
     			} 
-
+    			
+    			finishloadingdialog();
+    			
     			GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse !! 
 
     			while( !nextChapter && !gameOver ) {
@@ -555,7 +560,18 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
     }
 	
-	 private void writeMemoryUsageLog(FileWriter file,long elapsedTime) {
+	 private void finishloadingdialog() {
+		 Handler handler=GameThread.getInstance().getHandler();
+	        Message msg = handler.obtainMessage();
+	               Bundle b = new Bundle();
+				//b.putString("html", text);
+				msg.what = ActivityHandlerMessages.FINISH_LOADING;
+				msg.setData(b);
+				msg.sendToTarget();
+		
+	}
+
+	private void writeMemoryUsageLog(FileWriter file,long elapsedTime) {
 
 		 final long refresh = 1000;
 		 
@@ -588,6 +604,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 	/**
      * Init the game parameters
+	 * @param loadedGame 
      */
     private void loadCurrentChapter() {
 
@@ -695,7 +712,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         }
 
 
-//        GUI.getInstance( ).loading(90);
+        
 
         currentState = new GameStateNextScene( );
 
@@ -1037,6 +1054,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     }
 	
     
+
+ 
  
     /**
      * Push in the state stack the GameState gs

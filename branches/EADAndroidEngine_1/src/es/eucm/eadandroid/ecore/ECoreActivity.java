@@ -5,19 +5,25 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
 
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,13 +35,15 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import es.eucm.eadandroid.R;
+
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.Options;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
+
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 
 public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
@@ -43,8 +51,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	private GameSurfaceView gameSurfaceView = null;
 
-	private WindowManager window;
-
+	
 	private View assesmentLayout;
 	private View mbutton;
 	private WebView webview;
@@ -52,6 +59,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private String adventureName;
 	private boolean fromvideo = false;
 	private boolean continueAudio = false;
+	
+	ProgressDialog dialog;
 
 	boolean onescaled=false; 
 	
@@ -65,6 +74,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public static final int VIDEO = 1;
 		public static final int GAME_OVER = 2;
 		public static final int LOAD_GAMES = 3;
+		public static final int FINISH_LOADING = 4;
 
 	}
 
@@ -100,7 +110,14 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			case ActivityHandlerMessages.LOAD_GAMES:
 				StartLoadApplication();
 				finish();
-
+				break;
+			case ActivityHandlerMessages.FINISH_LOADING:
+				if(dialog!=null)
+				{
+				dialog.setIndeterminate(false);
+				dialog.dismiss();
+				dialog=null;
+				}
 				break;
 			}
 
@@ -114,6 +131,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 
+		overridePendingTransition(R.anim.fade, R.anim.hold);
 
 	}
 
@@ -164,6 +182,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			// register our interest in hearing about changes to our surface
 			// TODO tengo que descomentar esta linea
 			canvasHolder.addCallback(this);
+			
+			
+			dialog = ProgressDialog.show(ECoreActivity.this, "", 
+                    "Loading. Please wait...", true);
 
 			if (loadingfromsavedgame) {
 				String loadfile = this.getIntent().getExtras().getString(
@@ -376,11 +398,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		Options options = Game.getInstance().getOptions();
+		AlertDialog.Builder builder;
+		AlertDialog alert;
 
 		switch (item.getItemId()) {
 		case 0:
 
-
+			// TODO tendremos que decir que solo salva si estas en stateplaying
 			GameThread.getInstance().pause();
 			if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
 				(new File(Paths.eaddirectory.SAVED_GAMES_PATH)).mkdir();
@@ -397,7 +421,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			String time = this.time();
 			
 			Game.getInstance().save(
-					Paths.eaddirectory.SAVED_GAMES_PATH + adventureName + "/"
+					Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
 							+ time + ".txt");
 			
 		
@@ -486,24 +510,20 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			
 			break;	
 			
-		
 
 		}
+		
 
-		Game.getInstance().saveOptions();
-		if (options.isMusicActive())
-			Game.getInstance().getFunctionalScene().playBackgroundMusic();
-		else
-			Game.getInstance().getFunctionalScene().stopBackgroundMusic();
+		
+		
 
-		if (!options.isEffectsActive())
-			MultimediaManager.getInstance().stopAllSounds();
+		
 
 		return true;
 	}
 
 	public String time() {
-
+		String finalresult;
 		Date now = new Date();
 		String day = "none";
 		switch (now.getDay()) {
