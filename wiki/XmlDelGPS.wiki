@@ -1,0 +1,17 @@
+#summary One-sentence summary of this page.
+=Para que sepais como va a quedar el xml del gps=
+
+
+
+
+	<gpss>
+		<gps latitud="40.4873" longitud="-3.8773" radio="50">
+				<init-condition>
+					<active flag="dialogocurafalso"/>
+				</init-condition>
+				<effect>
+					<trigger-scene idTarget="puertacatedral" x="400" y="500"/>
+					<condition/>
+				</effect>
+		</gps>
+	</gpss>
