@@ -39,6 +39,7 @@ import java.util.List;
 import es.eucm.eadandroid.common.data.Positioned;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
 import es.eucm.eadandroid.common.data.chapter.Exit;
+import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.Trajectory;
 import es.eucm.eadandroid.common.data.chapter.elements.ActiveArea;
 import es.eucm.eadandroid.common.data.chapter.elements.Barrier;
@@ -98,6 +99,8 @@ public class Scene extends GeneralScene implements Positioned {
      * is true.
      */
     private boolean allowPlayerLayer;
+    
+    private List<GpsRule> Gpsrules;
 
     /**
      * List of exits
@@ -151,12 +154,33 @@ public class Scene extends GeneralScene implements Positioned {
         itemReferences = new ArrayList<ElementReference>( );
         atrezzoReferences = new ArrayList<ElementReference>( );
         characterReferences = new ArrayList<ElementReference>( );
+        Gpsrules = new ArrayList<GpsRule>( );
         activeAreas = new ArrayList<ActiveArea>( );
         barriers = new ArrayList<Barrier>( );
         playerLayer = PLAYER_WITHOUT_LAYER;
         allowPlayerLayer = false;
         playerScale = 1.0f;
     }
+    
+    
+    /**
+     * Returns the list of Gpsrules in the game
+     * 
+     * @return the list of Gpsrules in the game
+     */
+    public List<GpsRule> getGpsRules( ) {
+
+        return this.Gpsrules;
+    }
+    
+    /**
+     *Adds a gps rule to the list of gpsrules in the game.  
+     * @param gps
+     */
+     public void addGpsRule(GpsRule gps)
+     {
+     	this.Gpsrules.add(gps);
+     }
 
     /**
      * @return the trajectory

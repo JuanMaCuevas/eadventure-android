@@ -20,6 +20,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,12 +38,14 @@ import android.webkit.WebView;
 import es.eucm.eadandroid.R;
 
 import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
 
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
+import es.eucm.eadandroid.utils.ActivityPipe;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 
 public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
@@ -75,6 +78,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public static final int GAME_OVER = 2;
 		public static final int LOAD_GAMES = 3;
 		public static final int FINISH_LOADING = 4;
+		public static final int REGISTRATE_GPS = 5;
 
 	}
 
@@ -119,6 +123,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				dialog=null;
 				}
 				break;
+			case ActivityHandlerMessages.REGISTRATE_GPS:
+				activateGps();
+				
+				break;
 			}
 
 		}
@@ -133,6 +141,14 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 
+	}
+
+	protected void activateGps() {
+		LocationManager locationManager=(LocationManager) getSystemService(this.LOCATION_SERVICE);
+		
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+				0, GpsManager.getInstance().getListener());
+		
 	}
 
 	private void activityvideo() {
@@ -223,6 +239,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 			}
 		});
+		
+		
 	}
 
 	@Override

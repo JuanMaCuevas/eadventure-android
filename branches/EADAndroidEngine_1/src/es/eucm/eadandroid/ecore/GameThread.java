@@ -23,6 +23,7 @@ public class GameThread extends Thread {
 	
 	
 	
+	
 	private static GameThread instance = null;
 	
 	public static final String TAG ="GameThread";
@@ -38,11 +39,14 @@ public class GameThread extends Thread {
 		int landscapeWidth = displayMetrics.widthPixels;
 		
 		float scaleDensity = displayMetrics.density;
+	
 				
 		GUI.create(holder);
 		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 						
 	}
+
+
 
 	public static void create(SurfaceHolder holder,Context context, Handler handler,String loadingGame) 
 		{

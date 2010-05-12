@@ -42,6 +42,7 @@ import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
 import es.eucm.eadandroid.common.data.chapter.Exit;
+import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.elements.ActiveArea;
 import es.eucm.eadandroid.common.data.chapter.elements.Atrezzo;
 import es.eucm.eadandroid.common.data.chapter.elements.Barrier;
@@ -52,6 +53,7 @@ import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.ecore.control.ActionManager;
 import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.ItemSummary;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalExit;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalGoTo;
@@ -234,6 +236,19 @@ public class FunctionalScene implements Renderable {
                         FunctionalNPC fnpc = new FunctionalNPC( currentNPC, npcReference );
                         npcs.add( fnpc );
                     }
+        
+        
+       if (GpsManager.getInstance()!=null)
+       {
+    	   GpsManager.getInstance().flushGpsRules();
+       }
+        
+        // Add the functional active areas
+        for(int i=0;i<scene.getGpsRules().size();i++ )
+        	GpsManager.getInstance().addgpsrules(scene.getGpsRules().get(i));
+                   
+        
+        
         // Add the functional active areas
         for( ActiveArea activeArea : scene.getActiveAreas( ) )
             if( new FunctionalConditions( activeArea.getConditions( ) ).allConditionsOk( ) )

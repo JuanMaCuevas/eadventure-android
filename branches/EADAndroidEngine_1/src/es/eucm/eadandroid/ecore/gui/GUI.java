@@ -230,11 +230,11 @@ public class GUI {
 		 synchronized(GUI.class) {
 			
 			 finalCanvas.drawColor(Color.BLACK);
-			 
+			 /*
 			 Log.d("centeroffset", "" + CENTER_OFFSET);
 			Log.d("matriz escalado alto", "" + SCALE_RATIOY);
 			Log.d("escalado al ancho", "" + SCALE_RATIOX);
-
+*/
 			finalCanvas.translate(CENTER_OFFSET, 0);
 			finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
 			finalCanvas.translate(-CENTER_OFFSET, 0);

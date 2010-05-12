@@ -110,6 +110,14 @@ public class Chapter extends ChapterSummary implements HasTargetId {
     /**
      * List of the flags present in the game
      */
+    
+  
+
+    /**
+     * List of the flags present in the game
+     */
+    
+    
     private List<String> flags;
 
     /**
@@ -813,4 +821,15 @@ public class Chapter extends ChapterSummary implements HasTargetId {
 
         return c;
     }
+
+	public boolean doesGpsExist() {
+		boolean exists=false;
+		
+		for(int i=0;i<this.scenes.size();i++)
+		{
+			if (this.scenes.get(i).getGpsRules().size()>0)
+				exists=true;
+		}
+		return exists;
+	}
 }

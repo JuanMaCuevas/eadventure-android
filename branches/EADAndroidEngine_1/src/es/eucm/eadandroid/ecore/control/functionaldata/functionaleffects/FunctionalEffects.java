@@ -119,8 +119,10 @@ public class FunctionalEffects {
      */
     public static void storeAllEffects( Effects effects ) {
 
-        Game.getInstance( ).storeEffectsInQueue( new FunctionalEffects( effects ).getEffects( ), false );
-    }
+    	synchronized(FunctionalEffects.class) {
+    	Game.getInstance( ).storeEffectsInQueue( new FunctionalEffects( effects ).getEffects( ), false );
+    	}
+    	}
 
     public static void storeAllEffects( Effects effects, boolean fromConversation ) {
 
