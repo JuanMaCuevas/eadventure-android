@@ -17,7 +17,7 @@ import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 import es.eucm.eadandroid.utils.ActivityPipe;
-import es.eucm.eadandroid.utils.CreateFile;
+//import es.eucm.eadandroid.utils.CreateFile;
 
 public class GpsManager {
 
