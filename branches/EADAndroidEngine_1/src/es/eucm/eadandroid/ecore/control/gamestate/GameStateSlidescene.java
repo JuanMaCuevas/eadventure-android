@@ -135,7 +135,7 @@ public class GameStateSlidescene extends GameState {
         }
 
         // Create the set of slides and start it
-        slides = MultimediaManager.getInstance( ).loadSlides( resources.getAssetPath( Slidescene.RESOURCE_TYPE_SLIDES ), MultimediaManager.IMAGE_SCENE );
+        slides = MultimediaManager.getInstance( ).loadSlidesReference( resources.getAssetPath( Slidescene.RESOURCE_TYPE_SLIDES ), MultimediaManager.IMAGE_SCENE );
         slides.start( );
     }
 

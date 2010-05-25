@@ -108,20 +108,19 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
-		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);
-		
-		
+		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
 		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
+		
 		if (image == null) {
 			Log.e("", "0 "+bitmapPath);
 			Log.e("","1 Primero nula");
 			 image = getScaledImage( ResourceHandler.getInstance(
 			 ).getResourceAsImage( bitmapPath ), 1, 1 );
-		if (image != null) {
+			 if (image != null) {
 				Log.e("","2 Luego no nula");
 				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
-			}
-		else Log.e("","2 Finalmente nula");
+			 }
+			 else Log.e("","2 Finalmente nula");
 		}
 		
 
@@ -226,7 +225,7 @@ public class MultimediaManager {
 	 * @return a scaled image that fits in the game screen.
 	 */
 
-	private Bitmap getFullscreenImage(Bitmap image) {
+	public Bitmap getFullscreenImage(Bitmap image) {
 
 		return Bitmap.createScaledBitmap(image, GUI.WINDOW_WIDTH,
 				GUI.WINDOW_HEIGHT, false);
@@ -545,18 +544,28 @@ public class MultimediaManager {
 			boolean end = false;
 
 			while (!end) {
-				currentSlide = loadImageFromZip(slidesPath + "_"
+				currentSlide = loadImage(slidesPath + "_"
 						+ leadingZeros(i) + ".jpg", category);
 
 				if (currentSlide != null) {
 					slides.add(getFullscreenImage(currentSlide));
+					currentSlide=null;
 					i++;
 				} else
 					end = true;
 			}
 
 			imageSet = new ImageSet();
-			imageSet.setImages(slides.toArray(new Bitmap[] {}));
+			
+				
+			Bitmap[] arrayImages = new Bitmap[slides.size()];
+			for (int j=0;j<slides.size();j++){
+				arrayImages[j]=slides.get(j);
+			}
+			slides=null;
+			
+			imageSet.setImages(arrayImages);
+			arrayImages=null;
 		}
 
 		return imageSet;
@@ -588,28 +597,29 @@ public class MultimediaManager {
 			return animation;
 		} else {
 			int i = 1;
-			List<Bitmap> slides = new ArrayList<Bitmap>();
-			Bitmap currentSlide = null;
+			List<String> slides = new ArrayList<String>();
+			String currentSlide = null;
 			boolean end = false;
 
 			while (!end) {
-				currentSlide = loadImageFromZip(slidesPath + "_"
-						+ leadingZeros(i) + ".jpg", category);
+				currentSlide = slidesPath + "_"	+ leadingZeros(i) + ".jpg";
 
-				if (currentSlide != null) {
-					slides.add(getFullscreenImage(currentSlide));
+				if (loadImage(currentSlide, category)!=null) {
+					slides.add(currentSlide);
 					i++;
 				} else
 					end = true;
 			}
 
 			imageSet = new ImageSet();
-			imageSet.setImages(slides.toArray(new Bitmap[] {}));
+			imageSet.setImagesPath(slides.toArray(new String[] {}));
 		}
 
 		return imageSet;
 	}
 	
+	
+
 	
 
 	/**

@@ -46,11 +46,21 @@ public class ImageSet implements Animation {
      * Set of images.
      */
     protected Bitmap[] imageSet;
+    
+    /**
+     * Set of images.
+     */
+    protected String[] imagePathSet;
 
     /**
      * Index of the current frame.
      */
     protected int currentFrameIndex;
+    
+    /**
+     * Bitmap of the current frame.
+     */
+    protected Bitmap currentFrame;
 
     /**
      * Constructor.
@@ -59,6 +69,7 @@ public class ImageSet implements Animation {
 
         imageSet = null;
         currentFrameIndex = 0;
+        currentFrame = null;
     }
 
     /**
@@ -69,6 +80,17 @@ public class ImageSet implements Animation {
 
         this.imageSet = imageSet;
         if( imageSet.length == 0 )
+            this.imageSet = getNoAnimationAvailableImageSet( );
+    }
+    
+    /**
+     * Adds an image to the animation with the specified duration (time to
+     * display the image).
+     */
+    public void setImagesPath( String[] imagePathSet ) {
+
+        this.imagePathSet = imagePathSet;
+        if( imagePathSet.length == 0 )
             this.imageSet = getNoAnimationAvailableImageSet( );
     }
 
@@ -85,11 +107,18 @@ public class ImageSet implements Animation {
         boolean noMoreFrames = false;
 
         currentFrameIndex++;
-        if( currentFrameIndex >= imageSet.length ) {
-            currentFrameIndex %= imageSet.length;
-            noMoreFrames = true;
-        }
-
+        
+        if( imageSet == null ){
+        	if( currentFrameIndex >= imagePathSet.length ) {
+         	   currentFrameIndex %= imagePathSet.length;
+        	    noMoreFrames = true;
+     	   }else currentFrame = null;
+		}else if( currentFrameIndex >= imageSet.length ) {
+         	   currentFrameIndex %= imageSet.length;
+        	    noMoreFrames = true;
+     	}
+			
+		
         return noMoreFrames;
     }
 
@@ -97,8 +126,14 @@ public class ImageSet implements Animation {
      * Returns the current image from the set.
      */
     public Bitmap getImage( ) {
-
-        return imageSet[currentFrameIndex];
+    	if( imageSet == null ){
+    		if (currentFrame == null){
+    			Bitmap temp =  MultimediaManager.getInstance().loadImage(imagePathSet[currentFrameIndex], MultimediaManager.IMAGE_SCENE);
+    			currentFrame=MultimediaManager.getInstance().getFullscreenImage(temp);
+    		}
+    	}
+    	else currentFrame = imageSet[currentFrameIndex];
+    	return currentFrame;
     }
 
     public boolean isPlayingForFirstTime( ) {

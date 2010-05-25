@@ -38,6 +38,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
@@ -188,7 +191,7 @@ public class FunctionalScene implements Renderable {
         // Load the background image
         background = null;
         if( resources.existAsset( Scene.RESOURCE_TYPE_BACKGROUND ) )
-            background = MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
+            background = MultimediaManager.getInstance( ).loadImage( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
 
         if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth( ) > GUI.WINDOW_WIDTH ) {
             showsOffsetArrows = true;
@@ -198,9 +201,12 @@ public class FunctionalScene implements Renderable {
         foreground = null;
         if( background != null && resources.existAsset( Scene.RESOURCE_TYPE_FOREGROUND ) ) {
             Bitmap bufferedBackground =  background;
-            Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
+            Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImage( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
             Bitmap bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth(  ), foregroundHardMap.getHeight(  ), true );
-
+            
+            
+         
+            
             for( int i = 0; i < foregroundHardMap.getWidth(  ); i++ ) {
                 for( int j = 0; j < foregroundHardMap.getHeight(  ); j++ ) {
                     if( foregroundHardMap.getPixel(i, j)==0xFFFFFFFF ) //GRAPHICS (foregroundHardMap.getRGB( i, j ) == 0xFFFFFFFF )
@@ -477,7 +483,7 @@ public class FunctionalScene implements Renderable {
             showsOffsetArrows = false;
 
             if( resources.existAsset( Scene.RESOURCE_TYPE_BACKGROUND ) )
-                background = MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
+                background = MultimediaManager.getInstance( ).loadImage( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
 
             if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth(  ) > GUI.WINDOW_WIDTH ) {
                 showsOffsetArrows = true;
@@ -492,7 +498,7 @@ public class FunctionalScene implements Renderable {
             foreground = null;
             if( background != null && resources.existAsset( Scene.RESOURCE_TYPE_FOREGROUND ) ) {
                 Bitmap bufferedBackground =  background;
-                Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImageFromZip( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
+                Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImage( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
                 Bitmap bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth(  ), foregroundHardMap.getHeight(  ), true );
 
                 for( int i = 0; i < foregroundHardMap.getWidth(  ); i++ ) {
