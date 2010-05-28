@@ -26,10 +26,9 @@
 <activity android:name=".homeapp.HomeTabActivity" android:screenOrientation="portrait"></activity>
 <activity android:name=".ecore.EcoreVideo" android:screenOrientation="landscape"></activity>
 <activity android:name=".homeapp.loadsavedgames.LoadSavedGames"  android:screenOrientation="portrait"></activity>
-</application>
-	
-	<uses-sdk android:minSdkVersion="5" />
-
+<activity android:screenOrientation="portrait" android:name=".homeapp.preferences.LaunchAndExplorerActivity"></activity>
+</application>	
+<uses-sdk android:minSdkVersion="5"/>
 
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 <uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES"></uses-permission>

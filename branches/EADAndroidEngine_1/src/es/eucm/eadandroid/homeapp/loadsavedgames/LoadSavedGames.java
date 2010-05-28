@@ -287,7 +287,7 @@ public class LoadSavedGames extends ExpandableListActivity {
 			if (v == null) {
 				LayoutInflater vi = (LayoutInflater) con
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.local_games_actvitiy_listitem, null);
+				v = vi.inflate(R.layout.load_games_activity_listitem, null);
 			}
 
 			TextView tt = (TextView) v.findViewById(R.id.toptext);

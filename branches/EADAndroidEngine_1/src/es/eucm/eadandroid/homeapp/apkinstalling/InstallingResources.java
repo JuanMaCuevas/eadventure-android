@@ -60,8 +60,8 @@ public class InstallingResources extends Thread {
 				e.printStackTrace();
 			}
 
-			RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,
-					"EadAndroid.zip");
+			RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,Paths.device.EXTERNAL_STORAGE,
+					"EadAndroid.zip",true);
 		}
 	}
 

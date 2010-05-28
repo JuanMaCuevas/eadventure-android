@@ -107,7 +107,7 @@ public class Inventory {
 	}
 
 	public void doDraw(Canvas c) {
-
+		c.save();
 		c.clipRect(0, 0, IPANEL_WIDTH, iPanelBottom);
 		c.save();
 		c.translate(0, iPanelBottom - IPANEL_HEIGHT);
@@ -119,6 +119,7 @@ public class Inventory {
 		// FIXME estooo tiene que quitarse de aqui y ponerl en otro sitio ;D!!!
 		gridPanel.setDataSet(Game.getInstance().getInventory());
 		gridPanel.draw(c);
+		c.restore();
 
 	}
 

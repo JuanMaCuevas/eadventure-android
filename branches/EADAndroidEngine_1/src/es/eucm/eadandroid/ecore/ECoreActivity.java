@@ -1,30 +1,30 @@
 package es.eucm.eadandroid.ecore;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
-
+import android.text.Editable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,18 +35,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import android.widget.EditText;
+import android.widget.Toast;
 import es.eucm.eadandroid.R;
-
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
-
+import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
-import es.eucm.eadandroid.utils.ActivityPipe;
-import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 
 public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
@@ -54,7 +53,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	private GameSurfaceView gameSurfaceView = null;
 
-	
 	private View assesmentLayout;
 	private View mbutton;
 	private WebView webview;
@@ -62,11 +60,11 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private String adventureName;
 	private boolean fromvideo = false;
 	private boolean continueAudio = false;
-	
+
 	ProgressDialog dialog;
 
-	boolean onescaled=false; 
-	
+	boolean onescaled = false;
+
 	/**
 	 * Local games activity handler messages . Handled by
 	 * {@link LGActivityHandler} Defines the messages handled by this Activity
@@ -116,11 +114,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				finish();
 				break;
 			case ActivityHandlerMessages.FINISH_LOADING:
-				if(dialog!=null)
-				{
-				dialog.setIndeterminate(false);
-				dialog.dismiss();
-				dialog=null;
+				if (dialog != null) {
+					dialog.setIndeterminate(false);
+					dialog.dismiss();
+					dialog = null;
 				}
 				break;
 			case ActivityHandlerMessages.REGISTRATE_GPS:
@@ -138,9 +135,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
-
-		overridePendingTransition(R.anim.fade, R.anim.hold);
-
 	}
 
 	protected void activateGps() {
@@ -169,6 +163,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//DEBUG
+		Log.e("Inicio core1",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
 		// gets information from the intent to solve next questions
 		// are you starting the game?
@@ -198,10 +195,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			// register our interest in hearing about changes to our surface
 			// TODO tengo que descomentar esta linea
 			canvasHolder.addCallback(this);
-			
-			
-			dialog = ProgressDialog.show(ECoreActivity.this, "", 
-                    "Loading. Please wait...", true);
+
+			dialog = ProgressDialog.show(ECoreActivity.this, "",
+					"Loading. Please wait...", true);
 
 			if (loadingfromsavedgame) {
 				String loadfile = this.getIntent().getExtras().getString(
@@ -240,6 +236,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			}
 		});
 		
+		//DEBUG
+		Log.e("Inicio core2",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 		
 	}
 
@@ -412,58 +410,150 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		return true;
 	}
+	
+	private boolean saveGame(String fileName) {
+		
+		Boolean saved = true;
+		
+		try {
+			
+		if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
+			(new File(Paths.eaddirectory.SAVED_GAMES_PATH)).mkdir();
 
+		String adventurename = GameThread.getInstance().getAdventurePath()
+				.split("/")[GameThread.getInstance().getAdventurePath()
+				.split("/").length - 1];
+		File folder = new File(Paths.eaddirectory.SAVED_GAMES_PATH
+				+ adventurename + "/");
+
+		if (!folder.exists())
+			folder.mkdir();
+		
+		Game.getInstance().save(
+				Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
+						+ fileName + ".txt");
+
+		FileOutputStream sshot;
+		
+			sshot = new FileOutputStream(
+					Paths.eaddirectory.SAVED_GAMES_PATH + adventureName
+							+ "/" + fileName + ".txt.png");
+
+			int width = 200;
+			int height = (GUI.FINAL_WINDOW_HEIGHT * 200)
+					/ GUI.FINAL_WINDOW_WIDTH;
+
+			Bitmap temp = Bitmap.createScaledBitmap(GUI.getInstance()
+					.getBmpCpy(), width, height, false);
+
+			temp.compress(CompressFormat.PNG, 50, sshot);
+
+			temp = null;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			saved = false;
+		}
+		
+
+//		String time = this.currentDate();
+//
+//		Game.getInstance().save(
+//				Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
+//						+ time + ".txt");
+//
+//		FileOutputStream sshot;
+//		
+//			sshot = new FileOutputStream(
+//					Paths.eaddirectory.SAVED_GAMES_PATH + adventureName
+//							+ "/" + time + ".txt.png");
+//
+//			int width = 200;
+//			int height = (GUI.FINAL_WINDOW_HEIGHT * 200)
+//					/ GUI.FINAL_WINDOW_WIDTH;
+//
+//			Bitmap temp = Bitmap.createScaledBitmap(GUI.getInstance()
+//					.getBmpCpy(), width, height, false);
+//
+//			temp.compress(CompressFormat.PNG, 50, sshot);
+//
+//			temp = null;
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			saved = false;
+//		}
+//		
+		return saved;
+		
+	}
+	
+	private void showToast(String msg) {
+
+		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+	}
+
+	private void showSaveDialog(final boolean quit, final boolean load) {
+
+		final EditText input = new EditText(this);
+
+		new AlertDialog.Builder(this).setTitle("Save game").setMessage(
+				"Set slot name").setView(input).setPositiveButton(
+				"Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Editable value = input.getText();
+						if (saveGame(value.toString())) {
+							showToast("Game saved");
+							if (quit)
+								finishthread(load);
+						} else
+							showToast("Error saving game");
+					}
+				}).setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				}).show();
+
+	}
+
+	private void showQuitDialog(final boolean load){
+		
+		new AlertDialog.Builder(this).setTitle("Quit game").setMessage(
+		"Do you want to save the game?").setPositiveButton("OK",
+		new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,
+					int whichButton) {
+				showSaveDialog(true,load);
+			}
+		}).setNeutralButton("No",
+		new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,
+					int whichButton) {
+				finishthread(load);
+			}
+		}).setNegativeButton("Cancel",
+		new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,
+					int whichButton) {
+			}
+		}).show();			
+		
+	}
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		Options options = Game.getInstance().getOptions();
-		AlertDialog.Builder builder;
-		AlertDialog alert;
 
 		switch (item.getItemId()) {
 		case 0:
-
-			// TODO tendremos que decir que solo salva si estas en stateplaying
-			GameThread.getInstance().pause();
-			if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists())
-				(new File(Paths.eaddirectory.SAVED_GAMES_PATH)).mkdir();
-
-			String adventurename = GameThread.getInstance().getAdventurePath()
-					.split("/")[GameThread.getInstance().getAdventurePath()
-					.split("/").length - 1];
-			File folder = new File(Paths.eaddirectory.SAVED_GAMES_PATH
-					+ adventurename + "/");
-
-			if (!folder.exists())
-				folder.mkdir();
-
-			String time = this.time();
-			
-			Game.getInstance().save(
-					Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
-							+ time + ".txt");
-			
-		
-			FileOutputStream sshot;
-			try {
-				sshot = new FileOutputStream(Paths.eaddirectory.SAVED_GAMES_PATH + adventureName + "/"
-						+ time + ".txt.png");
-				
-				int width = 200;
-				int height = (GUI.FINAL_WINDOW_HEIGHT * 200)/GUI.FINAL_WINDOW_WIDTH;
-				
-				Bitmap temp = Bitmap.createScaledBitmap(GUI.getInstance().getBmpCpy(),width,height,false);
-				
-				temp.compress(CompressFormat.PNG, 50, sshot);
-				
-				temp=null;
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			
+						
+			GameThread.getInstance().pause();		
+			showSaveDialog(false,false);
 			GameThread.getInstance().unpause(this.gameSurfaceView.getHolder());
 
-			return true;
+			break;
 
 		case 1:
 			// TODO change music
@@ -471,108 +561,47 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				options.setMusicActive(false);
 			else
 				options.setMusicActive(true);
-			
+
 			Game.getInstance().saveOptions();
-			
+
 			if (options.isMusicActive())
 				Game.getInstance().getFunctionalScene().playBackgroundMusic();
 			else
 				Game.getInstance().getFunctionalScene().stopBackgroundMusic();
-			
+
 			if (!options.isEffectsActive())
 				MultimediaManager.getInstance().stopAllSounds();
 
 			break;
 		case 3:
-			// TODO exit game
-			/*
-			 * getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
-			 * , WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); builder =
-			 * new AlertDialog.Builder(this);
-			 * builder.setMessage("Are you sure you want to exit?")
-			 * .setCancelable(false) .setPositiveButton("Yes", new
-			 * DialogInterface.OnClickListener() { public void
-			 * onClick(DialogInterface dialog, int id) {
-			 * 
-			 * } }) .setNegativeButton("No", new
-			 * DialogInterface.OnClickListener() { public void
-			 * onClick(DialogInterface dialog, int id) { dialog.cancel(); } });
-			 * alert = builder.create();
-			 */
-			finishthread(false);
-
-			return true;
+			showQuitDialog(false);
+			break;
 		case 4:
-			/*
-			 * getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
-			 * , WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //TODO go to
-			 * load games builder = new AlertDialog.Builder(this);
-			 * builder.setMessage
-			 * ("Are you sure you want to exit and go to load games?")
-			 * .setCancelable(false) .setPositiveButton("Yes", new
-			 * DialogInterface.OnClickListener() { public void
-			 * onClick(DialogInterface dialog, int id) { finishthread(true); }
-			 * }) .setNegativeButton("No", new DialogInterface.OnClickListener()
-			 * { public void onClick(DialogInterface dialog, int id) {
-			 * dialog.cancel(); } }); alert = builder.create();
-			 */
-			finishthread(true);
-			return true;
-			
+
+			showQuitDialog(true);
+			break;
+
 		case 5:
-			
-		GameThread.getInstance().resize(onescaled);
+
+			GameThread.getInstance().resize(onescaled);
 			if (onescaled)
-			onescaled=false;
-			else onescaled=true;
-			
-			break;	
-			
+				onescaled = false;
+			else
+				onescaled = true;
+
+			break;
 
 		}
-		
-
-		
-		
-
-		
 
 		return true;
 	}
 
-	public String time() {
-		String finalresult;
-		Date now = new Date();
-		String day = "none";
-		switch (now.getDay()) {
-		case 0:
-			day = "sun";
-			break;
-		case 1:
-			day = "mon";
-			break;
-		case 2:
-			day = "tues";
-			break;
-		case 3:
-			day = "wed";
-			break;
-		case 4:
-			day = "thurs";
-			break;
-		case 5:
-			day = "fri";
-			break;
-		case 6:
-			day = "sat";
-			break;
+	private String currentDate() {
 
-		}
-		int month = now.getMonth() + 1;
-		String time = new String("MONTH_" + month + "_DAY_" + day + "_HOUR_"
-				+ now.getHours() + "_MIN_" + now.getMinutes() + "_SEC_"
-				+ now.getSeconds());
-		return time;
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ssdd-MM-yyyy");
+
+		return formatter.format(new Date());
+
 	}
 
 	public void finishthread(boolean loadactivitygames) {

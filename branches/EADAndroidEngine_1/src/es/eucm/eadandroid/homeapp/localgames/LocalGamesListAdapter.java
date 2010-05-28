@@ -29,7 +29,7 @@ public class LocalGamesListAdapter  extends ArrayAdapter<GameInfo> {
                 
                 if (v == null) {
                     LayoutInflater vi = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    v = vi.inflate(R.layout.local_games_actvitiy_listitem, null);
+                    v = vi.inflate(R.layout.local_games_activity_listitem, null);
                 }
                 GameInfo game = items.get(position);
                 if (game != null) {
@@ -39,7 +39,7 @@ public class LocalGamesListAdapter  extends ArrayAdapter<GameInfo> {
                         if (tt != null) {
                               tt.setText(game.getGameTitle());                            }
                         if(bt != null){
-                              bt.setText("Installed");
+                              bt.setText(game.getGameDescription());
                         }
                         if(iv != null){
                         	if (game.getImageIcon()!=null)

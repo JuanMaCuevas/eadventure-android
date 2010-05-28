@@ -16,6 +16,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -75,9 +76,10 @@ public class ActivityVideoIntro extends Activity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//DEBUG
+		Log.e("Inicio aplicaci—n",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+		
 		startactivity();
-		
-		
 
 		if (!RepoResourceHandler.doesfileexists(Paths.eaddirectory.ROOT_PATH)) {
 			InstallingResources is = new InstallingResources(this,

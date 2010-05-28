@@ -134,18 +134,18 @@ public class RepoResourceHandler {
 
 		downloadFile(url_from, path_to, fileName, pn);
 		pn.notifyIndeterminate("Insalling " + fileName);
-		unzip(path_to, fileName);
+		unzip(path_to,path_to, fileName,true);
 
 	}
 
-	public static void unzip(String filePath, String name) {
+	public static void unzip(String path_from,String path_to, String name,boolean deleteZip) {
 		// TODO la ruta a las carpetas me las tengo que crear cuando instalo
 		// pero por ahora lo dejo aqui
 
 		StringTokenizer separator = new StringTokenizer(name, ".", true);
 		String game_name = separator.nextToken();
 
-		separator = new StringTokenizer(filePath + game_name, "/", true);
+		separator = new StringTokenizer(path_to + game_name, "/", true);
 
 		String partial_path = null;
 		String total_path = separator.nextToken();
@@ -170,7 +170,7 @@ public class RepoResourceHandler {
 		ZipFile zipFile = null;
 
 		try {
-			String location_ead = filePath + name;
+			String location_ead = path_from + name;
 			zipFile = new ZipFile(location_ead);
 
 			entries = zipFile.entries();
@@ -192,12 +192,12 @@ public class RepoResourceHandler {
 
 						if (separator.hasMoreElements()) {
 							total_path = total_path + separator.nextToken();
-							(new File(filePath + game_name + "/" + total_path))
+							(new File(path_to + game_name + "/" + total_path))
 									.mkdir();
 						} else {
 
 							file = new BufferedOutputStream(
-									new FileOutputStream(filePath + game_name
+									new FileOutputStream(path_to + game_name
 											+ "/" + total_path));
 
 							System.err.println("Extracting file: "
@@ -217,7 +217,8 @@ public class RepoResourceHandler {
 			return;
 		}
 
-		(new File(filePath + name)).delete();
+		if (deleteZip)
+			(new File(path_from + name)).delete();
 
 	}
 

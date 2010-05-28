@@ -170,7 +170,7 @@ public class RepositoryActivity extends ListActivity {
 
 
 		m_adapter = new LocalGamesListAdapter(this,
-				R.layout.local_games_actvitiy_listitem, db.getRepoData());
+				R.layout.repository_activity_listitem, db.getRepoData());
 
 		setListAdapter(m_adapter);
 

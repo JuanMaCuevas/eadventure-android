@@ -37,6 +37,7 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Debug;
 import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
@@ -177,7 +178,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
 
         super( x, y );
         this.npc = npc;
-        this.layer = layer;
+        this.layer = layer; 
         this.influenceArea = influenceArea;
 
         textFrontColor = generateColor( npc.getTextFrontColor( ) );
@@ -187,11 +188,15 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
 
         // Select the resources
         resources = createResourcesBlock( );
+        
+        Log.e("NPCAnimAntes",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
         // Create the states of the character
         idleAnimation = new NPCIdle( this );
         talkingAnimation = new NPCTalking( this );
         walkingAnimation = new NPCWalking( this );
+        
+        Log.e("NPCAnimDespues",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
         destX = 0;
         destY = 0;

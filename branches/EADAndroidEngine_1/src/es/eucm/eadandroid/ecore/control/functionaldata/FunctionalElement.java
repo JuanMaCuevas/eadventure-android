@@ -186,18 +186,13 @@ public abstract class FunctionalElement implements Renderable {
      
     protected int generateColor( String colorText ) {
     	
-    	
-    	
-    
-    	
     	try {
     		int color=Color.parseColor(colorText);
     		return color;
     	}
     	catch(Exception e) {
     		Log.d("el color peta", "dentro de functionalElement generacolor()  ");
-    	}
-    	
+    	}  	
 		return Color.WHITE;
     }
     

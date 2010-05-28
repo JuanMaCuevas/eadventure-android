@@ -38,14 +38,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import android.graphics.Bitmap;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+import android.os.Debug;
 import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.ElementReference;
 import es.eucm.eadandroid.common.data.chapter.Exit;
-import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.elements.ActiveArea;
 import es.eucm.eadandroid.common.data.chapter.elements.Atrezzo;
 import es.eucm.eadandroid.common.data.chapter.elements.Barrier;
@@ -169,7 +166,26 @@ public class FunctionalScene implements Renderable {
      *            Background music identifier
      */
     public FunctionalScene( Scene scene, FunctionalPlayer player, long backgroundMusicId ) {
-
+    	
+    	/* DEBUG MEMORY ALLOCATION SCENE CREATION */
+    	
+    	long sceneMem = 0;
+    	long bkgMem = 0;
+    	long fgMem = 0;
+    	long itemMem =0;
+    	long npcMem =0;
+    	long aareaMem = 0;
+    	long barrierMem = 0;
+    	long atrezzoMem = 0;
+    	
+    	/////////////////////////////////////////////////////////
+    	   
+    	sceneMem = Debug.getNativeHeapAllocatedSize();
+    	
+    	Log.e("Inicio creaci—n escena",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+    	
+    	/////////////////////////////////////////////////////////
+        
         this.scene = scene;
         this.player = player;
 
@@ -179,7 +195,7 @@ public class FunctionalScene implements Renderable {
         atrezzo = new ArrayList<FunctionalAtrezzo>( );
         areas = new ArrayList<FunctionalActiveArea>( );
         barriers = new ArrayList<FunctionalBarrier>( );
-        trajectory = new FunctionalTrajectory( scene.getTrajectory( ), barriers );
+        trajectory = new FunctionalTrajectory( scene.getTrajectory( ), barriers);
 
         // Pick the item summary
         Chapter gameData = Game.getInstance( ).getCurrentChapterData( );
@@ -187,6 +203,14 @@ public class FunctionalScene implements Renderable {
 
         // Select the resources
         resources = createResourcesBlock( );
+        
+    	/////////////////////////////////////////////////////////
+        
+    	bkgMem = Debug.getNativeHeapAllocatedSize();
+        
+        Log.e("BackgroundAntes",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+        
+    	/////////////////////////////////////////////////////////
 
         // Load the background image
         background = null;
@@ -196,6 +220,20 @@ public class FunctionalScene implements Renderable {
         if( Game.getInstance( ).isTransparent( ) && background != null && background.getWidth( ) > GUI.WINDOW_WIDTH ) {
             showsOffsetArrows = true;
         }
+        
+    	/////////////////////////////////////////////////////////
+        
+    	bkgMem = Debug.getNativeHeapAllocatedSize() - bkgMem;
+    	
+        Log.e("BackgroundDespues",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+        
+        
+    	fgMem = Debug.getNativeHeapAllocatedSize(); 
+        
+        Log.e("ForegroundAntes",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+        
+    	/////////////////////////////////////////////////////////
+
 
         // Load the foreground image
         foreground = null;
@@ -203,10 +241,7 @@ public class FunctionalScene implements Renderable {
             Bitmap bufferedBackground =  background;
             Bitmap foregroundHardMap =  MultimediaManager.getInstance( ).loadImage( resources.getAssetPath( Scene.RESOURCE_TYPE_FOREGROUND ), MultimediaManager.IMAGE_SCENE );
             Bitmap bufferedForeground = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( foregroundHardMap.getWidth(  ), foregroundHardMap.getHeight(  ), true );
-            
-            
-         
-            
+
             for( int i = 0; i < foregroundHardMap.getWidth(  ); i++ ) {
                 for( int j = 0; j < foregroundHardMap.getHeight(  ); j++ ) {
                     if( foregroundHardMap.getPixel(i, j)==0xFFFFFFFF ) //GRAPHICS (foregroundHardMap.getRGB( i, j ) == 0xFFFFFFFF )
@@ -219,11 +254,24 @@ public class FunctionalScene implements Renderable {
             bufferedBackground = null;
             foreground = bufferedForeground;
         }
+        
+    	/////////////////////////////////////////////////////////
+        
+    	fgMem = Debug.getNativeHeapAllocatedSize() - fgMem; 
+        Log.e("ForegroundDespues",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
+    	/////////////////////////////////////////////////////////
+        
         // Load the background music (if it is not loaded)
         this.backgroundMusicId = backgroundMusicId;
         if( backgroundMusicId == -1 )
            playBackgroundMusic( );
+        
+    	/////////////////////////////////////////////////////////
+        
+    	itemMem = Debug.getNativeHeapAllocatedSize();
+    	
+    	/////////////////////////////////////////////////////////
 
         // Add the functional items
         for( ElementReference itemReference : scene.getItemReferences( ) )
@@ -234,6 +282,14 @@ public class FunctionalScene implements Renderable {
                             FunctionalItem fitem = new FunctionalItem( currentItem, itemReference );
                             items.add( fitem );
                         }
+        
+    	/////////////////////////////////////////////////////////
+        
+    	itemMem = Debug.getNativeHeapAllocatedSize() - itemMem;  
+    	
+    	npcMem = Debug.getNativeHeapAllocatedSize(); 
+    	/////////////////////////////////////////////////////////
+       
         // Add the functional characters
         for( ElementReference npcReference : scene.getCharacterReferences( ) )
             if( new FunctionalConditions( npcReference.getConditions( ) ).allConditionsOk( ) )
@@ -242,29 +298,33 @@ public class FunctionalScene implements Renderable {
                         FunctionalNPC fnpc = new FunctionalNPC( currentNPC, npcReference );
                         npcs.add( fnpc );
                     }
+    	/////////////////////////////////////////////////////////
         
-        
-       if (GpsManager.getInstance()!=null)
-       {
-    	   GpsManager.getInstance().flushGpsRules();
-       }
-        
-        // Add the functional active areas
-        for(int i=0;i<scene.getGpsRules().size();i++ )
-        	GpsManager.getInstance().addgpsrules(scene.getGpsRules().get(i));
-                   
-        
+    	npcMem = Debug.getNativeHeapAllocatedSize() - npcMem; 
+    	
+    	aareaMem= Debug.getNativeHeapAllocatedSize(); 
+    	/////////////////////////////////////////////////////////
         
         // Add the functional active areas
         for( ActiveArea activeArea : scene.getActiveAreas( ) )
             if( new FunctionalConditions( activeArea.getConditions( ) ).allConditionsOk( ) )
                 this.areas.add( new FunctionalActiveArea( activeArea, activeArea.getInfluenceArea( ) ) );
-
+    	///////////////////////////////////////////////////////// 
+        
+    	aareaMem = Debug.getNativeHeapAllocatedSize() -aareaMem; 
+    	barrierMem = Debug.getNativeHeapAllocatedSize(); 
+    	
+    	/////////////////////////////////////////////////////////
         // Add the functional barriers
         for( Barrier barrier : scene.getBarriers( ) )
             if( new FunctionalConditions( barrier.getConditions( ) ).allConditionsOk( ) )
                 this.barriers.add( new FunctionalBarrier( barrier ) );
-
+    	///////////////////////////////////////////////////////// 
+        
+        barrierMem = Debug.getNativeHeapAllocatedSize() - barrierMem; 
+    	atrezzoMem = Debug.getNativeHeapAllocatedSize(); 
+    	
+    	/////////////////////////////////////////////////////////
         // Add the functional atrezzo items
         for( ElementReference atrezzoReference : scene.getAtrezzoReferences( ) )
             if( new FunctionalConditions( atrezzoReference.getConditions( ) ).allConditionsOk( ) )
@@ -273,8 +333,50 @@ public class FunctionalScene implements Renderable {
                         FunctionalAtrezzo fatrezzo = new FunctionalAtrezzo( currentAtrezzo, atrezzoReference );
                         atrezzo.add( fatrezzo );
                     }
+    	/////////////////////////////////////////////////////////
+        
+        atrezzoMem = Debug.getNativeHeapAllocatedSize() - atrezzoMem; 
+    	
+    	/////////////////////////////////////////////////////////
+
+		if (GpsManager.getInstance() != null) {
+			GpsManager.getInstance().flushGpsRules();
+		}
+
+		for (int i = 0; i < scene.getGpsRules().size(); i++)
+			GpsManager.getInstance().addgpsrules(scene.getGpsRules().get(i));
+
 
         updateOffset( );
+        
+    	/////////////////////////////////////////////////////////
+        
+    	sceneMem = Debug.getNativeHeapAllocatedSize() - sceneMem;
+        
+        Log.e("Fin creaci—n escena",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+        
+        Log.e("Escena",String.valueOf(sceneMem/1048576)+"MB");
+        Log.e("BKG",String.valueOf(bkgMem/1048576)+"MB");
+        Log.e("FG",String.valueOf(fgMem/1048576)+"MB");
+        Log.e("Items",String.valueOf(itemMem/1048576)+"MB");
+        Log.e("Npcs",String.valueOf(npcMem/1048576)+"MB");
+        Log.e("Aarea",String.valueOf(aareaMem/1048576)+"MB");
+        Log.e("Barriers",String.valueOf(barrierMem/1048576)+"MB");
+        Log.e("Atrezzo",String.valueOf(atrezzoMem/1048576)+"MB");
+        
+        String[] memInfo = {"SCENE : "+String.valueOf(sceneMem/1048576)+"MB",
+        		"BKG: "+String.valueOf(bkgMem/1048576)+"MB",
+        		"FG : "+String.valueOf(fgMem/1048576)+"MB",
+        		"Items : "+String.valueOf(itemMem/1048576)+"MB",
+        		"NPCs : "+String.valueOf(npcMem/1048576)+"MB",
+        		"AAreas : "+String.valueOf(aareaMem/1048576)+"MB",
+        		"Barriers : "+String.valueOf(barrierMem/1048576)+"MB",
+        		"Atrezzos : "+String.valueOf(atrezzoMem/1048576)+"MB"};
+        
+        GUI.getInstance().setDebugMemoryAllocInfo(memInfo);
+        
+       
+    	/////////////////////////////////////////////////////////
     }
 
     /**

@@ -114,9 +114,10 @@ public class ActionsPanel {
 		paintBorder.setAntiAlias(true);
 
 		int roundRectWidth = APANEL_WIDTH - 2 * TRANSPARENT_PADDING;
-		// int roundRectHeight = APANEL_HEIGHT - 2 * TRANSPARENT_PADDING;
+		 int roundRectHeight = APANEL_HEIGHT - 2 * TRANSPARENT_PADDING;
 
-		int roundRectHeight = 2 * gridPanelHeight;
+		//int roundRectHeight = 2 * gridPanelHeight;
+		
 
 		r = new RectF(0, 0, roundRectWidth, roundRectHeight);
 
@@ -334,6 +335,7 @@ public class ActionsPanel {
 
 	public void doDraw(Canvas c) {
 
+		c.save();
 		c.clipRect(0, 0, APANEL_WIDTH, aPanelBottom);
 		c.save();
 		c.translate(0, aPanelBottom - APANEL_HEIGHT);
@@ -343,6 +345,7 @@ public class ActionsPanel {
 		c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, APANEL_HEIGHT
 				- TRANSPARENT_PADDING - RPANEL_PADDING - gridPanelHeight);
 		gridPanel.draw(c);
+		c.restore();
 
 	}
 

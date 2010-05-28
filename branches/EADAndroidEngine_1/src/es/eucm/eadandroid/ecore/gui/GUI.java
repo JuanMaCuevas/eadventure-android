@@ -4,20 +4,17 @@ package es.eucm.eadandroid.ecore.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.os.Handler;
+import android.os.Debug;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.control.TimerManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
@@ -151,6 +148,8 @@ public class GUI {
 	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();;
 
 	private int loading;
+	
+	private DebugOverlay debugOverlay;
 
 	public FPS getfps() {
 		return fps;
@@ -169,6 +168,7 @@ public class GUI {
 		this.canvasSurfaceHolder = mSurfaceHolder;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
+		debugOverlay = new DebugOverlay();
 	}
 
 	public static void create(SurfaceHolder mSurfaceHolder) {
@@ -179,6 +179,8 @@ public class GUI {
 
 	public void init(int landscapeHeight, int landscapeWidth, float scaleDensity) {
 
+    			
+		
 		FINAL_WINDOW_HEIGHT = landscapeHeight;
 		FINAL_WINDOW_WIDTH = landscapeWidth;
 
@@ -206,6 +208,9 @@ public class GUI {
 		mPaint.setStrokeWidth(4);
 		mPaint.setColor(0XFFFFFFFF);
 		// mPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
+		
+		debugOverlay.init();
+		
 
 	}
 
@@ -225,22 +230,14 @@ public class GUI {
 	public void endDraw() {
 
 		// reescale the drawn bitmap to fit the sreen size
-
 		
 		 synchronized(GUI.class) {
 			
-			 finalCanvas.drawColor(Color.BLACK);
-			 /*
-			 Log.d("centeroffset", "" + CENTER_OFFSET);
-			Log.d("matriz escalado alto", "" + SCALE_RATIOY);
-			Log.d("escalado al ancho", "" + SCALE_RATIOX);
-*/
+			finalCanvas.drawColor(Color.BLACK);			 
 			finalCanvas.translate(CENTER_OFFSET, 0);
 			finalCanvas.drawBitmap(bitmapcpy, scaleMatrix, null);
 			finalCanvas.translate(-CENTER_OFFSET, 0);
-			 
-			 
-			 
+		 
 		 }
 		
 		Canvas canvas = null;
@@ -251,8 +248,9 @@ public class GUI {
 
 				canvas.drawBitmap(finalBmp, 0, 0, null);
 
-				// fps.draw(canvas);
+				fps.draw(canvas);
 				hud.doDraw(canvas);
+			//DEBUG	debugOverlay.draw(canvas);
 			}
 		} finally {
 			// do this in a finally so that if an exception is thrown
@@ -264,6 +262,8 @@ public class GUI {
 		}
 
 	}
+
+
 
 	private void recalculateInteractiveElementsOrder() {
 		elementsToInteract = new ArrayList<FunctionalElement>();
@@ -1157,9 +1157,10 @@ public class GUI {
 
 	}
 
-	public void drawFPS(int calcFPS) {
+	public void updateDebugInfo(int calcFPS,long elapsedTime) {
 
 		fps.setFPS(calcFPS);
+		debugOverlay.updateMemAlloc(elapsedTime);
 
 	}
 
@@ -1236,5 +1237,20 @@ public class GUI {
 
 		}	
 	}
+
+	public void setDebugMemoryAllocInfo(String[] memInfo) {
+		
+		debugOverlay.setMemAllocInfo(memInfo);
+	}
+
+	public void calculateDebugMemoryAllocation(long elapsedTime) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+
 
 }

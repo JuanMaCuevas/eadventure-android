@@ -108,22 +108,18 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
-		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
-		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
+		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);
 		
+		
+		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		if (image == null) {
-			Log.e("", "0 "+bitmapPath);
-			Log.e("","1 Primero nula");
 			 image = getScaledImage( ResourceHandler.getInstance(
 			 ).getResourceAsImage( bitmapPath ), 1, 1 );
-			 if (image != null) {
-				Log.e("","2 Luego no nula");
+		if (image != null) {
 				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
-			 }
-			 else Log.e("","2 Finalmente nula");
+			}
 		}
 		
-
 		return image;
 
 	}
@@ -618,8 +614,6 @@ public class MultimediaManager {
 		return imageSet;
 	}
 	
-	
-
 	
 
 	/**

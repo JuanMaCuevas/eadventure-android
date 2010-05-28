@@ -40,7 +40,8 @@ import java.util.List;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-
+import android.os.Debug;
+import android.util.Log;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;
@@ -172,8 +173,14 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      *            the player's data
      */
     public FunctionalPlayer( Player player ) {
-
         super( 0, 0 );
+        
+    	/* DEBUG MEMORY ALLOCATION */
+    	
+    	long playerMem =  Debug.getNativeHeapAllocatedSize();
+    	
+    	/////////////////////////////////////////////////////////
+        
         this.player = player;
         speedX = 0;
         speedY = 0;
@@ -187,6 +194,8 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
         animationPool = new ArrayList<Animation[]>( );
 
         MultimediaManager multimedia = MultimediaManager.getInstance( );
+        
+        Log.e("PlayerAnimAntes",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
         Animation[] animations = new Animation[ 4 ];
         animations[AnimationState.EAST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_STAND_RIGHT ), false, MultimediaManager.IMAGE_PLAYER );
@@ -198,11 +207,24 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
         animations[AnimationState.SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_STAND_DOWN ), false, MultimediaManager.IMAGE_PLAYER );
 
         animationPool.add( animations );
+        
+        Log.e("PlayerAnimDespues",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
         textFrontColor = generateColor( player.getTextFrontColor( ) );
         textBorderColor = generateColor( player.getTextBorderColor( ) );
         bubbleBkgColor = generateColor( player.getBubbleBkgColor( ) );
         bubbleBorderColor = generateColor( player.getBubbleBorderColor( ) );
+        
+        
+    	/////////////////////////////////////////////////////////
+    	
+    	playerMem =  Debug.getNativeHeapAllocatedSize() - playerMem;
+    	
+    	Log.e("PlayerMem",String.valueOf(playerMem /1048576)+"MB");
+    	
+    	
+    	/////////////////////////////////////////////////////////
+        
     }
 
     public boolean isAlwaysSynthesizer( ) {

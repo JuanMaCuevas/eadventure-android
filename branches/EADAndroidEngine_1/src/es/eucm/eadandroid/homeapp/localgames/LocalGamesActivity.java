@@ -147,7 +147,7 @@ public class LocalGamesActivity extends ListActivity {
 
 		m_games = new ArrayList<GameInfo>();
 		m_adapter = new LocalGamesListAdapter(this,
-				R.layout.local_games_actvitiy_listitem, m_games);
+				R.layout.local_games_activity_listitem, m_games);
 		setListAdapter(m_adapter);
 
 		AnimationSet set = new AnimationSet(true);
