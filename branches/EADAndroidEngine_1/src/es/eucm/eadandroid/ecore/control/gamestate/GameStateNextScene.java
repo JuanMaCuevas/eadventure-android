@@ -61,6 +61,8 @@ public class GameStateNextScene extends GameState {
         MultimediaManager.getInstance( ).flushImagePool( MultimediaManager.IMAGE_SCENE );
         MultimediaManager.getInstance().flushAnimationPool();
         System.gc( );
+        
+        GUI.getInstance().loading();
 
         // Pick the next scene, and the scene related to it
         Exit nextScene = game.getNextScene( );
@@ -83,7 +85,8 @@ public class GameStateNextScene extends GameState {
                 Scene scene = (Scene) generalScene;
 
                 // Set the loading state
-                game.setState( Game.STATE_LOADING );
+              //  game.setState( Game.STATE_LOADING );
+
 
                 // Create a background music identifier to not replay the music from the start
                 long backgroundMusicId = -1;

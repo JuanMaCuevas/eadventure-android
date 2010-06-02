@@ -38,7 +38,7 @@ public class ActionButtons implements DataSet{
 
     public static final int MAX_BUTTON_HEIGHT = (int) ( 96 * GUI.DISPLAY_DENSITY_SCALE );
 
-    public static final int MIN_BUTTON_WIDTH = (int) ( 40 * GUI.DISPLAY_DENSITY_SCALE );
+    public static final int MIN_BUTTON_WIDTH = (int) ( 80 * GUI.DISPLAY_DENSITY_SCALE );
 
     public static final int MIN_BUTTON_HEIGHT = (int) ( 48 * GUI.DISPLAY_DENSITY_SCALE );
     

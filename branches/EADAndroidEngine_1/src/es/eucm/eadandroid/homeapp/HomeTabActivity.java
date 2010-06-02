@@ -3,7 +3,6 @@ package es.eucm.eadandroid.homeapp;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
 import android.widget.TabHost;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.loadsavedgames.LoadSavedGames;
@@ -25,11 +24,11 @@ public class HomeTabActivity extends TabActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		int current= this.getIntent().getExtras().getInt("tabstate");
-		init(current);
+		init();
 	}
+	
 
-	private void init(int currenttab) {
+	private void init() {
 
 
 		mTabHost = getTabHost();
@@ -54,13 +53,18 @@ public class HomeTabActivity extends TabActivity {
 				getResources().getDrawable(
 						R.drawable.equalizer)).setContent(
 				new Intent(this, PreferencesActivity.class)));
-
-		//is used if we want to restart finish the game and launch saved games
 		
-		
-		mTabHost.setCurrentTab(currenttab);
-
 	}
+
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		
+		int current= intent.getExtras().getInt("tabstate");
+		mTabHost.setCurrentTab(current);
+	}
+	
+	
 
 
 	

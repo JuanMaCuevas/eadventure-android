@@ -49,7 +49,7 @@ public class ActionButton {
     /**
      * Width of an action button
      */
-    public static final int ACTIONBUTTON_WIDTH = (int) ( 48 * GUI.DISPLAY_DENSITY_SCALE );
+    public static final int ACTIONBUTTON_WIDTH = (int) ( 80 * GUI.DISPLAY_DENSITY_SCALE );
 
     /**
      * Height of an action button
@@ -156,13 +156,15 @@ public class ActionButton {
         buttonNormal = loadImage( customNormalPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + ".png" );
         buttonOver = loadImage( customHighlightedPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + "Highlighted.png" );
         buttonPressed = loadImage( customPressedPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + "Pressed.png" );
+        
+        
     }
 
     private Bitmap loadImage( String customPath, String defaultPath ) {
 
         Bitmap temp = null;
         if( customPath == null )
-            temp = MultimediaManager.getInstance( ).loadImage( defaultPath, MultimediaManager.IMAGE_MENU );
+            temp = MultimediaManager.getInstance( ).loadScaledImage( defaultPath,(int)GUI.DISPLAY_DENSITY_SCALE,(int)GUI.DISPLAY_DENSITY_SCALE,MultimediaManager.IMAGE_MENU );
         else {
             try {
                 temp = MultimediaManager.getInstance( ).loadImageFromZip( customPath, MultimediaManager.IMAGE_MENU );

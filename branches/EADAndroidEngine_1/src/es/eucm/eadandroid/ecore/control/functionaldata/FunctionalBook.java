@@ -37,10 +37,7 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
-import es.eucm.eadandroid.utils.Dimension;
-import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.resources.Asset;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;

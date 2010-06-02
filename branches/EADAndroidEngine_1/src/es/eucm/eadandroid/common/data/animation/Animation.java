@@ -39,6 +39,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.util.Log;
 import es.eucm.eadandroid.common.auxiliar.CreateImage;
 import es.eucm.eadandroid.common.data.Documented;
@@ -488,48 +489,49 @@ public class Animation implements Cloneable, Documented, HasId {
         
         Log.e("Animation", "Uso de animaciones combinedFrames no implementadas");
         
-        /*TODO Falta por implementar las transiciones de animaciones en Android
-        long time = transitions.get( i + 1 ).getTime( );
-        Bitmap temp;
-        Graphics2D g;
-
-        switch( transitions.get( i + 1 ).getType( ) ) {
-            case Transition.TYPE_NONE:
-                return start;
-            case Transition.TYPE_FADEIN:
-                temp = new BufferedImage( end.getWidth( null ), end.getHeight( null ), BufferedImage.TYPE_4BYTE_ABGR );
-
-                g = (Graphics2D) temp.getGraphics( );
-                AlphaComposite alphaComposite = AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1 - (float) elapsedTime / (float) time );
-                g.setComposite( alphaComposite );
-                g.drawImage( start, 0, 0, null );
-
-                alphaComposite = AlphaComposite.getInstance( AlphaComposite.SRC_OVER, (float) elapsedTime / (float) time );
-                g.setComposite( alphaComposite );
-                g.drawImage( end, 0, 0, null );
-
-                return temp;
-            case Transition.TYPE_VERTICAL:
-                temp = new BufferedImage( end.getWidth( null ), end.getHeight( null ), BufferedImage.TYPE_4BYTE_ABGR );
-
-                g = (Graphics2D) temp.getGraphics( );
-                g.drawImage( start, (int) ( end.getWidth( null ) * (float) elapsedTime / time ), 0, null );
-
-                g.drawImage( end, (int) ( end.getWidth( null ) * (float) elapsedTime / time ) - end.getWidth( null ), 0, null );
-
-                return temp;
-            case Transition.TYPE_HORIZONTAL:
-                temp = new BufferedImage( end.getWidth( null ), end.getHeight( null ), BufferedImage.TYPE_4BYTE_ABGR );
-
-                g = (Graphics2D) temp.getGraphics( );
-                g.drawImage( start, 0, (int) ( end.getHeight( null ) * (float) elapsedTime / time ), null );
-
-                g.drawImage( end, 0, (int) ( end.getHeight( null ) * (float) elapsedTime / time ) - end.getHeight( null ), null );
-
-                return temp;
-            default:
-                return start;
-        }*/
+      
+//        long time = transitions.get( i + 1 ).getTime( );
+//        Bitmap temp;
+//        Canvas c;
+//
+//        switch( transitions.get( i + 1 ).getType( ) ) {
+//            case Transition.TYPE_NONE:
+//                return start;
+//            case Transition.TYPE_FADEIN:
+//            	
+//                temp = Bitmap.createBitmap(end.getWidth(), end.getHeight(),Bitmap.Config.ARGB_4444)
+//
+//                c = new Canvas(temp);
+//                AlphaComposite alphaComposite = AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1 - (float) elapsedTime / (float) time );
+//                g.setComposite( alphaComposite );
+//                g.drawImage( start, 0, 0, null );
+//
+//                alphaComposite = AlphaComposite.getInstance( AlphaComposite.SRC_OVER, (float) elapsedTime / (float) time );
+//                g.setComposite( alphaComposite );
+//                g.drawImage( end, 0, 0, null );
+//
+//                return temp;
+//            case Transition.TYPE_VERTICAL:
+//                temp = new BufferedImage( end.getWidth( null ), end.getHeight( null ), BufferedImage.TYPE_4BYTE_ABGR );
+//
+//                g = (Graphics2D) temp.getGraphics( );
+//                g.drawImage( start, (int) ( end.getWidth( null ) * (float) elapsedTime / time ), 0, null );
+//
+//                g.drawImage( end, (int) ( end.getWidth( null ) * (float) elapsedTime / time ) - end.getWidth( null ), 0, null );
+//
+//                return temp;
+//            case Transition.TYPE_HORIZONTAL:
+//                temp = new BufferedImage( end.getWidth( null ), end.getHeight( null ), BufferedImage.TYPE_4BYTE_ABGR );
+//
+//                g = (Graphics2D) temp.getGraphics( );
+//                g.drawImage( start, 0, (int) ( end.getHeight( null ) * (float) elapsedTime / time ), null );
+//
+//                g.drawImage( end, 0, (int) ( end.getHeight( null ) * (float) elapsedTime / time ) - end.getHeight( null ), null );
+//
+//                return temp;
+//            default:
+//                return start;
+//        }
         
         return start ;
     }

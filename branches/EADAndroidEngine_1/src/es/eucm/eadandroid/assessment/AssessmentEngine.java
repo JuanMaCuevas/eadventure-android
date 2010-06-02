@@ -1,6 +1,5 @@
 package es.eucm.eadandroid.assessment;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,25 +14,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 /*
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-*/
+ import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerConfigurationException;
+ import javax.xml.transform.TransformerException;
+ import javax.xml.transform.TransformerFactory;
+ import javax.xml.transform.dom.DOMSource;
+ import javax.xml.transform.stream.StreamResult;
+ */
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -63,8 +59,6 @@ import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity.LGAHandlerMessages;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
-
-
 /**
  * This engine stores the rules to be processed when the flags change in the
  * game, creating events that tell the process of the player in the game
@@ -76,15 +70,15 @@ public class AssessmentEngine implements TimerEventListener {
 	public static int STATE_NONE = 0;
 
 	public static int STATE_DONE = 2;
-	
+
 	/**
 	 * Constants for the colors of the HTML reports
 	 */
-	private static String HTML_REPORT_COLOR_0 = "794910"; //Old value =#4386CE 
-	
-	private static String HTML_REPORT_COLOR_1 = "F7D769"; //Old value =#C1D6EA
-	
-	private static String HTML_REPORT_COLOR_2 = "FFFFFF"; //Old value =#EEF6FE
+	private static String HTML_REPORT_COLOR_0 = "794910"; // Old value =#4386CE
+
+	private static String HTML_REPORT_COLOR_1 = "F7D769"; // Old value =#C1D6EA
+
+	private static String HTML_REPORT_COLOR_2 = "FFFFFF"; // Old value =#EEF6FE
 
 	/**
 	 * Current assessment profile
@@ -109,6 +103,8 @@ public class AssessmentEngine implements TimerEventListener {
 	private String playerName;
 
 	private int state;
+	
+	private String lastHTMLReport;
 
 	/**
 	 * Constructor
@@ -126,12 +122,13 @@ public class AssessmentEngine implements TimerEventListener {
 	 *            Path of the file containing the assessment data
 	 */
 	public void loadAssessmentRules(AssessmentProfile profile) {
-		//if (assessmentPath != null && !assessmentPath.equals("")) {
-			//assessmentProfile = Loader.loadAssessmentProfile(ResourceHandler
-			//		.getInstance(), assessmentPath, new ArrayList<Incidence>());
-			if (profile!=null){
-	    		assessmentProfile = profile;
-			assessmentRules = new ArrayList<AssessmentRule>(assessmentProfile.getRules());
+		// if (assessmentPath != null && !assessmentPath.equals("")) {
+		// assessmentProfile = Loader.loadAssessmentProfile(ResourceHandler
+		// .getInstance(), assessmentPath, new ArrayList<Incidence>());
+		if (profile != null) {
+			assessmentProfile = profile;
+			assessmentRules = new ArrayList<AssessmentRule>(assessmentProfile
+					.getRules());
 
 			FlagSummary flags = Game.getInstance().getFlags();
 			VarSummary vars = Game.getInstance().getVars();
@@ -141,20 +138,24 @@ public class AssessmentEngine implements TimerEventListener {
 			for (String var : assessmentProfile.getVars()) {
 				vars.addVar(var);
 			}
-		//} else {
-			//assessmentRules = new ArrayList<AssessmentRule>();
-		//}
+			// } else {
+			// assessmentRules = new ArrayList<AssessmentRule>();
+			// }
 
-		// Iterate through the rules: those timed add them to the timer manager
-		for (AssessmentRule assessmentRule : assessmentRules) {
-			if (assessmentRule instanceof TimedAssessmentRule) {
-				TimedAssessmentRule tRule = (TimedAssessmentRule) assessmentRule;
-				int id = TimerManager.getInstance().addTimer(tRule.getInitConditions(), tRule.getEndConditions(), tRule.isUsesEndConditions(), this);
-				timedRules.put(new Integer(id), tRule);
+			// Iterate through the rules: those timed add them to the timer
+			// manager
+			for (AssessmentRule assessmentRule : assessmentRules) {
+				if (assessmentRule instanceof TimedAssessmentRule) {
+					TimedAssessmentRule tRule = (TimedAssessmentRule) assessmentRule;
+					int id = TimerManager.getInstance().addTimer(
+							tRule.getInitConditions(),
+							tRule.getEndConditions(),
+							tRule.isUsesEndConditions(), this);
+					timedRules.put(new Integer(id), tRule);
+				}
 			}
+			processRules();
 		}
-		processRules();
-			}
 	}
 
 	public static AssessmentProfile loadAssessmentProfile(String assessmentPath) {
@@ -173,26 +174,27 @@ public class AssessmentEngine implements TimerEventListener {
 	public void processRules() {
 		int i = 0;
 
-		if (assessmentRules!=null){
-		// For every rule
-		while (i < assessmentRules.size()) {
+		if (assessmentRules != null) {
+			// For every rule
+			while (i < assessmentRules.size()) {
 
-			// If it was activated, execute the rule
-			if (isActive(assessmentRules.get(i))) {
-				AssessmentRule oldRule = assessmentRules.remove(i);
-				ProcessedRule rule = new ProcessedRule(oldRule, Game
-						.getInstance().getTime());
+				// If it was activated, execute the rule
+				if (isActive(assessmentRules.get(i))) {
+					AssessmentRule oldRule = assessmentRules.remove(i);
+					ProcessedRule rule = new ProcessedRule(oldRule, Game
+							.getInstance().getTime());
 
-				 //System.out.println("Se cumple la regla "+ oldRule.getId());
-				// Signal the LMS about the change
-				
-				processedRules.add(rule);
+					// System.out.println("Se cumple la regla "+
+					// oldRule.getId());
+					// Signal the LMS about the change
+
+					processedRules.add(rule);
+				}
+
+				// Else, check the next rule
+				else
+					i++;
 			}
-
-			// Else, check the next rule
-			else
-				i++;
-		}
 		}
 	}
 
@@ -218,55 +220,40 @@ public class AssessmentEngine implements TimerEventListener {
 	 *            File name of the report file
 	 */
 	/*
-	public void generateXMLReport(String filename) {
-		try {
-			// Create the necessary elements for building the DOM
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.newDocument();
-
-			// Create the root element, "report"
-			Element report = doc.createElement("report");
-
-			// For each processed rule
-			for (ProcessedRule rule : processedRules) {
-				// Create a new "processed-rule" node (DOM element), and link it
-				// to the document
-				Element processedRule = rule.getDOMStructure();
-				doc.adoptNode(processedRule);
-
-				// Add the node
-				report.appendChild(processedRule);
-			}
-
-			// Add the report structure to the XML file
-			doc.appendChild(report);
-
-			// Indent the DOM
-			indentDOM(report, 0);
-
-			// Create the necessary elements for export the DOM into a XML file
-			TransformerFactory tFactory = TransformerFactory.newInstance();
-			Transformer transformer = tFactory.newTransformer();
-
-			// Create the output buffer, write the DOM and close it
-			OutputStream fout = new FileOutputStream(filename);
-			OutputStreamWriter writeFile = new OutputStreamWriter(fout, "UTF-8");
-			transformer.transform(new DOMSource(doc), new StreamResult(
-					writeFile));
-			writeFile.close();
-
-		} catch (IOException exception) {
-			exception.printStackTrace();
-		} catch (ParserConfigurationException exception) {
-			exception.printStackTrace();
-		} catch (TransformerConfigurationException exception) {
-			exception.printStackTrace();
-		} catch (TransformerException exception) {
-			exception.printStackTrace();
-		}
-	}
-*/
+	 * public void generateXMLReport(String filename) { try { // Create the
+	 * necessary elements for building the DOM DocumentBuilderFactory dbf =
+	 * DocumentBuilderFactory.newInstance(); DocumentBuilder db =
+	 * dbf.newDocumentBuilder(); Document doc = db.newDocument();
+	 * 
+	 * // Create the root element, "report" Element report =
+	 * doc.createElement("report");
+	 * 
+	 * // For each processed rule for (ProcessedRule rule : processedRules) { //
+	 * Create a new "processed-rule" node (DOM element), and link it // to the
+	 * document Element processedRule = rule.getDOMStructure();
+	 * doc.adoptNode(processedRule);
+	 * 
+	 * // Add the node report.appendChild(processedRule); }
+	 * 
+	 * // Add the report structure to the XML file doc.appendChild(report);
+	 * 
+	 * // Indent the DOM indentDOM(report, 0);
+	 * 
+	 * // Create the necessary elements for export the DOM into a XML file
+	 * TransformerFactory tFactory = TransformerFactory.newInstance();
+	 * Transformer transformer = tFactory.newTransformer();
+	 * 
+	 * // Create the output buffer, write the DOM and close it OutputStream fout
+	 * = new FileOutputStream(filename); OutputStreamWriter writeFile = new
+	 * OutputStreamWriter(fout, "UTF-8"); transformer.transform(new
+	 * DOMSource(doc), new StreamResult( writeFile)); writeFile.close();
+	 * 
+	 * } catch (IOException exception) { exception.printStackTrace(); } catch
+	 * (ParserConfigurationException exception) { exception.printStackTrace(); }
+	 * catch (TransformerConfigurationException exception) {
+	 * exception.printStackTrace(); } catch (TransformerException exception) {
+	 * exception.printStackTrace(); } }
+	 */
 	/**
 	 * Generates a report file, in HTML format
 	 * 
@@ -296,10 +283,11 @@ public class AssessmentEngine implements TimerEventListener {
 			file.println("</title>");
 
 			// Body and content table
-			file.println("<body style=\"background: #"+HTML_REPORT_COLOR_0+";\">");
+			file.println("<body style=\"background: #" + HTML_REPORT_COLOR_0
+					+ ";\">");
 			file.println("<br/><br/>");
-			file
-					.println("<table align=\"center\" style=\"background : #"+HTML_REPORT_COLOR_1+"; border : 1px solid #000000;\">");
+			file.println("<table align=\"center\" style=\"background : #"
+					+ HTML_REPORT_COLOR_1 + "; border : 1px solid #000000;\">");
 			file.println("<tr><td>");
 
 			// Title
@@ -310,8 +298,8 @@ public class AssessmentEngine implements TimerEventListener {
 
 			// Clear table
 			file.println("<br/><br/>");
-			file
-					.println("<table align=\"center\" style=\"background : #"+HTML_REPORT_COLOR_2+"; border : 1px solid #000000\">");
+			file.println("<table align=\"center\" style=\"background : #"
+					+ HTML_REPORT_COLOR_2 + "; border : 1px solid #000000\">");
 			file.println("<tr><td>");
 
 			// For each processed rule
@@ -424,109 +412,97 @@ public class AssessmentEngine implements TimerEventListener {
 		// "+currentTime );
 	}
 
-		public boolean isEndOfChapterFeedbackDone() {
-		
+	public boolean isEndOfChapterFeedbackDone() {
 
-		if (assessmentProfile!=null){
-			
-		if (state == STATE_NONE && assessmentProfile.isShowReportAtEnd()) {
-			
-			
-			
-			try {
-				state = STATE_STARTED;
-				
-				
-				int i = 0;
-				File reportFile = null;
-				String fileName = null;
-				
-				if (!ReleaseFolders.reportsFolder().exists()) {
-					ReleaseFolders.reportsFolder().mkdirs();
-				}
-				
-				
-				do {
-					i++;
-					fileName = "Report_" + i + ".html";
-					reportFile = new File(ReleaseFolders.reportsFolder(), fileName);
-				} while (reportFile.exists());
-				
-				
-				
-				reportFile.createNewFile();
-				final String reportAbsoluteFile = reportFile.getAbsolutePath();
-				
-				generateHTMLReport(reportFile.getAbsolutePath(), -5);
-				
-				File report = new File(reportAbsoluteFile);
-				
+		if (assessmentProfile != null) {
+
+			if (state == STATE_NONE && assessmentProfile.isShowReportAtEnd()) {
+
 				try {
-				    FileReader fir = new FileReader(report);
-                    BufferedReader br = new BufferedReader(fir);
-                    String line = br.readLine( );
-                    String text = "";
-                    while (line != null) {
-                        text += line + "\n\r";
-                        line = br.readLine( );
-                    }
-                  //  es.eucm.eadventure.common.auxiliar.ReportDialog.sendReport(subject + "\n\r" + message + "\n\r" + text);
-                    
-                    
-                            
-                    
-                   Handler handler=GameThread.getInstance().getHandler();
-                    
-                    Message msg = handler.obtainMessage();
-                    
-                    
-                    Bundle b = new Bundle();
-    				b.putString("html", text);
-    				msg.what = ActivityHandlerMessages.ASSESSMENT;
-    				msg.setData(b);
-    				
-    				msg.sendToTarget();
-                    
-}
-                catch( FileNotFoundException e1 ) {
-                    e1.printStackTrace();
-                }
+					state = STATE_STARTED;
 
-//TODO send by mail
-				/*
-				if (!assessmentProfile.isSendByEmail()) {
-					JButton ok = new JButton("OK");
-					ok.addActionListener(new ActionListener() {
+					int i = 0;
+					File reportFile = null;
+					String fileName = null;
 
-						public void actionPerformed(ActionEvent e) {
-							GUI.getInstance().restoreFrame();
-							state = STATE_DONE;
+					if (!ReleaseFolders.reportsFolder().exists()) {
+						ReleaseFolders.reportsFolder().mkdirs();
+					}
+
+					do {
+						i++;
+						fileName = "Report_" + i + ".html";
+						reportFile = new File(ReleaseFolders.reportsFolder(),
+								fileName);
+					} while (reportFile.exists());
+
+					reportFile.createNewFile();
+					final String reportAbsoluteFile = reportFile
+							.getAbsolutePath();
+
+					generateHTMLReport(reportFile.getAbsolutePath(), -5);
+
+					File report = new File(reportAbsoluteFile);
+
+					try {
+						FileReader fir = new FileReader(report);
+						BufferedReader br = new BufferedReader(fir);
+						String line = br.readLine();
+						String text = "";
+						while (line != null) {
+							text += line + "\n\r";
+							line = br.readLine();
 						}
+						// es.eucm.eadventure.common.auxiliar.ReportDialog.sendReport(subject
+						// + "\n\r" + message + "\n\r" + text);
+						
+						lastHTMLReport = text;
 
-					});
-					
-					buttonPanel.add(ok);
-				
-					*/
-			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			
-			
-			state = STATE_STARTED;
-			return false;
-			
-		} else if (state == STATE_STARTED) {
-		    return false;
-		} else if (state == STATE_DONE) {
-			return true;
-		} else
-			return true;
+						Handler handler = GameThread.getInstance().getHandler();
+
+						Message msg = handler.obtainMessage();
+
+						Bundle b = new Bundle();
+						b.putString("html", text);
+						msg.what = ActivityHandlerMessages.ASSESSMENT;
+						msg.setData(b);
+
+						msg.sendToTarget();
+
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
+
+					// TODO send e mail
+					/*
+					 * if (!assessmentProfile.isSendByEmail()) { JButton ok =
+					 * new JButton("OK"); ok.addActionListener(new
+					 * ActionListener() {
+					 * 
+					 * public void actionPerformed(ActionEvent e) {
+					 * GUI.getInstance().restoreFrame(); state = STATE_DONE; }
+					 * 
+					 * });
+					 * 
+					 * buttonPanel.add(ok);
+					 */
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				state = STATE_STARTED;
+				return false;
+
+			} else if (state == STATE_STARTED) {
+				return false;
+			} else if (state == STATE_DONE) {
+				return true;
+			} else
+				return true;
 		}
 		return true;
 	}
@@ -543,11 +519,16 @@ public class AssessmentEngine implements TimerEventListener {
 		this.playerName = playerName;
 	}
 
-	public void statedone() {
-		// TODO Auto-generated method stub
+	public void setStateDone() {
+
 		state = STATE_DONE;
+
+	}
+	
+	public String getLastHTMLReport() {
+		
+		return lastHTMLReport;
 		
 	}
 
 }
-

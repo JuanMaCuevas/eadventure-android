@@ -5,6 +5,8 @@ import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -12,14 +14,18 @@ import android.view.SurfaceHolder;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 
 public class GameThread extends Thread {
 
 	private String advPath;
+	private String advName;
 	Handler handler;
 	boolean loadActivityGames=false;
+	
+	private Context context;
 	
 	
 	
@@ -31,6 +37,7 @@ public class GameThread extends Thread {
 	private GameThread(SurfaceHolder holder,Context context, Handler handler,String loadingGame)
 	{
 		this.handler =handler;
+		this.context = context;
 		Game.create(loadingGame);
 
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -58,9 +65,10 @@ public class GameThread extends Thread {
 		
 	//	Debug.startAllocCounting();
 		//startMethodTracing("thread");
-
-
+		
 		Game.getInstance().setAdventurePath(advPath);
+		Game.getInstance().setAdventureName(advName);
+		Game.getInstance().setPrefs(PreferenceManager.getDefaultSharedPreferences(context));
 		ResourceHandler.getInstance().setGamePath(Game.getInstance().getAdventurePath());
 
 		Game.getInstance().start();
@@ -118,9 +126,12 @@ public class GameThread extends Thread {
 	public String getAdventurePath() {
 		return advPath;
 	}
+	
+	public void setAdventureName(String advName){
+		this.advName = advName;
+	}
 
 	public void pause() {
-		// TODO Auto-generated method stub
 		if (Game.getInstance()!=null) {
 		Game.getInstance().pause();
 		}
@@ -147,8 +158,7 @@ public class GameThread extends Thread {
 		
 		if(Game.getInstance()!=null)
 		  Game.getInstance().finish();
-		
-		
+				
 	}
 
 

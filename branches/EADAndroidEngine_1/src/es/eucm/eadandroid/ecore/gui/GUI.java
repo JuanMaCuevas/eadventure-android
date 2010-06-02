@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.Paint.Align;
 import android.os.Debug;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -131,8 +132,6 @@ public class GUI {
 	 */
 	protected ArrayList<Text> textToDraw;
 
-	FPS fps = new FPS();
-
 	private boolean showsOffsetArrows;
 
 	private boolean moveOffsetRight;
@@ -141,6 +140,12 @@ public class GUI {
 
 	public static int CENTER_OFFSET;
 	public final static int OFFSET_ARROW_AREA_RADIUS = 40;
+	
+	/**
+	 * Loading paint
+	 */
+	
+	private Paint loadPaint;
 
 	/**
 	 * The GraphicsConfiguration class
@@ -150,10 +155,6 @@ public class GUI {
 	private int loading;
 	
 	private DebugOverlay debugOverlay;
-
-	public FPS getfps() {
-		return fps;
-	}
 
 	public SurfaceHolder getCanvasSurfaceHolder() {
 		return canvasSurfaceHolder;
@@ -196,7 +197,7 @@ public class GUI {
 
 		// Set the scale
 		SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT / (float) WINDOW_HEIGHT;
-		SCALE_RATIOX = WINDOW_WIDTH / FINAL_WINDOW_WIDTH;
+		SCALE_RATIOX =  (float) FINAL_WINDOW_WIDTH / (float) WINDOW_WIDTH;
 		scaleMatrix = new Matrix();
 		scaleMatrix.setScale(SCALE_RATIOX, SCALE_RATIOY);
 		CENTER_OFFSET = 0;
@@ -210,6 +211,12 @@ public class GUI {
 		// mPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
 		
 		debugOverlay.init();
+		
+		loadPaint = new Paint();
+		loadPaint.setColor(Color.WHITE);
+		loadPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
+		loadPaint.setTextSize(20);
+		loadPaint.setTextAlign(Align.LEFT);
 		
 
 	}
@@ -248,9 +255,10 @@ public class GUI {
 
 				canvas.drawBitmap(finalBmp, 0, 0, null);
 
-				fps.draw(canvas);
+		//		fps.draw(canvas);
 				hud.doDraw(canvas);
 			//DEBUG	debugOverlay.draw(canvas);
+				debugOverlay.draw(canvas);
 			}
 		} finally {
 			// do this in a finally so that if an exception is thrown
@@ -683,9 +691,7 @@ public class GUI {
 	 * Destroy the singleton instance
 	 */
 	public static void delete() {
-		// TODO habra que eliminar todo
 		GUI.instance = null;
-
 	};
 
 	/**
@@ -853,10 +859,6 @@ public class GUI {
 		return lines.toArray(new String[1]);
 	}
 
-	public static void setGraphicConfig(int newGraphicConfig) {
-
-		graphicConfig = newGraphicConfig;
-	}
 
 	public void clearBackground() {
 
@@ -1066,78 +1068,26 @@ public class GUI {
 		return transition != null && !transition.hasFinished(0);
 	}
 
-	public void loading(int percent) {
-		// Timer loadingTimer = null;
-		// if (percent == 0) {
-		//            
-		// // FIXME Chapucilla que huele a pipi
-		// //this.loadingImage = new ImageIcon("gui/loading.jpg").getImage();
-		// // this.loadingImage = MultimediaManager.getInstance( ).loadImage(
-		// "gui/loading.jpg", MultimediaManager.IMAGE_MENU );
-		// // if (this.loadingImage == null ){
-		// // this.loadingImage = MultimediaManager.getInstance(
-		// ).loadImageFromZip( "gui/loading.jpg", MultimediaManager.IMAGE_MENU
-		// );
-		// // }
-		// this.loading = percent;
-		// loadingTimer = new Timer();
-		// TimerTask loadingTask = new TimerTask() {
-		// private int cont = 20;
-		// private boolean contracting = false;
-		//                
-		//               
-		// public void run( ) {
-		// // Graphics2D g = GUI.this.getGraphics( );
-		// // g.drawImage( loadingImage, 0, 0, null);
-		//                	
-		// //TODO haces esto bien q no tengo ni warra
-		// GUI.canvascpy.drawText("0", 50, 60,mPaint);
-		// // g.setColor( new Color(250, 173, 6) );
-		// // g.fillRoundRect( 200, 300, loading * 4, 50, 10, 10 );
-		// // g.setColor( Color.BLUE );
-		// // g.fillArc( 350, 250, 50, 50, cont, 20 );
-		//                    
-		// // g.setStroke( new BasicStroke(4.0f) );
-		// // g.setColor( new Color(90, 32, 2) );
-		// // g.drawRoundRect( 200, 300, 400, 50, 10, 10 );
-		//
-		// // g.setColor( new Color(247, 215, 105) );
-		// // g.fillOval( 400 - cont / 2, 100 - cont / 2, cont, cont );
-		//                    
-		// // g.setColor( Color.BLACK );
-		// // g.drawOval( 350, 250, 50, 50 );
-		//
-		// if (!contracting) {
-		// cont += 1;
-		// if (cont > 60)
-		// contracting = true;
-		// } else {
-		// cont -= 1;
-		// if (cont < 10)
-		// contracting = false;
-		// }
-		//                    
-		// GUI.this.endDraw( );
-		// }
-		// };
-		// loadingTimer.scheduleAtFixedRate( loadingTask, 20, 20 );
-		// }
-		// if (percent == 100) {
-		// loadingTimer.cancel( );
-		// }
-		// this.loading = percent;
-		// //TODO coge no se mu bien como la pantalla
-		// // Graphics2D g = this.getGraphics( );
-		// // g.drawImage( loadingImage, 0, 0, null);
-		//
-		// // g.setColor( new Color(250, 173, 6) );
-		// // g.fillRoundRect( 200, 300, loading * 4, 50, 10, 10 );
-		//        
-		// //g.setStroke( new BasicStroke(4.0f) );
-		// //g.setColor( new Color(90, 32, 2) );
-		// // g.drawRoundRect( 200, 300, 400, 50, 10, 10 );
-		//        
-		// this.endDraw( );
+	public void loading() {
+		
+		Canvas canvas = null;
+
+		try {
+			canvas = canvasSurfaceHolder.lockCanvas(null);
+			synchronized (canvasSurfaceHolder) {
+				//canvas.drawARGB(150, 0, 0, 0);
+				canvas.drawText("Loading...", 10 * GUI.DISPLAY_DENSITY_SCALE,GUI.FINAL_WINDOW_HEIGHT - 10 * GUI.DISPLAY_DENSITY_SCALE, loadPaint);
+			}
+		} finally {
+			// do this in a finally so that if an exception is thrown
+			// during the above, we don't leave the Surface in an
+			// inconsistent state
+			if (canvas != null) {
+				canvasSurfaceHolder.unlockCanvasAndPost(canvas);
+			}
+		}
+
+		
 	}
 
 	public void setShowsOffestArrows(boolean showsOffsetArrows,
@@ -1159,8 +1109,7 @@ public class GUI {
 
 	public void updateDebugInfo(int calcFPS,long elapsedTime) {
 
-		fps.setFPS(calcFPS);
-		debugOverlay.updateMemAlloc(elapsedTime);
+		debugOverlay.updateMemAlloc(elapsedTime,calcFPS);
 
 	}
 
@@ -1207,7 +1156,6 @@ public class GUI {
 	}
 
 	public int getAscent() {
-		// TODO Auto-generated method stub
 		return (int) -mPaint.ascent();
 	}
 
@@ -1228,10 +1176,10 @@ public class GUI {
 
 			} else {
 				CENTER_OFFSET = 0;
-				SCALE_RATIOY = (float) FINAL_WINDOW_HEIGHT
-						/ (float) WINDOW_HEIGHT;
+				SCALE_RATIOY =  (float) FINAL_WINDOW_HEIGHT
+						/  (float) WINDOW_HEIGHT;
 				scaleMatrix = new Matrix();
-				SCALE_RATIOX = WINDOW_WIDTH / FINAL_WINDOW_WIDTH;
+				SCALE_RATIOX = (float) FINAL_WINDOW_WIDTH / (float) WINDOW_WIDTH ;
 				scaleMatrix.setScale(SCALE_RATIOX, SCALE_RATIOY);
 			}
 
@@ -1243,8 +1191,30 @@ public class GUI {
 		debugOverlay.setMemAllocInfo(memInfo);
 	}
 
-	public void calculateDebugMemoryAllocation(long elapsedTime) {
-		// TODO Auto-generated method stub
+
+	public void clearScreen() {
+		
+		Canvas canvas = null;
+
+		try {
+			canvas = canvasSurfaceHolder.lockCanvas(null);
+			synchronized (canvasSurfaceHolder) {
+				canvas.drawARGB(250, 0, 0, 0);
+			}
+		} finally {
+			// do this in a finally so that if an exception is thrown
+			// during the above, we don't leave the Surface in an
+			// inconsistent state
+			if (canvas != null) {
+				canvasSurfaceHolder.unlockCanvasAndPost(canvas);
+			}
+		}
+		
+	}
+
+	public void enableDebugOverlay() {
+		
+		debugOverlay.enable();
 		
 	}
 	

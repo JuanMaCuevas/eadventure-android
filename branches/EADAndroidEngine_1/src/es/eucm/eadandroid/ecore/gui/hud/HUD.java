@@ -52,7 +52,7 @@ public class HUD {
 
 	private void initElements() {
 		
-		mag = new Magnifier(100,6,1.5f,GUI.getInstance().getBmpCpy());
+		mag = new Magnifier(65,5,1.5f,GUI.getInstance().getBmpCpy());
 		inventory = new Inventory();
 		
 	}

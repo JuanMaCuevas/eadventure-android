@@ -102,7 +102,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		// TODO Auto-generated method stub
 		
 		
-		if (!started)
+	if (!started)
 		{
 		this.started=true;
 		this.prepare();
@@ -203,19 +203,12 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 3:
-			
 			this.finishthread(false);
-			mediaPlayer.release();
-			mediaPlayer=null;
 				return true;
-		case 4:
-			
+		case 4:		
 			this.finishthread(true);
-			mediaPlayer.release();
-			mediaPlayer=null;
 				return true;
 		}
-
 		return false;
 	}
 	
@@ -269,15 +262,22 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	{
 		if(!loadgames)
 		{		Intent i = new Intent(this, HomeTabActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		startActivity(i);
 		}
 		else 
 		{
 			Intent i = new Intent(this, HomeTabActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
 			startActivity(i);
 		}
+		
+		mediaPlayer.release();
+		mediaPlayer=null;
+		
+		this.finish();
 	}
 
 	

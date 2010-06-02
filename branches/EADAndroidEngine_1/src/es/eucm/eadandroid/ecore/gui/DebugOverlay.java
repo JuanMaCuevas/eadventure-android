@@ -3,6 +3,7 @@ package es.eucm.eadandroid.ecore.gui;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Debug;
 
 public class DebugOverlay {
@@ -24,11 +25,18 @@ public class DebugOverlay {
 	private float nativeAlloc[];
 	private float nativeSize[];
 	
+	private int fps;
+	
 	private String[] memInfo = null;
 	
 	private int i = 0;
 	
 	private Paint p = new Paint();
+	
+	private Paint textPaint = new Paint();
+	
+	
+	private boolean active = false;
 	
 	public void init() {
 		
@@ -41,12 +49,21 @@ public class DebugOverlay {
 		nativeAlloc = new float[MAX_HEAP_INFO];
 		nativeSize = new float[MAX_HEAP_INFO];
 		
+		fps = 0;
+		p.setTextSize(10*GUI.DISPLAY_DENSITY_SCALE);
+		textPaint.setTextSize(15*GUI.DISPLAY_DENSITY_SCALE);
+	    textPaint.setColor(0XFFFFFFFF);
+		
 	}
 
 	public void draw(Canvas canvas) {
+		
+		if (active) {
 
 		canvas.clipRect(0, 0, DEBUG_SCREEN_WIDTH, DEBUG_SCREEN_HEIGHT);
 		canvas.drawARGB(50, 0, 0, 0);
+			
+		canvas.drawText(String.valueOf((fps)), 10*GUI.DISPLAY_DENSITY_SCALE, 20*GUI.DISPLAY_DENSITY_SCALE, textPaint );
 
 		p.setStrokeWidth(3f);
 
@@ -89,8 +106,7 @@ public class DebugOverlay {
 		canvas.clipRect(DEBUG_INFO_SCREEN_X, 0, DEBUG_SCREEN_WIDTH,
 				DEBUG_SCREEN_HEIGHT);
 
-		canvas.drawARGB(200, 0, 0, 0);
-		p.setTextSize(15f);
+		canvas.drawARGB(100, 0, 0, 0);
 		p.setColor(Color.WHITE);
 
 		float y = 0;
@@ -104,11 +120,15 @@ public class DebugOverlay {
 			}
 
 		}
+		
+		}
 
 	}
 
-	public void updateMemAlloc(long elapsedTime) {
+	public void updateMemAlloc(long elapsedTime, int calcFPS) {
 
+		fps = calcFPS;
+		
 		totalElapsedTime += elapsedTime;
 
 		if (totalElapsedTime > REFRESH_RATIO) {
@@ -136,6 +156,12 @@ public class DebugOverlay {
 		
 		this.memInfo = memInfo;
 
+	}
+
+	public void enable() {
+		
+		active=true;
+		
 	}
 
 

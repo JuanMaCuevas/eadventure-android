@@ -152,15 +152,21 @@ public class LocalGamesActivity extends ListActivity {
 
 		AnimationSet set = new AnimationSet(true);
 
-		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-		animation.setDuration(500);
-		set.addAnimation(animation);
 
-		animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-		animation.setDuration(100);
-		set.addAnimation(animation);
+//		Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+//				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+//				(float) - 10, Animation.RELATIVE_TO_SELF, 0.0f);
+		
+		Animation animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, -1.0f,
+		Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+		0f, Animation.RELATIVE_TO_PARENT, 0.0f);
+		
+		animation2.setDuration(400);
+		set.addAnimation(animation2);
+		
+//		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+//		animation.setDuration(1000);
+//		set.addAnimation(animation);
 
 		controller = new LayoutAnimationController(set, 0.5f);
 

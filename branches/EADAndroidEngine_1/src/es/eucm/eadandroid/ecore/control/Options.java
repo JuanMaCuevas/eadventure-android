@@ -33,16 +33,12 @@
  */
 package es.eucm.eadandroid.ecore.control;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
+import java.util.Iterator;
 
+import android.content.SharedPreferences;
 import android.util.Log;
-import es.eucm.eadandroid.debug.ReportDialog;
 import es.eucm.eadandroid.ecore.data.GameText;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
-import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
+import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 
 /**
  * This class stores the options of the game
@@ -79,65 +75,25 @@ public class Options {
     /**
      * Options of the game stored in a Properties structure
      */
-    private Properties options;
+    
+    private SharedPreferences prefs;
+    
+    private boolean audioEnabled=true;
+    private boolean debugEnabled=true;
+    
+ 
 
     /**
      * Constructor, sets the default options
      */
-    public Options( ) {
-
-        options = new Properties( );
-
-        // Set the default values
-        options.setProperty( "Music", "On" );
-        options.setProperty( "FunctionalEffects", "On" );
-        options.setProperty( "TextSpeed", "1" );
+    public Options(SharedPreferences prefs) {
+    	
+    	this.prefs = prefs;
+    	audioEnabled = prefs.getBoolean(PreferencesActivity.AUDIO_PREF, true);
+    	debugEnabled = prefs.getBoolean(PreferencesActivity.DEBUG_PREF, false);
     }
 
-    /**
-     * Loads the options from a file, if possible
-     * 
-     * @param optionsPath
-     *            Options file path
-     * @param optionsFile
-     *            Options filename
-     */
-    public void loadOptions( String optionsPath, String optionsFile ) {
-
-        InputStream is = ResourceHandler.getInstance( ).getResourceAsStream(ResourceHandler.gamePath + optionsPath + optionsFile + "-opt.xml" );
-        if( is != null ) {
-            try {
-                options.loadFromXML( is );
-                is.close( );
-            }
-            catch( IOException e ) {
-            		Log.d(TAG,"ReportDialog.generateReortError");
-  // TODO             ReportDialog.GenerateErrorReport( e, Game.getInstance( ).isFromEditor( ), "UNKNOWERROR" );
-            }
-        }
-    }
-
-    /**
-     * Saves the options from a file, if possible
-     * 
-     * @param optionsPath
-     *            Options file path
-     * @param optionsFile
-     *            Options filename
-     */
-    public void saveOptions( String optionsPath, String optionsFile ) {
-
-        OutputStream os = ResourceHandler.getInstance( ).getOutputStream( optionsPath + optionsFile + "-opt.xml" );
-        if( os != null ) {
-            try {
-                options.storeToXML( os, "eAdventure game options", "ISO-8859-1" );
-            }
-            catch( IOException e ) {
-        		Log.d(TAG,"ReportDialog.generateReortError");
-        //TODO        ReportDialog.GenerateErrorReport( e, Game.getInstance( ).isFromEditor( ), "UNKNOWERROR" );
-            }
-        }
-    }
+   
 
     /**
      * Returns the state of the music
@@ -145,8 +101,18 @@ public class Options {
      * @return True if the music is active, false otherwise
      */
     public boolean isMusicActive( ) {
-
-        return options.getProperty( "Music" ).equals( "On" );
+    	
+        return audioEnabled;
+    }
+    
+    /**
+     * Returns the state of the music
+     * 
+     * @return True if the music is active, false otherwise
+     */
+    public boolean isDebugActive( ) {
+    	
+        return debugEnabled;
     }
 
     /**
@@ -156,7 +122,9 @@ public class Options {
      */
     public boolean isEffectsActive( ) {
 
-        return options.getProperty( "FunctionalEffects" ).equals( "On" );
+      //  return prefs.getProperty( "FunctionalEffects" ).equals( "On" );
+  	
+    	return true;
     }
 
     /**
@@ -166,7 +134,8 @@ public class Options {
      */
     public int getTextSpeed( ) {
 
-        return Integer.parseInt( options.getProperty( "TextSpeed" ) );
+//        return Integer.parseInt( prefs.getProperty( "TextSpeed" ) );
+    	return TEXT_NORMAL;
     }
 
     /**
@@ -177,7 +146,7 @@ public class Options {
      */
     public void setMusicActive( boolean active ) {
 
-        options.setProperty( "Music", ( active ? "On" : "Off" ) );
+    	audioEnabled = active;
     }
 
     /**
@@ -188,7 +157,8 @@ public class Options {
      */
     public void setEffectsActive( boolean active ) {
 
-        options.setProperty( "FunctionalEffects", ( active ? "On" : "Off" ) );
+    //    prefs.setProperty( "FunctionalEffects", ( active ? "On" : "Off" ) );
+ 
     }
 
     /**
@@ -199,6 +169,6 @@ public class Options {
      */
     public void setTextSpeed( int textSpeed ) {
 
-        options.setProperty( "TextSpeed", String.valueOf( textSpeed ) );
+    //    prefs.setProperty( "TextSpeed", String.valueOf( textSpeed ) );
     }
 }

@@ -74,9 +74,9 @@ public class Magnifier {
 	int exitColor = Color.parseColor("#81F781");
 	
 
-	public Magnifier(int radius, int frameWidth, float zoom, Bitmap bmp) {
+	public Magnifier(int not_scaled_radius, int not_scaled_frameWidth, float zoom, Bitmap bmp) {
 
-		this.radius = radius;
+		this.radius = (int) (not_scaled_radius * GUI.DISPLAY_DENSITY_SCALE);
 		CENTER_OFFSET = radius;
 
 		magBounds = new Rect(0, 0, radius * 2, radius * 2);
@@ -97,8 +97,7 @@ public class Magnifier {
 		pFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
 		pFrame.setColor(0xFF000000);
 		pFrame.setStyle(Paint.Style.STROKE);
-		pFrame.setStrokeWidth(frameWidth);
-//		pFrame.setShadowLayer(4f, -4, 4, Color.BLACK);
+		pFrame.setStrokeWidth(not_scaled_frameWidth * GUI.DISPLAY_DENSITY_SCALE);
 
 		textP = new Paint(Paint.ANTI_ALIAS_FLAG);
 		textP.setColor(0xFFFFFFFF);
@@ -120,8 +119,6 @@ public class Magnifier {
 		magBmp = Bitmap.createBitmap(magBounds.width(), magBounds.height(),
 				Bitmap.Config.RGB_565);
 
-		// float t = (zoom*fBounds.width()-magBounds.width())/2;
-
 		float t = (zoom * magBounds.width() - magBounds.width()) / 2;
 
 		matrix.preTranslate(-t, -t);
@@ -140,11 +137,6 @@ public class Magnifier {
 	}
 
 	private void updateMagPicture() {
-
-		// Bitmap bmpmagaux =
-		// Bitmap.createBitmap(bmpsrc,fBounds.left,fBounds.top,
-		// fBounds.width(), fBounds.height());
-		//bmpmagaux=BitmapFactory.Options
 		
 		 bmpmagaux = Bitmap.createBitmap(bmpsrc,
 				magBoundsIntersected.left, magBoundsIntersected.top,
@@ -157,9 +149,6 @@ public class Magnifier {
 		canvasMag.drawBitmap(bmpmagaux, matrix, null);
 		canvasMag.restore();
 		bmpmagaux = null;
-	/*	bmpmagaux.recycle();
-		System.gc();
-		*/
 
 	}
 

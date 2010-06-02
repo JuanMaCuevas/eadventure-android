@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Debug;
@@ -62,7 +63,6 @@ import es.eucm.eadandroid.ecore.data.SaveGameException;
 import es.eucm.eadandroid.ecore.data.SaveTimer;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class Game implements TimerEventListener , SpecialAssetPaths{
@@ -76,7 +76,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 	private static Game instance = null;
 
-	private String advPath;
 	
 	 /**
      * Constant for loading state
@@ -230,8 +229,18 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      */
     
     private  GameState currentState;
+    
+    private SharedPreferences prefs;
 
-    public GameState getCurrentState() {
+    public SharedPreferences getPrefs() {
+		return prefs;
+	}
+
+	public void setPrefs(SharedPreferences prefs) {
+		this.prefs = prefs;
+	}
+
+	public GameState getCurrentState() {
 		return currentState;
 	}
 
@@ -393,11 +402,11 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	}
 
 	public void setAdventurePath(String advPath) {
-		this.advPath = advPath;
+		this.adventurePath = advPath;
 	}
 
 	public String getAdventurePath() {
-		return this.advPath;
+		return this.adventurePath;
 	}
 	
     /**
@@ -412,156 +421,151 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     }
 
 	
-    public void start() {
+	public void start() {
 
-    	try {
-    		//DEBUG
-    		Log.e("InicioGame",String.valueOf(Debug.getNativeHeapAllocatedSize()));
-    		
-    		this.timerManager = TimerManager.getInstance( );
-    		totalTime = 0;
-    		long elapsedTime = 0;
-    		long oldTime = System.currentTimeMillis( );
-    		long lastFps = 0;
-    		long time;
-    		int fps = 0;
-    		int oldFps = 0;
+		try {
+			// DEBUG
+			Log.e("InicioGame", String.valueOf(Debug
+					.getNativeHeapAllocatedSize()));
 
-    		// Load the game descriptor (it holds the info of the GUI and the player)
-    		gameDescriptor = Loader.loadDescriptorData( ResourceHandler.getInstance( ) );
+			this.timerManager = TimerManager.getInstance();
+			totalTime = 0;
+			long elapsedTime = 0;
+			long oldTime = System.currentTimeMillis();
+			long lastFps = 0;
+			long time;
+			int fps = 0;
+			int oldFps = 0;
 
-    		if( gameDescriptor == null ) {
-    			// TODO possibly add dialog to tell player the game couldn't get loaded
-    			return;
-    		}
-    		gameDescriptor.setProjectName( adventureName );
+			// Load the game descriptor (it holds the info of the GUI and the
+			// player)
+			gameDescriptor = Loader.loadDescriptorData(ResourceHandler
+					.getInstance());
 
-    		//    GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
+			if (gameDescriptor == null) {
+				// TODO possibly add dialog to tell player the game couldn't get
+				// loaded
+				return;
+			}
+			gameDescriptor.setProjectName(adventureName);
 
-    		//      GUI.create(mSurfaceHolder);
+			// GUI.setGraphicConfig( gameDescriptor.getGraphicConfig( ) );
 
-    		currentState = new GameStateLoading( );
+			// GUI.create(mSurfaceHolder);
 
-    		//  GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ), gameDescriptor.isGUICustomized( ) );
+			currentState = new GameStateLoading();
 
-    		// Load the options
-    		options = new Options( );
-    		options.loadOptions( adventurePath, adventureName );
+			// GUI.getInstance( ).initGUI( gameDescriptor.getGUIType( ),
+			// gameDescriptor.isGUICustomized( ) );
 
-    		// Init the assessment and adaptation engines
-    		//         adaptationEngine = new AdaptationEngine( );
-    		assessmentEngine = new AssessmentEngine( );
+			// Load the options
+			options = new Options(prefs);
+	//		options.loadOptions(adventurePath,adventureName);
+			
+			if (options.isDebugActive()) 
+				GUI.getInstance().enableDebugOverlay();
+
+			// Init the assessment and adaptation engines
+			// adaptationEngine = new AdaptationEngine( );
+			assessmentEngine = new AssessmentEngine();
+
+			currentChapter = 0;
+
+			boolean needsName = false;
+
+			for (ChapterSummary chapter : gameDescriptor.getChapterSummaries()) {
+				AssessmentProfile ap = AssessmentEngine
+						.loadAssessmentProfile(chapter.getAssessmentName());
+				if (!needsName && ap != null && ap.isSendByEmail())
+					needsName = true;
+			}
+
+			if (needsName) {
+				// ASSESSMENT
+				String name = "player1";
+				gameDescriptor.setPlayerName(name);
+				assessmentEngine.setPlayerName(name);
+			}
 
 
-    		currentChapter = 0;
+			Log.e("InicioGame1", String.valueOf(Debug
+					.getNativeHeapAllocatedSize()));
 
-    		boolean needsName = false;
+			while (!gameOver) {
 
-    		for( ChapterSummary chapter : gameDescriptor.getChapterSummaries( ) ) {
-    			AssessmentProfile ap = AssessmentEngine.loadAssessmentProfile( chapter.getAssessmentName( ) );
-    			if( !needsName && ap != null && ap.isSendByEmail( ) )
-    				needsName = true;
-    		}
+				loadCurrentChapter();
+				if (this.LoadedGame) {
+					this.LoadedGame = false;
+					this.load(this.LoadingGame);
+				}
 
-    		if( needsName ) {
-    			// DebugLog.general( "Asks for player name" );
-    			//   String name = JOptionPane.showInputDialog( null, TC.get( "Reports.InputReportName" ), TC.get( "Reports.NameInput" ), JOptionPane.QUESTION_MESSAGE );
-    			//ASSESSMENT
-    			String name="player1";
-    			gameDescriptor.setPlayerName( name );
-    			assessmentEngine.setPlayerName( name );
-    		}
-    		
-            FileWriter file = new FileWriter(Paths.eaddirectory.ROOT_PATH+"memoryLog.csv");
+				finishloadingdialog();
 
-            Log.e("InicioGame1",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+				GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse
+												// !!
 
-    		while( !gameOver ) {
-    			//TODO esto es solo para probar que caga bien el juego
-    			//FIXME habra que cambiar varias cosas
-    			//2) que no haga un loadcurrentchapter, si lo pongo despues me peta xq algo no esta inicializado
-    			//3)intetar hacerlo fuera de alguna manera
-    			loadCurrentChapter();
-    			if(this.LoadedGame)
-    			{
-    				this.LoadedGame=false;
-    				this.load(this.LoadingGame);
-    			} 
-    			
-    			finishloadingdialog();
-    			
-    			GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse !! 
+				Log.e("InicioGame2", String.valueOf(Debug
+						.getNativeHeapAllocatedSize()));
 
-    			
-    			Log.e("InicioGame2",String.valueOf(Debug.getNativeHeapAllocatedSize()));
-    			
-    			while( !nextChapter && !gameOver ) {
-    				
-    			if(this.globalState==STATE_RUNNING)
-    			{	
-    				time = System.currentTimeMillis( );
-    				elapsedTime = time - oldTime;
-    				oldTime = time;
-    				totalTime += elapsedTime;
-    				if( time - lastFps < 1000 ) {
-    					fps++;
-    				}
-    				else {
-    					lastFps = time;
-    					oldFps = fps;
-    					fps = 1;
-    				}
+				while (!nextChapter && !gameOver) {
 
-    				GUI.getInstance().updateDebugInfo(oldFps,elapsedTime);
-    				
-    				//generation of log data about the usage of native heap allocation
-    				// csv file with the fields: free memory, allocated memory, heap size
-    				
-    				writeMemoryUsageLog(file,elapsedTime);
-    				    				   				    				
-    				currentState.mainLoop( elapsedTime, oldFps );
-    				
-    				MultimediaManager.getInstance( ).update( );
-    				
-    				
-    				try {
-    					Thread.sleep( Math.max((10 - (System.currentTimeMillis( ) - time)), 0) );
-    				}
-    				catch( InterruptedException e ) {
+					if (this.globalState == STATE_RUNNING) {
+						time = System.currentTimeMillis();
+						elapsedTime = time - oldTime;
+						oldTime = time;
+						totalTime += elapsedTime;
+						if (time - lastFps < 1000) {
+							fps++;
+						} else {
+							lastFps = time;
+							oldFps = fps;
+							fps = 1;
+						}
 
-    				}
-    			}else{
-    					Thread.sleep( 1000);
-    				}
-    				
-    			}
+						GUI.getInstance().updateDebugInfo(oldFps, elapsedTime);
 
-    			//If there is an assessment profile, show the "Save Report" dialog
-    			
-    			while(!assessmentEngine.isEndOfChapterFeedbackDone( )) {
-    				Thread.sleep( 100 );
-    			}
+						currentState.mainLoop(elapsedTime, oldFps);
 
-    			if( currentChapter == gameDescriptor.getChapterSummaries( ).size( ) )
-    				gameOver = true;
-    		}
-    		
-            file.close();
+						MultimediaManager.getInstance().update();
 
-    	}
-    	catch( Exception e ) {
+						try {
+							Thread.sleep(Math.max((10 - (System
+									.currentTimeMillis() - time)), 0));
+						} catch (InterruptedException e) {
 
-    		e.printStackTrace();
-    	}
+						}
+					} else {
+						Thread.sleep(1000);
+					}
 
-    	try {
-    		stop( );
-    	}
-    	catch( Exception e ) {
-    		e.printStackTrace();
-    	}
+				}
+				
+				GUI.getInstance().clearScreen();
 
-    }
+				// If there is an assessment profile, show the "Save Report"
+				// dialog
+
+				while (!assessmentEngine.isEndOfChapterFeedbackDone()) {
+					Thread.sleep(100);
+				}
+
+				if (currentChapter == gameDescriptor.getChapterSummaries()
+						.size())
+					gameOver = true;
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		try {
+			stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	
 	 private void finishloadingdialog() {
 		 Handler handler=GameThread.getInstance().getHandler();
@@ -1232,7 +1236,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      */
     public void saveOptions( ) {
 
-        options.saveOptions( adventurePath, adventureName );
+   //     options.saveOptions( adventurePath, adventureName );
     }
     
     
@@ -1559,10 +1563,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
                 currentState.registerTouchListener(sceneTouchListener);
 
                  break;    
-                
-            case STATE_OPTIONS:
- // GAMESTATE               currentState = new GameStateOptions( );
-                break;
+
         }
     }
     

@@ -44,8 +44,6 @@ public class ActivityVideoIntro extends Activity implements
 	MediaPlayer video = null;
 	SurfaceHolder holder = null;
 
-	private static String languageFile = ReleaseFolders.LANGUAGE_UNKNOWN;
-
 	public class ActivityHandlerInstalling {
 
 		public static final int FINISHISTALLING = 0;
@@ -134,37 +132,11 @@ public class ActivityVideoIntro extends Activity implements
 			}
 		});
 
-		// Load the configuration
-		ConfigData.loadFromXML(ReleaseFolders.configFileEngineRelativePath());
 
-		/* We«e got to set the language from the device locale ;D */
-		setLanguage(ReleaseFolders.getLanguageFromPath(ConfigData
-				.getLanguangeFile()));
 
 	}
 
-	/**
-	 * Sets the current language of the editor. Accepted values are
-	 * {@value #LANGUAGE_ENGLISH} & {@value #LANGUAGE_ENGLISH}. This method
-	 * automatically updates the about, language strings, and loading image
-	 * parameters.
-	 * 
-	 * The method will reload the main window if reloadData is true
-	 * 
-	 * @param language
-	 */
-	private static void setLanguage(String language) {
-
-		if (true) {
-			ConfigData.setLanguangeFile(ReleaseFolders
-					.getLanguageFilePath(language), ReleaseFolders
-					.getAboutFilePath(language));
-			languageFile = language;
-			TC.loadStrings(ReleaseFolders
-					.getLanguageFilePath4Engine(languageFile));
-		}
-	}
-
+	
 	public void surfaceCreated(SurfaceHolder holder2) {
 		video = new MediaPlayer();
 		video.setScreenOnWhilePlaying(true);

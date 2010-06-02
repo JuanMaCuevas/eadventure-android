@@ -36,7 +36,6 @@ package es.eucm.eadandroid.ecore.control;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
-
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
 import es.eucm.eadandroid.ecore.gui.hud.elements.DataSet;
 

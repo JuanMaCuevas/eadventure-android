@@ -1,6 +1,7 @@
 package es.eucm.eadandroid.ecore;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,12 +14,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Picture;
 import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -38,9 +42,12 @@ import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.Toast;
 import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
+import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
+import es.eucm.eadandroid.ecore.control.config.ConfigData;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
@@ -54,7 +61,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private GameSurfaceView gameSurfaceView = null;
 
 	private View assesmentLayout;
-	private View mbutton;
+	private View close_button;
+	private View report_button;
 	private WebView webview;
 
 	private String adventureName;
@@ -64,6 +72,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	ProgressDialog dialog;
 
 	boolean onescaled = false;
+	
+	private static String languageFile = ReleaseFolders.LANGUAGE_UNKNOWN;
 
 	/**
 	 * Local games activity handler messages . Handled by
@@ -95,7 +105,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				String text = b.getString("html");
 				webview.loadData(text, "text/html", "utf-8");
 				assesmentLayout.setVisibility(View.VISIBLE);
-				mbutton.setVisibility(View.VISIBLE);
+				close_button.setVisibility(View.VISIBLE);
+				report_button.setVisibility(View.VISIBLE);
 
 				break;
 			}
@@ -106,11 +117,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			case ActivityHandlerMessages.GAME_OVER:
 				finishapplication();
 				finish();
-
 				break;
 
 			case ActivityHandlerMessages.LOAD_GAMES:
-				StartLoadApplication();
+				startLoadApplication();
 				finish();
 				break;
 			case ActivityHandlerMessages.FINISH_LOADING:
@@ -130,9 +140,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	};
 
-	private void StartLoadApplication() {
+	private void startLoadApplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
@@ -155,6 +166,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void finishapplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.GAMES);
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
@@ -213,33 +225,103 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			String advPath = Paths.eaddirectory.GAMES_PATH + adventureName
 					+ "/";
 			GameThread.getInstance().setAdventurePath(advPath);
+			GameThread.getInstance().setAdventureName(adventureName);
+			
+			
 		} else {
 			this.fromvideo = true;
 			GameThread.getInstance().setHandler(ActivityHandler);
 		}
 
 		assesmentLayout = findViewById(R.id.hidecontainer);
-		mbutton = findViewById(R.id.hideme1);
+		close_button = findViewById(R.id.close_button);
+		report_button = findViewById(R.id.report_button);
 		webview = (WebView) findViewById(R.id.webview);
 		webview.setVerticalScrollBarEnabled(true);
 		webview.setVerticalScrollbarOverlay(true);
 		assesmentLayout.setBackgroundColor(Color.BLACK);
 		// webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		mbutton.setOnClickListener(new OnClickListener() {
+		close_button.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 
-				Game.getInstance().getAssessmentEngine().statedone();
+				Game.getInstance().getAssessmentEngine().setStateDone();
 				assesmentLayout.setVisibility(View.INVISIBLE);
-				mbutton.setVisibility(View.INVISIBLE);
+				close_button.setVisibility(View.INVISIBLE);
+				report_button.setVisibility(View.INVISIBLE);
 
 			}
 		});
+		
+		report_button.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+			
+				try {
+							
+				Picture p = webview.capturePicture();
+				Bitmap report = Bitmap.createBitmap(p.getWidth(), p.getHeight(), Bitmap.Config.RGB_565);
+				Canvas c = new Canvas(report);
+				p.draw(c);
+				
+				FileOutputStream temp = new FileOutputStream(Paths.eaddirectory.REPORTS_PATH+"/report.jpeg");
+				report.compress(CompressFormat.JPEG, 100, temp);
+				
+		
+				final Intent emailIntent = new Intent(
+						android.content.Intent.ACTION_SEND);
+
+				emailIntent.setType("text/html");
+//				emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
+//						new String[] { address.getText().toString() });
+				emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+						"Report");			
+				emailIntent.setType("image/jpeg");			
+				emailIntent.putExtra(Intent.EXTRA_STREAM,Uri.parse("file://"+Paths.eaddirectory.REPORTS_PATH+"/report.jpeg"));
+
+				ECoreActivity.this.startActivityForResult(emailIntent,0);
+				
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			
+			}
+		});
+		
+		// Load the configuration
+		ConfigData.loadFromXML(ReleaseFolders.configFileEngineRelativePath());
+
+		/* We«e got to set the language from the device locale ;D */
+		setLanguage(ReleaseFolders.getLanguageFromPath(ConfigData
+				.getLanguangeFile()));
 		
 		//DEBUG
 		Log.e("Inicio core2",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 		
 	}
+	
+	/**
+	 * Sets the current language of the editor. Accepted values are
+	 * {@value #LANGUAGE_ENGLISH} & {@value #LANGUAGE_ENGLISH}. This method
+	 * automatically updates the about, language strings, and loading image
+	 * parameters.
+	 * 
+	 * The method will reload the main window if reloadData is true
+	 * 
+	 * @param language
+	 */
+	private static void setLanguage(String language) {
+
+		if (true) {
+			ConfigData.setLanguangeFile(ReleaseFolders
+					.getLanguageFilePath(language), ReleaseFolders
+					.getAboutFilePath(language));
+			languageFile = language;
+			TC.loadStrings(ReleaseFolders
+					.getLanguageFilePath4Engine(languageFile));
+		}
+	}
+
 
 	@Override
 	protected void onResume() {
@@ -263,12 +345,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 							.stopBackgroundMusic();
 		}
 
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		// Log.d("acaba la aplicacion","XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    ");
 	}
 
 	/**
@@ -329,10 +405,32 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	 * 
 	 * @see android.app.Activity#dispatchKeyEvent(android.view.KeyEvent)
 	 */
-	public boolean dispatchKeyEvent(KeyEvent event) {
-
+	public boolean processKeyEvent(KeyEvent event) {
+		
 		return GameThread.getInstance().processKeyEvent(event);
 
+	}
+	
+	
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		Log.e("ECoreActivity",String.valueOf(event.getKeyCode()));
+		
+		if (event.getKeyCode()==KeyEvent.KEYCODE_BACK){
+			if (assesmentLayout.getVisibility()!=View.VISIBLE)
+			   showQuitDialog(false);
+			return true;
+		}
+		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
+	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+	        startActivityForResult(intent, 0);
+	        return true;
+		}
+			
+		else return super.onKeyDown(keyCode, event);
 	}
 
 	/*
@@ -373,6 +471,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	}
 
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		
+		boolean prepare = false;
+		
+		if (assesmentLayout.getVisibility()!=View.VISIBLE) {
+			
+		prepare = true;
+		
 		Options options = Game.getInstance().getOptions();
 		menu.removeItem(0);
 		menu.removeItem(1);
@@ -393,22 +498,16 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				menu.add(0, 1, 0, "Music on").setIcon(
 						android.R.drawable.ic_lock_silent_mode_off);
 
-		/*
-		 * if(Game.getInstance().getFunctionalScene( )!=null) if
-		 * (options.isEffectsActive()) menu.add(0, 2, 0,
-		 * "Effects off").setIcon(android
-		 * .R.drawable.ic_menu_close_clear_cancel); else menu.add(0, 2, 0,
-		 * "Effects on").setIcon(android.R.drawable.ic_menu_view);
-		 */
-
 		menu.add(0, 3, 0, "Quit Game").setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
 		menu.add(0, 4, 0, "Load game").setIcon(
 				android.R.drawable.ic_menu_directions);
 		menu.add(0, 5, 0, "Resize").setIcon(
 				android.R.drawable.ic_menu_directions);
+		
+		}
 
-		return true;
+		return prepare;
 	}
 	
 	private boolean saveGame(String fileName) {
@@ -436,7 +535,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		FileOutputStream sshot;
 		
 			sshot = new FileOutputStream(
-					Paths.eaddirectory.SAVED_GAMES_PATH + adventureName
+					Paths.eaddirectory.SAVED_GAMES_PATH + adventurename
 							+ "/" + fileName + ".txt.png");
 
 			int width = 200;
@@ -454,36 +553,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			e.printStackTrace();
 			saved = false;
 		}
-		
-
-//		String time = this.currentDate();
-//
-//		Game.getInstance().save(
-//				Paths.eaddirectory.SAVED_GAMES_PATH + adventurename + "/"
-//						+ time + ".txt");
-//
-//		FileOutputStream sshot;
-//		
-//			sshot = new FileOutputStream(
-//					Paths.eaddirectory.SAVED_GAMES_PATH + adventureName
-//							+ "/" + time + ".txt.png");
-//
-//			int width = 200;
-//			int height = (GUI.FINAL_WINDOW_HEIGHT * 200)
-//					/ GUI.FINAL_WINDOW_WIDTH;
-//
-//			Bitmap temp = Bitmap.createScaledBitmap(GUI.getInstance()
-//					.getBmpCpy(), width, height, false);
-//
-//			temp.compress(CompressFormat.PNG, 50, sshot);
-//
-//			temp = null;
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			saved = false;
-//		}
-//		
+				
 		return saved;
 		
 	}
@@ -494,10 +564,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	}
 
-	private void showSaveDialog(final boolean quit, final boolean load) {
+	private void showSaveDialog(boolean quit,boolean load) {
 
 		final EditText input = new EditText(this);
 
+		final boolean aux_quit = quit;
+		final boolean aux_load = load;
+		
 		new AlertDialog.Builder(this).setTitle("Save game").setMessage(
 				"Set slot name").setView(input).setPositiveButton(
 				"Ok", new DialogInterface.OnClickListener() {
@@ -505,8 +578,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 						Editable value = input.getText();
 						if (saveGame(value.toString())) {
 							showToast("Game saved");
-							if (quit)
-								finishthread(load);
+							if (aux_quit)
+								finishthread(aux_load);
 						} else
 							showToast("Error saving game");
 					}
@@ -518,20 +591,22 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	}
 
-	private void showQuitDialog(final boolean load){
+	private void showQuitDialog(boolean load){
+		
+		final boolean aux_load = load;
 		
 		new AlertDialog.Builder(this).setTitle("Quit game").setMessage(
 		"Do you want to save the game?").setPositiveButton("OK",
 		new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,
 					int whichButton) {
-				showSaveDialog(true,load);
+				showSaveDialog(true,aux_load);
 			}
 		}).setNeutralButton("No",
 		new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,
 					int whichButton) {
-				finishthread(load);
+				finishthread(aux_load);
 			}
 		}).setNegativeButton("Cancel",
 		new DialogInterface.OnClickListener() {

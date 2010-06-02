@@ -1,23 +1,12 @@
 package es.eucm.eadandroid.ecore.control;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Vector;
 
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.os.Looper;
-import android.util.FloatMath;
 import android.util.Log;
-
 import es.eucm.eadandroid.common.data.chapter.GpsRule;
-import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
-import es.eucm.eadandroid.utils.ActivityPipe;
-//import es.eucm.eadandroid.utils.CreateFile;
 
 public class GpsManager {
 

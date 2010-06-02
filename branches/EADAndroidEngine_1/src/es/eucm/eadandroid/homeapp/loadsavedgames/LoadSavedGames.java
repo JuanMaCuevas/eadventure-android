@@ -71,18 +71,12 @@ public class LoadSavedGames extends ExpandableListActivity {
 	}
 
 	private void nogames() {
-
 		setListAdapter(null);
-		// Toast.makeText(this, "no games", Toast.LENGTH_LONG).show();
-
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Searchingsavedgames gettingdata = new Searchingsavedgames(
-				ActivityHandler);
-		gettingdata.start();
 	}
 
 	@Override
@@ -218,11 +212,16 @@ public class LoadSavedGames extends ExpandableListActivity {
 		return false;
 	}
 
-	protected void refresh() {
+	private void refresh() {
 		Searchingsavedgames gettingdata = new Searchingsavedgames(
 				ActivityHandler);
 		gettingdata.start();
-
+	}
+	
+	@Override
+	protected void onResume(){
+		super.onResume();
+		refresh();
 	}
 
 	/**
@@ -340,6 +339,8 @@ public class LoadSavedGames extends ExpandableListActivity {
 		public boolean hasStableIds() {
 			return true;
 		}
+		
+		
 
 	}
 }

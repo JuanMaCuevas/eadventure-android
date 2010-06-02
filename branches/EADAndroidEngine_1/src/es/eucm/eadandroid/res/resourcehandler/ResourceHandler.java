@@ -130,16 +130,8 @@ public class ResourceHandler implements InputStreamCreator {
 	 *            Filename of the zip
 	 */
 	public void setGamePath(String gamePath) {
-
-	
-
-			Log.d("GameFolderName", "Nombre " + gamePath);
-			
+		
 			ResourceHandler.gamePath = gamePath;
-		//	zipFile = new ZipFile(zipFilename);
-
-
-
 	}
 	
 	public String getMediaPath(String a)

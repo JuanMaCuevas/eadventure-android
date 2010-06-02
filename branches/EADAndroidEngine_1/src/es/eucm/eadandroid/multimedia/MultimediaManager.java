@@ -212,6 +212,20 @@ public class MultimediaManager {
 		
 		return scaledImage;
 	}
+	
+	public Bitmap loadScaledImage(String bitmapPath, int wfactor, int hfactor,int category) {
+		
+		Bitmap image = loadImage(bitmapPath, category);
+
+		Bitmap scaledImage = null;
+		
+		  if( image != null ) {
+			
+			 scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * wfactor, image.getHeight() * hfactor, false);
+		  }
+		
+		return scaledImage;
+	}
 
 	/**
 	 * Returns a scaled image that fits in the game screen.

@@ -48,7 +48,7 @@ public class GameStateLoading extends GameState {
     @Override
     public void mainLoop( long elapsedTime, int fps ) {
 
-    	GUI.getInstance().loading(10);
+    	GUI.getInstance().loading();
 
     }
 
