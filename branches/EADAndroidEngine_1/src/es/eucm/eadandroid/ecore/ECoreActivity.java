@@ -415,20 +415,18 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		Log.e("ECoreActivity",String.valueOf(event.getKeyCode()));
 		
 		if (event.getKeyCode()==KeyEvent.KEYCODE_BACK){
 			if (assesmentLayout.getVisibility()!=View.VISIBLE)
 			   showQuitDialog(false);
 			return true;
 		}
-		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
-	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-	        startActivityForResult(intent, 0);
-	        return true;
-		}
+//		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
+//	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+//	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+//	        startActivityForResult(intent, 0);
+//	        return true;
+//		}
 			
 		else return super.onKeyDown(keyCode, event);
 	}
