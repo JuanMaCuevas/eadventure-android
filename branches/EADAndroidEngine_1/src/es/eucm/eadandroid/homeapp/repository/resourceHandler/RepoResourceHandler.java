@@ -141,9 +141,16 @@ public class RepoResourceHandler {
 	public static void unzip(String path_from,String path_to, String name,boolean deleteZip) {
 		// TODO la ruta a las carpetas me las tengo que crear cuando instalo
 		// pero por ahora lo dejo aqui
+		
+
 
 		StringTokenizer separator = new StringTokenizer(name, ".", true);
 		String game_name = separator.nextToken();
+		
+		File f = new File(path_to+game_name);
+		
+		if (f.exists())
+			removeDirectory(f);
 
 		separator = new StringTokenizer(path_to + game_name, "/", true);
 
@@ -161,8 +168,7 @@ public class RepoResourceHandler {
 				else
 					(new File(total_path)).mkdir();
 
-			} else
-				total_path = total_path + separator.nextToken();
+			} else total_path = total_path + separator.nextToken();
 
 		}
 
