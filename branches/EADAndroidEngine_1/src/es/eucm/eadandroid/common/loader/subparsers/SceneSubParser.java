@@ -109,7 +109,7 @@ public class SceneSubParser extends SubParser {
     private static final int SUBPARSING_BARRIER = 4;
 
     private static final int SUBPARSING_TRAJECTORY = 5;
-    private static final int SUBPARSING_GPS = 6;
+ 
 
     /**
      * Stores the current element being parsed
@@ -465,11 +465,7 @@ public class SceneSubParser extends SubParser {
             }
             
          // Subparse GPS
-            else if( sName.equals( "gps" ) ) {
-            	subParsing = SUBPARSING_GPS;
-                subParser = new GpsSubParser( chapter, scene );
-                
-            }
+
 
         }
 
@@ -663,14 +659,6 @@ public class SceneSubParser extends SubParser {
             }
         }
         
-        else if( subParsing == SUBPARSING_GPS ) {
-            // Spread the call
-            subParser.endElement( namespaceURI, sName, sName );
-
-            if( sName.equals( "gps" ) ) {
-                subParsing = SUBPARSING_NONE;
-            }
-        }
         
         
 

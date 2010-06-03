@@ -717,7 +717,14 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
             int id = timerManager.addTimer( timer, this, timer.getTime( ) );
             gameTimers.put( new Integer( id ), timer );
         }
-
+        
+        
+        //TODO todo lo del gps
+        /*		for (int i = 0; i < scene.getGpsRules().size(); i++)
+		GpsManager.getInstance().addgpsrules(scene.getGpsRules().get(i));
+*/
+        if (this.gameData.getGpsRules().size()>0)
+        {	
 		if (GpsManager.getInstance() == null) {
 				GpsManager.create();
 
@@ -729,8 +736,20 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 				msg.setData(b);
 				msg.sendToTarget();
 			}
-        
+		
+		GpsManager.getInstance().addallgpsrules(this.gameData.getGpsRules());
+		
+		
+		}
 
+        
+        if (this.gameData.getQrrules().size()>0)
+        {
+        	if (QrcodeManager.getInstance()==null)
+        	QrcodeManager.create();
+        	
+        	QrcodeManager.getInstance().addAllQRRules(this.gameData.getQrrules());           	
+        }
         currentState = new GameStateNextScene( );
 
         nextChapter = false;

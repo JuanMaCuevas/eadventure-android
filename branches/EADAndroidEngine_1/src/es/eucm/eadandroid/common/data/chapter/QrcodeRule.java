@@ -1,23 +1,18 @@
 package es.eucm.eadandroid.common.data.chapter;
 
 import android.graphics.Color;
-import es.eucm.eadandroid.common.data.Documented;
 import es.eucm.eadandroid.common.data.chapter.conditions.Conditions;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
 
-
-
-
-public class GpsRule implements Cloneable, Documented {
-
-
+public class QrcodeRule {
+	
 	public static final double DEFAULT_LATITUDE = 0;
 	public static final double DEFAULT_LONGITUD = 0;
 
  //   private long seconds;
     
-    private double latitude;
-    private double longitude;
+    private String Password;
+    
 
     private Conditions initCond;
 
@@ -27,11 +22,18 @@ public class GpsRule implements Cloneable, Documented {
 
 
 
-    private String documentation;
+    public String getPassword() {
+		return Password;
+	}
 
-    private int Radio;
+	public void setPassword(String password) {
+		Password = password;
+	}
 
-    /**
+
+	private String documentation;
+
+/**
      * to denotate which gps we are getting;
      */
     private String sceneName;
@@ -44,62 +46,34 @@ public class GpsRule implements Cloneable, Documented {
 		sceneName = id;
 	}
 
-	public int getRadio() {
-		return Radio;
-	}
 
-	public void setRadio(int radio) {
-		Radio = radio;
-	}
-
-	private int fontColor = Color.BLACK;
+private int fontColor = Color.BLACK;
 
     private int borderColor = Color.WHITE;
 
-    public GpsRule( double latitud,double longitud, Conditions init, Conditions end, Effects effect ) {
+    public QrcodeRule( String pasword, Conditions init, Conditions end, Effects effect ) {
 
-        this.latitude = latitud;
-        this.longitude = longitud;
+       this.Password=pasword;
         this.initCond = init;
         this.endCond = end;
         this.effect = effect;
 
-        Radio=50;
-       
-        
-        
-        
-        
+   }
+
+    public QrcodeRule( String password ) {
+
+        this( password, new Conditions( ), new Conditions( ), new Effects( ) );
     }
 
-    public GpsRule( double latitud, double longitud ) {
+    public QrcodeRule( ) {
 
-        this( latitud,longitud, new Conditions( ), new Conditions( ), new Effects( ) );
-    }
-
-    public GpsRule( ) {
-
-        this(0,0);
+        this("");
     }
 
 
 
 
-    public double getLatitude() {
-		return latitude;
-	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
 
 	/**
      * @return the initCond
@@ -211,7 +185,7 @@ public class GpsRule implements Cloneable, Documented {
     @Override
     public Object clone( ) throws CloneNotSupportedException {
 
-    	GpsRule t = (GpsRule) super.clone( );
+    	QrcodeRule t = (QrcodeRule) super.clone( );
         t.documentation = ( documentation != null ? new String( documentation ) : null );
         t.effect = ( effect != null ? (Effects) effect.clone( ) : null );
         t.endCond = ( endCond != null ? (Conditions) endCond.clone( ) : null );

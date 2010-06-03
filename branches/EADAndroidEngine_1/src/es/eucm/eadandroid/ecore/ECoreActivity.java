@@ -21,6 +21,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
+import es.eucm.eadandroid.ecore.control.QrcodeManager;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -153,6 +155,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, GpsManager.getInstance().getListener());
+		
+		
 		
 	}
 
@@ -421,14 +425,29 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			   showQuitDialog(false);
 			return true;
 		}
-//		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
-//	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-//	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-//	        startActivityForResult(intent, 0);
-//	        return true;
-//		}
+		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
+	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+	        startActivityForResult(intent, 0);
+	        return true;
+		}
 			
 		else return super.onKeyDown(keyCode, event);
+	}
+
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode==0)
+			if (resultCode == RESULT_OK) {
+	            String contents = data.getStringExtra("SCAN_RESULT");
+	            String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+			    QrcodeManager.getInstance().updateQRcode(contents);
+			}
+		
 	}
 
 	/*

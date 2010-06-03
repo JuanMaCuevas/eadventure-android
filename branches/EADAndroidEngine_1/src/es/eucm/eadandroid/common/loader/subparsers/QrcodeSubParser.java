@@ -4,14 +4,13 @@ import org.xml.sax.Attributes;
 
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.GpsRule;
-import es.eucm.eadandroid.common.data.chapter.Timer;
+import es.eucm.eadandroid.common.data.chapter.QrcodeRule;
 import es.eucm.eadandroid.common.data.chapter.conditions.Conditions;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
-import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 
+ 
 
-
-public class GpsSubParser extends SubParser {
+public class QrcodeSubParser extends SubParser {
 
     /* Attributes */
     /**
@@ -37,7 +36,7 @@ public class GpsSubParser extends SubParser {
     /**
      * Stores the current timer being parsed
      */
-    private GpsRule Gpsrule;
+    private QrcodeRule qrrule;
 
     /**
      * Stores the current conditions being parsed
@@ -64,7 +63,7 @@ public class GpsSubParser extends SubParser {
      * @param chapter
      *            Chapter data to store the read data
      */
-    public GpsSubParser( Chapter chapter ) {
+    public QrcodeSubParser( Chapter chapter ) {
 
         super( chapter );
         this.chapter=chapter;
@@ -84,27 +83,24 @@ public class GpsSubParser extends SubParser {
         	// If it is a timer tag, create a new timer with its time
         	//<timer countDown="yes" displayName="timer" multipleStarts="yes" 
         	//runsInLoop="yes" showTime="no" showWhenStopped="no" time="55" usesEndCondition="yes">
-            if( sName.equals( "gps" ) ) {
+            if( sName.equals( "qrcode" ) ) {
                double longitud=0;
                double latitud=0;
               int radio=0;
                String sceneName="";
+               String password="";
 
                 for( int i = 0; i < attrs.getLength( ); i++ ) {
-                    if( attrs.getLocalName( i ).equals( "longitud" ) )
-                    	longitud = Double.parseDouble(attrs.getValue( i ));
-                    if( attrs.getLocalName( i ).equals( "latitud" ) )
-                    	latitud = Double.parseDouble(attrs.getValue( i ));
-                    if( attrs.getLocalName( i ).equals( "radio" ) )
-                    	radio = Integer.parseInt(attrs.getValue( i ));
+ 
                     if( attrs.getLocalName( i ).equals( "sceneName" ) )
                     	sceneName = attrs.getValue( i );
+                    if( attrs.getLocalName( i ).equals( "password" ) )
+                    	password = attrs.getValue( i );
                    
                 }
 
-                Gpsrule = new GpsRule(latitud,longitud);
-               Gpsrule.setRadio(radio);
-                Gpsrule.setSceneName(sceneName);
+                qrrule = new QrcodeRule(password);
+                qrrule.setSceneName(sceneName);
                 
                 
             }
@@ -144,13 +140,14 @@ public class GpsSubParser extends SubParser {
         if( subParsing == SUBPARSING_NONE ) {
 
             // If it is a timer tag, add it to the game data
-            if( sName.equals( "gps" ) ) {
-                chapter.addGpsRule(Gpsrule);
+            if( sName.equals( "qrcode" ) ) {
+            	chapter.addQrRule(qrrule);
+             
             }
 
             // If it is a documentation tag, hold the documentation in the slidescene
             else if( sName.equals( "documentation" ) ) {
-                Gpsrule.setDocumentation( currentString.toString( ).trim( ) );
+            	qrrule.setDocumentation( currentString.toString( ).trim( ) );
             }
 
             // Reset the current string
@@ -164,7 +161,7 @@ public class GpsSubParser extends SubParser {
 
             // If the condition tag is being closed
             if( sName.equals( "init-condition" ) ) {
-                Gpsrule.setInitCond( currentConditions );
+            	qrrule.setInitCond( currentConditions );
 
                 // Switch the state
                 subParsing = SUBPARSING_NONE;
@@ -172,10 +169,10 @@ public class GpsSubParser extends SubParser {
 
             // If the condition tag is being closed
             if( sName.equals( "end-condition" ) ) {
-                Gpsrule.setEndCond( currentConditions );
+            	qrrule.setEndCond( currentConditions );
 
                 // Switch the state
-                subParsing = SUBPARSING_NONE;
+                subParsing = SUBPARSING_NONE;	
             }
         }
 
@@ -186,7 +183,7 @@ public class GpsSubParser extends SubParser {
 
             // If the effect tag is being closed, store the effect in the next scene and switch the state
             if( sName.equals( "effect" ) ) {
-                Gpsrule.setEffects( currentEffects );
+            	qrrule.setEffects( currentEffects );
                 subParsing = SUBPARSING_NONE;
             }
 
@@ -211,3 +208,4 @@ public class GpsSubParser extends SubParser {
             subParser.characters( buf, offset, len );
     }
 }
+

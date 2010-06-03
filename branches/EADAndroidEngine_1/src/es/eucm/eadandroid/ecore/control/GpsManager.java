@@ -1,5 +1,6 @@
 package es.eucm.eadandroid.ecore.control;
 
+import java.util.List;
 import java.util.Vector;
 
 import android.location.Location;
@@ -11,8 +12,8 @@ import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.Functio
 public class GpsManager {
 
 	private static GpsManager singleton = null;
-	private Vector<GpsRule> gpss;
-	private Vector<GpsRule> finishedpgss;
+	private Vector<GpsRule> gpsActive;
+	private Vector<GpsRule> allGpsRules;
 	GpsListener listener;
 
 	public static GpsManager getInstance() {
@@ -21,42 +22,80 @@ public class GpsManager {
 	}
 
 	private GpsManager()  {
-		gpss = new Vector<GpsRule>();
-		finishedpgss = new Vector<GpsRule>();
+		gpsActive = new Vector<GpsRule>();
+		allGpsRules = new Vector<GpsRule>();
 		listener=new GpsListener(this);
 	}
 
 	public static void create() {
 		singleton = new GpsManager();
 	}
+	
+	public void addallgpsrules(List<GpsRule> list)
+	{
+		this.allGpsRules.removeAllElements();
+		
+		for(int i=0;i<list.size();i++)
+		{
+			this.allGpsRules.add(list.get(i));
+		}
+		
+		
+		//loads global gpsrules
+		for(int i=0;i<list.size();i++)
+		{
+			if (list.get(i).getSceneName().equals(""))
+				this.gpsActive.add(list.get(i));
+		}
+		
+
+	}
 
 	public void addgpsrules(GpsRule rule) {
-		gpss.add(rule);
+		allGpsRules.add(rule);
 	}
 	
-	public void flushGpsRules() {
-		gpss.removeAllElements();
+	public void changeOfScene(String scene)
+	{
+	//first removes from gpsActive all gps related to other scenes
+		for (int i=this.gpsActive.size()-1;i>=0;i=i-1)
+		{
+			if(!this.gpsActive.elementAt(i).getSceneName().equals(""))
+				gpsActive.remove(i);
+		}
+//then adds gpsrules from new scene		
+		for (int i=0;i<this.allGpsRules.size();i++)
+		{
+			if (this.allGpsRules.elementAt(i).getSceneName().equals(scene))
+				gpsActive.add(this.gpsActive.elementAt(i));
+		}
+		
 	}
+	
+
 
 	public void updategps(Location location) {
-		for (int i = 0; i < gpss.size(); i++) {
-			if ((gpss.elementAt(i).isUsesEndCondition() && new FunctionalConditions(
-					gpss.elementAt(i).getEndCond()).allConditionsOk())
-					|| (!gpss.elementAt(i).isUsesEndCondition() && (new FunctionalConditions(
-							gpss.elementAt(i).getInitCond()).allConditionsOk()))) {
+		for (int i = 0; i < gpsActive.size(); i++) {
 
+			if (new FunctionalConditions(gpsActive.elementAt(i).getEndCond()).allConditionsOk())
+			{
 				double distance = distance(location.getLatitude(), location
-						.getLongitude(), gpss.elementAt(i).getLatitude(), gpss
+						.getLongitude(), gpsActive.elementAt(i).getLatitude(), gpsActive
 						.elementAt(i).getLongitude());
+				
+				Location d=new Location("");
+				d.setLatitude( gpsActive.elementAt(i).getLatitude());
+				d.setLongitude(gpsActive.elementAt(i).getLongitude());
+				
+				float metros=location.distanceTo(d);
+				Log.d("PUNTO1", " " + location.getLongitude()+"   "+location.getLatitude() );
+				Log.d("punto2", " " + d.getLongitude()+"   "+d.getLatitude() );
+				Log.d("DISTANCIA", "" + distance+"   "+metros);
 
-				Log.d("DISTANCIA", "" + distance);
-
-				if (distance < gpss.elementAt(i).getRadio()) {
-					this.finishedpgss.add(this.gpss.elementAt(i));
-					
-					FunctionalEffects.storeAllEffects(gpss.elementAt(i)
+				if (distance < gpsActive.elementAt(i).getRadio()) {
+					FunctionalEffects.storeAllEffects(gpsActive.elementAt(i)
 							.getEffects());
-					this.gpss.remove(i);
+					this.gpsActive.remove(i);
 
 				}
 			}

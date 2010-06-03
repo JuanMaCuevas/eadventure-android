@@ -66,7 +66,17 @@ public class Chapter extends ChapterSummary implements HasTargetId {
      * List of playable scenes.
      */
     private List<Scene> scenes;
+    
+    /** 
+     * list of gpsrules
+     */
+    private List<GpsRule> Gpsrules;
 
+    
+    /** 
+     * list of qrcodes
+     */
+    private List<QrcodeRule> qrrules;
     /**
      * List of cutscenes.
      */
@@ -155,8 +165,50 @@ public class Chapter extends ChapterSummary implements HasTargetId {
         vars = new ArrayList<String>( );
         globalStates = new ArrayList<GlobalState>( );
         macros = new ArrayList<Macro>( );
+        Gpsrules = new ArrayList<GpsRule>( );
+        qrrules = new ArrayList<QrcodeRule>( );
     }
 
+    
+    
+    
+    
+    public List<QrcodeRule> getQrrules() {
+		return qrrules;
+	}
+
+
+    public void addQrRule(QrcodeRule qr )
+    {
+    	this.qrrules.add(qr);
+    }
+  
+
+
+
+
+
+	/**
+     * Returns the list of Gpsrules in the game
+     * 
+     * @return the list of Gpsrules in the game
+     */
+    public List<GpsRule> getGpsRules( ) {
+
+        return this.Gpsrules;
+    }
+    
+    /**
+     *Adds a gps rule to the list of gpsrules in the game.  
+     * @param gps
+     */
+     public void addGpsRule(GpsRule gps)
+     {
+     	this.Gpsrules.add(gps);
+     }
+    
+    
+    
     /**
      * Constructor with title for the chapter. Sets empty values and creates
      * empty lists, plus one scene.
@@ -822,14 +874,5 @@ public class Chapter extends ChapterSummary implements HasTargetId {
         return c;
     }
 
-	public boolean doesGpsExist() {
-		boolean exists=false;
-		
-		for(int i=0;i<this.scenes.size();i++)
-		{
-			if (this.scenes.get(i).getGpsRules().size()>0)
-				exists=true;
-		}
-		return exists;
-	}
+
 }

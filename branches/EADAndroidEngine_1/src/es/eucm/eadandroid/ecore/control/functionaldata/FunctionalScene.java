@@ -55,6 +55,7 @@ import es.eucm.eadandroid.ecore.control.ActionManager;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.ItemSummary;
+import es.eucm.eadandroid.ecore.control.QrcodeManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalExit;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalGoTo;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -340,11 +341,13 @@ public class FunctionalScene implements Renderable {
     	/////////////////////////////////////////////////////////
 
 		if (GpsManager.getInstance() != null) {
-			GpsManager.getInstance().flushGpsRules();
+			GpsManager.getInstance().changeOfScene(scene.getId());
+		}
+		
+		if (QrcodeManager.getInstance() != null) {
+			QrcodeManager.getInstance().changeOfScene(scene.getId());
 		}
 
-		for (int i = 0; i < scene.getGpsRules().size(); i++)
-			GpsManager.getInstance().addgpsrules(scene.getGpsRules().get(i));
 
 
         updateOffset( );

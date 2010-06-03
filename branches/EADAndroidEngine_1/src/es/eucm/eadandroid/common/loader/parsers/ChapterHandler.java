@@ -55,9 +55,11 @@ import es.eucm.eadandroid.common.loader.subparsers.CharacterSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.ConditionSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.CutsceneSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.EffectSubParser;
+import es.eucm.eadandroid.common.loader.subparsers.GpsSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.GraphConversationSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.ItemSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.PlayerSubParser;
+import es.eucm.eadandroid.common.loader.subparsers.QrcodeSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.SceneSubParser;
 import es.eucm.eadandroid.common.loader.subparsers.SubParser;
 import es.eucm.eadandroid.common.loader.subparsers.TimerSubParser;
@@ -139,6 +141,9 @@ public class ChapterHandler extends DefaultHandler {
      * Constant for subparsing adaptation tag
      */
     private static final int ADAPTATION = 13;
+    
+    private static final int SUBPARSING_GPS=14;
+    private static final int SUBPARSING_QRCODE=15;
 
     /**
      * Stores the current element being parsed
@@ -261,6 +266,20 @@ public class ChapterHandler extends DefaultHandler {
                 subParser = new TimerSubParser( chapter );
                 subParsing = TIMER;
             }
+            
+
+            else if( sName.equals( "qrcode" ) ) {
+            	
+                subParser = new QrcodeSubParser( chapter );
+                subParsing = SUBPARSING_QRCODE;
+                
+            }
+            else if( sName.equals( "gps" ) ) {
+            	
+                subParser = new GpsSubParser( chapter );
+                subParsing = SUBPARSING_GPS;
+                
+            }
 
             // Subparse global-state
             else if( sName.equals( "global-state" ) ) {
@@ -335,8 +354,9 @@ public class ChapterHandler extends DefaultHandler {
             // Spread the end element call
             subParser.endElement( namespaceURI, sName, sName );
 
+
             // If the element is not being subparsed anymore, return to normal state
-            if( sName.equals( "scene" ) && subParsing == SCENE || ( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) && subParsing == CUTSCENE || sName.equals( "book" ) && subParsing == BOOK || sName.equals( "object" ) && subParsing == OBJECT || sName.equals( "player" ) && subParsing == PLAYER || sName.equals( "character" ) && subParsing == CHARACTER || sName.equals( "tree-conversation" ) && subParsing == CONVERSATION || sName.equals( "graph-conversation" ) && subParsing == CONVERSATION || sName.equals( "timer" ) && subParsing == TIMER || sName.equals( "global-state" ) && subParsing == GLOBAL_STATE || sName.equals( "macro" ) && subParsing == MACRO || sName.equals( "atrezzoobject" ) && subParsing == ATREZZO || sName.equals( "assessment" ) && subParsing == ASSESSMENT || sName.equals( "adaptation" ) && subParsing == ADAPTATION ) {
+            if( sName.equals( "scene" ) && subParsing == SCENE || ( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) && subParsing == CUTSCENE || sName.equals( "book" ) && subParsing == BOOK || sName.equals( "object" ) && subParsing == OBJECT || sName.equals( "player" ) && subParsing == PLAYER || sName.equals( "character" ) && subParsing == CHARACTER || sName.equals( "tree-conversation" ) && subParsing == CONVERSATION || sName.equals( "graph-conversation" ) && subParsing == CONVERSATION || sName.equals( "timer" ) && subParsing == TIMER || sName.equals( "qrcode" ) && subParsing == SUBPARSING_QRCODE|| sName.equals( "gps" ) && subParsing == SUBPARSING_GPS|| sName.equals( "global-state" ) && subParsing == GLOBAL_STATE || sName.equals( "macro" ) && subParsing == MACRO || sName.equals( "atrezzoobject" ) && subParsing == ATREZZO || sName.equals( "assessment" ) && subParsing == ASSESSMENT || sName.equals( "adaptation" ) && subParsing == ADAPTATION ) {
                 subParsing = NONE;
             }
 
