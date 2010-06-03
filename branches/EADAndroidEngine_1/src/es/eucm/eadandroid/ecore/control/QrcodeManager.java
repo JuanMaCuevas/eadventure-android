@@ -81,7 +81,7 @@ public class QrcodeManager {
 
 			if (new FunctionalConditions(qrcodeActive.elementAt(i).getEndCond()).allConditionsOk())
 			{
-				if (qrcodeActive.elementAt(i).getPassword().equals(password)) {
+				if (qrcodeActive.elementAt(i).getCode().equals(password)) {
 					FunctionalEffects.storeAllEffects(qrcodeActive.elementAt(i)
 							.getEffects());
 					this.qrcodeActive.remove(i);

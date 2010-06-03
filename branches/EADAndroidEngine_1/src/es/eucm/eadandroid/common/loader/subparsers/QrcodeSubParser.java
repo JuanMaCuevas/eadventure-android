@@ -94,7 +94,7 @@ public class QrcodeSubParser extends SubParser {
  
                     if( attrs.getLocalName( i ).equals( "sceneName" ) )
                     	sceneName = attrs.getValue( i );
-                    if( attrs.getLocalName( i ).equals( "password" ) )
+                    if( attrs.getLocalName( i ).equals( "code" ) )
                     	password = attrs.getValue( i );
                    
                 }

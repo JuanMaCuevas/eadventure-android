@@ -11,7 +11,7 @@ public class QrcodeRule {
 
  //   private long seconds;
     
-    private String Password;
+    private String Code;
     
 
     private Conditions initCond;
@@ -22,12 +22,12 @@ public class QrcodeRule {
 
 
 
-    public String getPassword() {
-		return Password;
+    public String getCode() {
+		return Code;
 	}
 
-	public void setPassword(String password) {
-		Password = password;
+	public void setCode(String password) {
+		Code = password;
 	}
 
 
@@ -53,7 +53,7 @@ private int fontColor = Color.BLACK;
 
     public QrcodeRule( String pasword, Conditions init, Conditions end, Effects effect ) {
 
-       this.Password=pasword;
+       this.Code=pasword;
         this.initCond = init;
         this.endCond = end;
         this.effect = effect;
