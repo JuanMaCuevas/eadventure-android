@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
+import es.eucm.eadandroid.ecore.control.ContextServices;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
@@ -49,6 +50,7 @@ public class GameThread extends Thread {
 	
 				
 		GUI.create(holder);
+		ContextServices.create(context);
 		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
 						
 	}

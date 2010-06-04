@@ -1,7 +1,6 @@
 package es.eucm.eadandroid.ecore.gui.hud.elements;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -11,8 +10,8 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
-import es.eucm.eadandroid.common.data.chapter.Exit;
+import android.os.Vibrator;
+import es.eucm.eadandroid.ecore.control.ContextServices;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -73,6 +72,8 @@ public class Magnifier {
 	int combinedElementColor = Color.parseColor("#5858FA");
 	int exitColor = Color.parseColor("#81F781");
 	
+	boolean vibrateOnFocus;
+	
 
 	public Magnifier(int not_scaled_radius, int not_scaled_frameWidth, float zoom, Bitmap bmp) {
 
@@ -110,6 +111,8 @@ public class Magnifier {
 		pointPaint.setColor(0xFF000000);
 		pointPaint.setStrokeWidth(4f * GUI.DISPLAY_DENSITY_SCALE);
 
+		vibrateOnFocus=true;	
+		
 		createMagnifier();
 
 	}
@@ -172,6 +175,8 @@ public class Magnifier {
 		
 		
 		if (feInCursor!=null && fe!=null) {
+			if (vibrateOnFocus)
+				foundedVibration();
 			
 			pFrame.setColor(combinedElementColor);
 			pointPaint.setColor(combinedElementColor);
@@ -180,19 +185,25 @@ public class Magnifier {
 		}
 		
 		else if (fe != null) {
-
+			if (vibrateOnFocus)
+				foundedVibration();
+			
 			pFrame.setColor(elementColor);
 			pointPaint.setColor(elementColor);
 			c.drawText(fe.getElement().getName(), 0, 0, textP);
 		}
 
 		else if (exit != null && exit !="") {
+			if (vibrateOnFocus)
+				foundedVibration();
+			
 			pFrame.setColor(exitColor);
 			pointPaint.setColor(exitColor);
 			c.drawText(exit, 0, 0, textP);
 		}
 
 		else {
+			vibrateOnFocus=true;
 			pFrame.setColor(Color.BLACK);
 			pointPaint.setColor(Color.BLACK);
 //			pFrame.setShadowLayer(4f, -4, 4, Color.BLACK);
@@ -214,6 +225,17 @@ public class Magnifier {
 		 c.drawPoint(radius, radius, pointPaint);
 
 		c.restore();
+	}
+
+	private void foundedVibration() {
+		if (Game.getInstance().getOptions().isVibrationActive()){
+			// Get instance of Vibrator from current Context
+			Vibrator v = (Vibrator) ContextServices.getInstance().getServiceVibrator(); 
+			// Vibrate for 300 milliseconds
+			v.vibrate(40);
+			vibrateOnFocus = false;
+		}
+
 	}
 
 	public void updateMagPos(int xfocus, int yfocus) {

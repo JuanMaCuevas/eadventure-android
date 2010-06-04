@@ -80,6 +80,7 @@ public class Options {
     
     private boolean audioEnabled=true;
     private boolean debugEnabled=true;
+    private boolean vibrateEnabled=true;
     
  
 
@@ -91,6 +92,7 @@ public class Options {
     	this.prefs = prefs;
     	audioEnabled = prefs.getBoolean(PreferencesActivity.AUDIO_PREF, true);
     	debugEnabled = prefs.getBoolean(PreferencesActivity.DEBUG_PREF, false);
+    	vibrateEnabled = prefs.getBoolean(PreferencesActivity.VIBRATE_PREF, true);
     }
 
    
@@ -113,6 +115,16 @@ public class Options {
     public boolean isDebugActive( ) {
     	
         return debugEnabled;
+    }
+    
+    /**
+     * Returns the state of the vibration
+     * 
+     * @return True if the music is active, false otherwise
+     */
+    public boolean isVibrationActive( ) {
+    	
+        return vibrateEnabled;
     }
 
     /**

@@ -15,6 +15,8 @@ public class PreferencesActivity extends PreferenceActivity {
 	
 	public static final String AUDIO_PREF = "AudioPref";
 	public static final String DEBUG_PREF = "DebugPref";
+	public static final String VIBRATE_PREF = "VibratePref";
+
 	
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,14 @@ public class PreferencesActivity extends PreferenceActivity {
         togglePref.setSummary("Enable or disable audio");
         togglePref.setPersistent(true);
         inlinePrefCat.addPreference(togglePref);
+        
+     // Toggle preference
+        CheckBoxPreference togglePref3 = new CheckBoxPreference(this);
+        togglePref3.setKey(VIBRATE_PREF);
+        togglePref3.setTitle("Enable  vibration");
+        togglePref3.setSummary("Enable or disable vibration");
+        togglePref3.setPersistent(true);
+        inlinePrefCat.addPreference(togglePref3);
         
         // Inline preferences 
         PreferenceCategory inlinePrefCat2 = new PreferenceCategory(this);
