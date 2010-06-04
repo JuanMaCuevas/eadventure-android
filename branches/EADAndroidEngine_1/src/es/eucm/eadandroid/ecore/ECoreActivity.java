@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -21,7 +22,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,16 +40,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
-import es.eucm.eadandroid.ecore.control.QrcodeManager;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStateConversation;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
@@ -67,6 +71,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private View report_button;
 	private WebView webview;
 
+	private View conversationLayout;
+	private ListView conversationList; 
+	private ArrayAdapter<String> conversationAdapter;
 	private String adventureName;
 	private boolean fromvideo = false;
 	private boolean continueAudio = false;
@@ -89,6 +96,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public static final int LOAD_GAMES = 3;
 		public static final int FINISH_LOADING = 4;
 		public static final int REGISTRATE_GPS = 5;
+		public static final int CONVERSATION = 6;
 
 	}
 
@@ -136,9 +144,19 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				activateGps();
 				
 				break;
+				
+			case ActivityHandlerMessages.CONVERSATION:
+				Bundle b = msg.getData();
+							
+				showConversationOptions(b);
+				
+				break;
+				
 			}
 
 		}
+
+		
 
 	};
 
@@ -156,8 +174,27 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
 				0, GpsManager.getInstance().getListener());
 		
+	}
+	
+	private void showConversationOptions(Bundle b) {
+
+
+		if(conversationList.getVisibility()!=View.VISIBLE){
+			
 		
-		
+			conversationAdapter.clear();
+			int size = b.getInt("size");
+			for (int i=0;i<size;i++){
+				conversationAdapter.add((String) b.getString(Integer.toString(i)));
+			}
+			
+			conversationLayout.setVisibility(View.VISIBLE);
+			conversationList.setVisibility(View.VISIBLE);
+			
+			
+
+		}
+
 	}
 
 	private void activityvideo() {
@@ -180,6 +217,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
 		//DEBUG
 		Log.e("Inicio core1",String.valueOf(Debug.getNativeHeapAllocatedSize()));
 
@@ -196,7 +234,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				.getSystemService(Context.SENSOR_SERVICE);
 		sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		// tell system to use the layout defined in our XML file
-		setContentView(R.layout.game_activity_canvas);
+		setContentView(R.layout.game_activity_canvas);	
 
 		// to know if we are going to load a saved game
 		boolean loadingfromsavedgame = this.getIntent().getExtras().getBoolean(
@@ -256,6 +294,37 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 			}
 		});
+		
+		conversationLayout = findViewById(R.id.conversationLayout);
+		
+		conversationList = (ListView) findViewById(R.id.ListView01);		
+		
+		conversationAdapter = new ArrayAdapter<String>(this, R.layout.conversation_line, new ArrayList<String>());
+		conversationList.setAdapter(conversationAdapter);
+		conversationLayout.setVisibility(View.INVISIBLE);
+		conversationList.setVisibility(View.INVISIBLE);
+				
+		conversationList.setOnItemClickListener(new OnItemClickListener() {
+			
+			public void onItemClick(AdapterView<?> parent, View view,
+		  	        int position, long id) {
+
+				((GameStateConversation) Game.getInstance().getCurrentState()).selectDisplayedOption(position);
+				conversationLayout.setVisibility(View.INVISIBLE);
+				conversationList.setVisibility(View.INVISIBLE);
+				
+				//conversationAdapter.clear();
+				
+				
+
+		  	    }
+
+		
+
+			
+		});
+		
+		
 		
 		report_button.setOnClickListener(new OnClickListener() {
 
@@ -425,29 +494,14 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			   showQuitDialog(false);
 			return true;
 		}
-		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
-	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-	        startActivityForResult(intent, 0);
-	        return true;
-		}
+//		else if (event.getKeyCode()==KeyEvent.KEYCODE_CAMERA || event.getKeyCode()==KeyEvent.KEYCODE_SEARCH) {
+//	        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+//	        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+//	        startActivityForResult(intent, 0);
+//	        return true;
+//		}
 			
 		else return super.onKeyDown(keyCode, event);
-	}
-
-	
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		
-		if (requestCode==0)
-			if (resultCode == RESULT_OK) {
-	            String contents = data.getStringExtra("SCAN_RESULT");
-	            String format = data.getStringExtra("SCAN_RESULT_FORMAT");
-			    QrcodeManager.getInstance().updateQRcode(contents);
-			}
-		
 	}
 
 	/*
@@ -456,7 +510,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
 	 */
 	public boolean onTouchEvent(MotionEvent event) {
-
+		
 		boolean dispatched = GameThread.getInstance().processTouchEvent(event);
 
 		// don't allow more than 60 motion events per second

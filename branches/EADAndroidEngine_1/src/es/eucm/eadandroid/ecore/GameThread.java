@@ -199,6 +199,13 @@ public class GameThread extends Thread {
 		Game.getInstance().unpause();
 		
 	}
+
+
+
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return this.context;
+	}
 	
 	
 	

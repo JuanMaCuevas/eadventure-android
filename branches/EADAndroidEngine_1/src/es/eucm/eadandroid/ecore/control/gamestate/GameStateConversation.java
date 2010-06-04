@@ -41,11 +41,16 @@ import java.util.Queue;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNode;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNodeView;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.OptionConversationNode;
 import es.eucm.eadandroid.common.gui.TC;
+import es.eucm.eadandroid.ecore.GameThread;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
@@ -63,10 +68,6 @@ import es.eucm.eadandroid.ecore.gui.GUI;
  */
 public class GameStateConversation extends GameState {
 
-    /**
-     * Number of response lines to display
-     */
-    private final int RESPONSE_TEXT_NUMBER_LINES;
 
     /**
      * Height of the text of the responses
@@ -89,18 +90,6 @@ public class GameStateConversation extends GameState {
     private int currentLine;
 
     /**
-     * Index of the first line displayed in an option node
-     */
-    private int firstLineDisplayed;
-
-    /**
-     * Index of the option currently highlighted
-     */
-    private int optionHighlighted;
-
-   
-
-    /**
      * Variable to control the access to doRandom()
      */
     private boolean firstTime;
@@ -115,11 +104,6 @@ public class GameStateConversation extends GameState {
      * Indicates if an option was selected
      */
     private boolean isOptionSelected;
-
-    /**
-     * Indicates if a key was pressed
-     */
-    private boolean keyPressed;
 
     /**
      * Number of options that has been displayed in the screen
@@ -150,18 +134,14 @@ public class GameStateConversation extends GameState {
      */
     
     public GameStateConversation( ) {
-
-        RESPONSE_TEXT_NUMBER_LINES = GUI.getInstance( ).getResponseTextNumberLines( );
         
         RESPONSE_TEXT_ASCENT = GUI.getInstance( ).getAscent( );
         RESPONSE_TEXT_HEIGHT = RESPONSE_TEXT_ASCENT * 3 ;
 
         currentNode = game.getConversation( ).getRootNode( );
         currentLine = 0;
-        firstLineDisplayed = 0;
-        optionHighlighted = -1;
         optionsToShow = new ArrayList<ConversationLine>( );
-        isOptionSelected = false;
+        
         skip = false;
         convID = new String( );
 
@@ -179,7 +159,7 @@ public class GameStateConversation extends GameState {
             processOptionNode( c );
 
         GUI.getInstance( ).endDraw( );
-       // c.dispose( );
+
     }
 
     /**
@@ -190,16 +170,13 @@ public class GameStateConversation extends GameState {
      * @return The graphics element for the scene
      */
     private Canvas setUpGUI( long elapsedTime ) {
-//HUD
-      //  GUI.getInstance( ).toggleHud( false );
-     //   GUI.getInstance( ).setDefaultCursor( );
+
 
         game.getFunctionalScene( ).update( elapsedTime );
         GUI.getInstance( ).update( elapsedTime );
 
         Canvas g = GUI.getInstance( ).getGraphics( );
-     //   g.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
-
+        
         game.getFunctionalScene( ).draw( );
         GUI.getInstance( ).drawScene( g, elapsedTime );
 
@@ -214,9 +191,7 @@ public class GameStateConversation extends GameState {
      * (BUTTON3) was pressed, all the lines are skipped.
      */
     private void processDialogNode( ) {
-//EVENTS
-    	
-    	
+  	
     	if( game.getCharacterCurrentlyTalking( ) == null || ( game.getCharacterCurrentlyTalking( ) != null && !game.getCharacterCurrentlyTalking( ).isTalking( ) ) ) {
             playNextLine( );
         }
@@ -226,21 +201,7 @@ public class GameStateConversation extends GameState {
     		skip = false;
     		
     	}
-//    	
-//        if( mouseClickedButton == MouseEvent.NOBUTTON ) {
-//            
-//        }
-//        else if( mouseClickedButton == MouseEvent.BUTTON1 ) {
-//            DebugLog.user( "Skipped line in conversation" );
-//            playNextLine( );
-//            mouseClickedButton = MouseEvent.NOBUTTON;
-//        }
-//        else if( mouseClickedButton == MouseEvent.BUTTON3 ) {
-//            DebugLog.user( "Skipped conversation" );
-//            currentLine = currentNode.getLineCount( );
-//            playNextLine( );
-//            mouseClickedButton = MouseEvent.NOBUTTON;
-//        }
+
         firstTime = true;
     }
 
@@ -253,48 +214,49 @@ public class GameStateConversation extends GameState {
      *            The graphics in which to draw the options
      */
     private void processOptionNode( Canvas c ) {
-
-        if( !isOptionSelected )
-            optionNodeNoOptionSelected( c );
-        else
-            optionNodeWithOptionSelected( );
+    	
+    	 if( !isOptionSelected )
+             optionNodeNoOptionSelected( c );
+         else
+             selectOption();
     }
 
-    /**
-     * When in an option node, if no option is selected all the possible options
-     * must be displayed on screen.
-     * 
-     * @param g
-     *            The graphics to draw the options in.
-     */
-    private void optionNodeNoOptionSelected( Canvas c ) {
 
+	private void optionNodeNoOptionSelected(Canvas  c ){
         if( firstTime ) {
+        	
             ( (OptionConversationNode) currentNode ).doRandom( );
+            storeOKConditionsConversationLines( );
+            
+            //send message to show options on a list activity 
+            Handler handler = GameThread.getInstance().getHandler();
+
+    		Message msg = handler.obtainMessage();
+
+    		Bundle b = new Bundle();
+    		int textColor = game.getCharacterCurrentlyTalking().getTextFrontColor();
+    		for( int i = 0; i < optionsToShow.size( ); i++ ) {
+    			b.putString(Integer.toString(i), optionsToShow.get( i ).getText( ));
+    			b.putInt("color",textColor );
+              //  drawLine( c, optionsToShow.get( i ).getText( ), i, i );
+                
+            }
+    		numberDisplayedOptions = optionsToShow.size( );
+    		b.putInt("size", numberDisplayedOptions);
+    		msg.what = ActivityHandlerMessages.CONVERSATION;
+    		msg.setData(b);
+
+    		msg.sendToTarget();
+    		
             firstTime = false;
         }
-        numberDisplayedOptions = 0;
-
-        storeOKConditionsConversationLines( );
-        if( optionsToShow.size( ) <= RESPONSE_TEXT_NUMBER_LINES ) {
-            for( int i = 0; i < optionsToShow.size( ); i++ ) {
-                drawLine( c, optionsToShow.get( i ).getText( ), i, i );
-                numberDisplayedOptions++;
-            }
-        }
-        else {
-            int i, indexLastLine = Math.min( firstLineDisplayed + RESPONSE_TEXT_NUMBER_LINES - 1, optionsToShow.size( ) );
-            for( i = firstLineDisplayed; i < indexLastLine; i++ ) {
-                drawLine( c, optionsToShow.get( i ).getText( ), ( i - firstLineDisplayed ), i );
-                numberDisplayedOptions++;
-            }
-            drawLine( c, TC.get( "GameText.More" ), ( i - firstLineDisplayed ), i );
-        }
-
         // if there are not options to draw, finalize the conversation
         if( numberDisplayedOptions == 0 )
             endConversation( );
+    
     }
+
+   
 
     /**
      * Returns the number of conversation lines in current option node which has
@@ -316,77 +278,7 @@ public class GameStateConversation extends GameState {
 
     }
 
-    /**
-     * Draw an option line in a given graphics object.
-     * 
-     * @param g
-     *            The graphics where to draw the line
-     * @param text
-     *            The text of the option
-     * @param optionIndex
-     *            The index of the option
-     */
-    private void drawLine( Canvas c, String text, int optionIndex, int lineIndex ) {
 
-        int textColor = Game.getInstance( ).getFunctionalPlayer( ).getTextFrontColor( );
-        if( optionIndex == optionHighlighted ) {
-            int red = Color.red(textColor);
-            int green = Color.green( textColor );
-            int blue = Color.blue( textColor );
-            textColor = Color.argb(255, 255 - red, 255 - green, 255 - blue);
-          //  textColor = new Color( 255 - red, 255 - green, 255 - blue );
-        }
-       
-        int y = GUI.getInstance( ).getResponseTextY( ) + optionIndex * RESPONSE_TEXT_HEIGHT + RESPONSE_TEXT_ASCENT;
-        int x = GUI.getInstance( ).getResponseTextX( );
-        String fullText = ( lineIndex + 1 ) + ".- " + text;
-        GUI.drawStringOnto( c, fullText, x, y, false, textColor,  Game.getInstance( ).getFunctionalPlayer( ).getTextBorderColor( ), true );
-    }
-
-    /**
-     * In an option node with an option selected: If there is a character
-     * talking, do nothing. If the current node has effects, pile them. If the
-     * current node has consumed it's effects or doesn't have them, finish the
-     * conversation. If the current node isn't terminal, follow the selected
-     * option.
-     */
-    private void optionNodeWithOptionSelected( ) {
-
-        if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) ) {
-            if (skip){
-
-                game.getCharacterCurrentlyTalking( ).stopTalking( );
-                skip = false;
-            	
-            }
-        	/*if( mouseClickedButton == MouseEvent.BUTTON1) {
-                DebugLog.user( "Skipped line in conversation" );
-                game.getCharacterCurrentlyTalking( ).stopTalking( );
-                mouseClickedButton = MouseEvent.NOBUTTON;
-            } else if ( mouseClickedButton == MouseEvent.BUTTON3 ) {
-                DebugLog.user( "Skipped conversation" );
-                game.getCharacterCurrentlyTalking( ).stopTalking( );
-            } else
-            */
-                return;
-        }
-
-        if( currentNode.hasValidEffect( ) && !currentNode.isEffectConsumed( ) ) {
-            currentNode.consumeEffect( );
-            game.pushCurrentState( this );
-            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );
-          //HUD   GUI.getInstance( ).toggleHud( true );
-        }
-        else if( ( !currentNode.hasValidEffect( ) || currentNode.isEffectConsumed( ) ) && currentNode.isTerminal( ) ) {
-            endConversation( );
-        }
-        else if( !currentNode.isTerminal( ) ) {
-            if( optionSelected >= 0 && optionSelected < currentNode.getChildCount( ) ) {
-                currentNode = currentNode.getChild( correspondingIndex.get( optionSelected ) );
-                isOptionSelected = false;
-            }
-        }
-    }
 
     /**
      * Finalize the conversation
@@ -403,102 +295,83 @@ public class GameStateConversation extends GameState {
     /**
      * If the user chooses a valid option, it is selected and its text show.
      */
-    private void selectDisplayedOption( ) {
+    public void selectOption() {
 
-        if( optionSelected >= 0 && optionSelected < optionsToShow.size( ) ) {
-            if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) )
+        if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) ) {
+            if (skip){
+
                 game.getCharacterCurrentlyTalking( ).stopTalking( );
-
-            FunctionalPlayer player = game.getFunctionalPlayer( );
-            ConversationLine line = currentNode.getLine( correspondingIndex.get( optionSelected ) );
-
-            if( line.isValidAudio( ) ) {
-                player.speak( line.getText( ), line.getAudioPath( ) );
+                skip = false;
+            	
             }
-            else if( line.getSynthesizerVoice( ) || player.isAlwaysSynthesizer( ) ) {
-                player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ) );
-            }
-            else {
-                player.speak( line.getText( ) );
-            }
-
-            game.setCharacterCurrentlyTalking( player );
-            isOptionSelected = true;
-            keyPressed = false;
+                return;
         }
+
+        if( currentNode.hasValidEffect( ) && !currentNode.isEffectConsumed( ) ) {
+            currentNode.consumeEffect( );
+            game.pushCurrentState( this );
+            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );
+          //HUD   GUI.getInstance( ).toggleHud( true );
+        }
+        else if( ( !currentNode.hasValidEffect( ) || currentNode.isEffectConsumed( ) ) && currentNode.isTerminal( ) ) {
+        	endConversation( );
+        }
+        else if( !currentNode.isTerminal( ) ) {
+        	if( optionSelected >= 0 && optionSelected < currentNode.getChildCount( ) ) {
+        		currentNode = currentNode.getChild( correspondingIndex.get( optionSelected ) );
+        		isOptionSelected = false;
+        	}
+        }
+    }	
+    ///////////////
+
+
+
+
+        public void selectDisplayedOption(int optionChoosed ) {
+
+    	this.optionSelected = optionChoosed;
+
+    	if( optionSelected >= 0 && optionSelected < optionsToShow.size( ) ) {
+    		if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) )
+    			game.getCharacterCurrentlyTalking( ).stopTalking( );
+
+    		FunctionalPlayer player = game.getFunctionalPlayer( );
+    		ConversationLine line = currentNode.getLine( correspondingIndex.get( optionSelected ) );
+
+    		if( line.isValidAudio( ) ) {
+    			player.speak( line.getText( ), line.getAudioPath( ) );
+    		}
+    		else if( line.getSynthesizerVoice( ) || player.isAlwaysSynthesizer( ) ) {
+    			player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ) );
+    		}
+    		else {
+    			player.speak( line.getText( ) );
+    		}
+
+    		game.setCharacterCurrentlyTalking( player );
+    		isOptionSelected = true;
+
+    	}
     }
 
-    /**
-     * Select an option when all options do not fit in the screen
-     */
-    private void selectNoAllDisplayedOption( ) {
-
-        if( !keyPressed )
-            optionSelected += firstLineDisplayed;
-
-        int indexLastLine = Math.min( firstLineDisplayed + RESPONSE_TEXT_NUMBER_LINES - 1, currentNode.getLineCount( ) );
-
-        if( optionSelected == indexLastLine ) {
-            firstLineDisplayed += RESPONSE_TEXT_NUMBER_LINES - 1;
-            if( firstLineDisplayed >= currentNode.getLineCount( ) )
-                firstLineDisplayed = 0;
-        }
-        else
-            selectDisplayedOption( );
-    }
-    
-
+ 
 
     public synchronized void mouseClicked( UIEvent e ) {
-    	int y;
-    	if (e.getAction()==UIEvent.TAP_ACTION){
-       		 y = (int) ((TapEvent) e).event.getY();
-    	}
-    	else  y = (int) ((UnPressedEvent) e).event.getY();
     	
-        if( currentNode.getType( ) == ConversationNodeView.OPTION &&
-                GUI.getInstance( ).getResponseTextY( ) <= y &&
-                GUI.getInstance( ).getResponseTextY( ) + currentNode.getLineCount( ) * RESPONSE_TEXT_HEIGHT /*+ RESPONSE_TEXT_ASCENT*/ >= y &&
-                !isOptionSelected) {
-            optionSelected = ( y - GUI.getInstance( ).getResponseTextY( ) ) / RESPONSE_TEXT_HEIGHT;
-            if( optionsToShow.size( ) <= RESPONSE_TEXT_NUMBER_LINES )
-                selectDisplayedOption( );
-            else
-                selectNoAllDisplayedOption( );
+        if( currentNode.getType( ) == ConversationNodeView.OPTION ) {
             skip = false;
         }
-        else if( currentNode.getType( ) == ConversationNodeView.DIALOGUE || isOptionSelected) {
+        else if( currentNode.getType( ) == ConversationNodeView.DIALOGUE) {
         	skip = true;
         }
     }
 
     
 
-    
-	public void mouseMoved(UIEvent e) {
-
-		int y;
-
-		if (e instanceof ScrollPressedEvent) {
-			ScrollPressedEvent ev = (ScrollPressedEvent) e;
-			y = (int) ev.eventDst.getY();
-
-		} else {
-			PressedEvent ev = (PressedEvent) e;
-			y = (int) ev.event.getY();
-		}
-
-		if (GUI.getInstance().getResponseTextY() <= y)
-			optionHighlighted = (y - GUI.getInstance().getResponseTextY())
-					/ RESPONSE_TEXT_HEIGHT;
-		else
-			optionHighlighted = -1;
-
-	}
-
     /**
      * Jumps to the next conversation line. If the current line was the last,
-     * end the conversation and trigger the efects or jump to the next node
+     * end the conversation and trigger the effects or jump to the next node
      */
     private void playNextLine( ) {
 
@@ -560,7 +433,6 @@ public class GameStateConversation extends GameState {
         }
         else if( !currentNode.isTerminal( ) ) {
             currentNode = currentNode.getChild( 0 );
-            firstLineDisplayed = 0;
             currentLine = 0;
         }
         
@@ -589,12 +461,6 @@ public class GameStateConversation extends GameState {
 		Queue<UIEvent> vEvents = touchListener.getEventQueue();
 		while ((e = vEvents.poll()) != null) {
 			switch (e.getAction()) {
-			case UIEvent.PRESSED_ACTION:				
-				mouseMoved(  e );
-				break;
-			case UIEvent.SCROLL_PRESSED_ACTION:				
-				mouseMoved(  e );
-				break;	
 			case UIEvent.UNPRESSED_ACTION:				
 				mouseClicked(e);
 				break;			

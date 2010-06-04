@@ -84,4 +84,6 @@ public interface TalkingElement {
     public int getBubbleBkgColor( );
 
     public int getBubbleBorderColor( );
+
+	public int getTextFrontColor();
 }
