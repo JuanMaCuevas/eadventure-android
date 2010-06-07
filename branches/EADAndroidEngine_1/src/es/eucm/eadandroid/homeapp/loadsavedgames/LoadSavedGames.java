@@ -68,6 +68,11 @@ public class LoadSavedGames extends ExpandableListActivity {
 		mAdapter = new MyExpandableListAdapter(this, info);
 		setListAdapter(mAdapter);
 		registerForContextMenu(getExpandableListView());
+		
+		for (int i = 0; i < info.getGroup().length; i++) {
+			getExpandableListView().expandGroup(i);
+		}
+
 
 	}
 
@@ -104,6 +109,7 @@ public class LoadSavedGames extends ExpandableListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		menu.setHeaderTitle("Options");
+		menu.setHeaderIcon(R.drawable.dialog_icon);
 		menu.add(0, 0, 0, "Play");
 		menu.add(0, 1, 0, "Delete");
 	}
@@ -224,6 +230,8 @@ public class LoadSavedGames extends ExpandableListActivity {
 		super.onResume();
 		refresh();
 	}
+	
+
 
 	/**
 	 * A simple adapter which maintains an ArrayList of photo resource Ids. Each

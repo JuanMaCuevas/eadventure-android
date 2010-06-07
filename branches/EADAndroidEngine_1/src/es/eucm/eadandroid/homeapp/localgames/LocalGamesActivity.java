@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
@@ -49,6 +48,7 @@ public class LocalGamesActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		menu.setHeaderTitle("Options");
+		menu.setHeaderIcon(R.drawable.dialog_icon);
 		menu.add(0, 0, 0, "Play");
 		menu.add(0, 1, 0, "Uninstall");
 	}
@@ -57,6 +57,7 @@ public class LocalGamesActivity extends ListActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo information = (AdapterContextMenuInfo) item
 				.getMenuInfo();
+		
 
 		switch (item.getItemId()) {
 
@@ -79,8 +80,14 @@ public class LocalGamesActivity extends ListActivity {
 					+ m_games.get(information.position).getGameTitle() + "/";
 			DeletingGame instance = new DeletingGame(LGActivityHandler, paths);
 			instance.start();
-			dialog = ProgressDialog.show(this, "<E-adventure> Android",
-					"Removing Game", true);
+			
+			dialog = new ProgressDialog(LocalGamesActivity.this);
+			dialog.setTitle("eAdventure");
+			dialog.setIcon(R.drawable.dialog_icon);
+			dialog.setMessage("Removing game...");
+			dialog.setIndeterminate(true);
+			dialog.show();
+
 			break;
 
 		}
@@ -137,10 +144,14 @@ public class LocalGamesActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setLayout();
-		searchForGames();
+	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		searchForGames();
+		
 	}
 
 	private void setLayout() {
@@ -182,7 +193,6 @@ public class LocalGamesActivity extends ListActivity {
 
 		GameInfo selectedAdventure = (GameInfo) this.getListView()
 				.getItemAtPosition(position);
-//TODO he cambiado el activity
 		Intent i = new Intent(this, ECoreControl.class);
 		i.putExtra("AdventureName", selectedAdventure.getGameTitle());
 
@@ -191,8 +201,6 @@ public class LocalGamesActivity extends ListActivity {
 	}
 
 	private void insertAdventuresToList(String[] advList) {
-
-		setLayout();
 
 		for (int i = 0; i < advList.length; i++)
 			m_games.add(new GameInfo(advList[i], "", "", null, null));
@@ -213,7 +221,7 @@ public class LocalGamesActivity extends ListActivity {
 	private void showAlert(String msg) {
 
 		new AlertDialog.Builder(this).setMessage(msg).setNeutralButton("OK",
-				null).show();
+				null).setIcon(R.drawable.dialog_icon).setTitle("External Storage").show();
 
 	}
 

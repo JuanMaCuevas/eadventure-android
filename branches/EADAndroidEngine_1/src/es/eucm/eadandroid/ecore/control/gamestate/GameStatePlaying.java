@@ -37,15 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-import android.content.Context;
 import android.graphics.Canvas;
-import android.os.Vibrator;
 import android.util.Log;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.chapter.Exit;
-import es.eucm.eadandroid.ecore.ECoreActivity;
-import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.OnDownEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -184,17 +181,12 @@ public class GameStatePlaying extends GameState {
 				break;	
 			case UIEvent.TAP_ACTION: 
 				
-				/*// Get instance of Vibrator from current Context
-				Vibrator v = (Vibrator) GameThread.getInstance().getContext().getSystemService(Context.VIBRATOR_SERVICE);		 
-				// Vibrate for 300 milliseconds
-				v.vibrate(60);*/
-
-				
-
-				
 				if (!GUI.getInstance().processTap(e)) {
 					game.getActionManager().tap((TapEvent)e);
 				}
+				break;
+			case UIEvent.ON_DOWN_ACTION:				
+				GUI.getInstance().processOnDown((OnDownEvent)e);		
 			}
 
 		}

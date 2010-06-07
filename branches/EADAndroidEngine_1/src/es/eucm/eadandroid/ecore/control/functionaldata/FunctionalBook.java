@@ -138,7 +138,7 @@ public abstract class FunctionalBook {
      */
     protected void loadImages( Resources r ) {
 
-        background = MultimediaManager.getInstance( ).loadImageFromZip( r.getAssetPath( Book.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
+        background = MultimediaManager.getInstance( ).loadImage( r.getAssetPath( Book.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
 
     }
 

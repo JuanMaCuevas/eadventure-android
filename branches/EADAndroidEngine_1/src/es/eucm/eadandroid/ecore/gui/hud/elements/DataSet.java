@@ -8,7 +8,9 @@ public interface DataSet {
 
 	Object getItem(int i);
 	
-	Bitmap getItemImageIcon(int i);
+	Bitmap getNormalImageIcon(int i);
+	
+	Bitmap getPressedImageIcon(int i);
 	
 	String getItemName(int i);
 

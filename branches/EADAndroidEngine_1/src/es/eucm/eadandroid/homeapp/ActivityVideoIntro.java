@@ -5,6 +5,7 @@ import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
 import es.eucm.eadandroid.homeapp.apkinstalling.InstallingResources;
+import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import android.app.Activity;
@@ -83,16 +84,19 @@ public class ActivityVideoIntro extends Activity implements
 			InstallingResources is = new InstallingResources(this,
 					ActivityHandler);
 			is.start();
-			dialog = ProgressDialog.show(this, "Welcome to <e-Adventure>", "Please wait...\nSetting up engine resources",true);
-		} //else 	startactivity();
-
-		
+			
+			dialog = new ProgressDialog(this);
+			dialog.setTitle("Welcome to eAdventure");
+			dialog.setIcon(R.drawable.dialog_icon);
+			dialog.setMessage("Please wait...\nSetting up engine resources");
+			dialog.setIndeterminate(true);
+			dialog.show();
+			
+		} 
 
 	}
 
 	private void startactivity() {
-		// TODO Auto-generated method stub
-
 		
 		setContentView(R.layout.introduction_video);
 		
@@ -182,7 +186,7 @@ public class ActivityVideoIntro extends Activity implements
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate",HomeTabActivity.GAMES);
 		startActivity(i);
-        overridePendingTransition(R.anim.fade, R.anim.hold);
+ //       overridePendingTransition(R.anim.fade, R.anim.hold);
 		this.finish();
 
 	}

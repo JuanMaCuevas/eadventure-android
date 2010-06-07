@@ -109,12 +109,16 @@ public class Inventory implements DataSet{
     }
 
     
-	public Bitmap getItemImageIcon(int i) {
+	public String getItemName(int i) {
+		return storedItems.get(i).getItem().getName();
+	}
+
+	public Bitmap getNormalImageIcon(int i) {
 		return storedItems.get(i).getIconImage();
 	}
 
-	public String getItemName(int i) {
-		return storedItems.get(i).getItem().getName();
+	public Bitmap getPressedImageIcon(int i) {
+		return storedItems.get(i).getIconImage();
 	}
 
 

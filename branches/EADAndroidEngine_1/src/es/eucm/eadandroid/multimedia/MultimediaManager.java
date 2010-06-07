@@ -113,8 +113,7 @@ public class MultimediaManager {
 		
 		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		if (image == null) {
-			 image = getScaledImage( ResourceHandler.getInstance(
-			 ).getResourceAsImage( bitmapPath ), 1, 1 );
+			 image = ResourceHandler.getInstance().getResourceAsImage( bitmapPath );
 		if (image != null) {
 				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
 			}
@@ -124,31 +123,6 @@ public class MultimediaManager {
 
 	}
 
-	/**
-	 * Returns an Image for imagePath. If the image file does not exists, a
-	 * FileNotFoundException is thrown.
-	 * 
-	 * @param imagePath
-	 *            Image path
-	 * @param category
-	 *            Category for the image
-	 * @return an Image for imagePath.
-	 */
-	public Bitmap loadImageFromZip(String imagePath, int category) {
-		
-		WeakReference wrImg = imageCache[category].get(imagePath);
-		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
-		
-        // If the image is in cache, don't load it
-        if( image == null ) {
-            // Load the image and store it in cache
-            image = getScaledImage( ResourceHandler.getInstance( ).getResourceAsImage( imagePath ), 1, 1 );
-            if( image != null ) {
-                imageCache[category].put( imagePath, new WeakReference(image) );
-            }
-        }
-        return image;
-	}
 
 	/**
 	 * Returns an Image for imagePath after mirroring it. If the image file does
@@ -160,7 +134,7 @@ public class MultimediaManager {
 	 *            Category for the image
 	 * @return an Image for imagePath.
 	 */
-	public Bitmap loadMirroredImageFromZip(String imagePath, int category) {
+	public Bitmap loadMirroredImage(String imagePath, int category) {
 
 		Bitmap image = mirrorImageCache[category].get(imagePath);
 		// If the image is in cache, don't load it
@@ -205,9 +179,8 @@ public class MultimediaManager {
 
 		Bitmap scaledImage = null;
 		
-		  if( image != null ) {
-			  
-			 scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * width, image.getHeight() * height, false);
+		  if( image != null && (width!=1 || height!=1)) {
+			     scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * width, image.getHeight() * height, false);
 		  }
 		
 		return scaledImage;
@@ -503,7 +476,7 @@ public class MultimediaManager {
 			boolean end = false;
 			while (!end) {
 				if (mirror)
-					currentFrame = loadMirroredImageFromZip(animationPath + "_"
+					currentFrame = loadMirroredImage(animationPath + "_"
 							+ leadingZeros(i) + ".png", category);
 				else
 					currentFrame = loadImage(animationPath + "_"

@@ -5,6 +5,7 @@ import android.util.Log;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.OnDownEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
@@ -44,21 +45,19 @@ public class InventoryState extends HUDstate {
 		if (inventory.pointInGrid(dstX, dstY)) {
 			fe = (FunctionalElement) inventory.selectItemFromGrid(
 					(int) ev.event.getX(), (int) ev.event.getY());
+
+			FunctionalElement elementInCursor = Game.getInstance()
+					.getActionManager().getElementInCursor();
+
+			if (fe != null && elementInCursor == null)
+				stateContext.setState(HUDstate.ActionsState, fe);
+			else if (elementInCursor!=null) {
+				Game.getInstance().getActionManager().setElementOver(fe);
+				stateContext.setState(HUDstate.HiddenState, null);
+			}
 		}
-
-		FunctionalElement elementInCursor = Game.getInstance()
-				.getActionManager().getElementInCursor();
-
-		if (fe != null && elementInCursor == null) {
-			stateContext.setState(HUDstate.ActionsState, fe);
-			return true;
-		} else {
-			Game.getInstance()
-			.getActionManager().setElementOver(fe);
-			stateContext.setState(HUDstate.HiddenState, null);
-			return false;
-		}
-
+		
+		return true;
 	}
 
 	@Override
@@ -74,24 +73,24 @@ public class InventoryState extends HUDstate {
 
 	@Override
 	public boolean processScrollPressed(UIEvent e) {
-		
-		
-			
+
 		ScrollPressedEvent ev = (ScrollPressedEvent) e;
-		
-		int srcY = (int)ev.eventSrc.getY();
-		int srcX = (int)ev.eventSrc.getX();
-		int dstX = (int)ev.eventDst.getX();
-		int dstY = (int)ev.eventDst.getY();
-		
-		int distanceX = -(int)ev.distanceX;
-		
-		
+
+		int srcY = (int) ev.eventSrc.getY();
+		int srcX = (int) ev.eventSrc.getX();
+		int dstX = (int) ev.eventDst.getX();
+		int dstY = (int) ev.eventDst.getY();
+
+		int distanceX = -(int) ev.distanceX;
+
 		if (srcY > Inventory.FOLD_REGION_POSY)
 			inventory.updateDraggingPos(dstY);
-		else if (inventory.pointInGrid(dstX,dstY))
-			 inventory.updateDraggingGrid(distanceX);
-					
+		else if (inventory.pointInGrid(dstX, dstY)) {
+			inventory.setItemFocus(dstX, dstY);
+			inventory.updateDraggingGrid(distanceX);
+		} else
+			inventory.resetItemFocus(dstX, dstY);
+
 		return true;
 	}
 	
@@ -122,6 +121,20 @@ public class InventoryState extends HUDstate {
 		}
 
 		return true;
+	}
+	
+	@Override
+	public boolean processOnDown(UIEvent e) {
+		
+		OnDownEvent ev = (OnDownEvent) e;
+				
+		int srcX = (int)ev.event.getX();
+		int srcY = (int)ev.event.getY();
+		
+		inventory.setItemFocus(srcX, srcY);
+			
+		return true;
+		
 	}
 
 }

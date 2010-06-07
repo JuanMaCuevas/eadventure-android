@@ -236,12 +236,12 @@ public class FunctionalItem extends FunctionalElement {
             MultimediaManager multimediaManager = MultimediaManager.getInstance( );
             Bitmap tempimage = null;
             if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
-                tempimage = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
+                tempimage = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
                 removeTransparentParts(tempimage);
                 
             }
             if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
-                icon = multimediaManager.loadImageFromZip( resources.getAssetPath( Item.RESOURCE_TYPE_ICON ), MultimediaManager.IMAGE_SCENE );
+                icon = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_ICON ), MultimediaManager.IMAGE_SCENE );
         }
     }
 

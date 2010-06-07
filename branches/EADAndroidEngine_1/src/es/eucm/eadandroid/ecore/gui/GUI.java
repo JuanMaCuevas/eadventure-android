@@ -215,7 +215,7 @@ public class GUI {
 		loadPaint = new Paint();
 		loadPaint.setColor(Color.WHITE);
 		loadPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
-		loadPaint.setTextSize(20);
+		loadPaint.setTextSize(15*GUI.DISPLAY_DENSITY_SCALE);
 		loadPaint.setTextAlign(Align.LEFT);
 		
 
@@ -1146,6 +1146,10 @@ public class GUI {
 	public boolean processTap(UIEvent e) {
 		return hud.processTap(e);
 	}
+	
+	public boolean processOnDown(UIEvent e) {
+		return hud.processOnDown(e);		
+	}
 
 	public int getGameAreaWidth() {
 		return WINDOW_WIDTH;
@@ -1217,6 +1221,8 @@ public class GUI {
 		debugOverlay.enable();
 		
 	}
+
+
 	
 	
 	

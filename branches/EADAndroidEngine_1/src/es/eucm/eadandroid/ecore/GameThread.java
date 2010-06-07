@@ -5,7 +5,6 @@ import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
@@ -15,7 +14,6 @@ import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.ContextServices;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 
@@ -27,10 +25,7 @@ public class GameThread extends Thread {
 	boolean loadActivityGames=false;
 	
 	private Context context;
-	
-	
-	
-	
+
 	private static GameThread instance = null;
 	
 	public static final String TAG ="GameThread";
@@ -65,9 +60,6 @@ public class GameThread extends Thread {
 	
 	public void run() {
 		
-	//	Debug.startAllocCounting();
-		//startMethodTracing("thread");
-		
 		Game.getInstance().setAdventurePath(advPath);
 		Game.getInstance().setAdventureName(advName);
 		Game.getInstance().setPrefs(PreferenceManager.getDefaultSharedPreferences(context));
@@ -81,8 +73,6 @@ public class GameThread extends Thread {
 		
 		finishThread();
 		
-		//Debug.stopMethodTracing();
-	
 	}
 	
 //last function it will be done from GameThread not activitythread
@@ -139,10 +129,6 @@ public class GameThread extends Thread {
 		}
 	}
 	
-	
-	
-	
-
 	public static GameThread getInstance() {
 		return instance;
 	}
@@ -163,27 +149,8 @@ public class GameThread extends Thread {
 				
 	}
 
-
-	public void saveState(Bundle outState) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void setRunning(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void setSurfaceSize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
 	public void setSurfacevideo(SurfaceHolder videoholder) {
-		GUI.getInstance().setCanvasSurfaceHolder(videoholder);
-		// TODO Auto-generated method stub
-		
+		GUI.getInstance().setCanvasSurfaceHolder(videoholder);		
 	}
 	
 	public void setHandler(Handler handler) {
@@ -200,16 +167,6 @@ public class GameThread extends Thread {
 		GUI.getInstance().resize(onescaled);
 		Game.getInstance().unpause();
 		
-	}
-
-
-
-	public Context getContext() {
-		// TODO Auto-generated method stub
-		return this.context;
-	}
-	
-	
-	
+	}	
 
 }

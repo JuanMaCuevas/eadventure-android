@@ -41,7 +41,8 @@ public class MagnifierState extends HUDstate{
 		
 		MotionEvent m = ((ScrollPressedEvent) e).eventDst;
 		
-		magnifier.show();
+		if (!magnifier.isShown())
+			magnifier.show();
 		magnifier.updateMagPos((int)m.getX(),(int)m.getY());
 				
 		return false;
@@ -60,6 +61,4 @@ public class MagnifierState extends HUDstate{
 		
 		return false;
 	}
-	
-
 }

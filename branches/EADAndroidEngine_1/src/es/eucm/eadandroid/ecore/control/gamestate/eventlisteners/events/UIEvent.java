@@ -7,6 +7,7 @@ public abstract class UIEvent {
 	public static final int FLING_ACTION = 2;
 	public static final int TAP_ACTION = 3;
 	public static final int SCROLL_PRESSED_ACTION = 4;
+	public static final int ON_DOWN_ACTION = 5;
 	
 	private int action ;
 	

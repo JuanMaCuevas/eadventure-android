@@ -12,6 +12,7 @@ import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TouchListener;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.OnDownEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
@@ -102,6 +103,9 @@ public class SceneTouchListener implements TouchListener , TouchListener.CallBac
 
         switch (action) {
         case MotionEvent.ACTION_DOWN:
+        	
+        	onDown(ev);
+        	
             mLastMotionX = x;
             mLastMotionY = y;
             mCurrentDownEvent = MotionEvent.obtain(ev);
@@ -233,6 +237,11 @@ public class SceneTouchListener implements TouchListener , TouchListener.CallBac
 	
 	public Queue<UIEvent> getEventQueue() {
 		return vEvents;
+	}
+
+
+	public boolean onDown(MotionEvent e) {
+		return vEvents.add(new OnDownEvent(e));
 	}
 
 }

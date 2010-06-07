@@ -124,8 +124,6 @@ public class RepositoryActivity extends ListActivity {
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		
-		this.finish();
-		
 	}
 
 
@@ -133,11 +131,16 @@ public class RepositoryActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 
-		pd = ProgressDialog.show(this, "Please wait...", "Retrieving data ...",
-				false);
+		pd = new ProgressDialog(this);
+		pd.setTitle("eAdventure Repository");
+		pd.setIcon(R.drawable.dialog_icon);
+		pd.setMessage("Retrieving data...");
+		pd.setIndeterminate(false);
+		pd.show();
 		
-
 		progressDialog = new ProgressDialog(this);
+		progressDialog.setTitle("eAdventure Repository");
+		progressDialog.setIcon(R.drawable.dialog_icon);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		progressDialog.setCancelable(false);
 

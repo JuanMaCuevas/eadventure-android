@@ -84,6 +84,9 @@ public class HUD {
 	public boolean processScrollPressed(UIEvent e) {
 		return currentState.processScrollPressed(e);
 	}
+	public boolean processOnDown(UIEvent e) {
+		return currentState.processOnDown(e);
+	}
 
 	public void setState(int state , Object info) {
 
@@ -109,5 +112,6 @@ public class HUD {
 		}
 
 	}
+
 
 }

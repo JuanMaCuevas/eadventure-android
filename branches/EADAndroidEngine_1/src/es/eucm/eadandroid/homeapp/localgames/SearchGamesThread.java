@@ -68,8 +68,6 @@ public class SearchGamesThread extends Thread {
 
 			else {
 
-				Log.d(this.getClass().getSimpleName(), "No adventures in SD");
-
 				msg.what = LGAHandlerMessages.NO_GAMES_FOUND;
 
 			}
@@ -80,8 +78,6 @@ public class SearchGamesThread extends Thread {
 
 			msg.what = LGAHandlerMessages.NO_SD_CARD;
 		}
-
-	//	handler.sendMessage(msg);
 		
 		msg.sendToTarget();
 

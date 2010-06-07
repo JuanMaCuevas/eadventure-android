@@ -34,5 +34,20 @@ public class HiddenState extends HUDstate{
 			stateContext.setState(HUDstate.MagnifierState,null);
 		else stateContext.setState(HUDstate.ShowingInventoryState,null);
 	}
+	
+	public boolean processTap(UIEvent e){
+		return false;
+	}
+	public boolean processUnPressed(UIEvent e){
+		return false;
+	}
+	public boolean processFling(UIEvent e){
+		return false;
+	}
+	public boolean processOnDown(UIEvent e) {
+		return false;
+	}
+	
+	
 
 }

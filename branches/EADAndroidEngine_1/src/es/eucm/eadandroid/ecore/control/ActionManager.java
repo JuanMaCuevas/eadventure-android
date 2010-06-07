@@ -126,7 +126,7 @@ public class ActionManager {
     /**
      * Element selected and current cursor
      */
-    private FunctionalElement elementInCursor;
+    private FunctionalElement currentCombInterElement;
 
 	/**
 	 * Current action selected.
@@ -277,10 +277,10 @@ public class ActionManager {
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
 		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
 		
-		if (elementInCursor!=null && elementOver!=null)
+		if (currentCombInterElement!=null && elementOver!=null)
 			   processElementClick();
 			else {				
-				elementInCursor=null;
+				currentCombInterElement=null;
 				Game.getInstance().getFunctionalScene().tap(x,y);
 			}
 		
@@ -306,13 +306,6 @@ public void pressed(UIEvent ev) {
 
 		FunctionalElement elementInside = functionalScene.getElementInside(x,y, dragElement);
 		Exit exit = functionalScene.getExitInside(x,y);
-		
-		if (elementInside !=null) 
-		Log.d("PRESSED",elementInside.getElement().getName());
-		if (exit!=null)
-		Log.d("PRESSED",exit.getNextSceneId());
-		
-		
 
 		if (dragElement != null) {
 			dragElement.setX(x);
@@ -354,11 +347,11 @@ public void pressed(UIEvent ev) {
 		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
 		
 		
-		if (elementInCursor!=null && elementOver!=null)
+		if (currentCombInterElement!=null && elementOver!=null)
 		   processElementClick();
 		else {
 			
-			elementInCursor=null;
+			currentCombInterElement=null;
 			Game.getInstance().getFunctionalScene().unpressed(x,y);
 		
 		}
@@ -369,7 +362,7 @@ public void pressed(UIEvent ev) {
 		
 		Game game = Game.getInstance();
 		
-		if( elementInCursor != null ) {
+		if( currentCombInterElement != null ) {
             if( game.getFunctionalPlayer( ).getCurrentAction( ).getType( ) == Action.CUSTOM_INTERACT ) {
                 setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
             }
@@ -379,17 +372,17 @@ public void pressed(UIEvent ev) {
             else {
                 if( this.elementOver.canPerform( ActionManager.ACTION_GIVE_TO ) ) {
                     setActionSelected( ActionManager.ACTION_GIVE );
-                    game.getFunctionalPlayer( ).performActionInElement( elementInCursor );
+                    game.getFunctionalPlayer( ).performActionInElement( currentCombInterElement );
                     setActionSelected( ActionManager.ACTION_GIVE_TO );
                 }
                 else {
                     setActionSelected( ActionManager.ACTION_USE );
-                    game.getFunctionalPlayer( ).performActionInElement( elementInCursor );
+                    game.getFunctionalPlayer( ).performActionInElement( currentCombInterElement );
                     setActionSelected( ActionManager.ACTION_USE_WITH );
                 }
             }
             game.getFunctionalPlayer( ).performActionInElement( this.elementOver );
-            elementInCursor = null;
+            currentCombInterElement = null;
       //      gui.setDefaultCursor( );
         }
         else {
@@ -446,29 +439,32 @@ public void pressed(UIEvent ev) {
 		Game game = Game.getInstance();
 		
 		 switch( type ) {
-         case ActionButton.HAND_BUTTON:
-             elementInCursor = null;
-         //    gui.setDefaultCursor( );
-             if( elementAction.canBeUsedAlone( ) ) {
-                 setActionSelected( ActionManager.ACTION_USE );
-                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
-             }
-             else {
+         case ActionButton.GRAB_BUTTON:
+             currentCombInterElement = null;
                  if( !elementAction.isInInventory( ) ) {
                      setActionSelected( ActionManager.ACTION_GRAB );
                      game.getFunctionalPlayer( ).performActionInElement( elementAction );
                  }
-                 else {
-                       elementInCursor = elementAction;
-             //        gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
-                 }
-             }
+                 else currentCombInterElement = elementAction;
+
              break;
-         case ActionButton.EYE_BUTTON:
+         case ActionButton.USE_BUTTON:
+        	 if( elementAction.canBeUsedAlone( ) ) {
+                 setActionSelected( ActionManager.ACTION_USE );
+                 game.getFunctionalPlayer( ).performActionInElement( elementAction );
+             }      	 
+        	 break;
+         case ActionButton.USE_WITH_BUTTON:
+        	  currentCombInterElement = elementAction;
+        	 break;
+         case ActionButton.GIVE_TO_BUTTON:
+       	  currentCombInterElement = elementAction;
+       	 break;
+         case ActionButton.EXAMINE_BUTTON:
              setActionSelected( ActionManager.ACTION_EXAMINE );
              game.getFunctionalPlayer( ).performActionInElement( elementAction );
              break;
-         case ActionButton.MOUTH_BUTTON:
+         case ActionButton.TALK_BUTTON:
              setActionSelected( ActionManager.ACTION_TALK );
              game.getFunctionalPlayer( ).performActionInElement( elementAction );
              break;
@@ -488,7 +484,7 @@ public void pressed(UIEvent ev) {
                  break;
              }
              else {
-                 elementInCursor = elementAction;
+                 currentCombInterElement = elementAction;
             //     gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
                  this.setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
                  this.setCustomActionName( ab.getName( ) );
@@ -501,7 +497,7 @@ public void pressed(UIEvent ev) {
 	}
 
 	public FunctionalElement getElementInCursor() {
-		return elementInCursor;
+		return currentCombInterElement;
 	}
 
 }

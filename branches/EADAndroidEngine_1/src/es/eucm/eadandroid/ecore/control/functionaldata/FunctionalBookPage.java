@@ -167,7 +167,7 @@ public class FunctionalBookPage {
         }
         else*/
         if( bookPage.getType( ) == BookPage.TYPE_IMAGE ) {
-            image = MultimediaManager.getInstance( ).loadImageFromZip( bookPage.getUri( ), MultimediaManager.IMAGE_SCENE );
+            image = MultimediaManager.getInstance( ).loadImage( bookPage.getUri( ), MultimediaManager.IMAGE_SCENE );
         }
 
         
@@ -178,15 +178,8 @@ public class FunctionalBookPage {
 
     public void paint( Canvas c ) {
     	
-    	 
-        //c.drawBitmap(background, 0, 0, null);
-        //c.drawBitmap( background, 0, 0, background.getWidth(  ), background.getHeight(  ) );
         if( image != null )
-        	//GUI.getInstance( ).addForegroundToDraw(image, 0);
-
-            c.drawBitmap(image, 0, 0,null);//c.drawImage( image, bookPage.getMargin( ), bookPage.getMarginTop( ), this.getWidth( ) - bookPage.getMarginEnd( ), this.getHeight( ) - bookPage.getMarginBottom( ), 0, 0, image.getWidth( null ), image.getHeight( null ), null );
-       
-        
+            c.drawBitmap(image, 0, 0,null);    
     }
 
     /**

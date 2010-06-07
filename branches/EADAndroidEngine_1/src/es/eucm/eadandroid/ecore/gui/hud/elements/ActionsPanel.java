@@ -34,7 +34,7 @@ public class ActionsPanel {
 
 	Picture actionsPicture;
 
-	/** Inventory panel **/
+	/** Actions panel **/
 
 	private static final int APANEL_WIDTH = GUI.FINAL_WINDOW_WIDTH;
 	private static final int APANEL_HEIGHT = GUI.FINAL_WINDOW_HEIGHT;
@@ -43,7 +43,7 @@ public class ActionsPanel {
 
 	/** Rounded rect panel */
 
-	private static final int ROUNDED_RECT_STROKE_WIDTH = (int) (1 * GUI.DISPLAY_DENSITY_SCALE);
+	private static final int ROUNDED_RECT_STROKE_WIDTH = (int) (3 * GUI.DISPLAY_DENSITY_SCALE);
 	private static final float ROUNDED_RECT_ROUND_RADIO = 15f * GUI.DISPLAY_DENSITY_SCALE;
 
 	private static final int RPANEL_PADDING = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
@@ -56,7 +56,7 @@ public class ActionsPanel {
 
 	private GridPanel gridPanel;
 
-	int gridPanelHeight = GridPanel.VERTICAL_ICON_SPACE;
+	int gridPanelHeight;
 
 	/** ACTIONS PANEL ANIMATION COORDINATES & VARIABLES */
 
@@ -67,6 +67,13 @@ public class ActionsPanel {
 	/** ELEMENT MODEL */
 
 	private FunctionalElement functionalElement = null;
+	
+	/** IMAGEICON */
+	
+	private Rect iconRect;
+	
+	private static final int ICON_WIDTH = (int)(80 * GUI.DISPLAY_DENSITY_SCALE);
+	private static final int ICON_HEIGHT = (int)(48 * GUI.DISPLAY_DENSITY_SCALE);
 
 	/** BUTTONS **/
 	private ActionButtons buttons;
@@ -88,11 +95,23 @@ public class ActionsPanel {
 	/*
 	 * Default action buttons, so they don't have to be generated each time
 	 */
-	private ActionButton handButton;
+	private ActionButton grabButton;
 
-	private ActionButton mouthButton;
+	private ActionButton talkButton;
 
-	private ActionButton eyeButton;
+	private ActionButton examineButton;
+	
+	// Nuevos
+	
+	private ActionButton useButton;
+	
+	private ActionButton useWithButton;
+	
+	private ActionButton giveToButton;
+	
+	private ActionButton dragButton;
+	
+	
 
 	private Paint textP;
 
@@ -117,6 +136,11 @@ public class ActionsPanel {
 		 int roundRectHeight = APANEL_HEIGHT - 2 * TRANSPARENT_PADDING;
 
 		//int roundRectHeight = 2 * gridPanelHeight;
+		 
+		int buttonHeight = 58;
+		int buttonWidth = 96;
+		 
+		gridPanelHeight = 150 ;
 		
 
 		r = new RectF(0, 0, roundRectWidth, roundRectHeight);
@@ -125,15 +149,19 @@ public class ActionsPanel {
 				APANEL_HEIGHT - TRANSPARENT_PADDING - RPANEL_PADDING
 						- gridPanelHeight, APANEL_WIDTH - TRANSPARENT_PADDING
 						- RPANEL_PADDING, APANEL_HEIGHT - TRANSPARENT_PADDING
-						- RPANEL_PADDING);
-
-		gridPanel = new GridPanel(gridPanelBounds);
+						- RPANEL_PADDING);		
+		
+		gridPanel = new GridPanel(gridPanelBounds,buttonHeight,buttonWidth);
 
 		buttons = new ActionButtons();
 
-		handButton = new ActionButton(ActionButton.HAND_BUTTON);
-		mouthButton = new ActionButton(ActionButton.MOUTH_BUTTON);
-		eyeButton = new ActionButton(ActionButton.EYE_BUTTON);
+		grabButton = new ActionButton(ActionButton.GRAB_BUTTON);
+		talkButton = new ActionButton(ActionButton.TALK_BUTTON);
+		examineButton = new ActionButton(ActionButton.EXAMINE_BUTTON);
+		useButton = new ActionButton(ActionButton.USE_BUTTON);
+		useWithButton = new ActionButton(ActionButton.USE_WITH_BUTTON);
+		giveToButton = new ActionButton(ActionButton.GIVE_TO_BUTTON);
+		dragButton = new ActionButton(ActionButton.DRAG_BUTTON);
 
 		gridPanel.setDataSet(buttons);
 
@@ -160,6 +188,8 @@ public class ActionsPanel {
 				- CLOSE_BOUNDS_OFFSET, CLOSE_X + CLOSE_WIDTH
 				+ CLOSE_BOUNDS_OFFSET, CLOSE_Y + CLOSE_WIDTH
 				+ CLOSE_BOUNDS_OFFSET);
+		
+		iconRect = new Rect(0,0,ICON_WIDTH,ICON_HEIGHT);
 
 	}
 
@@ -249,12 +279,12 @@ public class ActionsPanel {
 	 */
 	private void addDefaultCharacterButtons(FunctionalNPC functionalNPC) {
 
-		buttons.add(eyeButton);
-		buttons.add(mouthButton);
+		buttons.add(examineButton);
+		buttons.add(talkButton);
 		boolean use = functionalNPC.getFirstValidAction(Action.USE) != null;
 		if (use) {
-			handButton.setName(TC.get("ActionButton.Use"));
-			buttons.add(handButton);
+			useButton.setName(TC.get("ActionButton.Use"));
+			buttons.add(useButton);
 		}
 	}
 
@@ -263,37 +293,37 @@ public class ActionsPanel {
 	 */
 	private void addDefaultObjectButtons(FunctionalItem item) {
 
-		buttons.add(eyeButton);
-
-		boolean addHandButton = false;
+		buttons.add(examineButton);
 
 		if (!item.isInInventory()) {
-			handButton.setName(TC.get("ActionButton.Grab"));
+			grabButton.setName(TC.get("ActionButton.Grab"));
 			if (item.getFirstValidAction(Action.GRAB) != null)
-				addHandButton = true;
+				buttons.add(grabButton);
 			if (item.getFirstValidAction(Action.USE) != null) {
-				handButton.setName(TC.get("ActionButton.Use"));
-				addHandButton = true;
+				useButton.setName(TC.get("ActionButton.Use"));
+				buttons.add(useButton);
 			}
 		} else {
 			boolean useAlone = item.canBeUsedAlone();
 			boolean giveTo = item.getFirstValidAction(Action.GIVE_TO) != null;
 			boolean useWith = item.getFirstValidAction(Action.USE_WITH) != null;
-			addHandButton = useAlone || giveTo || useWith;
 			if (useAlone && !giveTo && !useWith) {
-				handButton.setName(TC.get("ActionButton.Use"));
+				useButton.setName(TC.get("ActionButton.Use"));
+				buttons.add(useButton);
 			} else if (!useAlone && giveTo && !useWith) {
-				handButton.setName(TC.get("ActionButton.GiveTo"));
+				giveToButton.setName(TC.get("ActionButton.GiveTo"));
+				buttons.add(giveToButton);
 			} else if (!useAlone && !giveTo && useWith) {
-				handButton.setName(TC.get("ActionButton.UseWith"));
+				useWithButton.setName(TC.get("ActionButton.UseWith"));
+				buttons.add(useWithButton);
 			} else if (!useAlone && giveTo && useWith) {
-				handButton.setName(TC.get("ActionButton.UseGive"));
+				useButton.setName(TC.get("ActionButton.UseGive"));
+				buttons.add(useButton);				
 			} else {
-				handButton.setName(TC.get("ActionButton.Use"));
+				useButton.setName(TC.get("ActionButton.Use"));
+				buttons.add(useButton);
 			}
 		}
-		if (addHandButton)
-			buttons.add(handButton);
 	}
 
 	private void doPanelPicture() {
@@ -303,8 +333,7 @@ public class ActionsPanel {
 		Canvas c = actionsPicture.beginRecording(APANEL_WIDTH, APANEL_HEIGHT);
 
 		c.drawARGB(150, 0, 0, 0);
-		c.translate(TRANSPARENT_PADDING, APANEL_HEIGHT - TRANSPARENT_PADDING
-				- RPANEL_PADDING - r.height());
+		c.translate(TRANSPARENT_PADDING, TRANSPARENT_PADDING);
 		c.drawRoundRect(r, ROUNDED_RECT_ROUND_RADIO, ROUNDED_RECT_ROUND_RADIO,
 				p);
 		c.drawRoundRect(r, ROUNDED_RECT_ROUND_RADIO, ROUNDED_RECT_ROUND_RADIO,
@@ -313,21 +342,25 @@ public class ActionsPanel {
 		c.drawBitmap(closeButton, 0, 0, null);
 		c.translate(closeButtonWidth / 2, closeButtonWidth / 2);
 		// c.drawCircle(0, 0, 15f * GUI.DISPLAY_DENSITY_SCALE, closeP);
-		c.translate(10 * GUI.DISPLAY_DENSITY_SCALE,
-				20 * GUI.DISPLAY_DENSITY_SCALE);
+		c.translate(35 * GUI.DISPLAY_DENSITY_SCALE,
+				30 * GUI.DISPLAY_DENSITY_SCALE);
 
 		if (functionalElement instanceof FunctionalItem) {
 
 			Bitmap image = ((FunctionalItem) functionalElement).getIconImage();
 			if (image != null)
-				c.drawBitmap(image, 0, 0, null);
+//				c.drawBitmap(image, 0, 0, null);
+				c.drawBitmap(image, null, iconRect, null);
+//				c.drawRect(iconRect, paintBorder);
 
 		}
 
-		c.translate(80 * GUI.DISPLAY_DENSITY_SCALE,
-				20 * GUI.DISPLAY_DENSITY_SCALE);
+		c.translate(iconRect.width() + 20 * GUI.DISPLAY_DENSITY_SCALE,
+				iconRect.height()/2 + textP.getTextSize()/2);
 
-		c.drawText(functionalElement.getElement().getName(), 0, 0, textP);
+		new AnimText(350,functionalElement.getElement().getName(),textP).draw(c);
+		
+//		c.drawText(functionalElement.getElement().getName(), 0, 0, textP);
 
 		actionsPicture.endRecording();
 
@@ -336,9 +369,7 @@ public class ActionsPanel {
 	public void doDraw(Canvas c) {
 
 		c.save();
-		c.clipRect(0, 0, APANEL_WIDTH, aPanelBottom);
 		c.save();
-		c.translate(0, aPanelBottom - APANEL_HEIGHT);
 		actionsPicture.draw(c);
 		c.restore();
 		c.translate(0, aPanelBottom - APANEL_HEIGHT);
@@ -385,5 +416,17 @@ public class ActionsPanel {
 
 		return closeBounds.contains(srcX, srcY);
 	}
+
+	public void setItemFocus(int srcX, int srcY) {
+		
+		gridPanel.setItemFocus(srcX,srcY);
+			
+	}
+
+	public void resetItemFocus(int dstX, int dstY) {
+		gridPanel.resetItemFocus(dstX,dstY);
+		
+	}
+	
 
 }

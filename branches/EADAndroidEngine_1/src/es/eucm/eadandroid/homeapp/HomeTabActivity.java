@@ -59,7 +59,7 @@ public class HomeTabActivity extends TabActivity {
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
-		
+				
 		int current= intent.getExtras().getInt("tabstate");
 		mTabHost.setCurrentTab(current);
 	}

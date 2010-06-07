@@ -25,19 +25,22 @@ public class HUDstate {
     }
 	
 	public boolean processTap(UIEvent e){
-		return false;
+		return true;
 	}
 	public boolean processPressed(UIEvent e){
-		return false;
+		return true;
 	}
 	public boolean processUnPressed(UIEvent e){
-		return false;
+		return true;
 	}
 	public boolean processFling(UIEvent e){
-		return false;
+		return true;
 	}
 	public boolean processScrollPressed(UIEvent e){
-		return false;
+		return true;
+	}
+	public boolean processOnDown(UIEvent e) {
+		return true;
 	}
 	
 	

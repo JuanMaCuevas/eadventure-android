@@ -59,27 +59,43 @@ public class ActionButton {
     /**
      * Constant that represent the hand button
      */
-    public static final int HAND_BUTTON = 0;
+    public static final int GRAB_BUTTON = 0;
 
     /**
      * Constant that represents the eye button
      */
-    public static final int EYE_BUTTON = 1;
+    public static final int EXAMINE_BUTTON = 1;
 
     /**
      * Constant that represents the mouth button
      */
-    public static final int MOUTH_BUTTON = 2;
+    public static final int TALK_BUTTON = 2;
+    
+    /**
+     * Constant that represents the use button
+     */
+    public static final int USE_BUTTON = 3;
     
     /**
      * Constant that represents the drag button
      */
-    public static final int DRAG_BUTTON = 3;
+    public static final int DRAG_BUTTON = 4;
+    
+    /**
+     * Constant that represents the give to button
+     */
+    public static final int GIVE_TO_BUTTON = 5;
+      
+    /**
+     * Constant that represents the use with button
+     */
+    public static final int USE_WITH_BUTTON = 6;
+    
     
     /**
      * Constant that represents the custom button
      */
-    public static final int CUSTOM_BUTTON = 4;
+    public static final int CUSTOM_BUTTON = 7;
     
 
     /**
@@ -91,11 +107,6 @@ public class ActionButton {
      * Image of the button when it's pressed
      */
     private Bitmap buttonPressed;
-
-    /**
-     * Image of the button when it has the mouse over
-     */
-    private Bitmap buttonOver;
 
   
     /**
@@ -122,60 +133,38 @@ public class ActionButton {
     public ActionButton( int type ) {
 
         switch( type ) {
-            case HAND_BUTTON:
-                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "btnHand" );
+            case GRAB_BUTTON:
+                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "Grab" );
                 actionName = TC.get( "ActionButton.GrabGiveUse" );
                 break;
-            case EYE_BUTTON:
-                loadButtonImages( DescriptorData.EXAMINE_BUTTON, "btnEye" );
+            case EXAMINE_BUTTON:
+                loadButtonImages( DescriptorData.EXAMINE_BUTTON, "Examine" );
                 actionName = TC.get( "ActionButton.Examine" );
                 break;
-            case MOUTH_BUTTON:
-                loadButtonImages( DescriptorData.TALK_BUTTON, "btnMouth" );
+            case TALK_BUTTON:
+                loadButtonImages( DescriptorData.TALK_BUTTON, "Talk" );
                 actionName = TC.get( "ActionButton.Talk" );
                 break;
+            case USE_BUTTON:
+                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "Use" );
+                actionName = TC.get( "ActionButton.Use" );
+                break;
             case DRAG_BUTTON:
-                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "btnHand" );
+                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "Drag" );
                 actionName = TC.get( "ActionButton.Drag" );
+                break;
+            case USE_WITH_BUTTON:
+                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "UseWith" );
+                actionName = TC.get( "ActionButton.UseWith" );
+                break;
+            case GIVE_TO_BUTTON:
+                loadButtonImages( DescriptorData.USE_GRAB_BUTTON, "GiveTo" );
+                actionName = TC.get( "ActionButton.GiveTo" );
                 break;
         }
         this.type = type;
     }
-
-    private void loadButtonImages( String type, String name ) {
-
-        DescriptorData descriptor = Game.getInstance( ).getGameDescriptor( );
-        String customNormalPath = null;
-        String customHighlightedPath = null;
-        String customPressedPath = null;
-
-        customNormalPath = descriptor.getButtonPath( type, DescriptorData.NORMAL_BUTTON );
-        customHighlightedPath = descriptor.getButtonPath( type, DescriptorData.HIGHLIGHTED_BUTTON );
-        customPressedPath = descriptor.getButtonPath( type, DescriptorData.PRESSED_BUTTON );
-
-        buttonNormal = loadImage( customNormalPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + ".png" );
-        buttonOver = loadImage( customHighlightedPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + "Highlighted.png" );
-        buttonPressed = loadImage( customPressedPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + "Pressed.png" );
-        
-        
-    }
-
-    private Bitmap loadImage( String customPath, String defaultPath ) {
-
-        Bitmap temp = null;
-        if( customPath == null )
-            temp = MultimediaManager.getInstance( ).loadScaledImage( defaultPath,(int)GUI.DISPLAY_DENSITY_SCALE,(int)GUI.DISPLAY_DENSITY_SCALE,MultimediaManager.IMAGE_MENU );
-        else {
-            try {
-                temp = MultimediaManager.getInstance( ).loadImageFromZip( customPath, MultimediaManager.IMAGE_MENU );
-            }
-            catch( Exception e ) {
-                temp = MultimediaManager.getInstance( ).loadImage( Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/btnError.png", MultimediaManager.IMAGE_MENU );
-            }
-        }
-        return temp;
-    }
-
+    
     /**
      * Construct a button from a custom action
      * 
@@ -193,35 +182,66 @@ public class ActionButton {
                 resources = action.getResources( ).get( i );
 
         buttonNormal = loadImage( resources.getAssetPath( "buttonNormal" ), Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/btnError.png" );
-        buttonOver = loadImage( resources.getAssetPath( "buttonOver" ), Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/btnError.png" );
         buttonPressed = loadImage( resources.getAssetPath( "buttonPressed" ), Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/btnError.png" );
 
-        buttonNormal = scaleButton( buttonNormal );
-        buttonOver = scaleButton( buttonOver );
-        buttonPressed = scaleButton( buttonPressed );
+//        buttonNormal = scaleButton( buttonNormal );
+//        buttonPressed = scaleButton( buttonPressed );
 
         this.type = CUSTOM_BUTTON;
     }
 
-    /**
-     * Scale an image of a button
-     * 
-     * @param button
-     *            the image to scale
-     * @return the scaled image
-     */
-    private Bitmap scaleButton( Bitmap button ) {
+    private void loadButtonImages( String type, String name ) {
 
-        if( button.getWidth() > ActionButtons.MAX_BUTTON_WIDTH )
-            button = Bitmap.createScaledBitmap(button, ActionButtons.MAX_BUTTON_WIDTH, button.getHeight(),false);
-        if( button.getWidth() < ActionButtons.MIN_BUTTON_WIDTH )
-            button = Bitmap.createScaledBitmap(button, ActionButtons.MIN_BUTTON_WIDTH, button.getHeight(),false);
-        if( button.getHeight() > ActionButtons.MAX_BUTTON_HEIGHT )
-            button = Bitmap.createScaledBitmap(button,button.getWidth(), ActionButtons.MAX_BUTTON_HEIGHT, false);
-        if( button.getHeight() < ActionButtons.MIN_BUTTON_HEIGHT )
-            button = Bitmap.createScaledBitmap(button,button.getWidth(), ActionButtons.MIN_BUTTON_HEIGHT, false);
-        return button;
+        DescriptorData descriptor = Game.getInstance( ).getGameDescriptor( );
+        String customNormalPath = null;
+        String customPressedPath = null;
+
+        customNormalPath = descriptor.getButtonPath( type, DescriptorData.NORMAL_BUTTON );
+        customPressedPath = descriptor.getButtonPath( type, DescriptorData.PRESSED_BUTTON );
+
+        buttonNormal = loadImage( customNormalPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + "-Normal.png" );
+        buttonPressed = loadImage( customPressedPath, Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/"  + name + "-Pressed.png" );
+        
+        
     }
+
+    private Bitmap loadImage( String customPath, String defaultPath ) {
+
+        Bitmap temp = null;
+        if( customPath == null )
+            temp = MultimediaManager.getInstance( ).loadImage( defaultPath,MultimediaManager.IMAGE_MENU );
+        else {
+            try {
+                temp = MultimediaManager.getInstance( ).loadImage( customPath, MultimediaManager.IMAGE_MENU );
+            }
+            catch( Exception e ) {
+                temp = MultimediaManager.getInstance( ).loadImage( Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/btnError.png", MultimediaManager.IMAGE_MENU );
+            }
+        }
+        return temp;
+    }
+
+   
+
+//    /**
+//     * Scale an image of a button
+//     * 
+//     * @param button
+//     *            the image to scale
+//     * @return the scaled image
+//     */
+//    private Bitmap scaleButton( Bitmap button ) {
+//
+//        if( button.getWidth() > ActionButtons.MAX_BUTTON_WIDTH )
+//            button = Bitmap.createScaledBitmap(button, ActionButtons.MAX_BUTTON_WIDTH, button.getHeight(),false);
+//        if( button.getWidth() < ActionButtons.MIN_BUTTON_WIDTH )
+//            button = Bitmap.createScaledBitmap(button, ActionButtons.MIN_BUTTON_WIDTH, button.getHeight(),false);
+//        if( button.getHeight() > ActionButtons.MAX_BUTTON_HEIGHT )
+//            button = Bitmap.createScaledBitmap(button,button.getWidth(), ActionButtons.MAX_BUTTON_HEIGHT, false);
+//        if( button.getHeight() < ActionButtons.MIN_BUTTON_HEIGHT )
+//            button = Bitmap.createScaledBitmap(button,button.getWidth(), ActionButtons.MIN_BUTTON_HEIGHT, false);
+//        return button;
+//    }
 
     /**
      * @return the buttonNormal
@@ -237,14 +257,6 @@ public class ActionButton {
     public Bitmap getButtonPressed( ) {
 
         return buttonPressed;
-    }
-
-    /**
-     * @return the buttonOver
-     */
-    public Bitmap getButtonOver( ) {
-
-        return buttonOver;
     }
 
 

@@ -74,11 +74,6 @@ public class ECoreControl extends Activity{
 
 	};
 	
-	
-
-	
-
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -150,9 +145,10 @@ public class ECoreControl extends Activity{
 	
 	private void showQRCodeDialog() {
 		new AlertDialog.Builder(this)
-				.setTitle("Qrcode configuration")
+				.setTitle("QRcode settings")
+				.setIcon(R.drawable.dialog_icon)
 				.setMessage(
-						"A game that uses Qrcode needs Barcode Application, do you want to install it?")
+						"You are about to start a QRCode based game. You should install BarcodeScanner app in order to play it")
 				.setPositiveButton("Install",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
@@ -181,8 +177,10 @@ public class ECoreControl extends Activity{
 	
 	private void showGPSDialog(){  
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);  
-		builder.setMessage("Your GPS is disabled! Would you like to enable it?")  
-		     .setCancelable(false)  
+		builder.setMessage("You are about to start a geolocated game. GPS is currently disabled")  
+		     .setCancelable(false) 
+		     .setTitle("GPS disabled")
+		     .setIcon(R.drawable.dialog_icon)
 		     .setPositiveButton("Enable GPS",  
 		          new DialogInterface.OnClickListener(){  
 		          public void onClick(DialogInterface dialog, int id){  

@@ -32,8 +32,8 @@ public class SoundAndroidMp3 extends Sound {
 			// ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
 			if (mMediaPlayer == null) {
 				mMediaPlayer = new MediaPlayer();
-				String falla = ResourceHandler.getInstance().getMediaPath(path);
-				mMediaPlayer.setDataSource(falla);
+				String media = ResourceHandler.getInstance().getMediaPath(path);
+				mMediaPlayer.setDataSource(media);
 				mMediaPlayer.prepare();
 				mMediaPlayer.start();
 			}else mMediaPlayer.start();

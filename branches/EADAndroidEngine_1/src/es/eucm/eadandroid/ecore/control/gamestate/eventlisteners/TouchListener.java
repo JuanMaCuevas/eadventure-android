@@ -24,6 +24,8 @@ public interface TouchListener {
 				float distanceX, float distanceY) ;
 		
 		public boolean onUnPressed(MotionEvent e) ;
+		
+		public boolean onDown(MotionEvent e) ;
 				
 	}
 

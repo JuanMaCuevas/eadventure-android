@@ -283,19 +283,23 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			if (qrCodeGame)
 			QrcodeManager.create();	
 			
-			if (gpsGame)
-			{
-			GpsManager.create();
-			 LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-			  
-			  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-			  0, GpsManager.getInstance().getListener());
-			  
-			  GpsManager.getInstance().setLocationManager(locationManager);
-			  
-			  dialog = ProgressDialog.show(ECoreActivity.this, "",
-						"Searching for gps connetivity...", true);
-			  
+			if (gpsGame) {
+				GpsManager.create();
+				LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+
+				locationManager.requestLocationUpdates(
+						LocationManager.GPS_PROVIDER, 0, 0, GpsManager
+								.getInstance().getListener());
+
+				GpsManager.getInstance().setLocationManager(locationManager);
+
+				dialog = new ProgressDialog(this);
+				dialog.setTitle("eAdventure");
+				dialog.setIcon(R.drawable.dialog_icon);
+				dialog.setMessage("Waiting GPS signal...");
+				dialog.setIndeterminate(true);
+				dialog.show();
+
 			}
 			
 			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
@@ -720,7 +724,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		final boolean aux_quit = quit;
 		final boolean aux_load = load;
 
-		new AlertDialog.Builder(this).setTitle("Save game").setMessage(
+		new AlertDialog.Builder(this).setTitle("Save game").setIcon(R.drawable.dialog_icon).setMessage(
 				"Set slot name").setView(input).setPositiveButton("Ok",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -744,7 +748,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		final boolean aux_load = load;
 
-		new AlertDialog.Builder(this).setTitle("Quit game").setMessage(
+		new AlertDialog.Builder(this).setTitle("Quit game").setIcon(R.drawable.dialog_icon).setMessage(
 				"Do you want to save the game?").setPositiveButton("OK",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -837,24 +841,5 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		}
 
 	}
-
-	static final int DIALOG_PAUSED_ID = 0;
-	static final int DIALOG_GAMEOVER_ID = 1;
-
-	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-		case DIALOG_PAUSED_ID:
-			// do the work to define the pause Dialog
-			break;
-		case DIALOG_GAMEOVER_ID:
-			// do the work to define the game over Dialog
-			break;
-		default:
-			dialog = null;
-		}
-		return dialog;
-	}
-
 	
 	}

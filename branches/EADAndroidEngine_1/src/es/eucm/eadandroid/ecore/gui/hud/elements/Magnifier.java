@@ -260,11 +260,17 @@ public class Magnifier {
 	public void show() {
 
 		showing = true;
+		vibrateOnFocus = true;
 
 	}
 
 	public void hide() {
 		showing = false;
+		vibrateOnFocus=false;
+	}
+
+	public boolean isShown() {
+		return showing;
 	}
 
 }

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.OnDownEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
@@ -69,8 +70,11 @@ public class ActionsState extends HUDstate {
 		
 		int distanceX = -(int)ev.distanceX;
 		
-		 if (actionsPanel.pointInGrid(dstX,dstY))
+		 if (actionsPanel.pointInGrid(dstX,dstY)) {
+			 actionsPanel.setItemFocus(dstX, dstY);
 			 actionsPanel.updateDraggingGrid(distanceX);
+		 }
+		 else  actionsPanel.resetItemFocus(dstX, dstY);
 					
 		return true;
 	}
@@ -110,6 +114,19 @@ public class ActionsState extends HUDstate {
 		return true;
 		
 	}
-
+	
+	@Override
+	public boolean processOnDown(UIEvent e) {
+		
+		OnDownEvent ev = (OnDownEvent) e;
+				
+		int srcX = (int)ev.event.getX();
+		int srcY = (int)ev.event.getY();
+		
+		actionsPanel.setItemFocus(srcX, srcY);
+			
+		return true;
+		
+	}
 
 }

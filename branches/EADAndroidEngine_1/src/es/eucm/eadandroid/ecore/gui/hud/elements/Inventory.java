@@ -38,7 +38,7 @@ public class Inventory {
 
 	/** Rounded rect panel */
 
-	private static final int ROUNDED_RECT_STROKE_WIDTH = (int) (1 * GUI.DISPLAY_DENSITY_SCALE);
+	private static final int ROUNDED_RECT_STROKE_WIDTH = (int) (3 * GUI.DISPLAY_DENSITY_SCALE);
 	private static final float ROUNDED_RECT_ROUND_RADIO = 15f * GUI.DISPLAY_DENSITY_SCALE;
 
 	private static final int RPANEL_PADDING = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
@@ -78,6 +78,7 @@ public class Inventory {
 		paintBorder.setStrokeWidth(ROUNDED_RECT_STROKE_WIDTH);
 		paintBorder.setAntiAlias(true);
 
+
 		int roundRectWidth = IPANEL_WIDTH - 2 * TRANSPARENT_PADDING;
 		int roundRectHeight = IPANEL_HEIGHT - 2 * TRANSPARENT_PADDING;
 
@@ -102,7 +103,7 @@ public class Inventory {
 				TRANSPARENT_PADDING + RPANEL_PADDING, IPANEL_WIDTH - TRANSPARENT_PADDING -RPANEL_PADDING,
 				IPANEL_HEIGHT - TRANSPARENT_PADDING-RPANEL_PADDING);
 
-		gridPanel = new GridPanel(gridPanelBounds);
+		gridPanel = new GridPanel(gridPanelBounds,GridPanel.DEFAULT_ICON_HEIGHT,GridPanel.DEFAULT_ICON_WIDTH);
 
 	}
 
@@ -178,6 +179,16 @@ public class Inventory {
 
 		return gridPanel.selectItem(x, y);
 
+	}
+
+	public void setItemFocus(int posX, int posY) {
+		gridPanel.setItemFocus(posX, posY);
+		
+	}
+
+	public void resetItemFocus(int dstX, int dstY) {
+		gridPanel.resetItemFocus(dstX,dstY);
+		
 	}
 
 }
