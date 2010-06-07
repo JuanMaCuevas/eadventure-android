@@ -5,10 +5,17 @@ import java.util.Vector;
 
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 import es.eucm.eadandroid.common.data.chapter.GpsRule;
+import es.eucm.eadandroid.ecore.GameThread;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
+import es.eucm.eadandroid.ecore.gui.GUI;
 
 public class GpsManager {
 	
@@ -39,6 +46,7 @@ public class GpsManager {
 	
 	public void addallgpsrules(List<GpsRule> list)
 	{
+		synchronized(GpsManager.class) {
 		this.allGpsRules.removeAllElements();
 		
 		for(int i=0;i<list.size();i++)
@@ -53,7 +61,7 @@ public class GpsManager {
 			if (list.get(i).getSceneName().equals(""))
 				this.gpsActive.add(list.get(i));
 		}
-		
+		}
 
 	}
 
@@ -63,6 +71,8 @@ public class GpsManager {
 	
 	public void changeOfScene(String scene)
 	{
+		
+		synchronized(GpsManager.class) {
 	//first removes from gpsActive all gps related to other scenes
 		for (int i=this.gpsActive.size()-1;i>=0;i=i-1)
 		{
@@ -75,37 +85,65 @@ public class GpsManager {
 			if (this.allGpsRules.elementAt(i).getSceneName().equals(scene))
 				gpsActive.add(this.gpsActive.elementAt(i));
 		}
-		
+		}
 	}
 	
 
 
 	public void updategps(Location location) {
-		for (int i = 0; i < gpsActive.size(); i++) {
+		
+		location.setAccuracy(1);
 
-			if (new FunctionalConditions(gpsActive.elementAt(i).getEndCond()).allConditionsOk())
-			{
-				double distance = distance(location.getLatitude(), location
-						.getLongitude(), gpsActive.elementAt(i).getLatitude(), gpsActive
-						.elementAt(i).getLongitude());
-				
-				Location d=new Location("");
-				d.setLatitude( gpsActive.elementAt(i).getLatitude());
-				d.setLongitude(gpsActive.elementAt(i).getLongitude());
-				
-				float metros=location.distanceTo(d);
-				Log.d("PUNTO1", " " + location.getLongitude()+"   "+location.getLatitude() );
-				Log.d("punto2", " " + d.getLongitude()+"   "+d.getLatitude() );
-				Log.d("DISTANCIA", "" + distance+"   "+metros);
+		synchronized (GpsManager.class) {
+			for (int i = 0; i < gpsActive.size(); i++) {
 
-				if (distance < gpsActive.elementAt(i).getRadio()) {
-					FunctionalEffects.storeAllEffects(gpsActive.elementAt(i)
-							.getEffects());
-					this.gpsActive.remove(i);
+				if (new FunctionalConditions(gpsActive.elementAt(i)
+						.getEndCond()).allConditionsOk()) {
+					double distance = distance(location.getLatitude(), location
+							.getLongitude(), gpsActive.elementAt(i)
+							.getLatitude(), gpsActive.elementAt(i)
+							.getLongitude());
 
+					Location d = new Location("");
+					d.setLatitude(gpsActive.elementAt(i).getLatitude());
+					d.setLongitude(gpsActive.elementAt(i).getLongitude());
+					d.setAccuracy(1);
+
+					float metros = location.distanceTo(d);
+
+					String a = new String("logitud " + location.getLongitude()
+							+ "latitud " + location.getLatitude()
+							+ "longitud2 " + d.getLongitude() + "latitud2 "
+							+ d.getLatitude() + "distancia" + metros
+							+ "distancia2 " + distance);
+					/*
+					 * Log.d("PUNTO1", " " +
+					 * location.getLongitude()+"   "+location.getLatitude() );
+					 * Log.d("punto2", " " +
+					 * d.getLongitude()+"   "+d.getLatitude() );
+					 * Log.d("DISTANCIA", "" + distance+"   "+metros);
+					 */
+
+					Handler handler = GameThread.getInstance().getHandler();
+
+					Message msg = handler.obtainMessage();
+
+					Bundle b = new Bundle();
+					b.putString("toast", a);
+					msg.what = ActivityHandlerMessages.SHOW_TOAST;
+					msg.setData(b);
+
+					msg.sendToTarget();
+
+					if (metros < gpsActive.elementAt(i).getRadio()) {
+						FunctionalEffects.storeAllEffects(gpsActive
+								.elementAt(i).getEffects());
+						this.gpsActive.remove(i);
+
+					}
 				}
-			}
 
+			}
 		}
 
 	}

@@ -105,6 +105,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	 //   public static final int REGISTRATE_GPS = 5;
 		public static final int REGISTRATE_GPS = 5;
 		public static final int CONVERSATION = 6;
+		public static final int SHOW_TOAST = 8;
 
 	}
 
@@ -155,6 +156,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				ECoreActivity.this.dialog = ProgressDialog.show(ECoreActivity.this, "",
 						text, true);
 				break;	
+			case ActivityHandlerMessages.SHOW_TOAST:
+				//TODO perri para que active la red
+				Bundle e = msg.getData();
+				text = e.getString("toast");
+				showToast(text);
+				
+				break;
 			
 		/*	 case ActivityHandlerMessages.REGISTRATE_GPS:
 				 activateGps();
@@ -240,6 +248,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		
+	//	Log.d("onCreate","XXXXXXXXXXXXXXXXXXXXXX");
 		// DEBUG
 		Log.e("Inicio core1", String
 				.valueOf(Debug.getNativeHeapAllocatedSize()));
@@ -456,6 +466,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.d("onResume","XXXXXXXXXXXXXXXXXXXXXX");
 		
 		// gameSurfaceView will only be null when the application is restored
 		if (gameSurfaceView == null) {
@@ -485,6 +496,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onPause() {
 		super.onPause();
+	//	Log.d("onPause","XXXXXXXXXXXXXXXXXXXXXX");
 
 		// to control if the game has finish or the user has done a quick exit
 		// making the game capable of being restored
@@ -840,6 +852,34 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			 */
 		}
 
+	}
+
+	@Override
+	protected void onRestart() {
+		
+		super.onRestart();
+	//	Log.d("onRestart","XXXXXXXXXXXXXXXXXXXXXX");
+	}
+
+	@Override
+	protected void onStart() {
+		
+		super.onStart();
+	//	Log.d("onStart","XXXXXXXXXXXXXXXXXXXXXX");
+	}
+
+	@Override
+	protected void onStop() {
+		
+		super.onStop();
+		//Log.d("onStop","XXXXXXXXXXXXXXXXXXXXXX");
+	}
+
+	@Override
+	protected void onDestroy() {
+		
+		super.onDestroy();
+	//	Log.d("onDestroy","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 	
 	}

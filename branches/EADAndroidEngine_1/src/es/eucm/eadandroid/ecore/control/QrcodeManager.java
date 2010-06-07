@@ -4,9 +4,14 @@ import java.util.List;
 import java.util.Vector;
 
 import android.location.Location;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.QrcodeRule;
+import es.eucm.eadandroid.ecore.GameThread;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
@@ -83,6 +88,17 @@ public class QrcodeManager {
 			if (new FunctionalConditions(qrcodeActive.elementAt(i).getEndCond()).allConditionsOk())
 			{
 				if (qrcodeActive.elementAt(i).getCode().equals(password)) {
+					
+					Handler handler = GameThread.getInstance().getHandler();
+					String text=new String("QRCode found ");
+					Message msg = handler.obtainMessage();
+					Bundle b = new Bundle();
+					b.putString("toast", text);
+					msg.what = ActivityHandlerMessages.SHOW_TOAST;
+					msg.setData(b);
+
+					msg.sendToTarget();
+					
 					FunctionalEffects.storeAllEffects(qrcodeActive.elementAt(i)
 							.getEffects());
 					this.qrcodeActive.remove(i);
