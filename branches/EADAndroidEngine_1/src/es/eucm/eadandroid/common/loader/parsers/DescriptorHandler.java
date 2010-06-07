@@ -243,6 +243,30 @@ public class DescriptorHandler extends DefaultHandler {
             }
         }
 
+      if( sName.equals( "type" ) ) {
+    	  boolean gpsMode = false;
+          boolean qrCodeMode = false;
+       
+
+          for( int i = 0; i < attrs.getLength( ); i++ ) {
+              // Type of the GUI
+        	  if( attrs.getLocalName( i ).equals( "barcode" ) ) {
+        		  qrCodeMode = attrs.getValue( i ).equals( "yes" );
+              }
+
+              // Customized GUI
+              else if( attrs.getLocalName( i ).equals( "geolocated" ) ) {
+            	  gpsMode = attrs.getValue( i ).equals( "yes" );
+              }
+          }
+
+          // Set the values
+          
+          gameDescriptor.setGpsMode(gpsMode);
+          gameDescriptor.setQrCodeMode(qrCodeMode);
+        
+      }
+
         // If it is a chapter, create it and store the path
         else if( sName.equals( "chapter" ) ) {
             currentChapter = new ChapterSummary( );

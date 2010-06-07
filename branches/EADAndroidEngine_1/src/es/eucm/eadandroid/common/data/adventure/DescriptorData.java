@@ -243,6 +243,28 @@ public class DescriptorData implements Cloneable, Described, Titled {
      */
     protected int playerMode;
 
+ 
+
+    
+    
+    
+    
+    
+    
+    
+
+    
+   
+
+	/**
+     *  Adventure qr mode
+    */
+    protected boolean qrCodeMode=false;
+    
+    /**
+     *  Adventure gps mode
+    */   
+protected boolean gpsMode=false;
     /**
      * Stores if the GUI's graphics are customized
      */
@@ -731,5 +753,21 @@ public class DescriptorData implements Cloneable, Described, Titled {
 
         this.projectName = projectName;
     }
+    
+    public boolean isQrCodeMode() {
+		return qrCodeMode;
+	}
+
+	public void setQrCodeMode(boolean qrCodeMode) {
+		this.qrCodeMode = qrCodeMode;
+	}
+
+	public boolean isGpsMode() {
+		return gpsMode;
+	}
+
+	public void setGpsMode(boolean gpsMode) {
+		this.gpsMode = gpsMode;
+	}
 
 }

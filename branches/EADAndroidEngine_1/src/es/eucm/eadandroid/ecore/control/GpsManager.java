@@ -4,17 +4,23 @@ import java.util.List;
 import java.util.Vector;
 
 import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 
 public class GpsManager {
+	
 
 	private static GpsManager singleton = null;
 	private Vector<GpsRule> gpsActive;
 	private Vector<GpsRule> allGpsRules;
 	GpsListener listener;
+	boolean activeGps=false;
+	LocationManager locationManager=null;
+
+
 
 	public static GpsManager getInstance() {
 
@@ -144,6 +150,30 @@ public class GpsManager {
 	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 	private double rad2deg(double rad) {
 		return (rad * 180.0 / Math.PI);
+	}
+	
+	
+	public boolean isActiveGps() {
+		boolean result=false;
+		if (activeGps)
+		{
+			result=true;
+			activeGps=false;
+		}
+		return result;
+	}
+
+	public void setActiveGps(boolean activeGps) {
+		this.activeGps = activeGps;
+	}
+	
+	
+	public LocationManager getLocationManager() {
+		return locationManager;
+	}
+
+	public void setLocationManager(LocationManager locationManager) {
+		this.locationManager = locationManager;
 	}
 
 }

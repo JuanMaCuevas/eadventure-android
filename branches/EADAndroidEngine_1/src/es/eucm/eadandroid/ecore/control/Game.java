@@ -9,8 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -38,6 +40,7 @@ import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.common.gui.JOptionPane;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
+import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
@@ -499,7 +502,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 					this.load(this.LoadingGame);
 				}
 
-				finishloadingdialog();
+				
 
 				GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse
 												// !!
@@ -572,7 +575,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	        Message msg = handler.obtainMessage();
 	               Bundle b = new Bundle();
 				//b.putString("html", text);
-				msg.what = ActivityHandlerMessages.FINISH_LOADING;
+				msg.what = ActivityHandlerMessages.FINISH_DIALOG;
 				msg.setData(b);
 				msg.sendToTarget();
 		
@@ -725,8 +728,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 */
         if (this.gameData.getGpsRules().size()>0)
         {	
-		if (GpsManager.getInstance() == null) {
-				GpsManager.create();
+		
+        	/*				GpsManager.create();
 
 				Handler handler = GameThread.getInstance().getHandler();
 				Message msg = handler.obtainMessage();
@@ -735,8 +738,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 				msg.what = ActivityHandlerMessages.REGISTRATE_GPS;
 				msg.setData(b);
 				msg.sendToTarget();
-			}
-		
+			
+	*/	
 		GpsManager.getInstance().addallgpsrules(this.gameData.getGpsRules());
 		
 		
@@ -1665,6 +1668,14 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	public void pause() {
 		setGlobalState(STATE_PAUSE);
 	}
+	
+	public boolean ispause() {
+		boolean pause=false;
+		
+		if (globalState==STATE_PAUSE)
+			pause=true;
+		return pause;
+	}
 
 	public Bundle saveState(Bundle map) {
 		return null;
@@ -1743,6 +1754,5 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		((GameStateVideoscene) currentState).setstop(true);
 		
 	}
-
 
 }

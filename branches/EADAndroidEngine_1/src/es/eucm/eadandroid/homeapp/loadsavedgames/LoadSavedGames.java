@@ -26,6 +26,7 @@ import android.widget.Toast;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.ecore.ECoreControl;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.utils.ActivityPipe;
@@ -126,7 +127,7 @@ public class LoadSavedGames extends ExpandableListActivity {
 				if ((!info.getGroup()[groupPos].equals("No Games"))
 						&& (!info.getChildren()[groupPos][childPos]
 								.equals("Saved but deleted"))) {
-					Intent i = new Intent(this, ECoreActivity.class);
+					Intent i = new Intent(this, ECoreControl.class);
 					i.putExtra("AdventureName", info.getGroup()[groupPos]);
 					i.putExtra("restoredGame",
 							Paths.eaddirectory.SAVED_GAMES_PATH

@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.ecore.ECoreActivity;
+import es.eucm.eadandroid.ecore.ECoreControl;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
@@ -181,8 +182,8 @@ public class LocalGamesActivity extends ListActivity {
 
 		GameInfo selectedAdventure = (GameInfo) this.getListView()
 				.getItemAtPosition(position);
-
-		Intent i = new Intent(this, ECoreActivity.class);
+//TODO he cambiado el activity
+		Intent i = new Intent(this, ECoreControl.class);
 		i.putExtra("AdventureName", selectedAdventure.getGameTitle());
 
 		this.startActivity(i);

@@ -9,6 +9,7 @@ import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.QrcodeRule;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
+import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 
 public class QrcodeManager {
 
@@ -91,6 +92,17 @@ public class QrcodeManager {
 
 		}
 
+	}
+	
+	public boolean isGameStatePlaying()
+	{
+		boolean isGamStatePlaying=false;
+		if (Game.getInstance().getCurrentState() instanceof GameStatePlaying)
+		{
+			isGamStatePlaying=true;
+		}
+		
+		return isGamStatePlaying;
 	}
 
 }
