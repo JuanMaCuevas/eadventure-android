@@ -120,6 +120,8 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		}
 		mediaPlayer.start();
 		
+		if (Game.getInstance().getFunctionalScene()!=null)
+			Game.getInstance().getFunctionalScene().playBackgroundMusic();
 
 	}
 

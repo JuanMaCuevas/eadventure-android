@@ -57,6 +57,7 @@ public class GpsListener implements LocationListener {
 				Message msg = handler.obtainMessage();
 
 				Bundle b = new Bundle();
+				b.putInt("dialog", 0);
 				msg.what = ActivityHandlerMessages.FINISH_DIALOG;
 				msg.setData(b);
 				msg.sendToTarget();

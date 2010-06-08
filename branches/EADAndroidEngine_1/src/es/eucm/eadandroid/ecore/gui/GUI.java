@@ -251,15 +251,16 @@ public class GUI {
 
 		try {
 			canvas = canvasSurfaceHolder.lockCanvas(null);
-			synchronized (canvasSurfaceHolder) {
+			if (canvas != null)
+				synchronized (canvasSurfaceHolder) {
 
-				canvas.drawBitmap(finalBmp, 0, 0, null);
+					canvas.drawBitmap(finalBmp, 0, 0, null);
 
-		//		fps.draw(canvas);
-				hud.doDraw(canvas);
-			//DEBUG	debugOverlay.draw(canvas);
-				debugOverlay.draw(canvas);
-			}
+					// fps.draw(canvas);
+					hud.doDraw(canvas);
+					// DEBUG debugOverlay.draw(canvas);
+					debugOverlay.draw(canvas);
+				}
 		} finally {
 			// do this in a finally so that if an exception is thrown
 			// during the above, we don't leave the Surface in an
@@ -268,7 +269,7 @@ public class GUI {
 				canvasSurfaceHolder.unlockCanvasAndPost(canvas);
 			}
 		}
-
+		
 	}
 
 

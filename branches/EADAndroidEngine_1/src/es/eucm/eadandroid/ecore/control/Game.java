@@ -502,7 +502,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 					this.load(this.LoadingGame);
 				}
 
-				
+				finishloadingdialog();
 
 				GUI.getInstance().initHUD(); // FIXME esto tiene que cambiarse
 												// !!
@@ -538,16 +538,18 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 						}
 					} else {
-						Thread.sleep(1000);
+						Thread.sleep(1000);		
 					}
 
 				}
 				
 				GUI.getInstance().clearScreen();
+				functionalScene.stopBackgroundMusic();
 
 				// If there is an assessment profile, show the "Save Report"
-				// dialog
+				
 
+				
 				while (!assessmentEngine.isEndOfChapterFeedbackDone()) {
 					Thread.sleep(100);
 				}
@@ -574,6 +576,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		 Handler handler=GameThread.getInstance().getHandler();
 	        Message msg = handler.obtainMessage();
 	               Bundle b = new Bundle();
+	               b.putInt("dialog", 1);
 				//b.putString("html", text);
 				msg.what = ActivityHandlerMessages.FINISH_DIALOG;
 				msg.setData(b);
