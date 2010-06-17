@@ -342,7 +342,7 @@ public class ActionsPanel {
 		c.translate(-closeButtonWidth / 2, -closeButtonWidth / 2);
 		c.drawBitmap(closeButton, 0, 0, null);
 		c.translate(closeButtonWidth / 2, closeButtonWidth / 2);
-		c.drawCircle(r.width()-ROUNDED_RECT_ROUND_RADIO,ROUNDED_RECT_ROUND_RADIO,ROUNDED_RECT_ROUND_RADIO, closeP);
+//		c.drawCircle(r.width()-ROUNDED_RECT_ROUND_RADIO,ROUNDED_RECT_ROUND_RADIO,ROUNDED_RECT_ROUND_RADIO, closeP);
 		c.translate(35 * GUI.DISPLAY_DENSITY_SCALE,
 				30 * GUI.DISPLAY_DENSITY_SCALE);
 
