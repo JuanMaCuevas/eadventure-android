@@ -145,7 +145,7 @@ public class ECoreControl extends Activity{
 	
 	private void showQRCodeDialog() {
 		new AlertDialog.Builder(this)
-				.setTitle("QRcode settings")
+				.setTitle("eAdventure QRCode game")
 				.setIcon(R.drawable.dialog_icon)
 				.setMessage(
 						"You are about to start a QRCode based game. You should install BarcodeScanner app in order to play it")
@@ -179,7 +179,7 @@ public class ECoreControl extends Activity{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);  
 		builder.setMessage("You are about to start a geolocated game. GPS is currently disabled")  
 		     .setCancelable(false) 
-		     .setTitle("GPS disabled")
+		     .setTitle("eAdventure Geolocated Game")
 		     .setIcon(R.drawable.dialog_icon)
 		     .setPositiveButton("Enable GPS",  
 		          new DialogInterface.OnClickListener(){  

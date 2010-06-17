@@ -355,7 +355,7 @@ public class GridPanel {
 
 	public void setItemFocus(int posX, int posY) {
 
-		itemFocusIndex = -1;
+		boolean resetIndex = true;
 
 		if (!dragging && dataSet != null && dataSet.getItemCount() > 0) {
 
@@ -401,9 +401,10 @@ public class GridPanel {
 							updateSelectedItem();
 							itemSelected = true;
 							itemFocusIndex = index;
+							resetIndex = false;
+							
 							
 						}
-
 					}
 
 				}
@@ -411,6 +412,9 @@ public class GridPanel {
 			}
 
 		}
+		
+		if (resetIndex)
+			itemFocusIndex=-1;
 
 	}
 	
@@ -424,7 +428,7 @@ public class GridPanel {
 
 	}
 
-	public void resetItemFocus(int dstX, int dstY) {
+	public void resetItemFocus() {
 		itemFocusIndex = -1;		
 	}
 

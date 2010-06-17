@@ -172,8 +172,9 @@ public class ActionsPanel {
 		textP.setTextAlign(Align.LEFT);
 
 		closeP = new Paint(Paint.ANTI_ALIAS_FLAG);
-		closeP.setColor(Color.RED);
-		closeP.setStyle(Style.FILL_AND_STROKE);
+		closeP.setColor(Color.WHITE);
+		closeP.setStyle(Style.STROKE);
+		closeP.setStrokeWidth(ROUNDED_RECT_STROKE_WIDTH);
 
 		CLOSE_Y = APANEL_HEIGHT - TRANSPARENT_PADDING - RPANEL_PADDING
 				- (int) r.height();
@@ -341,7 +342,7 @@ public class ActionsPanel {
 		c.translate(-closeButtonWidth / 2, -closeButtonWidth / 2);
 		c.drawBitmap(closeButton, 0, 0, null);
 		c.translate(closeButtonWidth / 2, closeButtonWidth / 2);
-		// c.drawCircle(0, 0, 15f * GUI.DISPLAY_DENSITY_SCALE, closeP);
+		c.drawCircle(r.width()-ROUNDED_RECT_ROUND_RADIO,ROUNDED_RECT_ROUND_RADIO,ROUNDED_RECT_ROUND_RADIO, closeP);
 		c.translate(35 * GUI.DISPLAY_DENSITY_SCALE,
 				30 * GUI.DISPLAY_DENSITY_SCALE);
 
@@ -349,10 +350,7 @@ public class ActionsPanel {
 
 			Bitmap image = ((FunctionalItem) functionalElement).getIconImage();
 			if (image != null)
-//				c.drawBitmap(image, 0, 0, null);
 				c.drawBitmap(image, null, iconRect, null);
-//				c.drawRect(iconRect, paintBorder);
-
 		}
 
 		c.translate(iconRect.width() + 20 * GUI.DISPLAY_DENSITY_SCALE,
@@ -423,8 +421,8 @@ public class ActionsPanel {
 			
 	}
 
-	public void resetItemFocus(int dstX, int dstY) {
-		gridPanel.resetItemFocus(dstX,dstY);
+	public void resetItemFocus() {
+		gridPanel.resetItemFocus();
 		
 	}
 	

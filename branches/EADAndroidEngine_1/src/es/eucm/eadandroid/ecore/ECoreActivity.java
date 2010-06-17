@@ -76,18 +76,17 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private WebView webview;
 
 	private View conversationLayout;
-	private ListView conversationList;
+	private ListView conversationList; 
 	private ArrayAdapter<String> conversationAdapter;
 	private String adventureName;
 	private boolean fromvideo = false;
 
-
 	ProgressDialog dialog;
-	ProgressDialog Dialog2;
+	ProgressDialog dialog2;
 
 	boolean onescaled = false;
-	boolean gpsGame = false;
-	boolean qrCodeGame = false;
+	boolean gpsGame=false;
+	boolean qrCodeGame=false;
 
 	private static String languageFile = ReleaseFolders.LANGUAGE_UNKNOWN;
 
@@ -103,11 +102,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public static final int LOAD_GAMES = 3;
 		public static final int FINISH_DIALOG = 4;
 		public static final int SHOW_DIALOG = 7;
-		// public static final int REGISTRATE_GPS = 5;
+	 //   public static final int REGISTRATE_GPS = 5;
 		public static final int REGISTRATE_GPS = 5;
 		public static final int CONVERSATION = 6;
 		public static final int SHOW_TOAST = 8;
-		
 
 	}
 
@@ -160,10 +158,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 					}
 				}
 				else{
-				if (Dialog2 != null) {
-					Dialog2.setIndeterminate(false);
-					Dialog2.dismiss();
-					Dialog2 = null;
+				if (dialog2 != null) {
+					dialog2.setIndeterminate(false);
+					dialog2.dismiss();
+					dialog2 = null;
 				}
 				}
 				break;
@@ -179,65 +177,68 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				Bundle e = msg.getData();
 				text = e.getString("toast");
 				showToast(text);
-
+				
 				break;
-
+			
+		/*	 case ActivityHandlerMessages.REGISTRATE_GPS:
+				 activateGps();
+			
+			 break;
+			*/ 
 
 				
-
-			/*
-			 * case ActivityHandlerMessages.REGISTRATE_GPS: activateGps();
-			 * 
-			 * break;
-			 */
-
 			case ActivityHandlerMessages.CONVERSATION:
 				Bundle c = msg.getData();
-
+							
 				showConversationOptions(c);
-
+				
 				break;
-
+				
 			}
 
 		}
+
+		
 
 	};
 
 	private void startLoadApplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
-		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
-				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
 
-	/*
-	 * protected void activateGps() { LocationManager locationManager =
-	 * (LocationManager) getSystemService(this.LOCATION_SERVICE);
-	 * 
-	 * locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-	 * 0, GpsManager.getInstance().getListener());
-	 * 
-	 * GpsManager.getInstance().setLocationManager(locationManager);
-	 * 
-	 * }
-	 */
+/*	
+	 protected void activateGps() { 
+		 LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+	  
+	  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+	  0, GpsManager.getInstance().getListener());
+	  
+	  GpsManager.getInstance().setLocationManager(locationManager);
+	  
+	  }
+*/	 
 
+	
 	private void showConversationOptions(Bundle b) {
 
-		if (conversationList.getVisibility() != View.VISIBLE) {
 
+		if(conversationList.getVisibility()!=View.VISIBLE){
+			
+		
 			conversationAdapter.clear();
 			int size = b.getInt("size");
-			for (int i = 0; i < size; i++) {
-				conversationAdapter.add((String) b.getString(Integer
-						.toString(i)));
+			for (int i=0;i<size;i++){
+				conversationAdapter.add((String) b.getString(Integer.toString(i)));
 			}
-
+			
 			conversationLayout.setVisibility(View.VISIBLE);
 			conversationList.setVisibility(View.VISIBLE);
+			
+			
 
 		}
 
@@ -252,8 +253,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void finishapplication() {
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.GAMES);
-		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
-				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
@@ -263,7 +263,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Log.d("DLOCK", "onCreate");
+
 		// DEBUG
 		Log.e("Inicio core1", String
 				.valueOf(Debug.getNativeHeapAllocatedSize()));
@@ -277,15 +277,15 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//
+//		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+//				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		SensorManager sm = (SensorManager) this
 				.getSystemService(Context.SENSOR_SERVICE);
 		sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		// tell system to use the layout defined in our XML file
-		setContentView(R.layout.game_activity_canvas);
+		setContentView(R.layout.game_activity_canvas);	
 
 		// to know if we are going to load a saved game
 		boolean loadingfromsavedgame = this.getIntent().getExtras().getBoolean(
@@ -300,17 +300,17 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 					"AdventureName");
 			String advPath = Paths.eaddirectory.GAMES_PATH + adventureName
 					+ "/";
-
+			
 			ResourceHandler.getInstance().setGamePath(advPath);
 			DescriptorData gameDescriptor = Loader
 					.loadDescriptorData(ResourceHandler.getInstance());
-
-			this.gpsGame = gameDescriptor.isGpsMode();
-			this.qrCodeGame = gameDescriptor.isQrCodeMode();
-
+			
+			this.gpsGame=gameDescriptor.isGpsMode();
+			this.qrCodeGame=gameDescriptor.isQrCodeMode();
+			
 			if (qrCodeGame)
-				QrcodeManager.create();
-
+			QrcodeManager.create();	
+			
 			if (gpsGame) {
 				GpsManager.create();
 				LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
@@ -322,37 +322,42 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				GpsManager.getInstance().setLocationManager(locationManager);
 
 				dialog = new ProgressDialog(this);
-				dialog.setTitle("eAdventure");
+				dialog.setTitle("eAdventure Geolocated Game");
 				dialog.setIcon(R.drawable.dialog_icon);
-				dialog.setMessage("Waiting GPS signal...");
+				dialog.setMessage("Waiting for GPS signal...");
 				dialog.setIndeterminate(true);
 				dialog.show();
+				// dialog.setCancelable(false);
 
-			}else
-			{
-				Dialog2 = new ProgressDialog(this);
-				Dialog2.setTitle("eAdventure");
-				Dialog2.setIcon(R.drawable.dialog_icon);
-				Dialog2.setMessage("");
-				Dialog2.setIndeterminate(true);
-				Dialog2.show();
+			} else {
+				dialog2 = new ProgressDialog(this);
+				dialog2.setTitle("eAdventure");
+				dialog2.setIcon(R.drawable.dialog_icon);
+				dialog2.setMessage("Loading game...");
+				dialog2.setIndeterminate(true);
+				dialog2.show();
 			}
+
 			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
 			SurfaceHolder canvasHolder = gameSurfaceView.getHolder();
 			// register our interest in hearing about changes to our surface
 			// TODO tengo que descomentar esta linea
 			canvasHolder.addCallback(this);
+			
+			
+			
+			if (loadingfromsavedgame) {
+				String loadfile = this.getIntent().getExtras().getString(
+						"restoredGame");
+				GameThread
+						.create(canvasHolder, this, ActivityHandler, loadfile);
+			} else
+				GameThread.create(canvasHolder, this, ActivityHandler, null);
 
-				if (loadingfromsavedgame) {
-					String loadfile = this.getIntent().getExtras().getString(
-							"restoredGame");
-					GameThread.create(canvasHolder, this, ActivityHandler,
-							loadfile);
-				} else
-					GameThread.create(canvasHolder, this, ActivityHandler, null);
-
-				GameThread.getInstance().setAdventurePath(advPath);
-				GameThread.getInstance().setAdventureName(adventureName);
+			GameThread.getInstance().setAdventurePath(advPath);
+			GameThread.getInstance().setAdventureName(adventureName);
+			
+			
 
 		} else {		
 			this.fromvideo = this.getIntent().getExtras().getBoolean("before_video");
@@ -379,32 +384,38 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			}
 		});
 
+		
 		conversationLayout = findViewById(R.id.conversationLayout);
-
-		conversationList = (ListView) findViewById(R.id.ListView01);
-
-		conversationAdapter = new ArrayAdapter<String>(this,
-				R.layout.conversation_line, new ArrayList<String>());
+		
+		conversationList = (ListView) findViewById(R.id.ListView01);		
+		
+		conversationAdapter = new ArrayAdapter<String>(this, R.layout.conversation_line, new ArrayList<String>());
 		conversationList.setAdapter(conversationAdapter);
 		conversationLayout.setVisibility(View.INVISIBLE);
 		conversationList.setVisibility(View.INVISIBLE);
-
+				
 		conversationList.setOnItemClickListener(new OnItemClickListener() {
-
+			
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+		  	        int position, long id) {
 
-				((GameStateConversation) Game.getInstance().getCurrentState())
-						.selectDisplayedOption(position);
+				((GameStateConversation) Game.getInstance().getCurrentState()).selectDisplayedOption(position);
 				conversationLayout.setVisibility(View.INVISIBLE);
 				conversationList.setVisibility(View.INVISIBLE);
+				
+				//conversationAdapter.clear();
+				
+				
 
-				// conversationAdapter.clear();
+		  	    }
 
-			}
+		
 
+			
 		});
-
+		
+		
+		
 		report_button.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -481,8 +492,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.d("DLOCK", "onResume");
-
+	
+		
 		// gameSurfaceView will only be null when the application is restored
 		if (gameSurfaceView == null) {
 			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
@@ -503,13 +514,15 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	}
 
+
+
 	/**
 	 * Invoked when the Activity loses user focus.
 	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.d("DLOCK", "onPause");
+
 
 		// to control if the game has finish or the user has done a quick exit
 		// making the game capable of being restored
@@ -616,7 +629,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
 	 */
 	public boolean onTouchEvent(MotionEvent event) {
-
+		
 		boolean dispatched = GameThread.getInstance().processTouchEvent(event);
 
 		// don't allow more than 60 motion events per second
@@ -748,9 +761,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		final boolean aux_quit = quit;
 		final boolean aux_load = load;
 
-		new AlertDialog.Builder(this).setTitle("Save game").setIcon(
-				R.drawable.dialog_icon).setMessage("Set slot name").setView(
-				input).setPositiveButton("Ok",
+		new AlertDialog.Builder(this).setTitle("Save game").setIcon(R.drawable.dialog_icon).setMessage(
+				"Set slot name").setView(input).setPositiveButton("Ok",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						Editable value = input.getText();
@@ -773,8 +785,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		final boolean aux_load = load;
 
-		new AlertDialog.Builder(this).setTitle("Quit game").setIcon(
-				R.drawable.dialog_icon).setMessage(
+		new AlertDialog.Builder(this).setTitle("Quit game").setIcon(R.drawable.dialog_icon).setMessage(
 				"Do you want to save the game?").setPositiveButton("OK",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -870,30 +881,30 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	@Override
 	protected void onRestart() {
-
+		
 		super.onRestart();
-		Log.d("DLOCK", "onRestart");
+	//	Log.d("onRestart","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onStart() {
-
+		
 		super.onStart();
-		Log.d("DLOCK", "onStart");
+	//	Log.d("onStart","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onStop() {
-
+		
 		super.onStop();
-		Log.d("DLOCK", "onStop");
+		//Log.d("onStop","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onDestroy() {
-
+		
 		super.onDestroy();
-		Log.d("DLOCK", "OnDestroy");
+	//	Log.d("onDestroy","XXXXXXXXXXXXXXXXXXXXXX");
 	}
-
-}
+	
+	}

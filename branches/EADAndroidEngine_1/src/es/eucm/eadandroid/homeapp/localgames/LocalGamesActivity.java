@@ -169,9 +169,9 @@ public class LocalGamesActivity extends ListActivity {
 //				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
 //				(float) - 10, Animation.RELATIVE_TO_SELF, 0.0f);
 		
-		Animation animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, -1.0f,
-		Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-		0f, Animation.RELATIVE_TO_PARENT, 0.0f);
+		Animation animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f,
+		Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT,
+		-1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
 		
 		animation2.setDuration(400);
 		set.addAnimation(animation2);

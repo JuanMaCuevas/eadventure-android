@@ -54,6 +54,7 @@ public class InventoryState extends HUDstate {
 			else if (elementInCursor!=null) {
 				Game.getInstance().getActionManager().setElementOver(fe);
 				stateContext.setState(HUDstate.HiddenState, null);
+				return false;
 			}
 		}
 		
@@ -89,7 +90,7 @@ public class InventoryState extends HUDstate {
 			inventory.setItemFocus(dstX, dstY);
 			inventory.updateDraggingGrid(distanceX);
 		} else
-			inventory.resetItemFocus(dstX, dstY);
+			inventory.resetItemFocus();
 
 		return true;
 	}
@@ -114,11 +115,33 @@ public class InventoryState extends HUDstate {
 	public boolean processUnPressed(UIEvent e) {
 		
 		if (inventory.isAnimating((int) ((UnPressedEvent) e).event.getY())) {
-			stateContext.setState(HUDstate.InventoryState,null);
+			UnPressedEvent ev = (UnPressedEvent) e;
+			int dstX = (int) ev.event.getX();
+			int dstY = (int) ev.event.getY();
+			
+			FunctionalElement fe = null;
+
+			if (inventory.pointInGrid(dstX, dstY)) {
+				fe = (FunctionalElement) inventory.selectItemFromGrid(
+						(int) ev.event.getX(), (int) ev.event.getY());
+
+				FunctionalElement elementInCursor = Game.getInstance()
+						.getActionManager().getElementInCursor();
+
+				if (fe != null && elementInCursor == null)
+					stateContext.setState(HUDstate.ActionsState, fe);
+				else if (elementInCursor!=null) {
+					Game.getInstance().getActionManager().setElementOver(fe);
+					stateContext.setState(HUDstate.HiddenState, null);
+					return false;
+				}
+			}
 		} else {
 			inventory.resetPos();
 			stateContext.setState(HUDstate.HiddenState,null);
 		}
+	
+
 
 		return true;
 	}

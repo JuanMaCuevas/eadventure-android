@@ -186,8 +186,8 @@ public class Inventory {
 		
 	}
 
-	public void resetItemFocus(int dstX, int dstY) {
-		gridPanel.resetItemFocus(dstX,dstY);
+	public void resetItemFocus() {
+		gridPanel.resetItemFocus();
 		
 	}
 

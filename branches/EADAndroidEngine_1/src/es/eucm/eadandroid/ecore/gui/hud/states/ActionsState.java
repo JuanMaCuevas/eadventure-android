@@ -74,7 +74,7 @@ public class ActionsState extends HUDstate {
 			 actionsPanel.setItemFocus(dstX, dstY);
 			 actionsPanel.updateDraggingGrid(distanceX);
 		 }
-		 else  actionsPanel.resetItemFocus(dstX, dstY);
+		 else  actionsPanel.resetItemFocus();
 					
 		return true;
 	}

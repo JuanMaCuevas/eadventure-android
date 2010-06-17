@@ -1,10 +1,12 @@
 package es.eucm.eadandroid.ecore.gui.hud;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.ecore.gui.hud.elements.Inventory;
 import es.eucm.eadandroid.ecore.gui.hud.elements.Magnifier;
+import es.eucm.eadandroid.ecore.gui.hud.elements.Wave;
 import es.eucm.eadandroid.ecore.gui.hud.states.ActionsState;
 import es.eucm.eadandroid.ecore.gui.hud.states.HiddenState;
 import es.eucm.eadandroid.ecore.gui.hud.states.InventoryState;
@@ -34,6 +36,7 @@ public class HUD {
 	
 	private Magnifier mag ;
 	private Inventory inventory;
+	private Wave wave;
 	
 	
 
@@ -41,7 +44,7 @@ public class HUD {
 
 		initElements();
 		
-		hiddenState = new HiddenState(this);
+		hiddenState = new HiddenState(this,wave);
 		magnifierState = new MagnifierState(this,mag);
 		showInventoryState = new ShowingInventoryState(this,inventory);
 		inventoryState = new InventoryState(this,inventory);
@@ -54,6 +57,7 @@ public class HUD {
 		
 		mag = new Magnifier(65,5,1.5f,GUI.getInstance().getBmpCpy());
 		inventory = new Inventory();
+		wave = new Wave(Color.parseColor("#2E9AFE"));
 		
 	}
 	
