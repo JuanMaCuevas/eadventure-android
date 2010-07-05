@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.homeapp.apkinstalling.InstallingResources;
+import es.eucm.eadandroid.homeapp.apkinstalling.EngineResInstaller;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
@@ -53,8 +53,8 @@ public class SplashScreenActivity extends Activity{
 			
 			setContentView(R.layout.splash_screen);
 
-			if (!RepoResourceHandler.doesfileexists(Paths.eaddirectory.ROOT_PATH)) {
-				InstallingResources is = new InstallingResources(this,
+			if (!RepoResourceHandler.checkEadDirectory(Paths.eaddirectory.ROOT_PATH)) {
+				EngineResInstaller is = new EngineResInstaller(this,
 						ActivityHandler);
 				is.start();
 				

@@ -4,7 +4,7 @@ import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
-import es.eucm.eadandroid.homeapp.apkinstalling.InstallingResources;
+import es.eucm.eadandroid.homeapp.apkinstalling.EngineResInstaller;
 import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
@@ -80,8 +80,8 @@ public class ActivityVideoIntro extends Activity implements
 		
 		startactivity();
 
-		if (!RepoResourceHandler.doesfileexists(Paths.eaddirectory.ROOT_PATH)) {
-			InstallingResources is = new InstallingResources(this,
+		if (!RepoResourceHandler.checkEadDirectory(Paths.eaddirectory.ROOT_PATH)) {
+			EngineResInstaller is = new EngineResInstaller(this,
 					ActivityHandler);
 			is.start();
 			

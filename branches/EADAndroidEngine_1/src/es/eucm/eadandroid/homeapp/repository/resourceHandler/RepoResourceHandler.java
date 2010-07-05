@@ -1,7 +1,9 @@
 package es.eucm.eadandroid.homeapp.repository.resourceHandler;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +31,9 @@ import es.eucm.eadandroid.res.pathdirectory.Paths;
 public class RepoResourceHandler {
 
 	private static final int DOWNLOAD_BUFFER_SIZE = 1048576;
+	private static final int BUFFER = 2048;
+	
+	
 
 	public static Bitmap DownloadImage(String url_from, ProgressNotifier pn) {
 
@@ -133,7 +139,7 @@ public class RepoResourceHandler {
 			String fileName, ProgressNotifier pn) {
 
 		downloadFile(url_from, path_to, fileName, pn);
-		pn.notifyIndeterminate("Insalling " + fileName);
+		pn.notifyIndeterminate("Installing " + fileName);
 		unzip(path_to,path_to, fileName,true);
 
 	}
@@ -145,14 +151,14 @@ public class RepoResourceHandler {
 
 
 		StringTokenizer separator = new StringTokenizer(name, ".", true);
-		String game_name = separator.nextToken();
+		String file_name = separator.nextToken();
 		
-		File f = new File(path_to+game_name);
+		File f = new File(path_to+file_name);
 		
 		if (f.exists())
 			removeDirectory(f);
 
-		separator = new StringTokenizer(path_to + game_name, "/", true);
+		separator = new StringTokenizer(path_to + file_name, "/", true);
 
 		String partial_path = null;
 		String total_path = separator.nextToken();
@@ -198,12 +204,12 @@ public class RepoResourceHandler {
 
 						if (separator.hasMoreElements()) {
 							total_path = total_path + separator.nextToken();
-							(new File(path_to + game_name + "/" + total_path))
+							(new File(path_to + file_name + "/" + total_path))
 									.mkdir();
 						} else {
 
 							file = new BufferedOutputStream(
-									new FileOutputStream(path_to + game_name
+									new FileOutputStream(path_to + file_name
 											+ "/" + total_path));
 
 							System.err.println("Extracting file: "
@@ -269,7 +275,7 @@ public class RepoResourceHandler {
 		return in;
 	}
 
-	public static boolean doesfileexists(String path) {
+	public static boolean checkEadDirectory(String path) {
 		if (new File(path).exists()) {
 			return true;
 		} else
@@ -395,5 +401,79 @@ public class RepoResourceHandler {
 
 		return directory.delete();
 	}
+
+
+//   public static void unzip (String path_from,String path_to,String name,boolean deleteZip) {
+//      try {
+//         BufferedOutputStream dest = null;
+//         FileInputStream fis = new 
+//	   FileInputStream(path_from + name);
+//         ZipInputStream zis = new 
+//	   ZipInputStream(new BufferedInputStream(fis));
+//         ZipEntry entry;
+//         while((entry = zis.getNextEntry()) != null) {
+//            System.out.println("Extracting: " +entry);
+//            int count;
+//            byte data[] = new byte[BUFFER];
+//            // write the files to the disk
+//            FileOutputStream fos = new 
+//	      FileOutputStream(entry.getName());
+//            dest = new 
+//              BufferedOutputStream(fos, BUFFER);
+//            while ((count = zis.read(data, 0, BUFFER)) 
+//              != -1) {
+//               dest.write(data, 0, count);
+//            }
+//            dest.flush();
+//            dest.close();
+//         }
+//         zis.close();
+//         
+// 		if (deleteZip)
+//			(new File(path_from + name)).delete();
+// 		
+//      } catch(Exception e) {
+//         e.printStackTrace();
+//      }    
+//      
+//   }
+
+
+//   public static void unzip(String path_from,String path_to,String name,boolean deleteZip) {
+//      try {
+//         BufferedOutputStream dest = null;
+//         BufferedInputStream is = null;
+//         ZipEntry entry;
+//         ZipFile zipfile = new ZipFile(path_from + name);
+//         Enumeration e = zipfile.entries();
+//         while(e.hasMoreElements()) {
+//            entry = (ZipEntry) e.nextElement();
+//            System.out.println("Extracting: " +entry);
+//            is = new BufferedInputStream
+//              (zipfile.getInputStream(entry));
+//            int count;
+//            byte data[] = new byte[BUFFER];
+//            FileOutputStream fos = new 
+//              FileOutputStream(entry.getName());
+//            dest = new 
+//              BufferedOutputStream(fos, BUFFER);
+//            while ((count = is.read(data, 0, BUFFER)) 
+//              != -1) {
+//               dest.write(data, 0, count);
+//            }
+//            dest.flush();
+//            dest.close();
+//            is.close();
+//            
+//            if (deleteZip)
+//			   (new File(path_from + name)).delete();
+//            
+//         }
+//      } catch(Exception e) {
+//         e.printStackTrace();
+//      }
+//   }
+
+		
 
 }

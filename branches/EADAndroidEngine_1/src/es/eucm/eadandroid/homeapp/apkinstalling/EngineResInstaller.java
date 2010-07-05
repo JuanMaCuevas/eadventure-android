@@ -18,12 +18,12 @@ import es.eucm.eadandroid.homeapp.ActivityVideoIntro.ActivityHandlerInstalling;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
-public class InstallingResources extends Thread {
+public class EngineResInstaller extends Thread {
 
 	Context con;
 	Handler han;
 
-	public InstallingResources(Context con, Handler handler) {
+	public EngineResInstaller(Context con, Handler handler) {
 		super();
 
 		this.con = con;
@@ -32,7 +32,7 @@ public class InstallingResources extends Thread {
 	}
 
 	public void run() {
-		this.initiating();
+		this.init();
 
 		Message msg = han.obtainMessage();
 		Bundle b = new Bundle();
@@ -42,7 +42,7 @@ public class InstallingResources extends Thread {
 
 	}
 
-	private void initiating() {
+	private void init() {
 		if (!new File(Paths.eaddirectory.ROOT_PATH).exists()) {
 
 			try {
@@ -60,8 +60,8 @@ public class InstallingResources extends Thread {
 				e.printStackTrace();
 			}
 
-			RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,Paths.device.EXTERNAL_STORAGE,
-					"EadAndroid.zip",true);
+			RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,
+					Paths.device.EXTERNAL_STORAGE, "EadAndroid.zip", true);
 		}
 	}
 
