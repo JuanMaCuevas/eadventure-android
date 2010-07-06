@@ -269,6 +269,9 @@ public class AssessmentEngine implements TimerEventListener {
 
 			// HTML tag
 			file.println("<html>");
+			
+			// META tag for accents
+			file.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>");
 
 			// Header
 			file.print("<title>");
@@ -461,7 +464,7 @@ public class AssessmentEngine implements TimerEventListener {
 						Handler handler = GameThread.getInstance().getHandler();
 
 						Message msg = handler.obtainMessage();
-
+												
 						Bundle b = new Bundle();
 						b.putString("html", text);
 						msg.what = ActivityHandlerMessages.ASSESSMENT;

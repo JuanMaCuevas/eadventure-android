@@ -102,7 +102,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public static final int LOAD_GAMES = 3;
 		public static final int FINISH_DIALOG = 4;
 		public static final int SHOW_DIALOG = 7;
-	 //   public static final int REGISTRATE_GPS = 5;
 		public static final int REGISTRATE_GPS = 5;
 		public static final int CONVERSATION = 6;
 		public static final int SHOW_TOAST = 8;
@@ -166,7 +165,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				}
 				break;
 			case ActivityHandlerMessages.SHOW_DIALOG:
-				// TODO perri para que active la red
 				 bundle = msg.getData();
 				String text = bundle.getString("content");
 				ECoreActivity.this.dialog = ProgressDialog.show(
