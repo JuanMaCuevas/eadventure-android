@@ -75,7 +75,7 @@ public class LocalGamesActivity extends ListActivity {
 		case 1:
 			String[] paths = new String[2];
 			paths[0] = Paths.eaddirectory.GAMES_PATH
-					+ m_games.get(information.position).getGameTitle() + "/";
+					+ m_games.get( information.position).getGameTitle() + "/";
 			paths[1] = Paths.eaddirectory.SAVED_GAMES_PATH
 					+ m_games.get(information.position).getGameTitle() + "/";
 			DeletingGame instance = new DeletingGame(LGActivityHandler, paths);
@@ -233,7 +233,7 @@ public class LocalGamesActivity extends ListActivity {
 
 		return true;
 	}
-
+/*
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -241,5 +241,5 @@ public class LocalGamesActivity extends ListActivity {
 		return true;
 
 	}
-
+*/
 }

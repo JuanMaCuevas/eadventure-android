@@ -113,7 +113,7 @@ public class ECoreControl extends Activity{
 		if (!scanAvailable)
 		{
 			showQRCodeDialog();
-		}else if (qrCodeGame)
+		}else if (gpsGame)
 					chekingGps();
 			else  changeActivity();
 	}

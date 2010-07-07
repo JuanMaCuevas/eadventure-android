@@ -102,9 +102,11 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public static final int LOAD_GAMES = 3;
 		public static final int FINISH_DIALOG = 4;
 		public static final int SHOW_DIALOG = 7;
+	 //   public static final int REGISTRATE_GPS = 5;
 		public static final int REGISTRATE_GPS = 5;
 		public static final int CONVERSATION = 6;
 		public static final int SHOW_TOAST = 8;
+		public static final int HIDE_CONVERATION = 9;
 
 	}
 
@@ -123,6 +125,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			case ActivityHandlerMessages.ASSESSMENT: {
 				 bundle = msg.getData();
 				String text = bundle.getString("html");
+				conversationLayout.setVisibility(View.INVISIBLE);
+				conversationList.setVisibility(View.INVISIBLE);
 				webview.loadData(text, "text/html", "utf-8");
 				assesmentLayout.setVisibility(View.VISIBLE);
 				close_button.setVisibility(View.VISIBLE);
@@ -165,6 +169,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				}
 				break;
 			case ActivityHandlerMessages.SHOW_DIALOG:
+			
 				 bundle = msg.getData();
 				String text = bundle.getString("content");
 				ECoreActivity.this.dialog = ProgressDialog.show(
@@ -191,6 +196,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				showConversationOptions(c);
 				
 				break;
+				
+	
+				
 				
 			}
 
@@ -241,6 +249,12 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		}
 
 	}
+	
+	
+	private void hideConversationOptions() {
+		conversationLayout.setVisibility(View.INVISIBLE);
+		conversationList.setVisibility(View.INVISIBLE);
+	}
 
 	private void activityvideo() {
 		Intent i = new Intent(this, EcoreVideo.class);
@@ -260,9 +274,10 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d("onCreate","XXXXXXXXXXXXXXXXXXXXXX");
 
 
-		// DEBUG
+	
 		Log.e("Inicio core1", String
 				.valueOf(Debug.getNativeHeapAllocatedSize()));
 
@@ -327,19 +342,67 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				dialog.show();
 				// dialog.setCancelable(false);
 
-			} else {
+			} else {	
+			
 				dialog2 = new ProgressDialog(this);
 				dialog2.setTitle("eAdventure");
 				dialog2.setIcon(R.drawable.dialog_icon);
 				dialog2.setMessage("Loading game...");
 				dialog2.setIndeterminate(true);
 				dialog2.show();
+				
+			}
+			
+			
+			if (qrCodeGame)
+			{
+				
+				
+				
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage("You are about to start a QRcode game \n Press the magnifier button to capture QRCodes")
+				       .setCancelable(false)
+				       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				               
+				           }
+				       });
+				
+				builder.setTitle("eAdventure");
+				builder.setIcon(R.drawable.dialog_icon);
+				      
+				       
+				AlertDialog alert = builder.create();
+				
+				alert.show();
+				
+				
+				
+				
+				
+				/*
+				
+				
+				
+				AlertDialog dialog3 = new AlertDialog(this);
+				dialog3.setTitle("eAdventure");
+				dialog3.setIcon(R.drawable.dialog_icon);
+				dialog3.setMessage("You are about to start a QRcode game ");
+				//dialog3.setIndeterminate(true);
+				dialog3.setButton("Continue", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                
+			           }
+			       });
+				dialog3.show();
+				*/
 			}
 
 			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
 			SurfaceHolder canvasHolder = gameSurfaceView.getHolder();
 			// register our interest in hearing about changes to our surface
-			// TODO tengo que descomentar esta linea
+		
 			canvasHolder.addCallback(this);
 			
 			
@@ -360,6 +423,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		} else {		
 			this.fromvideo = this.getIntent().getExtras().getBoolean("before_video");
 			GameThread.getInstance().setHandler(ActivityHandler);
+			
 		}
 
 		assesmentLayout = findViewById(R.id.hidecontainer);
@@ -490,6 +554,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.d("onResume","XXXXXXXXXXXXXXXXXXXXXX");
 	
 		
 		// gameSurfaceView will only be null when the application is restored
@@ -520,6 +585,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.d("onPause","XXXXXXXXXXXXXXXXXXXXXX");
 
 
 		// to control if the game has finish or the user has done a quick exit
@@ -816,7 +882,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			break;
 
 		case 1:
-			// TODO change music
+			
 			if (options.isMusicActive())
 				options.setMusicActive(false);
 			else
@@ -881,28 +947,28 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	protected void onRestart() {
 		
 		super.onRestart();
-	//	Log.d("onRestart","XXXXXXXXXXXXXXXXXXXXXX");
+		Log.d("onRestart","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onStart() {
 		
 		super.onStart();
-	//	Log.d("onStart","XXXXXXXXXXXXXXXXXXXXXX");
+		Log.d("onStart","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onStop() {
 		
 		super.onStop();
-		//Log.d("onStop","XXXXXXXXXXXXXXXXXXXXXX");
+	Log.d("onStop","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onDestroy() {
 		
 		super.onDestroy();
-	//	Log.d("onDestroy","XXXXXXXXXXXXXXXXXXXXXX");
+		Log.d("onDestroy","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 	
 	}

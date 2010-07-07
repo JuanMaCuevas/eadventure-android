@@ -73,6 +73,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 
 
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -85,12 +86,18 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		setContentView(R.layout.video_state);
 
 		videoSurfaceView = (VideoSurfaceView) findViewById(R.id.video_surface);
+		
 		videoHolder = videoSurfaceView.getHolder();
 		videoHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		videoHolder.addCallback(this);
 		GameThread.getInstance().setHandler(ActivityHandler);
 
 	}
+	
+	
+	
+	
+	
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -283,6 +290,9 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	}
 
 	
+	
+	
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -297,6 +307,11 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		
 	}
 	
+	
+	
+	
+	
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -304,10 +319,17 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		if (videoSurfaceView==null)
 		{
 			videoSurfaceView = (VideoSurfaceView) findViewById(R.id.video_surface);
+			videoSurfaceView.setFocusable(true);
+		//	gameSurfaceView.setFocusable(true);
 			videoHolder = videoSurfaceView.getHolder();
 			videoHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-			this.videoSurfaceView.setFocusable(true);
+			
+		
 			videoHolder.addCallback(this);
+			
+			
+			
+			
 			
 		}
 	}

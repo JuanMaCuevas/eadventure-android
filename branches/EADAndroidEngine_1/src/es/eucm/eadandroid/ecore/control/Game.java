@@ -743,6 +743,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 				msg.sendToTarget();
 			
 	*/	
+        	
+        	
+        if ( GpsManager.getInstance() !=null)	
 		GpsManager.getInstance().addallgpsrules(this.gameData.getGpsRules());
 		
 		
