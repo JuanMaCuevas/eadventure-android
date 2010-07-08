@@ -117,5 +117,11 @@ public class HUD {
 
 	}
 
+	public void reset() {
+		
+		currentState = hiddenState;
+		
+	}
+
 
 }

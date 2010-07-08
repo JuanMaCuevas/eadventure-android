@@ -1,10 +1,10 @@
-package es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker;
+package es.eucm.eadandroid.homeapp.repository.resourceHandler;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-public class ProgressNotifier extends TaskNode {
+public class ProgressNotifier {
 
 	private int progress;
 
@@ -12,9 +12,9 @@ public class ProgressNotifier extends TaskNode {
 
 		public static final int PROGRESS_ERROR = -1;
 		public static final int PROGRESS_PERCENTAGE = 0;
-		public static final int PROGRESS_FINISHED = 1;
+		public static final int PROGRESS_UPDATE_FINISHED = 1;
 		public static final int INDETERMINATE = 2;
-		public static final int FINAL_FINISH = 3;
+		public static final int GAME_INSTALLED = 3;
 
 	}
 
@@ -26,17 +26,13 @@ public class ProgressNotifier extends TaskNode {
 		this.progress = 0;
 	}
 
-	public ProgressTask createRootTask(String name, String desc) {
-		return new ProgressTask(this, name, desc);
-	}
-
 	public void notifyProgress(int nprogress, String currentOpMsg) {
 
 		// this avoids activity handler to dispatch to many messages
 		if (nprogress - this.progress >= 1) {
 
 			this.progress = nprogress;
-			handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+			removeHandlerMessages();
 			Message msg = handler.obtainMessage();
 			msg.what = ProgressMessage.PROGRESS_PERCENTAGE;
 			Bundle b = new Bundle();
@@ -49,11 +45,11 @@ public class ProgressNotifier extends TaskNode {
 
 	}
 
-	public void notifyFinished(String progressFinishedMsg) {
+	public void notifyUpdateFinished(String progressFinishedMsg) {
 
-		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		removeHandlerMessages();
 		Message msg = handler.obtainMessage();
-		msg.what = ProgressMessage.PROGRESS_FINISHED;
+		msg.what = ProgressMessage.PROGRESS_UPDATE_FINISHED;
 		Bundle b = new Bundle();
 		b.putString("msg", progressFinishedMsg);
 
@@ -65,7 +61,7 @@ public class ProgressNotifier extends TaskNode {
 
 	public void notifyError(String progressErrorMsg) {
 
-		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		removeHandlerMessages();
 		Message msg = handler.obtainMessage();
 		msg.what = ProgressMessage.PROGRESS_ERROR;
 		Bundle b = new Bundle();
@@ -79,7 +75,7 @@ public class ProgressNotifier extends TaskNode {
 
 	public void notifyIndeterminate(String string) {
 		
-		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		removeHandlerMessages();
 		Message msg = handler.obtainMessage();
 		msg.what = ProgressMessage.INDETERMINATE;
 		Bundle b = new Bundle();
@@ -91,16 +87,27 @@ public class ProgressNotifier extends TaskNode {
 		
 	}
 	
-	public void finalFinish(){
+	public void notifityGameInstalled(){
 		
-		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		removeHandlerMessages();
 		Message msg = handler.obtainMessage();
-		msg.what = ProgressMessage.FINAL_FINISH;
+		msg.what = ProgressMessage.GAME_INSTALLED;
 		Bundle b = new Bundle();
 
 		msg.setData(b);
 
 		handler.sendMessage(msg);
+		
+	}
+	
+	private void removeHandlerMessages() {
+		
+
+		handler.removeMessages(ProgressMessage.PROGRESS_PERCENTAGE);
+		handler.removeMessages(ProgressMessage.PROGRESS_ERROR);
+		handler.removeMessages(ProgressMessage.PROGRESS_UPDATE_FINISHED);
+		handler.removeMessages(ProgressMessage.GAME_INSTALLED);
+		handler.removeMessages(ProgressMessage.INDETERMINATE);
 		
 	}
 

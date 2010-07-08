@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,10 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import es.eucm.eadandroid.R;
@@ -75,7 +73,7 @@ public class LocalGamesActivity extends ListActivity {
 		case 1:
 			String[] paths = new String[2];
 			paths[0] = Paths.eaddirectory.GAMES_PATH
-					+ m_games.get( information.position).getGameTitle() + "/";
+					+ m_games.get(information.position).getGameTitle() + "/";
 			paths[1] = Paths.eaddirectory.SAVED_GAMES_PATH
 					+ m_games.get(information.position).getGameTitle() + "/";
 			DeletingGame instance = new DeletingGame(LGActivityHandler, paths);
@@ -155,36 +153,39 @@ public class LocalGamesActivity extends ListActivity {
 	}
 
 	private void setLayout() {
+		
 		setContentView(R.layout.local_games_activity);
 
 		m_games = new ArrayList<GameInfo>();
 		m_adapter = new LocalGamesListAdapter(this,
 				R.layout.local_games_activity_listitem, m_games);
 		setListAdapter(m_adapter);
-
-		AnimationSet set = new AnimationSet(true);
-
-
-//		Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-//				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-//				(float) - 10, Animation.RELATIVE_TO_SELF, 0.0f);
 		
-		Animation animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f,
-		Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT,
-		-1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
-		
-		animation2.setDuration(400);
-		set.addAnimation(animation2);
-		
-//		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-//		animation.setDuration(1000);
-//		set.addAnimation(animation);
-
-		controller = new LayoutAnimationController(set, 0.5f);
-
-		getListView().setLayoutAnimation(controller);
-		getListView().setTextFilterEnabled(true);
 		registerForContextMenu(getListView());
+
+//		AnimationSet set = new AnimationSet(true);
+//
+//
+////		Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+////				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+////				(float) - 10, Animation.RELATIVE_TO_SELF, 0.0f);
+//		
+//		Animation animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f,
+//		Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT,
+//		-1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
+//		
+//		animation2.setDuration(400);
+//		set.addAnimation(animation2);
+//		
+////		Animation animation = new AlphaAnimation(0.0f, 1.0f);
+////		animation.setDuration(1000);
+////		set.addAnimation(animation);
+//
+//		controller = new LayoutAnimationController(set, 0.5f);
+//
+//		getListView().setLayoutAnimation(controller);
+//		getListView().setTextFilterEnabled(true);
+		
 
 	}
 
@@ -201,9 +202,10 @@ public class LocalGamesActivity extends ListActivity {
 	}
 
 	private void insertAdventuresToList(String[] advList) {
+		
 
 		for (int i = 0; i < advList.length; i++)
-			m_games.add(new GameInfo(advList[i], "", "", null, null));
+			m_games.add(new GameInfo(advList[i], "", "",BitmapFactory.decodeFile(Paths.eaddirectory.GAMES_PATH+advList[i]+"/icon.png"),null));
 
 		m_adapter.notifyDataSetChanged();
 
@@ -233,7 +235,7 @@ public class LocalGamesActivity extends ListActivity {
 
 		return true;
 	}
-/*
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -241,5 +243,5 @@ public class LocalGamesActivity extends ListActivity {
 		return true;
 
 	}
-*/
+
 }

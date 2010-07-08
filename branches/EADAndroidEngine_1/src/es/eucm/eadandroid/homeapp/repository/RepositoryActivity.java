@@ -2,6 +2,7 @@ package es.eucm.eadandroid.homeapp.repository;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +30,7 @@ import es.eucm.eadandroid.homeapp.localgames.LocalGamesListAdapter;
 import es.eucm.eadandroid.homeapp.repository.connection.RepositoryServices;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
 import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier.ProgressMessage;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.ProgressNotifier.ProgressMessage;
 
 public class RepositoryActivity extends ListActivity {
 
@@ -62,8 +63,9 @@ public class RepositoryActivity extends ListActivity {
 				p = pd;
 			else if (progressDialog.isShowing())
 				p = progressDialog;
-				 
-				 
+			
+			if (p!=null) {
+				 	 
 			switch (msg.what) {
 
 			case ProgressMessage.PROGRESS_PERCENTAGE:
@@ -76,7 +78,7 @@ public class RepositoryActivity extends ListActivity {
 				p.setMessage(m);
 				break;
 
-			case ProgressMessage.PROGRESS_FINISHED:
+			case ProgressMessage.PROGRESS_UPDATE_FINISHED:
 
 				p.setIndeterminate(false);
 				p.setProgress(100);
@@ -90,7 +92,6 @@ public class RepositoryActivity extends ListActivity {
 				p.setProgress(0);
 				p.setMessage(m);
 				p.dismiss();
-
 				break;
 
 			case ProgressMessage.INDETERMINATE:
@@ -102,7 +103,7 @@ public class RepositoryActivity extends ListActivity {
 
 				break;
 				
-			case ProgressMessage.FINAL_FINISH:
+			case ProgressMessage.GAME_INSTALLED:
 
 				p.setIndeterminate(false);
 				p.dismiss();
@@ -111,6 +112,8 @@ public class RepositoryActivity extends ListActivity {
 			
 				break;
 				
+			}
+			
 			}
 
 		}
@@ -130,12 +133,17 @@ public class RepositoryActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-
 		pd = new ProgressDialog(this);
 		pd.setTitle("eAdventure Repository");
 		pd.setIcon(R.drawable.dialog_icon);
 		pd.setMessage("Retrieving data...");
-		pd.setIndeterminate(false);
+		//pd.setIndeterminate(false);
+		pd.setCancelable(false);
+//		pd.setButton("Cancel", new DialogInterface.OnClickListener() {
+//           public void onClick(DialogInterface dialog, int id) {
+//               RepositoryActivity.this.pd.dismiss();
+//           }
+//       });
 		pd.show();
 		
 		progressDialog = new ProgressDialog(this);

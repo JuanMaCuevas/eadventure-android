@@ -9,13 +9,12 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-import android.content.Context;
 import android.os.Handler;
 import es.eucm.eadandroid.common.auxiliar.File;
 import es.eucm.eadandroid.homeapp.repository.connection.parser.RepositoryDataHandler;
 import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.ProgressNotifier;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class UpdateDatabaseThread extends Thread {
@@ -25,7 +24,6 @@ public class UpdateDatabaseThread extends Thread {
 			+ Paths.repository.SOURCE_XML;
 	private static final String LOCAL_REPO_XML = Paths.eaddirectory.ROOT_PATH + Paths.repository.SOURCE_XML;
 
-	private Context context;
 	private Handler handler;
 	private RepositoryDatabase rd;
 	private ProgressNotifier pn;
@@ -36,28 +34,24 @@ public class UpdateDatabaseThread extends Thread {
 	 * @param ha
 	 *            -> Thread Handle Queue to send messages to.
 	 */
-	public UpdateDatabaseThread(Context ctx, Handler ha, RepositoryDatabase rd) {
-		this.context = ctx;
+	public UpdateDatabaseThread(Handler ha, RepositoryDatabase rd) {
 		this.handler = ha;
 		this.rd = rd;
 		
 		pn = new ProgressNotifier(handler);
-	//	this.pt = pn.createRootTask("Update repository database", "Update everything related with the repository database");
+
 
 	}
 
 	@Override
 	public void run() {
 
-		
-		// TODO check if needs update
 		try {
 			downloadXML();
 			parseXML();
-			pn.notifyFinished("");
+			pn.notifyUpdateFinished("");
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -65,7 +59,6 @@ public class UpdateDatabaseThread extends Thread {
 
 	private void downloadXML() throws IOException {
 
-//		ProgressTask downloadPt = pt.createChildTask("Downlaod file", "Download "+REPO_FULLPATH+" to "+EXTERNAL_STORAGE,70);
 		
 		File f = new File(LOCAL_REPO_XML);
 		
@@ -78,7 +71,6 @@ public class UpdateDatabaseThread extends Thread {
 
 	private void parseXML() {
 
-	//	ProgressTask parserPt = pt.createChildTask("Parse repository XML", "Parsing repository XML task",30);
 		
 		try {
 			FileInputStream fIn = new FileInputStream(LOCAL_REPO_XML);

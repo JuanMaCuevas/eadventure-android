@@ -39,6 +39,7 @@ public class PreferencesActivity extends PreferenceActivity {
         togglePref.setKey(AUDIO_PREF);
         togglePref.setTitle("Enable  audio");
         togglePref.setSummary("Enable or disable audio");
+        togglePref.setChecked(true);
         togglePref.setPersistent(true);
         inlinePrefCat.addPreference(togglePref);
         
@@ -47,6 +48,7 @@ public class PreferencesActivity extends PreferenceActivity {
         togglePref3.setKey(VIBRATE_PREF);
         togglePref3.setTitle("Enable  vibration");
         togglePref3.setSummary("Enable or disable vibration");
+        togglePref3.setChecked(true);
         togglePref3.setPersistent(true);
         inlinePrefCat.addPreference(togglePref3);
         

@@ -11,8 +11,8 @@ import android.util.Log;
 import es.eucm.eadandroid.homeapp.repository.RepositoryActivity;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
 import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.ProgressNotifier;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
 
 public class RepositoryDataHandler extends DefaultHandler {
 

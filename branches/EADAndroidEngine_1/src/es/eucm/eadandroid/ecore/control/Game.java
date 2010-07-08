@@ -1549,8 +1549,8 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      *            New game state
      */
     public void setState( int state ) {
-
-       
+    	
+    	
         switch( state ) {
             case STATE_LOADING:
                 currentState = new GameStateLoading( );

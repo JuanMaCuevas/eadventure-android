@@ -865,6 +865,10 @@ public class GUI {
 
 		this.background = null;
 	}
+	
+	public HUD getHUD() {
+		return hud;
+	}
 
 	/**
 	 * Draws the scene buffer given a Graphics2D

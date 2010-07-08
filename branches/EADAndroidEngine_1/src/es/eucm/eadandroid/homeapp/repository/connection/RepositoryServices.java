@@ -16,7 +16,7 @@ public class RepositoryServices {
 
 	public void updateDatabase(Context c, Handler handler, RepositoryDatabase rd) {
 
-		data_updater = new UpdateDatabaseThread(c, handler, rd);
+		data_updater = new UpdateDatabaseThread(handler, rd);
 		data_updater.start();
 
 	}

@@ -451,13 +451,14 @@ public class AssessmentEngine implements TimerEventListener {
 						FileReader fir = new FileReader(report);
 						BufferedReader br = new BufferedReader(fir);
 						String line = br.readLine();
+						
 						String text = "";
 						while (line != null) {
 							text += line + "\n\r";
 							line = br.readLine();
 						}
-						// es.eucm.eadventure.common.auxiliar.ReportDialog.sendReport(subject
-						// + "\n\r" + message + "\n\r" + text);
+						
+						text = checkUriEscaped(text);
 						
 						lastHTMLReport = text;
 
@@ -476,19 +477,7 @@ public class AssessmentEngine implements TimerEventListener {
 						e1.printStackTrace();
 					}
 
-					// TODO send e mail
-					/*
-					 * if (!assessmentProfile.isSendByEmail()) { JButton ok =
-					 * new JButton("OK"); ok.addActionListener(new
-					 * ActionListener() {
-					 * 
-					 * public void actionPerformed(ActionEvent e) {
-					 * GUI.getInstance().restoreFrame(); state = STATE_DONE; }
-					 * 
-					 * });
-					 * 
-					 * buttonPanel.add(ok);
-					 */
+
 				} catch (MalformedURLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -509,6 +498,24 @@ public class AssessmentEngine implements TimerEventListener {
 		}
 		return true;
 	}
+	
+	/** 
+	 * ANDROID WEBVIEW : 
+	 *  The data must be URI-escaped -- '#', '%', '\', '?' 
+	 *  should be replaced by %23, %25, %27, %3f respectively.
+	*/
+
+	private String checkUriEscaped(String text) {
+		
+	//	text = text.replace("#", "%23");
+		text = text.replace("%", "%25");
+		text = text.replace("\\", "%27");
+		text = text.replace("?", "%3f");
+		
+		return text;
+		
+	}
+	
 
 	public AssessmentProfile getAssessmentProfile() {
 		return assessmentProfile;

@@ -1,9 +1,7 @@
 package es.eucm.eadandroid.homeapp.repository.resourceHandler;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,13 +14,11 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import es.eucm.eadandroid.homeapp.loadsavedgames.InfoExpandabletable;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.progressTracker.ProgressNotifier;
 import es.eucm.eadandroid.res.filefilters.EADFileFilter;
 import es.eucm.eadandroid.res.filefilters.PNGFilter;
 import es.eucm.eadandroid.res.filefilters.TxtFilter;
@@ -37,7 +33,10 @@ public class RepoResourceHandler {
 
 	public static Bitmap DownloadImage(String url_from, ProgressNotifier pn) {
 
-		// pn.notifyProgress(0, "Downloading image " + url_from);
+		int last = url_from.lastIndexOf("/");
+		String fileName = url_from.substring(last + 1);
+		
+		pn.notifyIndeterminate("Downloading "+fileName);
 		Bitmap bitmap = null;
 		InputStream in = null;
 		try {
@@ -46,11 +45,8 @@ public class RepoResourceHandler {
 			in.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
+			pn.notifyError("Repository connection error");
 		}
-
-		// pn.notifyProgress(100, "Image downloaded");
-
-		// pn.notifyFinished("Image downloaded");
 
 		return bitmap;
 	}
@@ -118,18 +114,18 @@ public class RepoResourceHandler {
 
 				} catch (IOException e) {
 
-					pt.notifyError("Error while downloading");
+					pt.notifyError("Repository connection error");
 					e.printStackTrace();
 				}
 
 			} catch (FileNotFoundException e) {
 
-				pt.notifyError("Error , file not found");
+				pt.notifyError("Destination file error");
 				e.printStackTrace();
 			}
 
 		} catch (Exception e1) {
-
+			pt.notifyError("Repository connection error");
 			e1.printStackTrace();
 		}
 
@@ -139,16 +135,13 @@ public class RepoResourceHandler {
 			String fileName, ProgressNotifier pn) {
 
 		downloadFile(url_from, path_to, fileName, pn);
+		pn.notifyProgress(100,fileName+" downloaded");
 		pn.notifyIndeterminate("Installing " + fileName);
 		unzip(path_to,path_to, fileName,true);
 
 	}
 
 	public static void unzip(String path_from,String path_to, String name,boolean deleteZip) {
-		// TODO la ruta a las carpetas me las tengo que crear cuando instalo
-		// pero por ahora lo dejo aqui
-		
-
 
 		StringTokenizer separator = new StringTokenizer(name, ".", true);
 		String file_name = separator.nextToken();
