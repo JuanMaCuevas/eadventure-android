@@ -84,7 +84,8 @@ public class GameStateBook extends GameState {
     @Override
     public void mainLoop( long elapsedTime, int fps ) {
 
-    	if( book!=null && book.getBook( ).getType( ) == Book.TYPE_PARAGRAPHS ) {
+    	if( book != null && book.getBook( ).getType( ) == Book.TYPE_PARAGRAPHS ) {
+    		
     		Canvas c = GUI.getInstance( ).getGraphics( );
             //c.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
             
@@ -98,8 +99,9 @@ public class GameStateBook extends GameState {
 
 
     	}
-    	else if( book!=null && book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
-            Canvas c = GUI.getInstance( ).getGraphics( );
+    	else if( book != null && book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
+            
+    		Canvas c = GUI.getInstance( ).getGraphics( );
             //c.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
             
 

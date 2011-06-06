@@ -121,7 +121,7 @@ public class MultimediaManager {
 			}
 		}
 		
-		wrImg = null;
+		wrImg.clear();
 		return image;
 
 	}
@@ -152,7 +152,7 @@ public class MultimediaManager {
 			}
 		}
 		
-		wrImg = null;
+		wrImg.clear();
 		return image;
 	}
 
@@ -494,6 +494,7 @@ public class MultimediaManager {
 				if (currentFrame != null) {
 					frames.add(currentFrame);
 					i++;
+					currentFrame = null;
 				} else
 					end = true;
 			}

@@ -2,14 +2,9 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import java.util.ArrayList;
 
-import android.R;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.Log;
-
 import es.eucm.eadandroid.common.data.chapter.book.BookParagraph;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
@@ -48,8 +43,8 @@ public class FunctionalBookBullet extends FunctionalBookParagraph {
         this.bookBullet = bullet;
         this.p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setTextSize(18);
+        imgBullet = MultimediaManager.getInstance( ).loadImage(Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/bullet.png" , MultimediaManager.IMAGE_SCENE );
         this.init();
-        imgBullet = MultimediaManager.getInstance( ).loadImage(Paths.eaddirectory.ROOT_PATH + "gui/bullet.png" , MultimediaManager.IMAGE_SCENE );
     }
 
     /**
@@ -171,7 +166,7 @@ public class FunctionalBookBullet extends FunctionalBookParagraph {
                 y += ( FunctionalTextBook.PAGE_TEXT_HEIGHT - ( y % FunctionalTextBook.PAGE_TEXT_HEIGHT ) );
             }
             
-            c.drawText( line, x, y + FunctionalTextBook.LINE_HEIGHT - 9, null);
+            c.drawText( line, x, y + FunctionalTextBook.LINE_HEIGHT - 9, p);
             
             //add the line height to the Y coordinate for the next line
             y = y + FunctionalTextBook.LINE_HEIGHT;

@@ -214,8 +214,7 @@ public class GUI {
 		loadPaint.setColor(Color.WHITE);
 		loadPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
 		loadPaint.setTextSize(15*GUI.DISPLAY_DENSITY_SCALE);
-		loadPaint.setTextAlign(Align.LEFT);
-		
+		loadPaint.setTextAlign(Align.LEFT);		
 
 	}
 
