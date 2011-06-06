@@ -65,10 +65,9 @@ public class SplashScreenActivity extends Activity{
 				dialog.setIndeterminate(true);
 				dialog.show();
 				
-			} 
+			}			
 
-		}
-		
+		}		
 	
 		
 		

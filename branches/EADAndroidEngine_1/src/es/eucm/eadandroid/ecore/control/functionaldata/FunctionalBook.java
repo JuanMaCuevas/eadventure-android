@@ -34,7 +34,6 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -139,7 +138,6 @@ public abstract class FunctionalBook {
     protected void loadImages( Resources r ) {
 
         background = MultimediaManager.getInstance( ).loadImage( r.getAssetPath( Book.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
-
     }
 
 
@@ -163,8 +161,8 @@ public abstract class FunctionalBook {
     }
 
     public void draw( Canvas c ) {
-    	c.drawBitmap(background, 0, 0, null);
-        //g.drawImage( background, 0, 0, background.getWidth( null ), background.getHeight( null ), null );
+    	
+    	c.drawBitmap(background, 0, 0, null);        
 
     }
 

@@ -18,7 +18,7 @@ public class GpsManager {
 	
 
 	private static GpsManager singleton = null;
-	private Vector<GpsRule> gpsActive;
+	//private Vector<GpsRule> gpsActive;
 	private Vector<GpsRule> allGpsRules;
 	GpsListener listener;
 	boolean activeGps=false;
@@ -32,7 +32,7 @@ public class GpsManager {
 	}
 
 	private GpsManager()  {
-		gpsActive = new Vector<GpsRule>();
+		//gpsActive = new Vector<GpsRule>();
 		allGpsRules = new Vector<GpsRule>();
 		listener=new GpsListener(this);
 	}
@@ -53,11 +53,11 @@ public class GpsManager {
 		
 		
 		//loads global gpsrules
-		for(int i=0;i<list.size();i++)
+		/*for(int i=0;i<list.size();i++)
 		{
 			if (list.get(i).getSceneName().equals(""))
 				this.gpsActive.add(list.get(i));
-		}
+		}*/
 		}
 
 	}
@@ -66,24 +66,24 @@ public class GpsManager {
 		allGpsRules.add(rule);
 	}
 	
-	public void changeOfScene(String scene)
+	/*public void changeOfScene(String scene)
 	{
 		
 		synchronized(GpsManager.class) {
 	//first removes from gpsActive all gps related to other scenes
-		for (int i=this.gpsActive.size()-1;i>=0;i=i-1)
+		for (int i=this.allGpsRules.size()-1;i>=0;i=i-1)
 		{
-			if(!this.gpsActive.elementAt(i).getSceneName().equals(""))
-				gpsActive.remove(i);
+			if(!this.allGpsRules.elementAt(i).getSceneName().equals(""))
+				allGpsRules.remove(i);
 		}
 //then adds gpsrules from new scene		
 		for (int i=0;i<this.allGpsRules.size();i++)
 		{
 			if (this.allGpsRules.elementAt(i).getSceneName().equals(scene))
-				gpsActive.add(this.gpsActive.elementAt(i));
+				allGpsRules.add(this.allGpsRules.elementAt(i));
 		}
 		}
-	}
+	}*/
 	
 
 
@@ -92,18 +92,18 @@ public class GpsManager {
 		location.setAccuracy(1);
 
 		synchronized (GpsManager.class) {
-			for (int i = 0; i < gpsActive.size(); i++) {
+			for (int i = 0; i < allGpsRules.size(); i++) {
 
-				if (new FunctionalConditions(gpsActive.elementAt(i)
+				if (new FunctionalConditions(allGpsRules.elementAt(i)
 						.getEndCond()).allConditionsOk()) {
 					double distance = distance(location.getLatitude(), location
-							.getLongitude(), gpsActive.elementAt(i)
-							.getLatitude(), gpsActive.elementAt(i)
+							.getLongitude(), allGpsRules.elementAt(i)
+							.getLatitude(), allGpsRules.elementAt(i)
 							.getLongitude());
 
 					Location d = new Location("");
-					d.setLatitude(gpsActive.elementAt(i).getLatitude());
-					d.setLongitude(gpsActive.elementAt(i).getLongitude());
+					d.setLatitude(allGpsRules.elementAt(i).getLatitude());
+					d.setLongitude(allGpsRules.elementAt(i).getLongitude());
 					d.setAccuracy(1);
 
 					float metros = location.distanceTo(d);
@@ -132,10 +132,10 @@ public class GpsManager {
 
 					msg.sendToTarget();
 
-					if (metros < gpsActive.elementAt(i).getRadio()) {
-						FunctionalEffects.storeAllEffects(gpsActive
+					if (metros < allGpsRules.elementAt(i).getRadio()) {
+						FunctionalEffects.storeAllEffects(allGpsRules
 								.elementAt(i).getEffects());
-						this.gpsActive.remove(i);
+						this.allGpsRules.remove(i);
 
 					}
 				}

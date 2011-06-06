@@ -27,8 +27,7 @@ import es.eucm.eadandroid.res.pathdirectory.Paths;
 public class RepoResourceHandler {
 
 	private static final int DOWNLOAD_BUFFER_SIZE = 1048576;
-	private static final int BUFFER = 2048;
-	
+	private static final int BUFFER = 2048;	
 	
 
 	public static Bitmap DownloadImage(String url_from, ProgressNotifier pn) {

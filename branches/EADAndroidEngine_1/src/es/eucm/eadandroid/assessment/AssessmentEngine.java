@@ -35,6 +35,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
@@ -423,6 +424,8 @@ public class AssessmentEngine implements TimerEventListener {
 
 				try {
 					state = STATE_STARTED;
+					
+					Log.d("PASA POR ASSESMENT", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
 					int i = 0;
 					File reportFile = null;

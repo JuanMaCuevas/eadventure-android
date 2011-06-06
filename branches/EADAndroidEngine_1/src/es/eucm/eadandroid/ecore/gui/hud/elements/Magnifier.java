@@ -240,8 +240,11 @@ public class Magnifier {
 
 	public void updateMagPos(int xfocus, int yfocus) {
 
-		magBounds.set(xfocus - radius, yfocus + 30 - 2 * radius, xfocus
-				+ radius, yfocus + 30);
+		//magBounds.set(xfocus - radius, yfocus + 30 - 2 * radius, xfocus
+				//+ radius, yfocus + 30);
+		
+		magBounds.set(xfocus - radius, yfocus + 10 - 2 * radius, xfocus
+				+ radius, yfocus + 10 + radius);
 
 		magBoundsIntersected.set(magBounds);
 		magBoundsIntersected.intersect(windowBounds);

@@ -22,6 +22,7 @@ public class Inventory {
 
 	public static final int UNFOLD_REGION_POSY = (int) (20 * GUI.DISPLAY_DENSITY_SCALE);
 	public static final int FOLD_REGION_POSY = (int) ((GUI.FINAL_WINDOW_HEIGHT - 20 * GUI.DISPLAY_DENSITY_SCALE));
+	public static final int FOLD_REGION_POSX = (int) ((GUI.FINAL_WINDOW_WIDTH - 20 * GUI.DISPLAY_DENSITY_SCALE));
 
 	private static final int drag_offset = (int) (15 * GUI.DISPLAY_DENSITY_SCALE);
 

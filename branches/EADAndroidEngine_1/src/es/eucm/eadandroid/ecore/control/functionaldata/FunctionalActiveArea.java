@@ -40,7 +40,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.util.Log;
 import es.eucm.eadandroid.common.data.Polygon;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.InfluenceArea;
@@ -94,21 +93,16 @@ public class FunctionalActiveArea extends FunctionalItem {
         // Make all pixels transparent
         p.setColor(Color.TRANSPARENT);  
         p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
-        c.drawRect(0, 0, activeArea.getWidth(), activeArea.getHeight(), p);
-        
-      
-
+        c.drawRect(0, 0, activeArea.getWidth(), activeArea.getHeight(), p); 
+   
         image = bImagenTransparente;
 
         if( !activeArea.isRectangular( ) ) {
-            polygon = new Polygon(activeArea.getPoints( ).size() );
+            polygon = new Polygon(activeArea.getPoints( ).size());
             for( Point point : activeArea.getPoints( ) ) {
                 polygon.addPoint( point.x, point.y );
             }
         }
-
-
-
     }
 
     @Override
@@ -143,7 +137,7 @@ public class FunctionalActiveArea extends FunctionalItem {
             //System.out.println( "X="+this.x+" Y="+ this.y+" WIDTH="+this.getWidth( )+" HEIGHT="+this.getHeight( ));
         }
         else {
-            return polygon.contains( x, y );
+            return polygon.contains(x, y);
         }
         return isInside;
     }

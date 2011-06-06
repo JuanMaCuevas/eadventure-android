@@ -1,19 +1,8 @@
 package es.eucm.eadandroid.ecore;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.common.data.chapter.resources.Resources;
-import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
-import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
-import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
-import es.eucm.eadandroid.homeapp.HomeTabActivity;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
-import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
-import es.eucm.eadandroid.utils.ActivityPipe;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -24,10 +13,16 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.common.data.chapter.resources.Resources;
+import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
+import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
+import es.eucm.eadandroid.ecore.control.Game;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
+import es.eucm.eadandroid.homeapp.HomeTabActivity;
+import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 
@@ -52,7 +47,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	 */
 	public Handler ActivityHandler = new Handler() {
 		@Override
-		/**    * Called when a message is sent to Engines Handler Queue **/
+		
 		public void handleMessage(Message msg) {
 
 			switch (msg.what) {
@@ -178,7 +173,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 
 				public void onCompletion(MediaPlayer mp) {
 					mediaPlayer.release();
-					mediaPlayer=null;
+					mediaPlayer=null;					
 					changeactivity();
 
 				}
@@ -271,9 +266,9 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	{
 		if(!loadgames)
 		{		Intent i = new Intent(this, HomeTabActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtra("tabstate", HomeTabActivity.GAMES);
-		startActivity(i);
+				i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				i.putExtra("tabstate", HomeTabActivity.GAMES);
+				startActivity(i);
 		}
 		else 
 		{

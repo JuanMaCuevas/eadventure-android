@@ -1,7 +1,5 @@
 package es.eucm.eadandroid.res.pathdirectory;
 
-import android.os.Environment;
-
 public final class Paths {
 
 	public static final class repository {
@@ -13,7 +11,7 @@ public final class Paths {
 
 	public static final class eaddirectory {
 		
-		public static final String ROOT_PATH = Paths.device.EXTERNAL_STORAGE + "EadAndroid/" ;
+		public static final String ROOT_PATH = Paths.device.EXTERNAL_STORAGE + "EadAndroid/";
 		public static final String GAMES_PATH = ROOT_PATH + "games/" ;
 		public static final String REPORTS_PATH = ROOT_PATH + "reports/" ;
 		public static final String SAVED_GAMES_PATH = ROOT_PATH + "saved_games/" ;

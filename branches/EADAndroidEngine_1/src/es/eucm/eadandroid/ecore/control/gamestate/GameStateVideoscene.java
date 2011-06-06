@@ -5,6 +5,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
@@ -110,9 +111,9 @@ public class GameStateVideoscene extends GameState {
 	private void loadNextScene() {
 
 
-
-		if (videoscene.getNext() == Cutscene.ENDCHAPTER)
+		if (videoscene.getNext() == Cutscene.ENDCHAPTER){
 			game.goToNextChapter();
+		}
 		else if (videoscene.getNext() == Cutscene.NEWSCENE) {
 			Exit exit = new Exit(videoscene.getTargetId());
 			exit.setDestinyX(videoscene.getPositionX());

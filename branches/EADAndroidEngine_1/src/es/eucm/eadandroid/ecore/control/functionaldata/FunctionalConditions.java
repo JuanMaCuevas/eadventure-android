@@ -38,6 +38,7 @@ import es.eucm.eadandroid.common.data.chapter.conditions.Conditions;
 import es.eucm.eadandroid.common.data.chapter.conditions.FlagCondition;
 import es.eucm.eadandroid.common.data.chapter.conditions.GlobalState;
 import es.eucm.eadandroid.common.data.chapter.conditions.VarCondition;
+import es.eucm.eadandroid.common.data.chapter.conditions.GlobalStateCondition;
 import es.eucm.eadandroid.ecore.control.FlagSummary;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.VarSummary;
@@ -97,10 +98,11 @@ public class FunctionalConditions {
                     evaluation = evaluateVarCondition( state, value, actualValue );
                 }
                 else if( condition.getType( ) == Condition.GLOBAL_STATE_CONDITION ) {
-                    String globalStateId = condition.getId( );
+                	
+                	String globalStateId = condition.getId( );
+                    GlobalStateCondition gsCondition = (GlobalStateCondition) condition;
                     GlobalState gs = Game.getInstance( ).getCurrentChapterData( ).getGlobalState( globalStateId );
-                    evaluation = new FunctionalConditions( gs ).allConditionsOk( );
-
+                    evaluation = (gsCondition.getState( ) == GlobalStateCondition.GS_NOT_SATISFIED) ^ new FunctionalConditions( gs ).allConditionsOk( );
                 }
             }
         }
@@ -166,9 +168,11 @@ public class FunctionalConditions {
                     evaluation = evaluateVarCondition( state, value, actualValue );
                 }
                 else if( condition.getType( ) == Condition.GLOBAL_STATE_CONDITION ) {
-                    String globalStateId = condition.getId( );
+                	
+                	String globalStateId = condition.getId( );
+                    GlobalStateCondition gsCondition = (GlobalStateCondition) condition;
                     GlobalState gs = Game.getInstance( ).getCurrentChapterData( ).getGlobalState( globalStateId );
-                    evaluation = new FunctionalConditions( gs ).allConditionsOk( );
+                    evaluation = (gsCondition.getState( ) == GlobalStateCondition.GS_NOT_SATISFIED) ^ new FunctionalConditions( gs ).allConditionsOk( );
                 }
             }
 

@@ -275,7 +275,7 @@ public class ActionManager {
 		MotionEvent e = ((TapEvent) ev).event;
 
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
-		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
+		int y = (int) ((e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET);
 		
 		if (currentCombInterElement!=null && elementOver!=null)
 			   processElementClick();
@@ -286,7 +286,7 @@ public class ActionManager {
 		
 	}
 	
-public void pressed(UIEvent ev) {
+	public void pressed(UIEvent ev) {
 
 		
 		MotionEvent e = null;
@@ -297,7 +297,7 @@ public void pressed(UIEvent ev) {
 			e = ((ScrollPressedEvent) ev).eventDst;
 				
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
-		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
+		int y = (int) ((e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET);
 		
 		Game game = Game.getInstance();
 		FunctionalScene functionalScene = game.getFunctionalScene();
@@ -344,7 +344,7 @@ public void pressed(UIEvent ev) {
 		MotionEvent e = ((UnPressedEvent) ev).event;
 
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
-		int y = (int) (e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET;
+		int y = (int) ((e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET);
 		
 		
 		if (currentCombInterElement!=null && elementOver!=null)

@@ -218,84 +218,20 @@ public class ResourceHandler implements InputStreamCreator {
 		Bitmap image = null;
 
 		if (!path.startsWith("/sdcard"))
-			 path=gamePath+path;
-			//Here we should decode the images properly
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inPurgeable = true;
-			options.inInputShareable = true;
-			//options.inDensity = 120; //temporaly minimal quality
-			options.inPreferredConfig = Bitmap.Config.ARGB_4444;
-			// end added
-			image = BitmapFactory.decodeFile(path, options);//decodeStream(inputStream, null, options);
-			
-			/*String memory = "Free,"+Long.toString(Debug.getNativeHeapFreeSize())+
-							", Allocated:, "+Long.toString(Debug.getNativeHeapAllocatedSize())+
-							", Size:, "+Long.toString(Debug.getNativeHeapSize())+","+path;
-			Log.i("Memory usage",memory);*/
+			path=gamePath+path;
+		
+		//Here we should decode the images properly
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		//add dithering to decode faster
+		options.inDither = true;
+		options.inPurgeable = true;
+		options.inInputShareable = true;
+		options.inPreferredConfig = Bitmap.Config.RGB_565;
 
+		image = BitmapFactory.decodeFile(path, options);
 
 		return image;
 	}
-	
-	
-
-	/**
-	 * Loads a file as an input stream from the Zip file
-	 * 
-	 * @param path
-	 *            Path of the file
-	 * @return The file as an input stream
-	 */
-
-	/*
-	public InputStream getResourceAsStreamFromZip(String path) {
-
-		InputStream inputStream = null;
-
-		if (path.startsWith("/"))
-			path = path.substring(1);
-
-		
-			if (zipPath != null && new File(zipPath+path).exists())
-				inputStream = getResourceAsStream(zipPath+path);
-			else
-				inputStream = getResourceAsStream(path); // TODO esta linea no
-			// deberia estar??
-		
-	
-
-		return inputStream;
-	}*/
-
-	/**
-	 * 
-	 * Loads a file as a Bitmap image from the Zip file
-	 * 
-	 * @param path
-	 *            Path of the file
-	 * @return The file as a Bitmap image
-	 */
-
-/*	public Bitmap getResourceAsImageFromZip(String path) {
-
-		Bitmap image = null;
-
-		if (path.startsWith("/")) {
-			path = path.substring(1);
-		}
-
-//		try {
-//			InputStream inputStream = getResourceAsStreamFromZip(path);
-//			if (inputStream != null) {
-//				image = BitmapFactory.decodeStream(inputStream);
-//				inputStream.close();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
-		return this.getResourceAsImage(ResourceHandler.gamePath+path);
-	}*/
 	
 	
 	public URL buildURL(String path) {

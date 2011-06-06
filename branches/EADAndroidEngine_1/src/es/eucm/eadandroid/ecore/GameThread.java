@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -41,13 +42,11 @@ public class GameThread extends Thread {
 		int landscapeHeight = displayMetrics.heightPixels;
 		int landscapeWidth = displayMetrics.widthPixels;
 		
-		float scaleDensity = displayMetrics.density;
-	
+		float scaleDensity = displayMetrics.density;	
 				
 		GUI.create(holder);
 		ContextServices.create(context);
-		GUI.getInstance().init(landscapeHeight,landscapeWidth,scaleDensity);
-						
+		GUI.getInstance().init(landscapeHeight, landscapeWidth, scaleDensity);						
 	}
 
 
@@ -77,10 +76,8 @@ public class GameThread extends Thread {
 	
 //last function it will be done from GameThread not activitythread
 	private void finishThread() {
-		
         
-        Message msg = handler.obtainMessage();
-        
+        Message msg = handler.obtainMessage();        
         
         Bundle b = new Bundle();
 
@@ -88,7 +85,7 @@ public class GameThread extends Thread {
         	msg.what = ActivityHandlerMessages.LOAD_GAMES;	
         else msg.what = ActivityHandlerMessages.GAME_OVER;
 		msg.setData(b);
-		this.instance=null;
+		//this.instance=null;
 		
 		msg.sendToTarget();
 		
@@ -145,8 +142,7 @@ public class GameThread extends Thread {
 		this.loadActivityGames=loadactivitygames;
 		
 		if(Game.getInstance()!=null)
-		  Game.getInstance().finish();
-				
+			Game.getInstance().finish();				
 	}
 
 	public void setSurfacevideo(SurfaceHolder videoholder) {

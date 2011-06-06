@@ -45,6 +45,7 @@ import es.eucm.eadandroid.common.data.chapter.effects.Effects;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalBook;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalStyledBook;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalTextBook;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
@@ -66,8 +67,8 @@ public class GameStateBook extends GameState {
         super( );
         if( game.getBook( ).getType( ) == Book.TYPE_PARAGRAPHS ) {
             //System.out.println( "[LOG] GameStateBook - Constructor - Paragraphs Book" );
-            //book = new FunctionalTextBook( game.getBook( ) );
-        	Log.d("GameStateBook","Paragraph books not supported, yet");
+            book = new FunctionalTextBook( game.getBook( ) );
+        	//Log.d("GameStateBook","Paragraph books not supported, yet");
         }
         else if( game.getBook( ).getType( ) == Book.TYPE_PAGES ) {
             //System.out.println( "[LOG] GameStateBook - Constructor - Pages Book" );
@@ -83,8 +84,21 @@ public class GameStateBook extends GameState {
     @Override
     public void mainLoop( long elapsedTime, int fps ) {
 
-    	
-    	if( book!=null && book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
+    	if( book!=null && book.getBook( ).getType( ) == Book.TYPE_PARAGRAPHS ) {
+    		Canvas c = GUI.getInstance( ).getGraphics( );
+            //c.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
+            
+
+            ( (FunctionalTextBook) book ).draw( c );
+
+            //c.drawColor( Color.WHITE );
+            //g.drawString(Integer.toString( fps ), 780, 14);
+
+            GUI.getInstance( ).endDraw( );
+
+
+    	}
+    	else if( book!=null && book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
             Canvas c = GUI.getInstance( ).getGraphics( );
             //c.clearRect( 0, 0, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT );
             
@@ -148,45 +162,6 @@ public class GameStateBook extends GameState {
 
 		return true;
 	}
-      
-  /*  @Override
-    public void mouseClicked( MouseEvent e ) {
-
-        //System.out.println( "MOUSE CLICKED" );
-        // Left click changes the page
-        if( e.getButton( ) == MouseEvent.BUTTON1 ) {
-            if( book.isInPreviousPage( e.getX( ), e.getY( ) ) )
-                book.previousPage( );
-
-            else if( book.isInNextPage( e.getX( ), e.getY( ) ) ) {
-
-                if( book.isInLastPage( ) ) {
-                    GUI.getInstance( ).restoreFrame( );
-                    // this method also change the state to run effects
-                    FunctionalEffects.storeAllEffects( new Effects( ) );
-                    //game.setState( Game.STATE_RUN_EFFECTS );
-                }
-                else
-                    book.nextPage( );
-            }
-        }
-
-        // Right click ends the book
-        else if( e.getButton( ) == MouseEvent.BUTTON3 ) {
-            GUI.getInstance( ).restoreFrame( );
-            FunctionalEffects.storeAllEffects( new Effects( ) );
-            //game.setState( Game.STATE_RUN_EFFECTS );
-        }
-    }*/
-    /*
-    
-    @Override
-    public void mouseMoved( MouseEvent e ){
-        boolean mouseOverPreviousPage = book.isInPreviousPage( e.getX( ), e.getY( ) );
-        book.mouseOverPreviousPage( mouseOverPreviousPage );
-        
-        boolean mouseOverNextPage = book.isInNextPage( e.getX( ), e.getY( ) );
-        book.mouseOverNextPage( mouseOverNextPage );
-    }*/
+ 
     
 }

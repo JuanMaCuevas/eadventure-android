@@ -135,6 +135,9 @@ public class GameStatePlaying extends GameState {
                     }
                 }
             }
+            //OLD
+            adaptedVars.clear();
+            adaptedValues.clear();
 
         }
 

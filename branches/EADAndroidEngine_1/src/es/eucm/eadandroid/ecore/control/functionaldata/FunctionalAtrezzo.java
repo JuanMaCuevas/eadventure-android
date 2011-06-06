@@ -34,7 +34,6 @@
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Canvas;
@@ -157,8 +156,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
         
         Canvas c = new Canvas(image);       
         c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
-        //GRAPHICS
-        //g.drawImage( tempimage, 0, 0, x2-x1, y2-y1, x1, y1, x2, y2, null);
+        
         
     }
 
@@ -287,8 +285,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
         mousex = mousex - x1;
         mousey = mousey - y1;
         if( ( mousex >= 0 ) && ( mousex < getWidth( ) * scale ) && ( mousey >= 0 ) && ( mousey < getHeight( ) * scale ) ) {
-            Bitmap bufferedImage =  image;
-            int alpha = Color.alpha(bufferedImage.getPixel((int) ( mousex / scale ),  (int) ( mousey / scale ))) ;
+            int alpha = Color.alpha(image.getPixel((int) ( mousex / scale ),  (int) ( mousey / scale ))) ;
             //GRAPHICS
             //bufferedImage.getRGB( (int) ( mousex / scale ), (int) ( mousey / scale ) ) >>> 24;
             isInside = alpha > 128;

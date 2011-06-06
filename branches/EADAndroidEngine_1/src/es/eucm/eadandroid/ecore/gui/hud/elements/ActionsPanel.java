@@ -83,7 +83,7 @@ public class ActionsPanel {
 	private final static String closeButtonPath = Paths.eaddirectory.ROOT_PATH
 			+ "gui/hud/contextual/close1.png";
 
-	private final static int closeButtonWidth = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
+	private final static int closeButtonWidth = (int) (20 * GUI.DISPLAY_DENSITY_SCALE);
 
 	private static final int CLOSE_X = TRANSPARENT_PADDING;
 	private static int CLOSE_Y;

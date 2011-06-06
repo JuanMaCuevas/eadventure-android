@@ -9,10 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.hardware.SensorEvent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
@@ -40,9 +38,8 @@ import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.common.gui.JOptionPane;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
-import es.eucm.eadandroid.ecore.ECoreActivity;
-import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
+import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalItem;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalNPC;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
@@ -548,7 +545,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 				// If there is an assessment profile, show the "Save Report"
 				
-
 				
 				while (!assessmentEngine.isEndOfChapterFeedbackDone()) {
 					Thread.sleep(100);

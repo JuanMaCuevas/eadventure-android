@@ -128,6 +128,9 @@ public class FunctionalItem extends FunctionalElement {
         if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
             tempimage = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
             removeTransparentParts(tempimage);
+            //OLD
+            tempimage = null;
+            Runtime.getRuntime( ).gc( );
 
         }
         if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
@@ -135,7 +138,11 @@ public class FunctionalItem extends FunctionalElement {
     }
 
     private void removeTransparentParts(Bitmap tempimage) {
-        x1 = tempimage.getWidth(); y1 = tempimage.getHeight(); x2 = 0; y2 = 0;
+   
+        x1 = tempimage.getWidth(); 
+        y1 = tempimage.getHeight(); 
+        x2 = 0; 
+        y2 = 0;
         width = x1;
         height = y1;
         
@@ -170,30 +177,7 @@ public class FunctionalItem extends FunctionalElement {
             }
         }
         
-        Log.d("Ll","fin");
-//        
-//        x1 = tempimage.getWidth(); y1 = tempimage.getHeight(); x2 = 0; y2 = 0;
-//        width = x1;
-//        height = y1;
-//        for (int i = 0; i < tempimage.getWidth(); i++) {
-//            boolean x_clear = true;
-//            for (int j = 0; j < tempimage.getHeight(); j++) {
-//                boolean y_clear = true;
-//                Bitmap bufferedImage = tempimage;
-//                int alpha = Color.alpha(bufferedImage.getPixel(i,j)); 
-//                if (alpha > 128) {
-//                    if (x_clear)
-//                        x1 = Math.min( x1, i );
-//                    if (y_clear)
-//                        y1 = Math.min( y1, j );
-//                    x_clear = false;
-//                    y_clear = false;
-//                    x2 = Math.max( x2, i );
-//                    y2 = Math.max( y2, j );
-//                }
-//            }
-//        }
-    	
+        Log.d("Ll","fin");    	
        
         // create a transparent (not translucent) image
         image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( x2 - x1, y2 - y1, true );
@@ -203,7 +187,6 @@ public class FunctionalItem extends FunctionalElement {
         Canvas c = new Canvas(image);       
         c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
         tempimage = null;
-
         //GRAPHICS       
         
     }
@@ -238,6 +221,9 @@ public class FunctionalItem extends FunctionalElement {
             if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
                 tempimage = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
                 removeTransparentParts(tempimage);
+                //OLD
+                tempimage = null;
+                Runtime.getRuntime( ).gc( );
                 
             }
             if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
@@ -298,10 +284,9 @@ public class FunctionalItem extends FunctionalElement {
      */
     public void draw( ) {
 
-        int x_image = Math.round( x - ( getWidth( ) * scale / 2 ) ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( );
-        int y_image = Math.round( y - getHeight( ) * scale );
-        x_image+=x1;
-        y_image+=y1;
+        int x_image = Math.round( (x + x1 * scale) - ( getWidth( ) * scale / 2 ) ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( );
+        int y_image = Math.round( (y + y1 * scale) - getHeight( ) * scale );
+ 
         if( scale != 1 ) {
             Bitmap temp=null;
             if( image == oldOriginalImage && scale == oldScale ) {
@@ -323,6 +308,7 @@ public class FunctionalItem extends FunctionalElement {
                 oldImage = temp;
                 oldOriginalImage = image;
                 oldScale = scale;
+                
             }
             if( layer == -1 )
                 GUI.getInstance( ).addElementToDraw( temp, x_image, y_image, Math.round( y ), Math.round( y ), highlight, this );
@@ -350,12 +336,11 @@ public class FunctionalItem extends FunctionalElement {
         mousey = mousey - (int) (y1 * scale);
 
         if( ( mousex >= 0 ) && ( mousex < (x2 - x1) * scale ) && ( mousey >= 0 ) && ( mousey < (y2 - y1) * scale ) ) {
-            Bitmap bufferedImage = image;
             
             int xx = (int)( mousex / scale );
             int yy =   (int)( mousey /scale ) ;
             
-            int color= bufferedImage.getPixel(xx,yy);
+            int color= image.getPixel(xx,yy);
             int alpha = Color.alpha(color);
             isInside = alpha > 128;
         }

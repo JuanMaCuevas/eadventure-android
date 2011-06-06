@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import android.graphics.Bitmap;
@@ -48,7 +49,7 @@ public class MultimediaManager {
 	/**
 	 * Mirrored images cache
 	 */
-	private HashMap<String, Bitmap>[] mirrorImageCache;
+	private HashMap<String, WeakReference<Bitmap>>[] mirrorImageCache;
 
 	/**
 	 * Sounds cache
@@ -89,7 +90,7 @@ public class MultimediaManager {
 			imageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
 		mirrorImageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
-			mirrorImageCache[i] = new HashMap<String, Bitmap>();
+			mirrorImageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
 
 		soundCache = new HashMap<Long, Sound>();
 
@@ -108,17 +109,19 @@ public class MultimediaManager {
 	 * @return an Image for imagePath.
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
-		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);
 		
+		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
 		
 		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
+		
 		if (image == null) {
 			 image = ResourceHandler.getInstance().getResourceAsImage( bitmapPath );
-		if (image != null) {
+			 if (image != null) {
 				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
 			}
 		}
 		
+		wrImg = null;
 		return image;
 
 	}
@@ -134,19 +137,22 @@ public class MultimediaManager {
 	 *            Category for the image
 	 * @return an Image for imagePath.
 	 */
-	public Bitmap loadMirroredImage(String imagePath, int category) {
+	public Bitmap loadMirroredImage(String bitmapPath, int category) {
 
-		Bitmap image = mirrorImageCache[category].get(imagePath);
+		WeakReference<Bitmap> wrImg = mirrorImageCache[category].get(bitmapPath);
+		
+		Bitmap image = (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		// If the image is in cache, don't load it
 		if (image == null) {
 			// Load the image and store it in cache
 
-			 image = getScaledImage( loadImage( imagePath, category ),
-			 -1, 1 );
+			image = getScaledImage( loadImage( bitmapPath, category ),-1, 1 );
 			if (image != null) {
-				mirrorImageCache[category].put(imagePath, image);
+				mirrorImageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
 			}
 		}
+		
+		wrImg = null;
 		return image;
 	}
 
@@ -157,7 +163,7 @@ public class MultimediaManager {
 	 *            Image category to clear
 	 */
 	public void flushImagePool(int category) {
-
+		
 		imageCache[category].clear();
 		mirrorImageCache[category].clear();
 	}
@@ -196,7 +202,9 @@ public class MultimediaManager {
 			
 			 scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * wfactor, image.getHeight() * hfactor, false);
 		  }
-		
+		  
+		image.recycle();
+		  
 		return scaledImage;
 	}
 
@@ -462,12 +470,13 @@ public class MultimediaManager {
 			return temp;
 
 		if (animationPath != null && animationPath.endsWith(".eaa")) {
-			FrameAnimation animation = new FrameAnimation(Loader.loadAnimation(
+			//FrameAnimation animation 
+			temp = new FrameAnimation(Loader.loadAnimation(
 					ResourceHandler.getInstance(), animationPath,
 					new EngineImageLoader()));
-			animation.setMirror(mirror);
-			temp = animation;
-            Log.e("NPC",animationPath+"Variable :"+ animation);
+			((FrameAnimation)temp).setMirror(mirror);
+			//temp = animation;
+            Log.e("NPC",animationPath+"Variable :"+ temp);
 			
 		} else {
 			int i = 1;
@@ -488,9 +497,11 @@ public class MultimediaManager {
 				} else
 					end = true;
 			}
-			ImageAnimation animation = new ImageAnimation();
-			animation.setImages(frames.toArray(new Bitmap[] {}));
-			temp = animation;
+			//ImageAnimation animation 
+			temp = new ImageAnimation();
+			((ImageAnimation)temp).setImages(frames.toArray(new Bitmap[] {}));
+			//temp = animation;
+			frames.clear();
 		}
 		animationCache.put(animationPath + (mirror ? "t" : "f"), temp);
 		return temp;
@@ -545,7 +556,7 @@ public class MultimediaManager {
 			for (int j=0;j<slides.size();j++){
 				arrayImages[j]=slides.get(j);
 			}
-			slides=null;
+			slides.clear();
 			
 			imageSet.setImages(arrayImages);
 			arrayImages=null;
@@ -596,6 +607,7 @@ public class MultimediaManager {
 
 			imageSet = new ImageSet();
 			imageSet.setImagesPath(slides.toArray(new String[] {}));
+			slides.clear();
 		}
 
 		return imageSet;
@@ -620,7 +632,7 @@ public class MultimediaManager {
 	}
 
 	public void flushAnimationPool() {
-
+		
 		animationCache.clear();
 	}
 

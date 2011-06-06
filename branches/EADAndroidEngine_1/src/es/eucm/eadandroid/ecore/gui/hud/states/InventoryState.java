@@ -65,6 +65,7 @@ public class InventoryState extends HUDstate {
 	public boolean processPressed(UIEvent e) {
 
 		PressedEvent ev = (PressedEvent) e;
+		
 		// lo bueno de hacer esto aqui es que si lo hgo dentro de inventory , si
 		// hay mas tipos de eventos se va a enguarrinar
 		if (ev.event.getY() > Inventory.FOLD_REGION_POSY)

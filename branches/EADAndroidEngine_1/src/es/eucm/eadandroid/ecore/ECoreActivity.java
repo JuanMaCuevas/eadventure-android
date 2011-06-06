@@ -117,12 +117,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		public void handleMessage(Message msg) {
 			
 			Bundle bundle;
+			String text;
 
 			switch (msg.what) {
 
 			case ActivityHandlerMessages.ASSESSMENT: {
 				 bundle = msg.getData();
-				String text = bundle.getString("html");
+				text = bundle.getString("html");
 
 				conversationLayout.setVisibility(View.INVISIBLE);
 				conversationList.setVisibility(View.INVISIBLE);
@@ -137,7 +138,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				activityvideo();
 				break;
 
-			case ActivityHandlerMessages.GAME_OVER:
+			case ActivityHandlerMessages.GAME_OVER:	
 				finishapplication();
 				finish();
 				break;
@@ -146,6 +147,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				startLoadApplication();
 				finish();
 				break;
+				
 			case ActivityHandlerMessages.FINISH_DIALOG:
 				  bundle = msg.getData();
 				
@@ -169,7 +171,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				break;
 			case ActivityHandlerMessages.SHOW_DIALOG:
 				 bundle = msg.getData();
-				String text = bundle.getString("content");
+				text = bundle.getString("content");
 				ECoreActivity.this.dialog = ProgressDialog.show(
 						ECoreActivity.this, "", text, true);
 				break;

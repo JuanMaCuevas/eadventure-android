@@ -268,7 +268,7 @@ public class ChapterHandler extends DefaultHandler {
             }
             
 
-            else if( sName.equals( "qrcode" ) ) {
+            else if( sName.equals( "qrcodes" ) ) {
             	
                 subParser = new QrcodeSubParser( chapter );
                 subParsing = SUBPARSING_QRCODE;
@@ -356,7 +356,7 @@ public class ChapterHandler extends DefaultHandler {
 
 
             // If the element is not being subparsed anymore, return to normal state
-            if( sName.equals( "scene" ) && subParsing == SCENE || ( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) && subParsing == CUTSCENE || sName.equals( "book" ) && subParsing == BOOK || sName.equals( "object" ) && subParsing == OBJECT || sName.equals( "player" ) && subParsing == PLAYER || sName.equals( "character" ) && subParsing == CHARACTER || sName.equals( "tree-conversation" ) && subParsing == CONVERSATION || sName.equals( "graph-conversation" ) && subParsing == CONVERSATION || sName.equals( "timer" ) && subParsing == TIMER || sName.equals( "qrcode" ) && subParsing == SUBPARSING_QRCODE|| sName.equals( "gps" ) && subParsing == SUBPARSING_GPS|| sName.equals( "global-state" ) && subParsing == GLOBAL_STATE || sName.equals( "macro" ) && subParsing == MACRO || sName.equals( "atrezzoobject" ) && subParsing == ATREZZO || sName.equals( "assessment" ) && subParsing == ASSESSMENT || sName.equals( "adaptation" ) && subParsing == ADAPTATION ) {
+            if( sName.equals( "scene" ) && subParsing == SCENE || ( sName.equals( "slidescene" ) || sName.equals( "videoscene" ) ) && subParsing == CUTSCENE || sName.equals( "book" ) && subParsing == BOOK || sName.equals( "object" ) && subParsing == OBJECT || sName.equals( "player" ) && subParsing == PLAYER || sName.equals( "character" ) && subParsing == CHARACTER || sName.equals( "tree-conversation" ) && subParsing == CONVERSATION || sName.equals( "graph-conversation" ) && subParsing == CONVERSATION || sName.equals( "timer" ) && subParsing == TIMER || sName.equals( "qrcodes" ) && subParsing == SUBPARSING_QRCODE|| sName.equals( "gps" ) && subParsing == SUBPARSING_GPS|| sName.equals( "global-state" ) && subParsing == GLOBAL_STATE || sName.equals( "macro" ) && subParsing == MACRO || sName.equals( "atrezzoobject" ) && subParsing == ATREZZO || sName.equals( "assessment" ) && subParsing == ASSESSMENT || sName.equals( "adaptation" ) && subParsing == ADAPTATION ) {
                 subParsing = NONE;
             }
 

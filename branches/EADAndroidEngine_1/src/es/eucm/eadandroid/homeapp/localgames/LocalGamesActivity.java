@@ -16,7 +16,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import es.eucm.eadandroid.R;
@@ -47,8 +51,8 @@ public class LocalGamesActivity extends ListActivity {
 			ContextMenuInfo menuInfo) {
 		menu.setHeaderTitle("Options");
 		menu.setHeaderIcon(R.drawable.dialog_icon);
-		menu.add(0, 0, 0, "Play");
-		menu.add(0, 1, 0, "Uninstall");
+		menu.add(0, 0, 0, "Play Game");
+		menu.add(0, 1, 0, "Uninstall Game");
 	}
 
 	@Override
@@ -133,7 +137,6 @@ public class LocalGamesActivity extends ListActivity {
 				dialog.dismiss();
 				searchForGames();
 				break;
-
 			}
 		}
 
@@ -143,12 +146,12 @@ public class LocalGamesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setLayout();
+		searchForGames();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		searchForGames();
 		
 	}
 
@@ -161,31 +164,7 @@ public class LocalGamesActivity extends ListActivity {
 				R.layout.local_games_activity_listitem, m_games);
 		setListAdapter(m_adapter);
 		
-		registerForContextMenu(getListView());
-
-//		AnimationSet set = new AnimationSet(true);
-//
-//
-////		Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-////				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-////				(float) - 10, Animation.RELATIVE_TO_SELF, 0.0f);
-//		
-//		Animation animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f,
-//		Animation.RELATIVE_TO_PARENT, 0f, Animation.RELATIVE_TO_PARENT,
-//		-1.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
-//		
-//		animation2.setDuration(400);
-//		set.addAnimation(animation2);
-//		
-////		Animation animation = new AlphaAnimation(0.0f, 1.0f);
-////		animation.setDuration(1000);
-////		set.addAnimation(animation);
-//
-//		controller = new LayoutAnimationController(set, 0.5f);
-//
-//		getListView().setLayoutAnimation(controller);
-//		getListView().setTextFilterEnabled(true);
-		
+		registerForContextMenu(getListView());		
 
 	}
 

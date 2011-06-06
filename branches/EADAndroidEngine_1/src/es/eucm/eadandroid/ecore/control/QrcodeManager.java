@@ -3,15 +3,12 @@ package es.eucm.eadandroid.ecore.control;
 import java.util.List;
 import java.util.Vector;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.QrcodeRule;
-import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
+import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
@@ -20,7 +17,7 @@ public class QrcodeManager {
 
 	
 	private static QrcodeManager singleton = null;
-	private Vector<QrcodeRule> qrcodeActive;
+	//private Vector<QrcodeRule> qrcodeActive;
 	private Vector<QrcodeRule> allqrrules;
 
 
@@ -30,7 +27,7 @@ public class QrcodeManager {
 	}
 
 	private QrcodeManager()  {
-		qrcodeActive = new Vector<QrcodeRule>();
+		//qrcodeActive = new Vector<QrcodeRule>();
 		allqrrules = new Vector<QrcodeRule>();
 	
 	}
@@ -50,11 +47,11 @@ public class QrcodeManager {
 		
 		
 		//loads global qrrules
-		for(int i=0;i<list.size();i++)
+		/*for(int i=0;i<list.size();i++)
 		{
 			if (list.get(i).getSceneName().equals(""))
 				this.qrcodeActive.add(list.get(i));
-		}
+		}*/
 		
 
 	}
@@ -63,7 +60,7 @@ public class QrcodeManager {
 		allqrrules.add(rule);
 	}
 	
-	public void changeOfScene(String scene)
+/*	public void changeOfScene(String scene)
 	{
 	//first removes from gpsActive all qr related to other scenes
 		for (int i=this.qrcodeActive.size()-1;i>=0;i=i-1)
@@ -78,16 +75,16 @@ public class QrcodeManager {
 				qrcodeActive.add(allqrrules.elementAt(i));
 		}
 		
-	}
+	}*/
 	
 
 
 	public void updateQRcode(String password) {
-		for (int i = 0; i < qrcodeActive.size(); i++) {
+		for (int i = 0; i < allqrrules.size(); i++) {
 
-			if (new FunctionalConditions(qrcodeActive.elementAt(i).getEndCond()).allConditionsOk())
+			if (new FunctionalConditions(allqrrules.elementAt(i).getInitCond()).allConditionsOk())
 			{
-				if (qrcodeActive.elementAt(i).getCode().equals(password)) {
+				if (allqrrules.elementAt(i).getCode().equals(password)) {
 					
 					Handler handler = GameThread.getInstance().getHandler();
 					String text=new String("QRCode found ");
@@ -99,9 +96,9 @@ public class QrcodeManager {
 
 					msg.sendToTarget();
 					
-					FunctionalEffects.storeAllEffects(qrcodeActive.elementAt(i)
+					FunctionalEffects.storeAllEffects(allqrrules.elementAt(i)
 							.getEffects());
-					this.qrcodeActive.remove(i);
+					this.allqrrules.remove(i);
 
 				}
 			}

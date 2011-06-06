@@ -71,9 +71,7 @@ public class FunctionalScene implements Renderable {
     /**
      * Margins of the scene (for use in the scroll)
      */
-    private final static int MAX_OFFSET_X = 300;
-
-    
+    private final static int MAX_OFFSET_X = 300;    
 
     /**
      * Scene data
@@ -251,8 +249,9 @@ public class FunctionalScene implements Renderable {
                         bufferedForeground.setPixel( i, j, bufferedBackground.getPixel(i, j) );
                 }
             }
+
             foregroundHardMap = null;
-            bufferedBackground = null;
+            bufferedBackground = null;              
             foreground = bufferedForeground;
         }
         
@@ -340,13 +339,13 @@ public class FunctionalScene implements Renderable {
     	
     	/////////////////////////////////////////////////////////
 
-		if (GpsManager.getInstance() != null) {
+		/*if (GpsManager.getInstance() != null) {
 			GpsManager.getInstance().changeOfScene(scene.getId());
 		}
 		
 		if (QrcodeManager.getInstance() != null) {
 			QrcodeManager.getInstance().changeOfScene(scene.getId());
-		}
+		}*/
 
 
 
@@ -596,8 +595,7 @@ public class FunctionalScene implements Renderable {
 
             // If there was a foreground, delete it
             if( foreground != null )
-                foreground.recycle();//.flush( );
-            //GRAPHICS
+                foreground.recycle();
 
             // Load the foreground image
             foreground = null;
@@ -614,7 +612,9 @@ public class FunctionalScene implements Renderable {
                             bufferedForeground.setPixel(i, j, bufferedBackground.getPixel(i, j));
                     }
                 }
-
+                
+                bufferedBackground =  null;
+                foregroundHardMap = null;
                 foreground = bufferedForeground;
             }
 
@@ -705,15 +705,9 @@ public class FunctionalScene implements Renderable {
         // Update the player
         player.update( elapsedTime );
         
-      
+        // Update the offset
         updateOffset( );
 
-        // Update the offset
-        /*//EVENT
-        if( updateOffset( ) && Game.getInstance( ).getLastMouseEvent( ) != null && Game.getInstance( ).getLastMouseEvent( ).getID( ) != MouseEvent.MOUSE_DRAGGED )
-            Game.getInstance( ).mouseMoved( Game.getInstance( ).getLastMouseEvent( ) );
-        else if( updateOffset( ) && Game.getInstance( ).getLastMouseEvent( ) != null)
-            Game.getInstance( ).mouseDragged( Game.getInstance( ).getLastMouseEvent( ) );*/
     }
 
     /**
@@ -843,14 +837,14 @@ public class FunctionalScene implements Renderable {
         moveOffsetLeft = false;
 
         if( showsOffsetArrows ) {
-            int ypos = (int) (GUI.WINDOW_HEIGHT*GUI.SCALE_RATIOY / 2);
+            int ypos = (int) (GUI.WINDOW_HEIGHT / 2);
             if( y >= ypos - GUI.OFFSET_ARROW_AREA_RADIUS && y <= ypos + GUI.OFFSET_ARROW_AREA_RADIUS ) {
                 int max_x = (int) Math.ceil( Math.sqrt( GUI.OFFSET_ARROW_AREA_RADIUS * GUI.OFFSET_ARROW_AREA_RADIUS - Math.pow( y - ypos, 2 ) ) );
                 if( x <= max_x )
                     moveOffsetLeft = true;
                 if( x >= GUI.WINDOW_WIDTH - max_x )
                     moveOffsetRight = true;
-            }
+            } 
         }
 
         return moveOffsetLeft || moveOffsetRight;
@@ -897,16 +891,15 @@ public class FunctionalScene implements Renderable {
 
 		// FIXME Francis: Aclarar el uso del offset, ya que se añade en sitios
 		// que no deberia y viceversa
-		// if( isInsideOffsetArrow( x, y ) ) {
-		// System.out.println( "Is inside offset arrow" );
-		// if( moveOffsetRight )
-		// updateOffset( true );
-		// if( moveOffsetLeft )
-		// updateOffset( false );
-		// }
+		 /*if( isInsideOffsetArrow( x, y ) ) {		
+			 if( moveOffsetRight )
+				 updateOffset( true );
+			 if( moveOffsetLeft )
+				 updateOffset( false );
+		 }*/
 
 		FunctionalElement element = getElementInside(x + offsetX, y, null);
-		if (Game.getInstance().getActionManager().getActionSelected() == ActionManager.ACTION_GOTO) {
+		if (Game.getInstance().getActionManager().getActionSelected() == ActionManager.ACTION_GOTO ) {
 			int destX = x + offsetX;
 			int destY = y;
 			FunctionalGoTo functionalGoTo = new FunctionalGoTo(null, destX,
@@ -926,11 +919,13 @@ public class FunctionalScene implements Renderable {
 						player.addAction(new FunctionalExit(exit));
 						player.addAction(functionalGoTo);
 					}
-				} else {
+				}	 
+				else {
 					if (!player.isTransparent() && functionalGoTo.canGetTo()) {
 						player.addAction(new FunctionalExit(exit));
 						player.addAction(functionalGoTo);
-					} else if (player.isTransparent()) {
+					} 
+					else if (player.isTransparent()) {
 						player.addAction(new FunctionalExit(exit));
 					}
 				}
@@ -938,9 +933,8 @@ public class FunctionalScene implements Renderable {
 
 			Game.getInstance().getActionManager().setActionSelected(
 					ActionManager.ACTION_GOTO);
-		} else if (element != null) {
-			Game.getInstance().getFunctionalPlayer().performActionInElement(
-					element);
+		} else if (element != null){
+			Game.getInstance().getFunctionalPlayer().performActionInElement(element);
 		}
 	}
 

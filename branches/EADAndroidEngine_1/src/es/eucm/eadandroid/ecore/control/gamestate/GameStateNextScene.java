@@ -60,7 +60,6 @@ public class GameStateNextScene extends GameState {
         // Flush the image pool and the garbage colector
         MultimediaManager.getInstance( ).flushImagePool( MultimediaManager.IMAGE_SCENE );
         MultimediaManager.getInstance().flushAnimationPool();
-        System.gc( );
         
         GUI.getInstance().loading();
 

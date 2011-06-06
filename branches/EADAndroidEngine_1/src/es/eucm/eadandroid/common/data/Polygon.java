@@ -7,7 +7,7 @@ package es.eucm.eadandroid.common.data;
 public class Polygon {
 
     // Polygon coodinates.
-    private int[] polyY, polyX;
+    private float[] polyY, polyX;
     private int points;
 
     // Number of sides in the polygon.
@@ -15,16 +15,12 @@ public class Polygon {
 
     /**
      * Default constructor.
-     * @param px Polygon y coods.
-     * @param py Polygon x coods.
+     * @param px Polygon x coords.
+     * @param py Polygon y coords.
      * @param ps Polygon sides count.
-     */
+     */    
     
-    
-  
-    
-    
-    public Polygon( int[] px, int[] py, int ps ) {
+    public Polygon( float[] px, float[] py, int ps ) {
 
         polyX = px;
         polyY = py;
@@ -32,9 +28,9 @@ public class Polygon {
     }
     
 	public Polygon(int maxSize) {
-		// TODO Auto-generated constructor stub
-		polyX = new int[maxSize];
-		polyY = new int[maxSize];
+		
+		polyX = new float[maxSize];
+		polyY = new float[maxSize];
 		points = 0;
 		polySides = -1;
 	}
@@ -47,7 +43,7 @@ public class Polygon {
      * @param y Point vertical pos.
      * @return Point is in Poly flag.
      */
-    public boolean contains( int x, int y ) {
+    public boolean contains( float x, float y ) {
 
         boolean oddTransitions = false;
         for( int i = 0, j = polySides -1; i < polySides; j = i++ ) {
@@ -59,30 +55,9 @@ public class Polygon {
         }
         return oddTransitions;
     }
-    
-	/**
-     * Checks if the Polygon contains a point.
-     * @see "http://alienryderflex.com/polygon/"
-     * @param x Point horizontal pos.
-     * @param y Point vertical pos.
-     * @return Point is in Poly flag.
-     */
-    public boolean contains( float fx, float fy ) {
-    	int x=Float.floatToIntBits(fx);
-    	int y=Float.floatToIntBits(fy);
-        boolean oddTransitions = false;
-        for( int i = 0, j = polySides -1; i < polySides; j = i++ ) {
-            if( ( polyY[ i ] < y && polyY[ j ] >= y ) || ( polyY[ j ] < y && polyY[ i ] >= y ) ) {
-                if( polyX[ i ] + ( y - polyY[ i ] ) / ( polyY[ j ] - polyY[ i ] ) * ( polyX[ j ] - polyX[ i ] ) < x ) {
-                    oddTransitions = !oddTransitions;          
-                }
-            }
-        }
-        return oddTransitions;
-    }
 
 
-	public void addPoint(int x, int y) {
+	public void addPoint(float x, float y) {
 		
 		    polyX[points] = x;
 	        polyY[points] = y;

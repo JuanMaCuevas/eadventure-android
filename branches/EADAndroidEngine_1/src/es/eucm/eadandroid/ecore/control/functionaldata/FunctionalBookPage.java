@@ -34,21 +34,12 @@
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
 
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
-import es.eucm.eadandroid.common.auxiliar.ReportDialog;
 import es.eucm.eadandroid.common.data.chapter.book.BookPage;
-import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
-import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
+
 
 public class FunctionalBookPage {
 
@@ -84,96 +75,11 @@ public class FunctionalBookPage {
         this.previousPage = previousPage;
         this.nextPage = nextPage;
         
-    /*   FunctionalBookMouseListener bookListener = new FunctionalBookMouseListener( );
-        this.addMouseListener( bookListener );
-        this.addMouseMotionListener( bookListener );*/
-        
-        
-        /*
-        if( bookPage.getType( ) == BookPage.TYPE_URL ) {
-            URL url = null;
-            try {
-                url = new URL( bookPage.getUri( ) );
-                url.openStream( ).close( );
-            }
-            catch( Exception e ) {
-                isValid = false;
-                //System.out.println( "[LOG] FunctionalBookPage - Constructor - Error creating URL "+bookPage.getUri( ) );
-            }
-
-            try {
-                if( isValid ) {
-                    editorPane.setPage( url );
-                    editorPane.setEditable( false );
-                    if( listenHyperLinks )
-                        editorPane.addHyperlinkListener( new BookHyperlinkListener( ) );
-                    if( !( editorPane.getEditorKit( ) instanceof HTMLEditorKit ) && !( editorPane.getEditorKit( ) instanceof RTFEditorKit ) ) {
-                        isValid = false;
-                        //System.out.println( "[LOG] FunctionalBookPage - Constructor - Type of page not valid "+bookPage.getUri( ) );
-                    }
-                    else {
-                        //System.out.println( "[LOG] FunctionalBookPage - Constructor - Page OK "+bookPage.getUri( ) );
-                    }
-
-                }
-            }
-            catch( IOException e ) {
-            }
-
-        }
-        else if( bookPage.getType( ) == BookPage.TYPE_RESOURCE ) {
-            String uri = bookPage.getUri( );
-            String ext = uri.substring( uri.lastIndexOf( '.' ) + 1, uri.length( ) ).toLowerCase( );
-            if( ext.equals( "html" ) || ext.equals( "htm" ) || ext.equals( "rtf" ) ) {
-
-                //Read the text
-                StringBuffer textBuffer = new StringBuffer( );
-                InputStream is = ResourceHandler.getInstance( ).getResourceAsStreamFromZip( uri );//null;
-                try {
-                    int c;
-                    while( ( c = is.read( ) ) != -1 ) {
-                        textBuffer.append( (char) c );
-                    }
-                }
-                catch( IOException e ) {
-                    isValid = false;
-                }
-                finally {
-                    if( is != null ) {
-                        try {
-                            is.close( );
-                        }
-                        catch( IOException e ) {
-                            isValid = false;
-                        }
-                    }
-                }
-
-                //Set the proper content type
-                if( ext.equals( "html" ) || ext.equals( "htm" ) ) {
-                    editorPane.setContentType( "text/html" );
-                    ProcessHTML processor = new ProcessHTML( textBuffer.toString( ) );
-                    String htmlProcessed = processor.start( );
-                    editorPane.setText( htmlProcessed );
-                }
-                else {
-                    editorPane.setContentType( "text/rtf" );
-                    editorPane.setText( textBuffer.toString( ) );
-                }
-                isValid = true;
-
-            }
-
-        }
-        else*/
         if( bookPage.getType( ) == BookPage.TYPE_IMAGE ) {
             image = MultimediaManager.getInstance( ).loadImage( bookPage.getUri( ), MultimediaManager.IMAGE_SCENE );
         }
-
         
     }
-
-
 
 
     public void paint( Canvas c ) {

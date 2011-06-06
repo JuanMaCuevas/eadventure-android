@@ -242,20 +242,7 @@ public class DescriptorData implements Cloneable, Described, Titled {
      * Adventure mode (1st person/3rd person)
      */
     protected int playerMode;
-
- 
-
-    
-    
-    
-    
-    
-    
-    
-
-    
-   
-
+  
 	/**
      *  Adventure qr mode
     */
@@ -264,7 +251,8 @@ public class DescriptorData implements Cloneable, Described, Titled {
     /**
      *  Adventure gps mode
     */   
-protected boolean gpsMode=false;
+    
+    protected boolean gpsMode=false;
     /**
      * Stores if the GUI's graphics are customized
      */

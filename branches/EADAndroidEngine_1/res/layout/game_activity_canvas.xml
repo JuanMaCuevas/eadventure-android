@@ -14,7 +14,7 @@
 		android:visibility="gone" xmlns:android="http://schemas.android.com/apk/res/android">
 
 		<WebView android:id="@+id/webview" android:layout_width="fill_parent"
-			android:layout_height="270dip" android:width="480dip"
+			android:layout_height="270dip" 
 			android:scrollbars="vertical" />
 
 		<Button android:text="Report" android:id="@+id/report_button"

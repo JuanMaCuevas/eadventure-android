@@ -40,7 +40,8 @@ import android.graphics.Canvas;
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.book.BookPage;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
-import es.eucm.eadandroid.ecore.gui.GUI;
+
+
 
 public class FunctionalStyledBook extends FunctionalBook {
 

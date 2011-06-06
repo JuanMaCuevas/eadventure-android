@@ -33,20 +33,20 @@ public class HomeTabActivity extends TabActivity {
 
 		mTabHost = getTabHost();
 
-		mTabHost.addTab(mTabHost.newTabSpec("tab_games").setIndicator("Games",
+		mTabHost.addTab(mTabHost.newTabSpec("tab_games").setIndicator("Installed Games",
 				getResources().getDrawable(R.drawable.monitor))
 				.setContent(new Intent(this, LocalGamesActivity.class)));
 		
 		mTabHost.addTab(mTabHost.newTabSpec("load_games").setIndicator(
-				"Load game",
+				"Load Saved Games",
 				getResources().getDrawable(
 						R.drawable.flag)).setContent(
 				new Intent(this, LoadSavedGames.class)));
 
-		mTabHost.addTab(mTabHost.newTabSpec("tab_downloads").setIndicator(
+		/*mTabHost.addTab(mTabHost.newTabSpec("tab_downloads").setIndicator(
 				"Repository",
 				getResources().getDrawable(R.drawable.cloud))
-				.setContent(new Intent(this, RepositoryActivity.class)));
+				.setContent(new Intent(this, RepositoryActivity.class)));*/
 		
 		mTabHost.addTab(mTabHost.newTabSpec("tab_preferences").setIndicator(
 				"Preferences",

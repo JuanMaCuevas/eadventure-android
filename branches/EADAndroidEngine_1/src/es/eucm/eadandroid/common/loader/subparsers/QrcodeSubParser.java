@@ -2,6 +2,8 @@ package es.eucm.eadandroid.common.loader.subparsers;
 
 import org.xml.sax.Attributes;
 
+import android.util.Log;
+
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.QrcodeRule;
@@ -101,7 +103,7 @@ public class QrcodeSubParser extends SubParser {
 
                 qrrule = new QrcodeRule(password);
                 qrrule.setSceneName(sceneName);
-                
+                Log.d("QRCODE", "Entra en qrcode y lee " + password);
                 
             }
 
@@ -142,7 +144,7 @@ public class QrcodeSubParser extends SubParser {
             // If it is a timer tag, add it to the game data
             if( sName.equals( "qrcode" ) ) {
             	chapter.addQrRule(qrrule);
-             
+            	Log.d("QRCODE", "Sale de QRCode");
             }
 
             // If it is a documentation tag, hold the documentation in the slidescene

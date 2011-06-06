@@ -13,8 +13,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
-import android.os.Debug;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import es.eucm.eadandroid.ecore.control.TimerManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
@@ -139,7 +137,7 @@ public class GUI {
 	private boolean moveOffsetLeft;
 
 	public static int CENTER_OFFSET;
-	public final static int OFFSET_ARROW_AREA_RADIUS = 40;
+	public final static int OFFSET_ARROW_AREA_RADIUS = 30;
 	
 	/**
 	 * Loading paint
@@ -1020,10 +1018,9 @@ public class GUI {
 		if (transformedX >= 0 && transformedX < width) {
 			minY = element.image.getHeight() - 1;
 			try {
-				Bitmap bufferedImage = element.image;
 				do {
 					// TODO esto puede cascar
-					int alpha = bufferedImage.getPixel(transformedX, minY) >>> 24;
+					int alpha = element.image.getPixel(transformedX, minY) >>> 24;
 					minY--;
 					isInside = alpha > 128;
 				} while (!isInside && minY > 0);
