@@ -78,7 +78,7 @@ public class CreateImage {
 			String text, int textColor, int alignX, int alignY, Typeface typeface , int style) {
 
 		Bitmap im = Bitmap
-		.createBitmap(width, height, Bitmap.Config.ARGB_8888);	
+		.createBitmap(width, height, Bitmap.Config.ARGB_4444);	
 		Canvas canvas = new Canvas(im);
 		
 		int textThickness = 1;

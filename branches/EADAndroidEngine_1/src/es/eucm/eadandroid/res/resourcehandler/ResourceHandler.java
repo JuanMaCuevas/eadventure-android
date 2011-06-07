@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.os.Debug;
 import android.util.Log;
 import es.eucm.eadandroid.common.loader.InputStreamCreator;
+import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.res.resourcehandler.zipurl.ZipURL;
 
@@ -228,11 +229,73 @@ public class ResourceHandler implements InputStreamCreator {
 		options.inInputShareable = true;
 		options.inPreferredConfig = Bitmap.Config.RGB_565;
 
-		image = BitmapFactory.decodeFile(path, options);
-
+		//image = BitmapFactory.decodeFile(path, options);
+		image = decodeFile(path);
+		
 		return image;
 	}
 	
+	//decodes image and scales it to reduce memory consumption
+    private Bitmap decodeFile(String path){
+        try {
+
+        	File f = new File(path);
+            //decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+
+            //Find the correct scale value. It should be the power of 2.
+            final int REQUIRED_SIZE=GUI.FINAL_WINDOW_HEIGHT;
+            int width_tmp=o.outWidth, height_tmp=o.outHeight;
+            int sampleSize=1;
+            while(true){
+                if(width_tmp/2<REQUIRED_SIZE || height_tmp/2<REQUIRED_SIZE)
+                    break;
+                width_tmp/=2;
+                height_tmp/=2;
+                sampleSize*=2;
+            }
+
+
+                //decode with inSampleSize
+            Bitmap bitmap = null;
+            boolean cacheHasBeenCleared = false;
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize=sampleSize;
+            options.inDither = true;
+    		options.inPurgeable = true;
+    		options.inInputShareable = true;
+    		options.inPreferredConfig = Bitmap.Config.RGB_565;
+            byte[] tempBuffer=new byte[8000];
+                options.inTempStorage = tempBuffer;
+
+                while ( (bitmap == null) && (sampleSize < 64) ) {
+                        try {
+                                bitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+                        } catch (OutOfMemoryError e) {
+
+                                if (!cacheHasBeenCleared) {
+
+                                        //Try to free up some memory
+                                        System.gc();
+                                        System.runFinalization();
+                                        System.gc();
+
+                                        cacheHasBeenCleared = true;
+                                }
+
+                                sampleSize *=2;
+                        }
+                }
+
+            return bitmap;
+
+        } catch (FileNotFoundException e) {}
+        return null;
+    }
+
 	
 	public URL buildURL(String path) {
 

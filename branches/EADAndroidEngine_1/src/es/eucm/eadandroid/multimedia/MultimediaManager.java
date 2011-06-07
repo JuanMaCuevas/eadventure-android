@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import android.graphics.Bitmap;
@@ -44,12 +43,12 @@ public class MultimediaManager {
 	 */
 	public static final int IMAGE_PLAYER = 2;
 
-	private HashMap<String, WeakReference<Bitmap>>[] imageCache;
+	private static HashMap<String, WeakReference<Bitmap>>[] imageCache;
 
 	/**
 	 * Mirrored images cache
 	 */
-	private HashMap<String, WeakReference<Bitmap>>[] mirrorImageCache;
+	private static HashMap<String, WeakReference<Bitmap>>[] mirrorImageCache;
 
 	/**
 	 * Sounds cache
@@ -66,7 +65,7 @@ public class MultimediaManager {
 	 */
 	private static MultimediaManager instance = new MultimediaManager();
 
-	private HashMap<String, Animation> animationCache;
+	private static HashMap<String, Animation> animationCache;
 
 	/**
 	 * Returns the MultimediaManager instance. Notice MultimediaManager is a
@@ -121,7 +120,6 @@ public class MultimediaManager {
 			}
 		}
 		
-		wrImg.clear();
 		return image;
 
 	}
@@ -152,7 +150,6 @@ public class MultimediaManager {
 			}
 		}
 		
-		wrImg.clear();
 		return image;
 	}
 
@@ -202,8 +199,6 @@ public class MultimediaManager {
 			
 			 scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * wfactor, image.getHeight() * hfactor, false);
 		  }
-		  
-		image.recycle();
 		  
 		return scaledImage;
 	}
@@ -602,6 +597,7 @@ public class MultimediaManager {
 				if (loadImage(currentSlide, category)!=null) {
 					slides.add(currentSlide);
 					i++;
+					currentSlide = null;
 				} else
 					end = true;
 			}

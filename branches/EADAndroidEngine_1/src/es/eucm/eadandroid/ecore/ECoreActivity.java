@@ -954,6 +954,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	protected void onDestroy() {
 		
 		super.onDestroy();
+		System.gc();
 	//	Log.d("onDestroy","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 	
