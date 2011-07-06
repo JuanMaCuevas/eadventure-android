@@ -76,7 +76,6 @@ public class SplashScreenActivity extends Activity{
 			
 			if (this.getIntent().getData() != null){
 				data = this.getIntent().getData();
-				Log.d("DATA INTENT", data.toString()+"                 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 			}
 			
 			if (!installing){
