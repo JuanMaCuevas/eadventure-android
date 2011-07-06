@@ -36,7 +36,6 @@ package es.eucm.eadandroid.ecore.control.animations;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
@@ -78,6 +77,8 @@ public abstract class AnimationState {
     private Bitmap oldImage = null;
 
     private Bitmap oldOriginalImage = null;
+    
+    private Bitmap image = null;
 
     /**
      * Creates a new AnimationState
@@ -166,8 +167,9 @@ public abstract class AnimationState {
      *            Position where will be drawn
      */
     public void draw( int x, int y, float scale, int depth, FunctionalElement fe ) {
-//TODO falta por hacer el draw
-        Bitmap image = getCurrentAnimation( ).getImage( );
+    	//TODO falta por hacer el draw
+    	
+        image = getCurrentAnimation( ).getImage( );
         int realX = (int) ( x - ( image.getWidth(  ) * scale / 2 ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ) );
         int realY = (int) ( y - ( image.getHeight(  ) * scale ) );
 
@@ -187,6 +189,7 @@ public abstract class AnimationState {
             
             c.drawBitmap(image, m, null);            
             image = temp;
+            temp = null;
         }
         else {
             oldOriginalImage = image;

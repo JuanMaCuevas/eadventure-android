@@ -10,6 +10,7 @@ public class HUDstate {
 	public static final int InventoryState = 2;
 	public static final int MagnifierState = 3;
 	public static final int ShowingInventoryState = 4;
+	public static final int DraggingState = 5;
 	
 	
 	protected HUD stateContext ;

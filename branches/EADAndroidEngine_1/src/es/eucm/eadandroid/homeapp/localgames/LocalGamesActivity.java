@@ -146,13 +146,12 @@ public class LocalGamesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setLayout();
-		searchForGames();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		searchForGames();
 	}
 
 	private void setLayout() {
@@ -182,9 +181,10 @@ public class LocalGamesActivity extends ListActivity {
 
 	private void insertAdventuresToList(String[] advList) {
 		
-
+		m_games.clear();
+		
 		for (int i = 0; i < advList.length; i++)
-			m_games.add(new GameInfo(advList[i], "", "",BitmapFactory.decodeFile(Paths.eaddirectory.GAMES_PATH+advList[i]+"/icon.png"),null));
+			m_games.add(new GameInfo(advList[i], "", "",BitmapFactory.decodeFile(Paths.eaddirectory.GAMES_PATH+advList[i]+"/icon.png")));
 
 		m_adapter.notifyDataSetChanged();
 
@@ -194,7 +194,8 @@ public class LocalGamesActivity extends ListActivity {
 	private void searchForGames() {
 
 		m_games.clear();
-		SearchGamesThread t = new SearchGamesThread(this, LGActivityHandler);
+		m_adapter.clear();
+		SearchGamesThread t = new SearchGamesThread(LGActivityHandler);
 		t.start();
 
 	}

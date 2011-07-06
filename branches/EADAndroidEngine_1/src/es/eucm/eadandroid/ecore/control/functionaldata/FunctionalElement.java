@@ -37,6 +37,8 @@ public abstract class FunctionalElement implements Renderable {
 
     protected FunctionalHighlight highlight;
     
+    protected boolean dragging;
+    
     /**
      * Creates a new FunctionalElement
      * 
@@ -52,6 +54,7 @@ public abstract class FunctionalElement implements Renderable {
         this.scale = 1;
         this.layer = -1;
         this.highlight = null;
+        this.dragging = false;
     }
 
     /**
@@ -235,5 +238,13 @@ public abstract class FunctionalElement implements Renderable {
      */
     public boolean canBeDragged( ) {
         return false;
+    }
+    
+    public void setDragging( boolean b ) {
+        this.dragging = b;
+    }
+    
+    public boolean getDragging() {
+        return this.dragging;
     }
 }

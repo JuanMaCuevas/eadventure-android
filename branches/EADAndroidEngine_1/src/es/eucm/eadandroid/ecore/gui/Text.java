@@ -1,5 +1,6 @@
 package es.eucm.eadandroid.ecore.gui;
 
+import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine;
 import android.graphics.Canvas;
 
 class Text {
@@ -96,6 +97,8 @@ class Text {
 	 *            Graphics2D to draw the text
 	 */
 	public void draw(Canvas c) {
+		
+		this.processType();
 
 		if (showBubble)
 			
@@ -113,4 +116,16 @@ class Text {
 
 		return y;
 	}
+	
+	private void processType( ) {
+
+		String text = this.text[0];
+        if( text != null && !text.equals( "" ) && text.charAt( 0 ) == '#' ) {
+            String tag = text.substring( 0, text.indexOf( ' ' ) );
+            if( tag != "" ) 
+                this.text[0] = text.substring( tag.length( ) );               
+            
+        }
+
+    }
 }

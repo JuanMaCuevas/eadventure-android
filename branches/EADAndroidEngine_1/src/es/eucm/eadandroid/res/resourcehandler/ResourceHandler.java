@@ -220,16 +220,7 @@ public class ResourceHandler implements InputStreamCreator {
 
 		if (!path.startsWith("/sdcard"))
 			path=gamePath+path;
-		
-		//Here we should decode the images properly
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		//add dithering to decode faster
-		options.inDither = true;
-		options.inPurgeable = true;
-		options.inInputShareable = true;
-		options.inPreferredConfig = Bitmap.Config.RGB_565;
 
-		//image = BitmapFactory.decodeFile(path, options);
 		image = decodeFile(path);
 		
 		return image;
@@ -267,6 +258,7 @@ public class ResourceHandler implements InputStreamCreator {
             options.inDither = true;
     		options.inPurgeable = true;
     		options.inInputShareable = true;
+    		options.inTempStorage=new byte[32 * 1024];
     		options.inPreferredConfig = Bitmap.Config.RGB_565;
             byte[] tempBuffer=new byte[8000];
                 options.inTempStorage = tempBuffer;

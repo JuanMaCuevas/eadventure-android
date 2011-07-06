@@ -1,6 +1,6 @@
 package es.eucm.eadandroid.multimedia;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,10 +17,6 @@ import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.res.resourcehandler.EngineImageLoader;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
-/**
- * Author: Guillermo
- * para darme cuenta que lo he tocado
- */
 
 /**
  * This class manages various aspects related to multimedia in eAdventure.
@@ -43,12 +39,12 @@ public class MultimediaManager {
 	 */
 	public static final int IMAGE_PLAYER = 2;
 
-	private static HashMap<String, WeakReference<Bitmap>>[] imageCache;
+	private static HashMap<String, SoftReference<Bitmap>>[] imageCache;
 
 	/**
 	 * Mirrored images cache
 	 */
-	private static HashMap<String, WeakReference<Bitmap>>[] mirrorImageCache;
+	private static HashMap<String, SoftReference<Bitmap>>[] mirrorImageCache;
 
 	/**
 	 * Sounds cache
@@ -86,10 +82,10 @@ public class MultimediaManager {
 
 		imageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
-			imageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
+			imageCache[i] = new HashMap<String, SoftReference<Bitmap>>();
 		mirrorImageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
-			mirrorImageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
+			mirrorImageCache[i] = new HashMap<String, SoftReference<Bitmap>>();
 
 		soundCache = new HashMap<Long, Sound>();
 
@@ -109,19 +105,20 @@ public class MultimediaManager {
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
 		
-		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
+		SoftReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
 		
 		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		
 		if (image == null) {
 			 image = ResourceHandler.getInstance().getResourceAsImage( bitmapPath );
 			 if (image != null) {
-				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
+				imageCache[category].put(bitmapPath, new SoftReference<Bitmap>(image));
 			}
 		}
 		
+		wrImg = null;
+		
 		return image;
-
 	}
 
 
@@ -137,7 +134,7 @@ public class MultimediaManager {
 	 */
 	public Bitmap loadMirroredImage(String bitmapPath, int category) {
 
-		WeakReference<Bitmap> wrImg = mirrorImageCache[category].get(bitmapPath);
+		SoftReference<Bitmap> wrImg = mirrorImageCache[category].get(bitmapPath);
 		
 		Bitmap image = (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		// If the image is in cache, don't load it
@@ -146,23 +143,13 @@ public class MultimediaManager {
 
 			image = getScaledImage( loadImage( bitmapPath, category ),-1, 1 );
 			if (image != null) {
-				mirrorImageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
+				mirrorImageCache[category].put(bitmapPath, new SoftReference<Bitmap>(image));
 			}
 		}
 		
-		return image;
-	}
-
-	/**
-	 * Clear the image cache of the given category
-	 * 
-	 * @param category
-	 *            Image category to clear
-	 */
-	public void flushImagePool(int category) {
+		wrImg = null;
 		
-		imageCache[category].clear();
-		mirrorImageCache[category].clear();
+		return image;
 	}
 
 	/**
@@ -195,10 +182,12 @@ public class MultimediaManager {
 
 		Bitmap scaledImage = null;
 		
-		  if( image != null ) {
+		if( image != null ) {
 			
 			 scaledImage = Bitmap.createScaledBitmap(image, image.getWidth() * wfactor, image.getHeight() * hfactor, false);
 		  }
+		  
+		image = null;
 		  
 		return scaledImage;
 	}
@@ -239,6 +228,7 @@ public class MultimediaManager {
 			soundCache.put(new Long(sound.getId()), sound);
 			soundId = sound.getId();
 		}
+		
 		return soundId;
 	}
 
@@ -354,7 +344,6 @@ public class MultimediaManager {
 				sound.finalize();
 			}
 		}
-
 	}
 
 	/**
@@ -545,15 +534,10 @@ public class MultimediaManager {
 					end = true;
 			}
 
-			imageSet = new ImageSet();
-			
+			imageSet = new ImageSet();			
 				
-			Bitmap[] arrayImages = new Bitmap[slides.size()];
-			for (int j=0;j<slides.size();j++){
-				arrayImages[j]=slides.get(j);
-			}
-			slides.clear();
-			
+			Bitmap[] arrayImages = (Bitmap[]) slides.toArray();
+			slides.clear();			
 			imageSet.setImages(arrayImages);
 			arrayImages=null;
 		}
@@ -626,6 +610,31 @@ public class MultimediaManager {
 			s = "";
 		s = s + n;
 		return s;
+	}
+	
+	/**
+	 * Clear the image cache of the given category
+	 * 
+	 * @param category
+	 *            Image category to clear
+	 */
+	public void flushImagePool(int category) {
+		
+		if (category != MultimediaManager.IMAGE_MENU){
+		
+			for (SoftReference<Bitmap> reference : imageCache[category].values()) {
+				final Bitmap drawable = reference.get();
+				if (drawable != null) drawable.recycle();
+			}
+		
+			for (SoftReference<Bitmap> reference : mirrorImageCache[category].values()) {
+				final Bitmap drawable = reference.get();
+				if (drawable != null) drawable.recycle();
+			}
+		}
+		
+		imageCache[category].clear();
+		mirrorImageCache[category].clear();		
 	}
 
 	public void flushAnimationPool() {

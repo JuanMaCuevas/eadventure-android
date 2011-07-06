@@ -14,7 +14,7 @@ public class DownloadGameThread extends Thread {
 
 	public DownloadGameThread(Context c, Handler handler, GameInfo game) {
 		
-		this.game=game;
+		this.game = game;
 		pn = new ProgressNotifier(handler);
 		
 	}
@@ -23,7 +23,7 @@ public class DownloadGameThread extends Thread {
 	public void run() {
 
 
-		RepoResourceHandler.downloadFileAndUnzip(game.getEadUrl(),Paths.eaddirectory.GAMES_PATH , game.getFileName() , pn);
+		RepoResourceHandler.downloadFileAndUnzip(game.getEadUrl(), Paths.eaddirectory.GAMES_PATH , game.getFileName() , pn);
 
 		pn.notifityGameInstalled();
 		

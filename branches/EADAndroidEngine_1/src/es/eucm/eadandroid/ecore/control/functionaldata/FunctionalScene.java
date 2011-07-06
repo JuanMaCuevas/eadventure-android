@@ -181,7 +181,7 @@ public class FunctionalScene implements Renderable {
     	   
     	sceneMem = Debug.getNativeHeapAllocatedSize();
     	
-    	Log.e("Inicio creaci—n escena",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+    	Log.e("Inicio creacion escena",String.valueOf(Debug.getNativeHeapAllocatedSize()));
     	
     	/////////////////////////////////////////////////////////
         
@@ -355,7 +355,7 @@ public class FunctionalScene implements Renderable {
         
     	sceneMem = Debug.getNativeHeapAllocatedSize() - sceneMem;
         
-        Log.e("Fin creaci—n escena",String.valueOf(Debug.getNativeHeapAllocatedSize()));
+        Log.e("Fin creacion escena",String.valueOf(Debug.getNativeHeapAllocatedSize()));
         
         Log.e("Escena",String.valueOf(sceneMem/1048576)+"MB");
         Log.e("BKG",String.valueOf(bkgMem/1048576)+"MB");
@@ -586,6 +586,7 @@ public class FunctionalScene implements Renderable {
             resources = newResources;
             showsOffsetArrows = false;
 
+            background = null;
             if( resources.existAsset( Scene.RESOURCE_TYPE_BACKGROUND ) )
                 background = MultimediaManager.getInstance( ).loadImage( resources.getAssetPath( Scene.RESOURCE_TYPE_BACKGROUND ), MultimediaManager.IMAGE_SCENE );
 
@@ -616,6 +617,7 @@ public class FunctionalScene implements Renderable {
                 bufferedBackground =  null;
                 foregroundHardMap = null;
                 foreground = bufferedForeground;
+                bufferedForeground = null;
             }
 
             playBackgroundMusic( );
@@ -775,11 +777,17 @@ public class FunctionalScene implements Renderable {
         GUI.getInstance( ).addBackgroundToDraw( background, offsetX );
 
         for( FunctionalItem item : items )
-            item.draw( );
+        	if (item.getX()> this.offsetX && item.getX()< GUI.WINDOW_WIDTH + this.offsetX)
+        		item.draw( );
+
         for( FunctionalNPC npc : npcs )
-            npc.draw( );
+        	if (npc.getX()> this.offsetX && npc.getX()< GUI.WINDOW_WIDTH + this.offsetX)
+        		npc.draw( );
+
         for( FunctionalAtrezzo at : atrezzo )
-            at.draw( );
+        	if (at.getX()> this.offsetX && at.getX()< GUI.WINDOW_WIDTH + this.offsetX)
+        		at.draw( );
+
         player.draw( );
 
         if( foreground != null )
@@ -803,15 +811,14 @@ public class FunctionalScene implements Renderable {
         FunctionalElement element = null;
         if( isInsideOffsetArrow( x, y ) )
             return null;
-
            
-           List<FunctionalElement> er = GUI.getInstance( ).getElementsToInteract( ); 
-           int i=er.size( )-1; 
-           while( i>=0 && element == null ) {
-            FunctionalElement currentElement = er.get( i );
-            i--;
-            if( currentElement != exclude && currentElement.isPointInside( x + Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), y ) )
-                element = currentElement;
+        List<FunctionalElement> er = GUI.getInstance( ).getElementsToInteract( ); 
+        int i=er.size( )-1; 
+        while( i>=0 && element == null ) {
+        	FunctionalElement currentElement = er.get( i );
+        	i--;
+        	if( currentElement != exclude && currentElement.isPointInside( x + Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), y ) )
+        		element = currentElement;                
         }
 
         Iterator<FunctionalActiveArea> ita = areas.iterator( );
@@ -820,13 +827,6 @@ public class FunctionalScene implements Renderable {
             if( currentActiveArea != exclude && currentActiveArea.isPointInside( x + Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), y ) )
                 element = currentActiveArea;
         }
-
-      /*  Iterator<FunctionalNPC> itp = npcs.iterator( );
-        while( itp.hasNext( ) && element == null ) {
-            FunctionalNPC currentNPC = itp.next( );
-            if( currentNPC != exclude && currentNPC.isPointInside( x + Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), y ) )
-                element = currentNPC;
-        }*/
         
         return element;
     }
@@ -941,7 +941,7 @@ public class FunctionalScene implements Renderable {
 	public void tap(int x, int y) {
 
 		if (isInsideOffsetArrow(x, y)) {
-			System.out.println("Is inside offset arrow");
+			//System.out.println("Is inside offset arrow");
 			if (moveOffsetRight)
 				updateOffset(true);
 			if (moveOffsetLeft)
@@ -955,8 +955,6 @@ public class FunctionalScene implements Renderable {
 			int destY = y;
 			FunctionalGoTo functionalGoTo = new FunctionalGoTo(null, destX,
 					destY);
-			int finalX = functionalGoTo.getPosX();
-			int finalY = functionalGoTo.getPosY();
 			player.cancelActions();
 			if (!player.isTransparent()) {
 				player.addAction(functionalGoTo);
@@ -1051,4 +1049,17 @@ public class FunctionalScene implements Renderable {
         }
         return newResources;
     }
+    
+    public void freeMemory() {
+        this.resources = null;
+        this.background = null;
+        this.foreground = null;
+        this.trajectory = null;
+        this.areas = null;
+        this.atrezzo = null;
+        this.barriers = null;
+        this.items = null;
+        this.npcs = null;
+    }
+    
 }

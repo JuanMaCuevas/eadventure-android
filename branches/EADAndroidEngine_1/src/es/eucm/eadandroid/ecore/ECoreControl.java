@@ -148,7 +148,7 @@ public class ECoreControl extends Activity{
 				.setTitle("eAdventure QRCode game")
 				.setIcon(R.drawable.dialog_icon)
 				.setMessage(
-						"You are about to start a QRCode based game. You should install BarcodeScanner app in order to play it")
+						"You are about to start a QRCode-based game. You should install BarcodeScanner app in order to play it")
 				.setPositiveButton("Install",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,

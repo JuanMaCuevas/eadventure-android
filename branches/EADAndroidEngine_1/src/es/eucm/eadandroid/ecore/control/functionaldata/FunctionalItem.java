@@ -128,9 +128,7 @@ public class FunctionalItem extends FunctionalElement {
         if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
             tempimage = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
             removeTransparentParts(tempimage);
-            //OLD
             tempimage = null;
-            Runtime.getRuntime( ).gc( );
 
         }
         if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
@@ -149,13 +147,9 @@ public class FunctionalItem extends FunctionalElement {
         int tempWidth = tempimage.getWidth();
         int tempHeight = tempimage.getHeight();
         
-        Log.d("Ll","inicio");
-        
         int[] temp = new int[tempWidth * tempHeight] ;
         
-        tempimage.getPixels(temp, 0, tempWidth, 0, 0, tempWidth, tempHeight);
-        
-        Log.d("Ll","fin1");
+        tempimage.getPixels(temp, 0, tempWidth, 0, 0, tempWidth, tempHeight);       
         
         //OPTIMIZE
         
@@ -186,8 +180,7 @@ public class FunctionalItem extends FunctionalElement {
         // draw the transformed image
         Canvas c = new Canvas(image);       
         c.drawBitmap(tempimage,new Rect(x1,y1,x2,y2),new Rect(0,0,x2-x1,y2-y1), null);
-        tempimage = null;
-        //GRAPHICS       
+        tempimage = null;      
         
     }
 
@@ -221,9 +214,7 @@ public class FunctionalItem extends FunctionalElement {
             if( resources.existAsset( Item.RESOURCE_TYPE_IMAGE ) ) {
                 tempimage = multimediaManager.loadImage( resources.getAssetPath( Item.RESOURCE_TYPE_IMAGE ), MultimediaManager.IMAGE_SCENE );
                 removeTransparentParts(tempimage);
-                //OLD
                 tempimage = null;
-                Runtime.getRuntime( ).gc( );
                 
             }
             if( resources.existAsset( Item.RESOURCE_TYPE_ICON ) )
@@ -288,7 +279,7 @@ public class FunctionalItem extends FunctionalElement {
         int y_image = Math.round( (y + y1 * scale) - getHeight( ) * scale );
  
         if( scale != 1 ) {
-            Bitmap temp=null;
+        	Bitmap temp;
             if( image == oldOriginalImage && scale == oldScale ) {
                 temp = oldImage;
             }
@@ -314,7 +305,9 @@ public class FunctionalItem extends FunctionalElement {
                 GUI.getInstance( ).addElementToDraw( temp, x_image, y_image, Math.round( y ), Math.round( y ), highlight, this );
             else
                 GUI.getInstance( ).addElementToDraw( temp, x_image, y_image, layer, Math.round( y ), highlight, this );
+            
         }
+        
         else if( layer == -1 )
             GUI.getInstance( ).addElementToDraw( image, x_image, y_image, Math.round( y ), Math.round( y ), highlight, this  );
         else
@@ -344,8 +337,6 @@ public class FunctionalItem extends FunctionalElement {
             int alpha = Color.alpha(color);
             isInside = alpha > 128;
         }
-
-        Log.d("Esta?", String.valueOf(isInside));
         
         return isInside;
     }
@@ -860,4 +851,5 @@ public class FunctionalItem extends FunctionalElement {
 
         return reference;
     }
+    
 }

@@ -14,7 +14,6 @@ import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class SearchGamesThread extends Thread {
 
-	private Context context;
 	private Handler handler;
 
 	/**
@@ -23,8 +22,7 @@ public class SearchGamesThread extends Thread {
 	 * @param ha
 	 *            -> Thread Handle Queue to send messages to.
 	 */
-	public SearchGamesThread(Context ctx, Handler ha) {
-		context = ctx;
+	public SearchGamesThread(Handler ha) {
 		handler = ha;
 	}
 
@@ -37,13 +35,12 @@ public class SearchGamesThread extends Thread {
 	@Override
 	public void run() {
 
-
 		Message msg = handler.obtainMessage();
 		
 		
 	//	if (!new File(entry.getName()).exists())
 
-		Log.d("SearcgGamesThread", "SDCard state : "
+		Log.d("SearchGamesThread", "SDCard state : "
 				+ Environment.getExternalStorageState().toString());
 
 		if (Environment.getExternalStorageState().equals(
@@ -82,4 +79,5 @@ public class SearchGamesThread extends Thread {
 		msg.sendToTarget();
 
 	}
+	
 }

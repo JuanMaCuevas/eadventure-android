@@ -165,5 +165,10 @@ public abstract class FunctionalBook {
     	c.drawBitmap(background, 0, 0, null);        
 
     }
+    
+    public void clearBookBitmap() {
+    	
+    	this.background.recycle();
+    }
 
 }

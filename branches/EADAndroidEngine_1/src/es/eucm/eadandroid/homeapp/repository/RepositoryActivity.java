@@ -2,7 +2,6 @@ package es.eucm.eadandroid.homeapp.repository;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -224,7 +223,7 @@ public class RepositoryActivity extends ListActivity {
 		
 
 		progressDialog.setTitle("Please wait");
-		progressDialog.setMessage("Starting donwload");
+		progressDialog.setMessage("Starting download");
 		progressDialog.show();
 		
 		RepositoryServices rs = new RepositoryServices() ;

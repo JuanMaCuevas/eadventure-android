@@ -51,7 +51,11 @@ public class ActionsState extends HUDstate {
 		
 		if (ab != null ) {
 			Game.getInstance().getActionManager().processAction(ab,actionsPanel.getElementInfo());
-			stateContext.setState(HUDstate.HiddenState,null);
+			if (ab.getType() == ActionButton.DRAG_BUTTON) {
+				stateContext.setState(HUDstate.DraggingState, null);
+				return true;
+			}
+			stateContext.setState(HUDstate.HiddenState, null);
 		}
 		else if (actionsPanel.isInCloseButton(srcX,srcY))
 			stateContext.setState(HUDstate.HiddenState,null);

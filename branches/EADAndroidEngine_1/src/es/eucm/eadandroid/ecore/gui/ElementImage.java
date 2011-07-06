@@ -1,9 +1,12 @@
 package es.eucm.eadandroid.ecore.gui;
 
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
-import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
+import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
+import es.eucm.eadandroid.multimedia.MultimediaManager;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 
 class ElementImage {
@@ -12,6 +15,9 @@ class ElementImage {
 	 * Image
 	 */
 	protected Bitmap image;
+	protected Bitmap temp;
+	protected Bitmap hand;
+	protected Bitmap dest;
 
 	/**
 	 * X coordinate
@@ -37,6 +43,7 @@ class ElementImage {
 	private FunctionalHighlight highlight;
 
 	private FunctionalElement functionalElement;
+
 
 	/**
 	 * Constructor of the class
@@ -83,8 +90,19 @@ class ElementImage {
 			// highlight.getDisplacementX( ), y +
 			// highlight.getDisplacementY( ), null );
 		} else {
-			c.drawBitmap(image, x, y, null);
+			if (this.functionalElement != null && this.functionalElement.getDragging()){
+				hand = MultimediaManager.getInstance( ).loadImage(Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/drag.png" , MultimediaManager.IMAGE_SCENE);
+				temp = Bitmap.createScaledBitmap(image, (int)(this.functionalElement.getWidth()*this.getFunctionalElement().getScale()*1.075*GUI.DISPLAY_DENSITY_SCALE), (int)(this.functionalElement.getHeight()*this.getFunctionalElement().getScale()*1.075*GUI.DISPLAY_DENSITY_SCALE), true);
+				dest = temp.copy(Bitmap.Config.ARGB_4444, true);
+				Paint p = new Paint(Paint.DITHER_FLAG * Paint.ANTI_ALIAS_FLAG);
+				p.setAlpha(150); 
+		        c.drawBitmap(dest, x, y, p);
+		        c.drawBitmap(hand, x + 10 * GUI.DISPLAY_DENSITY_SCALE, y + (3 * this.functionalElement.getHeight()*this.getFunctionalElement().getScale())/4, null);
+		        temp = null;
+			}				
+			else c.drawBitmap(image, x, y, null);
 		}
+		
 	}
 
 	/**

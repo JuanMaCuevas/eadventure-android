@@ -148,6 +148,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
     private Bitmap oldImage = null;
 
     private Bitmap oldOriginalImage = null;
+   
 
     /**
      * @return the isTransparent
@@ -546,8 +547,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 image = oldImage;
             }
             else if( scale != 1 ) {
-                oldOriginalImage = image;
-                //image = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
+                oldOriginalImage = image;           
                 image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
                 Canvas c = new Canvas(image);
                 Matrix m = new Matrix();
@@ -566,7 +566,9 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 GUI.getInstance( ).addPlayerToDraw( image, realX, realY, Math.round( y ), Math.round( y ) );
             else
                 GUI.getInstance( ).addElementToDraw( image, realX, realY, layer, Math.round( y ), null, null );
+
         }
+        
         if( getCurrentAction( ).isStarted( ) && !getCurrentAction( ).isFinished( ) )
             getCurrentAction( ).drawAditionalElements( );
     }

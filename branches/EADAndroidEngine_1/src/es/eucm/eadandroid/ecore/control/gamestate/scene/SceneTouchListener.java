@@ -3,10 +3,8 @@ package es.eucm.eadandroid.ecore.control.gamestate.scene;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;

@@ -78,7 +78,8 @@ public class GameStateNextScene extends GameState {
                 }
                 if( GUI.getInstance( ).hasTransition( ) )
                     GUI.getInstance( ).drawScene( null, elapsedTime );
-                GUI.getInstance( ).clearBackground( );
+                
+                GUI.getInstance( ).clearBackground();
 
                 // If it is a scene
                 Scene scene = (Scene) generalScene;
@@ -90,7 +91,7 @@ public class GameStateNextScene extends GameState {
                 // Create a background music identifier to not replay the music from the start
                 long backgroundMusicId = -1;
 
-                // If there is a funcional scene
+                // If there is a functional scene
                 if( game.getFunctionalScene( ) != null ) {
                     // Take the old and the new music path
                     String oldMusicPath = null;

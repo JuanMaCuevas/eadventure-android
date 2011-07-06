@@ -148,26 +148,26 @@ public class GUI {
 	/**
 	 * The GraphicsConfiguration class
 	 */
-	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();;
+	private GraphicsConfiguration graphicsConf = new GraphicsConfiguration();
 
 	private int loading;
 	
 	private DebugOverlay debugOverlay;
 
+	private GUI(SurfaceHolder mSurfaceHolder) {
+		
+		this.canvasSurfaceHolder = mSurfaceHolder;
+		elementsToDraw = new ArrayList<ElementImage>();
+		textToDraw = new ArrayList<Text>();
+		debugOverlay = new DebugOverlay();
+	}
+	
 	public SurfaceHolder getCanvasSurfaceHolder() {
 		return canvasSurfaceHolder;
 	}
 
 	public void setCanvasSurfaceHolder(SurfaceHolder canvasSurfaceHolder) {
 		this.canvasSurfaceHolder = canvasSurfaceHolder;
-	}
-
-	private GUI(SurfaceHolder mSurfaceHolder) {
-		// this.Handleractivity=handler;
-		this.canvasSurfaceHolder = mSurfaceHolder;
-		elementsToDraw = new ArrayList<ElementImage>();
-		textToDraw = new ArrayList<Text>();
-		debugOverlay = new DebugOverlay();
 	}
 
 	public static void create(SurfaceHolder mSurfaceHolder) {
@@ -206,7 +206,6 @@ public class GUI {
 				.create(Typeface.SANS_SERIF, Typeface.NORMAL));
 		mPaint.setStrokeWidth(4);
 		mPaint.setColor(0XFFFFFFFF);
-		// mPaint.setShadowLayer(4f, 0, 0, Color.BLACK);
 		
 		debugOverlay.init();
 		
@@ -301,7 +300,6 @@ public class GUI {
 		// Create the image to store it
 		ElementImage element = new ElementImage(image, x, y, depth, originalY,
 				highlight, fe);
-
 		// While the element has not been added, and
 		// we haven't checked every previous element
 		while (!added && i < elementsToDraw.size()) {
@@ -778,44 +776,6 @@ public class GUI {
 	 * @return String[] with the various lines splited from the text
 	 */
 	
-	
-/*
-	      //  FontMetrics fontMetrics = getGraphics( ).getFontMetrics( );
-
-	        do {
-	           
-
-	            if( width > MAX_WIDTH_IN_TEXT ) {
-	                int lineNumber = (int) Math.ceil( (double) width / (double) MAX_WIDTH_IN_TEXT );
-	                int index = currentLine.lastIndexOf( ' ', text.length( ) / lineNumber );
-
-	                if( index == -1 ) {
-	                    index = currentLine.indexOf( ' ' );
-	                }
-
-	                if( index == -1 ) {
-	                    index = currentLine.length( );
-	                    exit = true;
-	                }
-
-	                line = currentLine.substring( 0, index );
-	                currentLine = currentLine.substring( index ).trim( );
-
-	            }
-	            else {
-	                line = currentLine;
-	                exit = true;
-	            }
-
-	            lines.add( line );
-	        } while( !exit );
-	        return lines.toArray( new String[ 1 ] );
-	    }
-
-	*/
-	
-	
-	
 	public String[] splitText(String text) {
 
 		ArrayList<String> lines = new ArrayList<String>();
@@ -830,10 +790,8 @@ public class GUI {
 			width = (int) mPaint.measureText(currentLine);
 
 			if (width > MAX_WIDTH_IN_TEXT) {
-				int lineNumber = (int) Math.ceil((double) width
-						/ (double) MAX_WIDTH_IN_TEXT);
-				int index = currentLine.lastIndexOf(' ', text.length()
-						/ lineNumber);
+				int lineNumber = (int) Math.ceil((double) width	/ (double) MAX_WIDTH_IN_TEXT);
+				int index = currentLine.lastIndexOf(' ', text.length() / lineNumber);
 
 				if (index == -1) {
 					index = currentLine.indexOf(' ');
@@ -859,7 +817,7 @@ public class GUI {
 
 
 	public void clearBackground() {
-
+		
 		this.background = null;
 	}
 	

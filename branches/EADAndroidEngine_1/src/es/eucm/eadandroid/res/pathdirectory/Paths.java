@@ -3,7 +3,7 @@ package es.eucm.eadandroid.res.pathdirectory;
 public final class Paths {
 
 	public static final class repository {
-
+		
 		public static final String DEFAULT_PATH = "http://eadventure-android.googlecode.com/files/";
 		public static final String SOURCE_XML = "repository.xml";
 

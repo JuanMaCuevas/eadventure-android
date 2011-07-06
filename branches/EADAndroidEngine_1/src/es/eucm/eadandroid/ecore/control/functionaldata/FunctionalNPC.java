@@ -33,8 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-
-
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Debug;
@@ -348,6 +346,76 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
         }
 
         return isInside;
+    }
+    
+    /**
+     * Triggers the drag to action associated with the item
+     * 
+     * @param npc
+     *            The second item necessary for the use with action
+     * @return True if the items were used, false otherwise
+     */
+    public boolean dragTo( FunctionalNPC npc ) {
+        boolean dragTo = false;
+
+        // Only take the FIRST valid action
+        for( int i = 0; i < this.npc.getActions( ).size( ) && !dragTo; i++ ) {
+            Action action = this.npc.getAction( i );
+            if( action.getType( ) == Action.DRAG_TO && action.getTargetId( ).equals( npc.getNPC( ).getId( ) ) ) {
+                if( new FunctionalConditions( action.getConditions( ) ).allConditionsOk( ) ) {
+                    // Store the effects
+                    FunctionalEffects.storeAllEffects( action.getEffects( ) );
+                    dragTo = true;
+                }
+            }
+        }
+        // if no actions can be launched (because its conditions are't OK), lunch the first action which has activated not-effects
+        for( int i = 0; i < this.npc.getActions( ).size( ) && !dragTo; i++ ) {
+            Action action = this.npc.getAction( i );
+            if( action.getType( ) == Action.DRAG_TO && action.getTargetId( ).equals( npc.getNPC( ).getId( ) ) ) {
+                if( action.isActivatedNotEffects( ) ) {
+                    // Store the effects
+                    FunctionalEffects.storeAllEffects( action.getNotEffects( ) );
+                    dragTo = true;
+                }
+            }
+        }
+        return dragTo;
+    }
+    
+    /**
+     * Triggers the drag to action associated with the item
+     * 
+     * @param anotherItem
+     *            The second item necessary for the use with action
+     * @return True if the items were used, false otherwise
+     */
+    public boolean dragTo( FunctionalItem anotherItem ) {
+        boolean dragTo = false;
+
+        // Only take the FIRST valid action
+        for( int i = 0; i < npc.getActions( ).size( ) && !dragTo; i++ ) {
+            Action action = npc.getAction( i );
+            if( action.getType( ) == Action.DRAG_TO && action.getTargetId( ).equals( anotherItem.getItem( ).getId( ) ) ) {
+                if( new FunctionalConditions( action.getConditions( ) ).allConditionsOk( ) ) {
+                    // Store the effects
+                    FunctionalEffects.storeAllEffects( action.getEffects( ) );
+                    dragTo = true;
+                }
+            }
+        }
+        // if no actions can be launched (because its conditions are't OK), lunch the first action which has activated not-effects
+        for( int i = 0; i < npc.getActions( ).size( ) && !dragTo; i++ ) {
+            Action action = npc.getAction( i );
+            if( action.getType( ) == Action.DRAG_TO && action.getTargetId( ).equals( anotherItem.getItem( ).getId( ) ) ) {
+                if( action.isActivatedNotEffects( ) ) {
+                    // Store the effects
+                    FunctionalEffects.storeAllEffects( action.getNotEffects( ) );
+                    dragTo = true;
+                }
+            }
+        }
+        return dragTo;
     }
 
     @Override
@@ -773,6 +841,21 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
     public ElementReference getReference( ) {
 
         return reference;
+    }
+    
+    @Override
+    public boolean canBeDragged() {
+        boolean canBeDragged = false;
+        for (int i = 0; i < npc.getActions().size( ) && !canBeDragged; i++) {
+            Action action = npc.getAction( i );
+            if (action.getType( ) == Action.DRAG_TO) {
+                if ( new FunctionalConditions( action.getConditions( )).allConditionsOk( )){
+                    canBeDragged = true;
+                } else if (action.isActivatedNotEffects( ))
+                    canBeDragged = true;
+            }
+        }
+        return canBeDragged;
     }
 
     @Override

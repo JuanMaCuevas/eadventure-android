@@ -88,7 +88,6 @@ public class Wave {
 	public void doDraw(Canvas c) {
 		
 		if (showing) {
-			Log.d("OFFSET", String.valueOf(offsetScene));
 			c.drawCircle(posX + offsetScene,posY, radius, paint);
 		}
 		

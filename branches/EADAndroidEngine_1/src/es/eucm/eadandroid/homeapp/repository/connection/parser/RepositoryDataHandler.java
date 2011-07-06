@@ -31,7 +31,6 @@ public class RepositoryDataHandler extends DefaultHandler {
 
 	String tit, des, url;
 	Bitmap imgIcon ;
-	Bitmap image;
 
 	/**
 	 * Constructor
@@ -64,10 +63,6 @@ public class RepositoryDataHandler extends DefaultHandler {
 		if (sName.equals("imageIcon")) {
 			hasImageIcon = true;			
 		}
-		
-		if (sName.equals("image")) {
-			hasImage = true;
-		}
 
 		if (sName.equals("description")) {
 			hasDescription = true;
@@ -92,10 +87,6 @@ public class RepositoryDataHandler extends DefaultHandler {
 		if (sName.equals("imageIcon")) {
 			hasImageIcon = false;
 		}
-		
-		if (sName.equals("image")) {
-			hasImage = false;
-		}
 
 		if (sName.equals("description")) {
 			hasDescription = false;
@@ -109,7 +100,7 @@ public class RepositoryDataHandler extends DefaultHandler {
 			hasDescription = false;
 			
 			
-			this.repositoryInfo.addGameInfo(new GameInfo(tit, des, url, imgIcon,image));
+			this.repositoryInfo.addGameInfo(new GameInfo(tit, des, url, imgIcon));
 		}
 
 	}
@@ -128,14 +119,6 @@ public class RepositoryDataHandler extends DefaultHandler {
 			Log.d("Characters", "Text : " + new String(buf, offset, len));
 			
 			imgIcon = RepoResourceHandler.DownloadImage(im,pn);
-			
-		}
-		
-		if (hasImage) {
-			String im = new String(new String(buf, offset, len));
-			Log.d("Characters", "Text : " + new String(buf, offset, len));
-			
-			image = RepoResourceHandler.DownloadImage(im,pn);
 			
 		}
 

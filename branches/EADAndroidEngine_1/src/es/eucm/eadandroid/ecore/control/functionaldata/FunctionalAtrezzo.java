@@ -72,7 +72,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
     /**
      * Image of the atrezzo item, to display on the inventory
      */
-    // private Image icon;
+  
     private Bitmap oldImage = null;
     
     private int x1, y1, x2, y2;
@@ -241,7 +241,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
         x_image+=x1;
         y_image+=y1;
         if( scale != 1 ) {
-            Bitmap temp;
+        	Bitmap temp;
             if( scale == oldScale && image == oldOriginalImage ) {
                 temp = oldImage;
             }
@@ -264,7 +264,7 @@ public class FunctionalAtrezzo extends FunctionalElement {
                 GUI.getInstance( ).addElementToDraw( temp, x_image, y_image, Math.round( y ), Math.round( y ), null, null );
             else
                 GUI.getInstance( ).addElementToDraw( temp, x_image, y_image, layer, Math.round( y ), null, null  );
-
+            
         }
         else if( layer == -1 )
             GUI.getInstance( ).addElementToDraw( image, x_image, y_image, Math.round( y ), Math.round( y ), null, null  );
@@ -369,4 +369,5 @@ public class FunctionalAtrezzo extends FunctionalElement {
 
         return reference;
     }
+
 }

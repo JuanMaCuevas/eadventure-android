@@ -40,6 +40,7 @@ public class DebugOverlay {
 	
 	public void init() {
 		
+		
 		DEBUG_SCREEN_WIDTH = GUI.FINAL_WINDOW_WIDTH;
 		DEBUG_SCREEN_HEIGHT = GUI.FINAL_WINDOW_HEIGHT;		
 		DEBUG_INFO_SCREEN_X = (int) (GUI.FINAL_WINDOW_WIDTH * 0.85f);
@@ -53,6 +54,7 @@ public class DebugOverlay {
 		p.setTextSize(10*GUI.DISPLAY_DENSITY_SCALE);
 		textPaint.setTextSize(15*GUI.DISPLAY_DENSITY_SCALE);
 	    textPaint.setColor(0XFFFFFFFF);
+	
 		
 	}
 
@@ -126,7 +128,7 @@ public class DebugOverlay {
 	}
 
 	public void updateMemAlloc(long elapsedTime, int calcFPS) {
-
+ 
 		fps = calcFPS;
 		
 		totalElapsedTime += elapsedTime;
@@ -150,11 +152,12 @@ public class DebugOverlay {
 			i+=2;
 
 		}
+		
 	}
 
 	public void setMemAllocInfo(String[] memInfo) {
-		
-		this.memInfo = memInfo;
+	
+			this.memInfo = memInfo;
 
 	}
 

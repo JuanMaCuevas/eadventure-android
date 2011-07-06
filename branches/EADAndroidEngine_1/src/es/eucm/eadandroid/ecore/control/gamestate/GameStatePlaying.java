@@ -138,14 +138,12 @@ public class GameStatePlaying extends GameState {
             //OLD
             adaptedVars.clear();
             adaptedValues.clear();
-
         }
 
 
         
         // Update the data pending from the flags
-        game.updateDataPendingFromState( true );
-        
+        game.updateDataPendingFromState( true );        
 
         // Ends the draw process
         GUI.getInstance( ).endDraw( );

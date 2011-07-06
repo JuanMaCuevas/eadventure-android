@@ -33,7 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.Exit;
@@ -272,22 +271,25 @@ public class ActionManager {
 	
 	public void tap(UIEvent ev) {
 		
+		if (dragElement != null) return;
+		
 		MotionEvent e = ((TapEvent) ev).event;
 
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
 		int y = (int) ((e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET);
 		
 		if (currentCombInterElement!=null && elementOver!=null)
-			   processElementClick();
-			else {				
-				currentCombInterElement=null;
-				Game.getInstance().getFunctionalScene().tap(x,y);
+			processElementClick();
+		else {				
+			currentCombInterElement=null;
+			Game.getInstance().getFunctionalScene().tap(x, y);
 			}
 		
 	}
 	
 	public void pressed(UIEvent ev) {
 
+		if (dragElement != null) return;
 		
 		MotionEvent e = null;
 
@@ -304,17 +306,10 @@ public class ActionManager {
 		if (functionalScene == null)
 			return;
 
-		FunctionalElement elementInside = functionalScene.getElementInside(x,y, dragElement);
-		Exit exit = functionalScene.getExitInside(x,y);
+		FunctionalElement elementInside = functionalScene.getElementInside(x, y, dragElement);
+		Exit exit = functionalScene.getExitInside(x, y);
 
-		if (dragElement != null) {
-			dragElement.setX(x);
-			dragElement.setY(y);
-		}
-
-		if (elementInside != null) {
-			setElementOver(elementInside);
-		} else if (exit != null && actionSelected == ACTION_GOTO) {
+		if (exit != null && actionSelected == ACTION_GOTO) {
 			// SET EXIT CURSOR ;
 
 			GeneralScene nextScene = null;
@@ -335,25 +330,27 @@ public class ActionManager {
 			} else if (nextScene != null)
 				setExit(nextScene.getName());
 		}
-
+		else if (elementInside != null) 
+			setElementOver(elementInside);
+		  
 	}
 
 
 	public void unPressed(UIEvent ev) {
 
+		if (dragElement != null) return;
+		
 		MotionEvent e = ((UnPressedEvent) ev).event;
 
 		int x = (int) ((e.getX() - GUI.CENTER_OFFSET)/ GUI.SCALE_RATIOX);
 		int y = (int) ((e.getY() / GUI.SCALE_RATIOY) - Magnifier.CENTER_OFFSET);
 		
-		
-		if (currentCombInterElement!=null && elementOver!=null)
-		   processElementClick();
-		else {
-			
+		if (currentCombInterElement!=null && elementOver!=null){
+		    processElementClick();
+		}
+		else {			
 			currentCombInterElement=null;
-			Game.getInstance().getFunctionalScene().unpressed(x,y);
-		
+			Game.getInstance().getFunctionalScene().unpressed(x,y);		
 		}
 
 	}
@@ -365,9 +362,6 @@ public class ActionManager {
 		if( currentCombInterElement != null ) {
             if( game.getFunctionalPlayer( ).getCurrentAction( ).getType( ) == Action.CUSTOM_INTERACT ) {
                 setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
-            }
-            else if (game.getFunctionalPlayer( ).getCurrentAction( ).getType( ) == Action.DRAG_TO) {
-                setActionSelected( ActionManager.ACTION_DRAG_TO );
             }
             else {
                 if( this.elementOver.canPerform( ActionManager.ACTION_GIVE_TO ) ) {
@@ -381,9 +375,9 @@ public class ActionManager {
                     setActionSelected( ActionManager.ACTION_USE_WITH );
                 }
             }
+            
             game.getFunctionalPlayer( ).performActionInElement( this.elementOver );
             currentCombInterElement = null;
-      //      gui.setDefaultCursor( );
         }
         else {
             setActionSelected( ActionManager.ACTION_LOOK );
@@ -438,9 +432,9 @@ public class ActionManager {
 		int type = ab.getType();
 		Game game = Game.getInstance();
 		
-		 switch( type ) {
+		switch( type ) {
          case ActionButton.GRAB_BUTTON:
-             currentCombInterElement = null;
+             	currentCombInterElement = null;
                  if( !elementAction.isInInventory( ) ) {
                      setActionSelected( ActionManager.ACTION_GRAB );
                      game.getFunctionalPlayer( ).performActionInElement( elementAction );
@@ -456,10 +450,10 @@ public class ActionManager {
         	 break;
          case ActionButton.USE_WITH_BUTTON:
         	  currentCombInterElement = elementAction;
-        	 break;
+        	  break;
          case ActionButton.GIVE_TO_BUTTON:
-       	  currentCombInterElement = elementAction;
-       	 break;
+       	  	  currentCombInterElement = elementAction;
+       	  	  break;
          case ActionButton.EXAMINE_BUTTON:
              setActionSelected( ActionManager.ACTION_EXAMINE );
              game.getFunctionalPlayer( ).performActionInElement( elementAction );
@@ -469,13 +463,8 @@ public class ActionManager {
              game.getFunctionalPlayer( ).performActionInElement( elementAction );
              break;
          case ActionButton.DRAG_BUTTON:
-//          //   elementInCursor = elementAction;
-//             this.startDragging( elementInCursor );
-//             this.draggingElement.setX( pressedX );
-//             this.draggingElement.setY( pressedY + this.draggingElement.getHeight( ) / 2);
-//             pressedX = (int) this.originalDragX;
-//             pressedY = (int) this.originalDragY - this.draggingElement.getHeight( ) / 2;
-             break;
+        	 dragging(elementAction);
+        	 break;
          case ActionButton.CUSTOM_BUTTON:
              if( ab.getCustomAction( ).getType( ) == Action.CUSTOM ) {
                  this.setActionSelected( ActionManager.ACTION_CUSTOM );
@@ -485,7 +474,6 @@ public class ActionManager {
              }
              else {
                  currentCombInterElement = elementAction;
-            //     gui.setCursor( Toolkit.getDefaultToolkit( ).createCustomCursor( ( (FunctionalItem) elementInCursor ).getIconImage( ), new Point( 5, 5 ), "elementInCursor" ) );
                  this.setActionSelected( ActionManager.ACTION_CUSTOM_INTERACT );
                  this.setCustomActionName( ab.getName( ) );
                  game.getFunctionalPlayer( ).performActionInElement( elementAction );
@@ -498,6 +486,31 @@ public class ActionManager {
 
 	public FunctionalElement getElementInCursor() {
 		return currentCombInterElement;
+	}
+	
+	public void resetElementInCursor() {
+		currentCombInterElement = null;
+	}
+	
+	public void resetDragElement() {
+		dragElement = null;
+	}
+	
+	public void setElementInCursor(FunctionalElement element) {
+		currentCombInterElement = element;
+	}
+	
+	public void setDragElement(FunctionalElement drag){
+		this.dragElement = drag;
+	}
+	
+	public void dragging(FunctionalElement element){
+	
+		this.setActionSelected( ActionManager.ACTION_DRAG_TO );
+   	 	currentCombInterElement = element;
+   	 	currentCombInterElement.setDragging(true);
+   	 	setDragElement(currentCombInterElement);
+   	 	GUI.getInstance().getHUD().getDragState().startDragging( currentCombInterElement );
 	}
 
 }

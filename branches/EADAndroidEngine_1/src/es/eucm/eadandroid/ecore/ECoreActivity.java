@@ -6,10 +6,8 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,6 +47,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
+import es.eucm.eadandroid.common.data.chapter.resources.Resources;
+import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.ecore.control.Game;
@@ -56,6 +56,7 @@ import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
 import es.eucm.eadandroid.ecore.control.QrcodeManager;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
+import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateConversation;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -80,6 +81,8 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private ArrayAdapter<String> conversationAdapter;
 	private String adventureName;
 	private boolean fromvideo = false;
+	
+	private Videoscene videoscene;
 
 	ProgressDialog dialog;
 	ProgressDialog dialog2;
@@ -239,21 +242,20 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			}
 			
 			conversationLayout.setVisibility(View.VISIBLE);
-			conversationList.setVisibility(View.VISIBLE);
-			
-			
-
+			conversationList.setVisibility(View.VISIBLE);	
 		}
 
 	}
 
 	private void activityvideo() {
+		
 		Intent i = new Intent(this, EcoreVideo.class);
 		startActivity(i);
-		overridePendingTransition(R.anim.fade, R.anim.hold);
-	}
+		overridePendingTransition(R.anim.fade, R.anim.hold);	
+	}	
 
 	private void finishapplication() {
+		
 		Intent i = new Intent(this, HomeTabActivity.class);
 		i.putExtra("tabstate", HomeTabActivity.GAMES);
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -316,7 +318,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			
 			if (gpsGame) {
 				GpsManager.create();
-				LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+				LocationManager locationManager = (LocationManager) getSystemService(ECoreActivity.LOCATION_SERVICE);
 
 				locationManager.requestLocationUpdates(
 						LocationManager.GPS_PROVIDER, 0, 0, GpsManager
@@ -350,7 +352,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("You are about to start a QRcode game \n Press the magnifier button to capture QRCodes")
+				builder.setMessage("You are about to start a QRcode-based game \n Press the magnifier button on the options menu to capture QRCodes")
 				       .setCancelable(false)
 				       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 				           public void onClick(DialogInterface dialog, int id) {
@@ -420,6 +422,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		webview = (WebView) findViewById(R.id.webview);
 		webview.setVerticalScrollBarEnabled(true);
 		webview.setVerticalScrollbarOverlay(true);
+		webview.setMinimumHeight(GUI.FINAL_WINDOW_HEIGHT / 2);
 		assesmentLayout.setBackgroundColor(Color.BLACK);
 		// webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		close_button.setOnClickListener(new OnClickListener() {
@@ -430,7 +433,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				assesmentLayout.setVisibility(View.INVISIBLE);
 				close_button.setVisibility(View.INVISIBLE);
 				report_button.setVisibility(View.INVISIBLE);
-
 			}
 		});
 
@@ -453,15 +455,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				conversationLayout.setVisibility(View.INVISIBLE);
 				conversationList.setVisibility(View.INVISIBLE);
 				
-				//conversationAdapter.clear();
-				
-				
+				//conversationAdapter.clear();			
 
-		  	    }
-
-		
-
-			
+		  	    }			
 		});
 		
 		
@@ -597,7 +593,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// Log.d("cambiandooooooooo", "XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
@@ -725,6 +721,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			menu.removeItem(3);
 			menu.removeItem(4);
 			menu.removeItem(5);
+			
+			if (this.qrCodeGame)
+				menu.removeItem(6);
 
 			if (Game.getInstance().getCurrentState() instanceof GameStatePlaying) {
 				menu.add(0, 0, 0, "Save").setIcon(
@@ -745,6 +744,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 					android.R.drawable.ic_menu_directions);
 			menu.add(0, 5, 0, "Resize").setIcon(
 					android.R.drawable.ic_menu_directions);
+			if (this.qrCodeGame)
+				menu.add(0, 6, 0, "Scan QRCode").setIcon(
+						android.R.drawable.ic_menu_search);
 
 		}
 
@@ -903,8 +905,22 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 			break;
 
-		}
+		case 6:
+			
+			if (QrcodeManager.getInstance() != null) {
 
+				if (QrcodeManager.getInstance().isGameStatePlaying()) {
+					Intent intent = new Intent(
+							"com.google.zxing.client.android.SCAN");
+					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+					startActivityForResult(intent, 0);
+				}
+			}
+			
+			break;
+		
+		}
+		
 		return true;
 	}
 
@@ -933,21 +949,20 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	protected void onRestart() {
 		
 		super.onRestart();
-	//	Log.d("onRestart","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onStart() {
 		
 		super.onStart();
-	//	Log.d("onStart","XXXXXXXXXXXXXXXXXXXXXX");
 	}
 
 	@Override
 	protected void onStop() {
 		
 		super.onStop();
-		//Log.d("onStop","XXXXXXXXXXXXXXXXXXXXXX");
+		System.gc();
+		System.runFinalization();
 	}
 
 	@Override
@@ -955,7 +970,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		
 		super.onDestroy();
 		System.gc();
-	//	Log.d("onDestroy","XXXXXXXXXXXXXXXXXXXXXX");
+		System.runFinalization();
 	}
 	
 	}

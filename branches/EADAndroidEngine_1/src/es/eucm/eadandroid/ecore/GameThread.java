@@ -85,7 +85,8 @@ public class GameThread extends Thread {
         	msg.what = ActivityHandlerMessages.LOAD_GAMES;	
         else msg.what = ActivityHandlerMessages.GAME_OVER;
 		msg.setData(b);
-		this.instance=null;
+		
+		GameThread.instance = null;
 		
 		msg.sendToTarget();
 		

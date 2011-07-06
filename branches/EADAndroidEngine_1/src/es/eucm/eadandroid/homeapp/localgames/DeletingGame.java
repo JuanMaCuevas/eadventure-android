@@ -16,7 +16,7 @@ public class DeletingGame extends Thread {
 	public DeletingGame(Handler han,String[] paths) {
 		super();
 		handler=han;
-	this.paths=paths;
+		this.paths=paths;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class DeletingGame extends Thread {
       
 		msg.what = LGAHandlerMessages.DELETING_GAME;
 		msg.setData(b);
-			msg.sendToTarget();
+		msg.sendToTarget();
 	}
 
 }

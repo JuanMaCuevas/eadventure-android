@@ -7,13 +7,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,7 +41,7 @@ public class RepoResourceHandler {
 		Bitmap bitmap = null;
 		InputStream in = null;
 		try {
-			in = OpenHttpConnection(url_from);
+			in = getInputStreamFromUrl(url_from);
 			bitmap = BitmapFactory.decodeStream(in);
 			in.close();
 		} catch (IOException e1) {
@@ -53,19 +55,23 @@ public class RepoResourceHandler {
 	public static void downloadFile(String url_from, String path_to,
 			String fileName, ProgressNotifier pt) {
 
-		URL u = null;
+		//URL u = null;
 
 		try {
 
-			u = new URL(url_from);
+			//u = new URL(url_from);
 
-			HttpURLConnection c = (HttpURLConnection) u.openConnection();
+			//HttpURLConnection c = (HttpURLConnection) u.openConnection();
 
-			pt.notifyProgress(0, "Connection opened");
+			//pt.notifyProgress(0, "Connection opened");
 
-			c.setRequestMethod("GET");
+			/*c.setRequestMethod("GET");
 			c.setDoOutput(true);
-			c.connect();
+			c.connect();*/
+			HttpGet httpGet = new HttpGet(url_from);
+			HttpClient httpclient = new DefaultHttpClient();
+			// Execute HTTP Get Request
+			HttpResponse response = httpclient.execute(httpGet);
 
 			pt.notifyProgress(0, "Connection established");
 
@@ -78,7 +84,8 @@ public class RepoResourceHandler {
 				InputStream in;
 				try {
 
-					float fileSize = c.getContentLength();
+					float fileSize = response.getEntity().getContentLength();
+					//float fileSize = c.getContentLength();
 
 					Log.d("fileSize", String.valueOf(fileSize));
 
@@ -93,7 +100,7 @@ public class RepoResourceHandler {
 
 					Float progress = new Float(0);
 
-					in = c.getInputStream();
+					in = response.getEntity().getContent();
 					byte[] buffer = new byte[DOWNLOAD_BUFFER_SIZE];
 					int len1 = 0;
 					while ((len1 = in.read(buffer)) != -1) {
@@ -129,6 +136,20 @@ public class RepoResourceHandler {
 		}
 
 	}
+	
+	public static InputStream getInputStreamFromUrl(String url) {
+		InputStream content = null;
+		try {
+			HttpGet httpGet = new HttpGet(url);
+			HttpClient httpclient = new DefaultHttpClient();
+			// Execute HTTP Get Request
+			HttpResponse response = httpclient.execute(httpGet);
+			content = response.getEntity().getContent();
+                } catch (Exception e) {
+             
+		}
+		return content;
+}
 
 	public static void downloadFileAndUnzip(String url_from, String path_to,
 			String fileName, ProgressNotifier pn) {
@@ -238,7 +259,7 @@ public class RepoResourceHandler {
 		out.close();
 	}
 
-	private static InputStream OpenHttpConnection(String urlString)
+	/*private static InputStream OpenHttpConnection(String urlString)
 
 	throws IOException {
 		InputStream in = null;
@@ -265,7 +286,7 @@ public class RepoResourceHandler {
 			throw new IOException("Error connecting");
 		}
 		return in;
-	}
+	}*/
 
 	public static boolean checkEadDirectory(String path) {
 		if (new File(path).exists()) {

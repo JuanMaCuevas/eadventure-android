@@ -23,13 +23,14 @@ public class HomeTabActivity extends TabActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		init();
+		getIntent().getData();
 	}
 	
 
 	private void init() {
-
 
 		mTabHost = getTabHost();
 
@@ -43,10 +44,10 @@ public class HomeTabActivity extends TabActivity {
 						R.drawable.flag)).setContent(
 				new Intent(this, LoadSavedGames.class)));
 
-		/*mTabHost.addTab(mTabHost.newTabSpec("tab_downloads").setIndicator(
+		mTabHost.addTab(mTabHost.newTabSpec("tab_downloads").setIndicator(
 				"Repository",
 				getResources().getDrawable(R.drawable.cloud))
-				.setContent(new Intent(this, RepositoryActivity.class)));*/
+				.setContent(new Intent(this, RepositoryActivity.class)));
 		
 		mTabHost.addTab(mTabHost.newTabSpec("tab_preferences").setIndicator(
 				"Preferences",

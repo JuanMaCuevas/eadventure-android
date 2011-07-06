@@ -8,6 +8,7 @@ import es.eucm.eadandroid.ecore.gui.hud.elements.Inventory;
 import es.eucm.eadandroid.ecore.gui.hud.elements.Magnifier;
 import es.eucm.eadandroid.ecore.gui.hud.elements.Wave;
 import es.eucm.eadandroid.ecore.gui.hud.states.ActionsState;
+import es.eucm.eadandroid.ecore.gui.hud.states.DraggingState;
 import es.eucm.eadandroid.ecore.gui.hud.states.HiddenState;
 import es.eucm.eadandroid.ecore.gui.hud.states.InventoryState;
 import es.eucm.eadandroid.ecore.gui.hud.states.MagnifierState;
@@ -29,6 +30,7 @@ public class HUD {
 	private ShowingInventoryState showInventoryState;
 	private InventoryState inventoryState;
 	private ActionsState actionsState;
+	private DraggingState draggingState;
 	
 	/**
 	 * ELEMENTS
@@ -49,6 +51,7 @@ public class HUD {
 		showInventoryState = new ShowingInventoryState(this,inventory);
 		inventoryState = new InventoryState(this,inventory);
 		actionsState = new ActionsState(this);
+		draggingState = new DraggingState(this);
 
 		currentState = hiddenState;
 	}
@@ -112,7 +115,9 @@ public class HUD {
 			currentState = actionsState;
 			((ActionsState) currentState).setItem(info);
 			break;
-
+		case HUDstate.DraggingState:
+			currentState = draggingState;
+			break;
 		}
 
 	}
@@ -121,6 +126,11 @@ public class HUD {
 		
 		currentState = hiddenState;
 		
+	}
+	
+	public DraggingState getDragState(){
+		
+		return draggingState;
 	}
 
 

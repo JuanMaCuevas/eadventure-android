@@ -1,21 +1,15 @@
 package es.eucm.eadandroid.ecore;
 
-import java.io.IOException;
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
 import android.view.Window;
 import android.view.WindowManager;
-import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
@@ -24,16 +18,19 @@ import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.homeapp.HomeTabActivity;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
-public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
+public class EcoreVideo extends Activity {
 
 	// private GameThread gameThread;
-	private VideoSurfaceView videoSurfaceView;
+	/*private VideoSurfaceView videoSurfaceView;
 	private SurfaceHolder videoHolder;
-	private MediaPlayer mediaPlayer;
+	private MediaPlayer mediaPlayer;*/
 	
 	private boolean started=false;
 	private int timeconsumed;
 	
+	private Resources resources;
+	
+	private final static int STATIC_INTEGER_VALUE = 5;
 
 	/**
 	 * Videoscene being played
@@ -74,33 +71,24 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		videoscene = (Videoscene) Game.getInstance().getCurrentChapterData()
-				.getGeneralScene(
-						Game.getInstance().getNextScene().getNextSceneId());
+		videoscene = (Videoscene) Game.getInstance().getCurrentChapterData().getGeneralScene(Game.getInstance().getNextScene().getNextSceneId());
 
-		setContentView(R.layout.video_state);
+		resources = createResourcesBlock();
+		/*setContentView(R.layout.video_state);
 
 		videoSurfaceView = (VideoSurfaceView) findViewById(R.id.video_surface);
 		
 		videoHolder = videoSurfaceView.getHolder();
 		videoHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		videoHolder.addCallback(this);
+		videoHolder.addCallback(this);*/
 		GameThread.getInstance().setHandler(ActivityHandler);
+		
+		this.play();
 
 	}
 	
-	
-	
-	
-	
 
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void surfaceCreated(SurfaceHolder holder) {
+	/*public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		
 		
@@ -109,7 +97,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		this.started=true;
 		this.prepare();
 	}else {
-			mediaPlayer.setDisplay(this.videoHolder);
+		    mediaPlayer.setDisplay(this.videoHolder);
 			try {
 				mediaPlayer.prepare();
 			} catch (IllegalStateException e) {
@@ -125,12 +113,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		if (Game.getInstance().getFunctionalScene()!=null)
 			Game.getInstance().getFunctionalScene().playBackgroundMusic();
 
-	}
-
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-
-	}
+	}*/
 
 	public Resources createResourcesBlock() {
 
@@ -148,8 +131,34 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		}
 		return newResources;
 	}
+	
+	public void play() {
+		
+		 String destAddr = ResourceHandler.getInstance().getMediaPath(resources.getAssetPath(Videoscene.RESOURCE_TYPE_VIDEO));	
+		 String pack="com.redirectin.rockplayer.android.unified.lite";
+		 Uri uri = Uri.parse(destAddr.toString());
+		 Intent i = new Intent("android.intent.action.VIEW");		 
+		 i.setPackage(pack);
+		 i.setDataAndType(uri, "video/*");		 
+		 startActivityForResult(i, STATIC_INTEGER_VALUE);
+		 
+		 if (Game.getInstance().getFunctionalScene()!=null)
+				Game.getInstance().getFunctionalScene().playBackgroundMusic();
+	}
+	
+	@Override 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+	  super.onActivityResult(requestCode, resultCode, data); 
+	  switch(requestCode) { 
+	    case (STATIC_INTEGER_VALUE) : { 
+	    	this.changeActivity();
+	      break; 
+	    } 
+	  } 
+	}
 
-	public void prepare() {
+
+	/*public void prepare() {
 		try {
 
 			this.mediaPlayer = new MediaPlayer();
@@ -188,12 +197,13 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		} catch (Exception e) {
 
 		}
-	}
+	}*/
 
-	public void changeactivity() {
+	public void changeActivity() {
 		Intent i = new Intent(this, ECoreActivity.class);
 		i.putExtra("before_video", true);
 		this.startActivity(i);
+		this.finish();
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -216,7 +226,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		return false;
 	}
 	
-	public String  time()
+	/*public String  time()
 	{
 		
 		Date now = new Date();
@@ -248,13 +258,11 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		 int month=now.getMonth()+1;
          String time=new String("MONTH_"+month+"_DAY_"+day+"_HOUR_"+now.getHours()+"_MIN_"+now.getMinutes()+"_SEC_"+now.getSeconds());
 		return time;
-	}
+	}*/
 	
 	public void finishthread(boolean load)
 	{
 		
-	
-		  boolean retry = true;
 		  if (GameThread.getInstance()!=null) {
 			  GameThread.getInstance().finish(load);
 		
@@ -278,8 +286,8 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 			startActivity(i);
 		}
 		
-		mediaPlayer.release();
-		mediaPlayer=null;
+		//mediaPlayer.release();
+		//mediaPlayer=null;
 		
 		this.finish();
 	}
@@ -293,10 +301,10 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 		super.onPause();
 		//this is because on pause can be called when 
 		//luego lo hare por ahora no
-		if (this.mediaPlayer!=null)
+		/*if (this.mediaPlayer!=null)
 		this.mediaPlayer.pause();
 		
-		this.videoSurfaceView=null;
+		this.videoSurfaceView=null;*/
 		
 		
 		
@@ -311,7 +319,7 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 	protected void onResume() {
 		super.onResume();
 		
-		if (videoSurfaceView==null)
+		/*if (videoSurfaceView==null)
 		{
 			videoSurfaceView = (VideoSurfaceView) findViewById(R.id.video_surface);
 			videoSurfaceView.setFocusable(true);
@@ -326,6 +334,6 @@ public class EcoreVideo extends Activity implements SurfaceHolder.Callback {
 			
 			
 			
-		}
+		}*/
 	}
 }

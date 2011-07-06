@@ -99,6 +99,7 @@ public class GameStateBook extends GameState {
 
 
     	}
+    	
     	else if( book != null && book.getBook( ).getType( ) == Book.TYPE_PAGES ) {
             
     		Canvas c = GUI.getInstance( ).getGraphics( );
@@ -114,7 +115,9 @@ public class GameStateBook extends GameState {
 
            // c.dispose( );
     	}
+
     	else {
+    		book.clearBookBitmap();
             FunctionalEffects.storeAllEffects( new Effects( ) );
             game.setState( Game.STATE_RUN_EFFECTS ); 
     	}
