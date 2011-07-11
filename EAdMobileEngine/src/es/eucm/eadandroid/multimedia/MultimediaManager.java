@@ -620,19 +620,6 @@ public class MultimediaManager {
 	 */
 	public void flushImagePool(int category) {
 		
-		if (category != MultimediaManager.IMAGE_MENU){
-		
-			for (SoftReference<Bitmap> reference : imageCache[category].values()) {
-				final Bitmap drawable = reference.get();
-				if (drawable != null) drawable.recycle();
-			}
-		
-			for (SoftReference<Bitmap> reference : mirrorImageCache[category].values()) {
-				final Bitmap drawable = reference.get();
-				if (drawable != null) drawable.recycle();
-			}
-		}
-		
 		imageCache[category].clear();
 		mirrorImageCache[category].clear();		
 	}

@@ -15,9 +15,6 @@ class ElementImage {
 	 * Image
 	 */
 	protected Bitmap image;
-	protected Bitmap temp;
-	protected Bitmap hand;
-	protected Bitmap dest;
 
 	/**
 	 * X coordinate
@@ -91,14 +88,13 @@ class ElementImage {
 			// highlight.getDisplacementY( ), null );
 		} else {
 			if (this.functionalElement != null && this.functionalElement.getDragging()){
-				hand = MultimediaManager.getInstance( ).loadImage(Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/drag.png" , MultimediaManager.IMAGE_SCENE);
-				temp = Bitmap.createScaledBitmap(image, (int)(this.functionalElement.getWidth()*this.getFunctionalElement().getScale()*1.075*GUI.DISPLAY_DENSITY_SCALE), (int)(this.functionalElement.getHeight()*this.getFunctionalElement().getScale()*1.075*GUI.DISPLAY_DENSITY_SCALE), true);
-				dest = temp.copy(Bitmap.Config.ARGB_4444, true);
+				final Bitmap hand = MultimediaManager.getInstance( ).loadImage(Paths.eaddirectory.ROOT_PATH + "gui/hud/contextual/drag.png" , MultimediaManager.IMAGE_SCENE);
+				final Bitmap temp = Bitmap.createScaledBitmap(image, (int)(this.functionalElement.getWidth()*this.getFunctionalElement().getScale()*1.075*GUI.DISPLAY_DENSITY_SCALE), (int)(this.functionalElement.getHeight()*this.getFunctionalElement().getScale()*1.075*GUI.DISPLAY_DENSITY_SCALE), true);
+				final Bitmap dest = temp.copy(Bitmap.Config.ARGB_4444, true);
 				Paint p = new Paint(Paint.DITHER_FLAG * Paint.ANTI_ALIAS_FLAG);
 				p.setAlpha(150); 
 		        c.drawBitmap(dest, x, y, p);
 		        c.drawBitmap(hand, x + 10 * GUI.DISPLAY_DENSITY_SCALE, y + (3 * this.functionalElement.getHeight()*this.getFunctionalElement().getScale())/4, null);
-		        temp = null;
 			}				
 			else c.drawBitmap(image, x, y, null);
 		}
