@@ -618,7 +618,7 @@ public class Exit implements Cloneable, Documented, Rectangle, Positioned {
             for( Point p : points ) {
            // el apa–o!! 	
             	Point paux = new Point(p);
-                e.points.add( (Point) paux );
+                e.points.add( paux );
                 
             }
         }

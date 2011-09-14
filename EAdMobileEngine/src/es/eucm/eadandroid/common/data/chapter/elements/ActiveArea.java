@@ -264,7 +264,7 @@ public class ActiveArea extends Item implements Rectangle {
         {      	
         	// el apa–o!! 
         	Point paux = new Point(p);
-            aa.points.add( (Point) paux );            
+            aa.points.add( paux );            
         }
         return aa;
     }

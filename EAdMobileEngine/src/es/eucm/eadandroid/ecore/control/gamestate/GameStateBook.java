@@ -37,8 +37,6 @@ package es.eucm.eadandroid.ecore.control.gamestate;
 
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.MotionEvent;
 import es.eucm.eadandroid.common.data.chapter.book.Book;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;

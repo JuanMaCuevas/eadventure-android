@@ -790,7 +790,7 @@ public class GUI {
 			width = (int) mPaint.measureText(currentLine);
 
 			if (width > MAX_WIDTH_IN_TEXT) {
-				int lineNumber = (int) Math.ceil((double) width	/ (double) MAX_WIDTH_IN_TEXT);
+				int lineNumber = (int) Math.ceil(width	/ MAX_WIDTH_IN_TEXT);
 				int index = currentLine.lastIndexOf(' ', text.length() / lineNumber);
 
 				if (index == -1) {

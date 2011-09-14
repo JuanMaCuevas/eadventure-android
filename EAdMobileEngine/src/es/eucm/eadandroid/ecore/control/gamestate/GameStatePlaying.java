@@ -38,12 +38,9 @@ import java.util.List;
 import java.util.Queue;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.OnDownEvent;
-import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
@@ -183,11 +180,11 @@ public class GameStatePlaying extends GameState {
 			case UIEvent.TAP_ACTION: 
 				
 				if (!GUI.getInstance().processTap(e)) {
-					game.getActionManager().tap((TapEvent)e);
+					game.getActionManager().tap(e);
 				}
 				break;
 			case UIEvent.ON_DOWN_ACTION:				
-				GUI.getInstance().processOnDown((OnDownEvent)e);		
+				GUI.getInstance().processOnDown(e);		
 			}
 
 		}

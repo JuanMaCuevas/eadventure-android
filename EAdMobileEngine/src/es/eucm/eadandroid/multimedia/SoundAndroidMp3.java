@@ -52,6 +52,7 @@ public class SoundAndroidMp3 extends Sound {
 		}
 	}
 
+	@Override
 	public synchronized void stopPlaying() {
 		 stop = true;
 	}

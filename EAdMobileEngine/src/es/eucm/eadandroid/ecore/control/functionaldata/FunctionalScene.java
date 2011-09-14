@@ -53,9 +53,7 @@ import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.ecore.control.ActionManager;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.ItemSummary;
-import es.eucm.eadandroid.ecore.control.QrcodeManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalExit;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalGoTo;
 import es.eucm.eadandroid.ecore.gui.GUI;
@@ -837,7 +835,7 @@ public class FunctionalScene implements Renderable {
         moveOffsetLeft = false;
 
         if( showsOffsetArrows ) {
-            int ypos = (int) (GUI.WINDOW_HEIGHT / 2);
+            int ypos = (GUI.WINDOW_HEIGHT / 2);
             if( y >= ypos - GUI.OFFSET_ARROW_AREA_RADIUS && y <= ypos + GUI.OFFSET_ARROW_AREA_RADIUS ) {
                 int max_x = (int) Math.ceil( Math.sqrt( GUI.OFFSET_ARROW_AREA_RADIUS * GUI.OFFSET_ARROW_AREA_RADIUS - Math.pow( y - ypos, 2 ) ) );
                 if( x <= max_x )

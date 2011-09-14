@@ -1,6 +1,5 @@
 package es.eucm.eadandroid.ecore.gui;
 
-import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine;
 import android.graphics.Canvas;
 
 class Text {

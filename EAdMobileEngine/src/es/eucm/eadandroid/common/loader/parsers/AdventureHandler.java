@@ -547,7 +547,8 @@ public class AdventureHandler extends DefaultHandler {
      *  (non-Javadoc)
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String, java.lang.String)
      */
-    public InputSource resolveEntity( String publicId, String systemId ) {
+    @Override
+	public InputSource resolveEntity( String publicId, String systemId ) {
         // Take the name of the file SAX is looking for
         int startFilename = systemId.lastIndexOf( "/" ) + 1;
         String filename = systemId.substring( startFilename, systemId.length( ) );

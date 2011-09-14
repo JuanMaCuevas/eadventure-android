@@ -230,7 +230,7 @@ public class Magnifier {
 	private void foundedVibration() {
 		if (Game.getInstance().getOptions().isVibrationActive()){
 			// Get instance of Vibrator from current Context
-			Vibrator v = (Vibrator) ContextServices.getInstance().getServiceVibrator(); 
+			Vibrator v = ContextServices.getInstance().getServiceVibrator(); 
 			// Vibrate for 300 milliseconds
 			v.vibrate(40);
 			vibrateOnFocus = false;

@@ -3,7 +3,6 @@ package es.eucm.eadandroid.homeapp.preferences;
 import java.io.File;
 import java.net.URI;
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -14,15 +13,12 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
 import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.homeapp.HomeTabActivity;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.ProgressNotifier.ProgressMessage;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class LaunchAndExplorerActivity extends PreferenceActivity {
@@ -34,6 +30,7 @@ public class LaunchAndExplorerActivity extends PreferenceActivity {
 	private String path_from = null;
 		
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -104,6 +101,7 @@ public class LaunchAndExplorerActivity extends PreferenceActivity {
 		alert.show();
 	}
 
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
 
@@ -170,8 +168,7 @@ public class LaunchAndExplorerActivity extends PreferenceActivity {
 	}
 	
 	private void startGamesTabActivity() {
-		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", HomeTabActivity.GAMES);
+		Intent i = new Intent(this, WorkspaceActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 //		overridePendingTransition(R.anim.fade, R.anim.hold);
@@ -181,6 +178,7 @@ public class LaunchAndExplorerActivity extends PreferenceActivity {
 	
 	static final int DIALOG_INSTALL_ID = 0;
 
+	@Override
 	protected Dialog onCreateDialog(int id) {
 		Dialog dialog = null;
 		switch (id) {

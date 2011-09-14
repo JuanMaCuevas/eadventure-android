@@ -14,12 +14,12 @@
 		android:visibility="gone" xmlns:android="http://schemas.android.com/apk/res/android">
 
 		<WebView android:id="@+id/webview" android:layout_width="fill_parent"
-		android:layout_height="270dip" android:scrollbars="vertical" />
+		android:layout_height="wrap_content" android:scrollbars="vertical" />
 
 		<Button android:text="Report" android:id="@+id/report_button"
 			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:width="270dip" android:visibility="gone"
-			android:layout_below="@+id/webview"></Button>
+			android:width="270dip" android:visibility="gone" android:layout_below="@+id/webview">
+		</Button>
 
 		<Button android:layout_toRightOf="@+id/report_button"
 			android:layout_below="@+id/webview" android:layout_width="wrap_content"

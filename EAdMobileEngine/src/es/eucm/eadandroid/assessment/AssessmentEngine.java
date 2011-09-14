@@ -6,17 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 /*
  import javax.xml.transform.Transformer;
@@ -27,27 +21,19 @@ import javax.xml.parsers.ParserConfigurationException;
  import javax.xml.transform.stream.StreamResult;
  */
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.webkit.WebView;
-
-import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.data.assessment.AssessmentProfile;
 import es.eucm.eadandroid.common.data.assessment.AssessmentRule;
 import es.eucm.eadandroid.common.data.assessment.TimedAssessmentRule;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.common.loader.incidences.Incidence;
-import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.FlagSummary;
@@ -56,8 +42,6 @@ import es.eucm.eadandroid.ecore.control.TimerEventListener;
 import es.eucm.eadandroid.ecore.control.TimerManager;
 import es.eucm.eadandroid.ecore.control.VarSummary;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
-import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity.LGAHandlerMessages;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 /**
@@ -100,6 +84,12 @@ public class AssessmentEngine implements TimerEventListener {
 	 * Structure of timed rules
 	 */
 	private HashMap<Integer, TimedAssessmentRule> timedRules;
+	
+	/**
+	* This list store the rules which can be executed again, and
+	were executed once
+	*/
+	private List<AssessmentRule> repeatedRules;
 
 	private String playerName;
 
@@ -112,6 +102,7 @@ public class AssessmentEngine implements TimerEventListener {
 	 */
 	public AssessmentEngine() {
 		processedRules = new ArrayList<ProcessedRule>();
+		repeatedRules = new ArrayList<AssessmentRule>();
 		timedRules = new HashMap<Integer, TimedAssessmentRule>();
 		state = STATE_NONE;
 	}
@@ -176,20 +167,31 @@ public class AssessmentEngine implements TimerEventListener {
 		int i = 0;
 
 		if (assessmentRules != null) {
+			
+			// check if repeated rules have to be executed again
+			for (AssessmentRule repeatRule: repeatedRules){
+				if (isActive(repeatRule))
+					triggerRule(repeatRule);
+
+			}
+			
 			// For every rule
 			while (i < assessmentRules.size()) {
 
 				// If it was activated, execute the rule
 				if (isActive(assessmentRules.get(i))) {
-					AssessmentRule oldRule = assessmentRules.remove(i);
-					ProcessedRule rule = new ProcessedRule(oldRule, Game
-							.getInstance().getTime());
+					AssessmentRule oldRule = null;
+					try {
+						oldRule = (AssessmentRule)(assessmentRules.remove(i) .clone( ));
+					} catch (CloneNotSupportedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// first time that the repeatRule is executed
+					if (oldRule.isRepeatRule( ))
+						repeatedRules.add( oldRule );
 
-					// System.out.println("Se cumple la regla "+
-					// oldRule.getId());
-					// Signal the LMS about the change
-
-					processedRules.add(rule);
+					triggerRule(oldRule);
 				}
 
 				// Else, check the next rule
@@ -197,6 +199,16 @@ public class AssessmentEngine implements TimerEventListener {
 					i++;
 			}
 		}
+	}
+	
+	private void triggerRule(AssessmentRule oldRule){
+
+		oldRule.setConcept( Game.getInstance( ).processText( oldRule.getConcept( )));
+
+		oldRule.setText( Game.getInstance( ).processText( oldRule.getText( )));
+		ProcessedRule rule = new ProcessedRule(oldRule, Game.getInstance().getTime());
+
+		processedRules.add(rule);
 	}
 
 	private static boolean isActive(AssessmentRule rule) {
@@ -276,14 +288,7 @@ public class AssessmentEngine implements TimerEventListener {
 
 			// Header
 			file.print("<title>");
-			file.print(Game.getInstance().getGameDescriptor().getTitle());
-			file.println("</title>");
-			// HTML tag
-			file.println("<html>");
-
-			// Header
-			file.print("<title>");
-			file.print(Game.getInstance().getGameDescriptor().getTitle());
+			file.print(Game.getInstance().processText(Game.getInstance().getGameDescriptor().getTitle()));
 			file.println("</title>");
 
 			// Body and content table
@@ -296,7 +301,7 @@ public class AssessmentEngine implements TimerEventListener {
 
 			// Title
 			file.print("<center><h3>");
-			file.print(Game.getInstance().getGameDescriptor().getTitle());
+			file.print(Game.getInstance().processText(Game.getInstance().getGameDescriptor().getTitle()));
 			file.print(" report");
 			file.println("</h3></center>");
 
@@ -310,7 +315,7 @@ public class AssessmentEngine implements TimerEventListener {
 			for (ProcessedRule rule : processedRules) {
 				// First check the importance
 				if (rule.getImportance() >= minImportance) {
-					file.println(rule.getHTMLCode());
+					file.println(Game.getInstance().processText(rule.getHTMLCode()));
 					file.println("<br/><br/>");
 				}
 			}

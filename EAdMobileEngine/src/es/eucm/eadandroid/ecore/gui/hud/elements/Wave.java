@@ -3,7 +3,6 @@ package es.eucm.eadandroid.ecore.gui.hud.elements;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.util.Log;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.gui.GUI;
 

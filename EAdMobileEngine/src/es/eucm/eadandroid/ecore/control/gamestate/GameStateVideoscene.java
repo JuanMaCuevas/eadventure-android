@@ -1,25 +1,18 @@
 package es.eucm.eadandroid.ecore.control.gamestate;
 
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;
-import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Cutscene;
 import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
-import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
-import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class GameStateVideoscene extends GameState {
 

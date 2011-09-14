@@ -62,6 +62,7 @@ import es.eucm.eadandroid.ecore.data.SaveGame;
 import es.eucm.eadandroid.ecore.data.SaveGameException;
 import es.eucm.eadandroid.ecore.data.SaveTimer;
 import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.ecore.gui.hud.states.DraggingState;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
@@ -1656,6 +1657,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	// TIMER EVENT LISTENER INTERFACE IMPLEMENTATION//
 
     public void cycleCompleted( int timerId, long elapsedTime ) {
+    	
+    	if (GUI.getInstance().getHUD().getState() instanceof DraggingState){
+        	((DraggingState) GUI.getInstance().getHUD().getState()).clearDraggingElement();
+        }
+    	GUI.getInstance().getHUD().reset();
+        
+        this.getFunctionalPlayer().cancelActions();
 
         //System.out.println("Timer " + timerId + " expired, executing effects.");
         Timer timer = gameTimers.get( new Integer( timerId ) );
@@ -1669,6 +1677,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     }
 
     public void timerStopped( int timerId, long currentTime ) {
+    	
+    	if (GUI.getInstance().getHUD().getState() instanceof DraggingState){
+        	((DraggingState) GUI.getInstance().getHUD().getState()).clearDraggingElement();
+        }
+    	GUI.getInstance().getHUD().reset();
+        
+        this.getFunctionalPlayer().cancelActions();
 
         //System.out.println("Timer " + timerId + " was stopped, executing effects");
         Timer timer = gameTimers.get( new Integer( timerId ) );

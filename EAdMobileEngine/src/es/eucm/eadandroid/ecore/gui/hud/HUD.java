@@ -132,6 +132,11 @@ public class HUD {
 		
 		return draggingState;
 	}
+	
+	public HUDstate getState(){
+		
+		return currentState;
+	}
 
 
 }

@@ -3,7 +3,6 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import es.eucm.eadandroid.common.data.chapter.book.BookParagraph;
 
 /**

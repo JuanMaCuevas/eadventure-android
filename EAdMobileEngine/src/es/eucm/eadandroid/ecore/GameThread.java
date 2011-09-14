@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -57,6 +56,7 @@ public class GameThread extends Thread {
 	
 		}
 	
+	@Override
 	public void run() {
 		
 		Game.getInstance().setAdventurePath(advPath);

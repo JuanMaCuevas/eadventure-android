@@ -85,7 +85,7 @@ public class SplashScreenActivity extends Activity{
 					}
 				};
 		    
-				ActivityHandler.postDelayed(endSplash, 3000);
+				ActivityHandler.postDelayed(endSplash, 2500);
 			}
 		}		
 			
@@ -100,8 +100,7 @@ public class SplashScreenActivity extends Activity{
 
 		public void startEngineHomeActivity() {
 
-			Intent i = new Intent(this, HomeTabActivity.class);
-			i.putExtra("tabstate",HomeTabActivity.GAMES);
+			Intent i = new Intent(this, WorkspaceActivity.class);
 			if (data != null)
 				i.setData(data);			
 			startActivity(i);

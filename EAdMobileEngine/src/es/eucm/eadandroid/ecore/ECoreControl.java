@@ -1,17 +1,14 @@
 package es.eucm.eadandroid.ecore;
 
 import java.util.List;
-
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
 import es.eucm.eadandroid.common.loader.Loader;
-import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
-import es.eucm.eadandroid.homeapp.HomeTabActivity;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,8 +19,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.View;
 
 public class ECoreControl extends Activity{
 	
@@ -201,6 +196,7 @@ public class ECoreControl extends Activity{
 	
 	
 	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		if (requestCode == REQUEST_GPS) {
@@ -246,8 +242,8 @@ public class ECoreControl extends Activity{
 	}
 	
 	public void quitGame(){
-		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", HomeTabActivity.GAMES);
+		Intent i = new Intent(this, WorkspaceActivity.class);
+		i.putExtra("tabstate", WorkspaceActivity.GAMES);
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
 				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);

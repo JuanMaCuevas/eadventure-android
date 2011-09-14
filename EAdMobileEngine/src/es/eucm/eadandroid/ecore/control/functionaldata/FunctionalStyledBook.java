@@ -131,7 +131,8 @@ public class FunctionalStyledBook extends FunctionalBook {
     }
     
     
-    public void draw( Canvas c ) {
+    @Override
+	public void draw( Canvas c ) {
     	
     	//GUI.getInstance( ).addBackgroundToDraw( background, 0 );
 

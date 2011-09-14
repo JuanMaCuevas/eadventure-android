@@ -15,7 +15,7 @@ import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
-import es.eucm.eadandroid.homeapp.HomeTabActivity;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 public class EcoreVideo extends Activity {
@@ -64,6 +64,7 @@ public class EcoreVideo extends Activity {
 	};
 
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
@@ -206,6 +207,7 @@ public class EcoreVideo extends Activity {
 		this.finish();
 	}
 	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		menu.add(0, 3, 0, "Quit Game").setIcon(android.R.drawable.ic_menu_add);
@@ -214,6 +216,7 @@ public class EcoreVideo extends Activity {
 		return true;
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 3:
@@ -272,22 +275,10 @@ public class EcoreVideo extends Activity {
 	}
 	private void finishapplication(boolean loadgames)
 	{
-		if(!loadgames)
-		{		Intent i = new Intent(this, HomeTabActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				i.putExtra("tabstate", HomeTabActivity.GAMES);
-				startActivity(i);
-		}
-		else 
-		{
-			Intent i = new Intent(this, HomeTabActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
-			startActivity(i);
-		}
 		
-		//mediaPlayer.release();
-		//mediaPlayer=null;
+		Intent i = new Intent(this, WorkspaceActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);		
 		
 		this.finish();
 	}

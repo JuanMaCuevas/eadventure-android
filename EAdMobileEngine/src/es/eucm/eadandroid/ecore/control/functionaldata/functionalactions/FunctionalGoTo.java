@@ -36,7 +36,6 @@ package es.eucm.eadandroid.ecore.control.functionaldata.functionalactions;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.elements.NPC;
-import es.eucm.eadandroid.common.data.chapter.elements.Player;
 import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.ecore.control.ActionManager;
 import es.eucm.eadandroid.ecore.control.DebugLog;

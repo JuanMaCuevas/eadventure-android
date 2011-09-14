@@ -3,10 +3,8 @@ package es.eucm.eadandroid.homeapp.localgames;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import es.eucm.eadandroid.homeapp.loadsavedgames.LoadSavedGames.SavedGamesHandlerMessages;
-import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity.LGAHandlerMessages;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity.LocalGamesListFragment.LGAHandlerMessages;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 public class DeletingGame extends Thread {
 	

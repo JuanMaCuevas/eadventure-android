@@ -36,7 +36,6 @@ package es.eucm.eadandroid.ecore.control.animations.npc;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.util.Log;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
 import es.eucm.eadandroid.common.data.chapter.elements.NPC;

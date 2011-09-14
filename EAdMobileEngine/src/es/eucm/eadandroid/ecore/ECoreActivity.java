@@ -47,7 +47,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
-import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.common.loader.Loader;
@@ -56,11 +55,10 @@ import es.eucm.eadandroid.ecore.control.GpsManager;
 import es.eucm.eadandroid.ecore.control.Options;
 import es.eucm.eadandroid.ecore.control.QrcodeManager;
 import es.eucm.eadandroid.ecore.control.config.ConfigData;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStateConversation;
 import es.eucm.eadandroid.ecore.control.gamestate.GameStatePlaying;
 import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.homeapp.HomeTabActivity;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity;
 import es.eucm.eadandroid.multimedia.MultimediaManager;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
@@ -209,8 +207,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	};
 
 	private void startLoadApplication() {
-		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", HomeTabActivity.LOAD_GAMES);
+		Intent i = new Intent(this, WorkspaceActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
@@ -238,7 +235,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			conversationAdapter.clear();
 			int size = b.getInt("size");
 			for (int i=0;i<size;i++){
-				conversationAdapter.add((String) b.getString(Integer.toString(i)));
+				conversationAdapter.add(b.getString(Integer.toString(i)));
 			}
 			
 			conversationLayout.setVisibility(View.VISIBLE);
@@ -256,8 +253,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	private void finishapplication() {
 		
-		Intent i = new Intent(this, HomeTabActivity.class);
-		i.putExtra("tabstate", HomeTabActivity.GAMES);
+		Intent i = new Intent(this, WorkspaceActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
@@ -318,7 +314,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			
 			if (gpsGame) {
 				GpsManager.create();
-				LocationManager locationManager = (LocationManager) getSystemService(ECoreActivity.LOCATION_SERVICE);
+				LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 				locationManager.requestLocationUpdates(
 						LocationManager.GPS_PROVIDER, 0, 0, GpsManager
@@ -674,6 +670,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	 * 
 	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
 	 */
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		
 		boolean dispatched = GameThread.getInstance().processTouchEvent(event);
@@ -692,6 +689,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	 * @see
 	 * android.app.Activity#dispatchTrackballEvent(android.view.MotionEvent)
 	 */
+	@Override
 	public boolean dispatchTrackballEvent(MotionEvent event) {
 		return GameThread.getInstance().processTrackballEvent(event);
 	}
@@ -706,6 +704,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		return GameThread.getInstance().processSensorEvent(event);
 	}
 
+	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 
 		boolean prepare = false;
@@ -809,6 +808,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void showSaveDialog(boolean quit, boolean load) {
 
 		final EditText input = new EditText(this);
+		input.setText("Save_0");
+		input.setLines(1);
+		input.setSelection(input.getText().length());
 
 		final boolean aux_quit = quit;
 		final boolean aux_load = load;
@@ -856,6 +858,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		Options options = Game.getInstance().getOptions();
