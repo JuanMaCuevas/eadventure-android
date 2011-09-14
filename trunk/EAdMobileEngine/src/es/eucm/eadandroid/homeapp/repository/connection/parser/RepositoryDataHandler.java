@@ -8,7 +8,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-import es.eucm.eadandroid.homeapp.repository.RepositoryActivity;
 import es.eucm.eadandroid.homeapp.repository.database.GameInfo;
 import es.eucm.eadandroid.homeapp.repository.database.RepositoryDatabase;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.ProgressNotifier;
@@ -20,8 +19,6 @@ public class RepositoryDataHandler extends DefaultHandler {
 
 	RepositoryDatabase repositoryInfo;
 	ProgressNotifier pn ;
-	
-	RepositoryActivity aux;
 
 	boolean hasTitle = false;
 	boolean hasImageIcon = false;
@@ -105,6 +102,7 @@ public class RepositoryDataHandler extends DefaultHandler {
 
 	}
 
+	@Override
 	public void characters(char[] buf, int offset, int len) throws SAXException {
 
 		currentString.append(new String(buf, offset, len));

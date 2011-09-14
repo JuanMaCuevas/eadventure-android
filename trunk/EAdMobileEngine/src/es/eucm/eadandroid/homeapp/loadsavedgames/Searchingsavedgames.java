@@ -3,7 +3,7 @@ package es.eucm.eadandroid.homeapp.loadsavedgames;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import es.eucm.eadandroid.homeapp.loadsavedgames.LoadSavedGames.SavedGamesHandlerMessages;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity.LoadGamesListFragment.SavedGamesHandlerMessages;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.utils.ActivityPipe;
 
@@ -17,15 +17,16 @@ public class Searchingsavedgames extends Thread {
 
 	}
 
+	@Override
 	public void run() {
 
-		InfoExpandabletable info = null;
+		LoadGamesArray info = null;
 
 		RepoResourceHandler.updatesavedgames();
 
 		info = RepoResourceHandler.getexpandablelist();
 
-		if (info.getChildren() == null) {
+		if (info.getSavedGames().size() == 0) {
 
 			Message msg = handler.obtainMessage();
 			Bundle b = new Bundle();

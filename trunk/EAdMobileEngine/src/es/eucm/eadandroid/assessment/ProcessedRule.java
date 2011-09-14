@@ -1,14 +1,6 @@
 package es.eucm.eadandroid.assessment;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import es.eucm.eadandroid.common.data.assessment.AssessmentRule;
-import es.eucm.eadandroid.common.data.assessment.TimedAssessmentRule;
 
 
 /**

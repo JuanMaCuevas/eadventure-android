@@ -37,8 +37,6 @@ package es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.graphics.Color;
-import android.graphics.Paint.FontMetrics;
 import es.eucm.eadandroid.common.data.chapter.effects.ShowTextEffect;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.Options;

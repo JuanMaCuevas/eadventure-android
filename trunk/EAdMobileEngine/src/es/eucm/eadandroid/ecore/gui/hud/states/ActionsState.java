@@ -41,11 +41,14 @@ public class ActionsState extends HUDstate {
 		actionsPanel.doDraw(c);
 	}
 	
+	@Override
 	public boolean processTap(UIEvent e) {
 		TapEvent ev = (TapEvent) e;
 		
 		int srcX = (int)ev.event.getX();
 		int srcY = (int)ev.event.getY();
+		
+		actionsPanel.setItemFocus(srcX, srcY);
 		
 		ActionButton ab = (ActionButton)actionsPanel.selectItemFromGrid(srcX, srcY);
 		
@@ -102,15 +105,21 @@ public class ActionsState extends HUDstate {
 	public boolean processUnPressed(UIEvent e) {
 		
 		UnPressedEvent ev = (UnPressedEvent) e;
-				
+		
 		int srcX = (int)ev.event.getX();
 		int srcY = (int)ev.event.getY();
+		
+		actionsPanel.setItemFocus(srcX, srcY);
 		
 		ActionButton ab = (ActionButton)actionsPanel.selectItemFromGrid(srcX, srcY);
 		
 		if (ab != null ) {
 			Game.getInstance().getActionManager().processAction(ab,actionsPanel.getElementInfo());
-			stateContext.setState(HUDstate.HiddenState,null);
+			if (ab.getType() == ActionButton.DRAG_BUTTON) {
+				stateContext.setState(HUDstate.DraggingState, null);
+				return true;
+			}
+			stateContext.setState(HUDstate.HiddenState, null);
 		}
 		else if (actionsPanel.isInCloseButton(srcX,srcY))
 			stateContext.setState(HUDstate.HiddenState,null);

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
-import android.util.Log;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.elements.Item;
 import es.eucm.eadandroid.ecore.control.ActionManager;
@@ -79,8 +78,6 @@ public class DraggingState extends HUDstate {
 	@Override
 	public boolean processUnPressed(UIEvent e) {
 		
-		Log.d("USA EL UNPRESSED DE DRAGGING", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-		
 		UnPressedEvent ev = (UnPressedEvent) e;
 		
 		x = (int)ev.event.getX();
@@ -92,9 +89,7 @@ public class DraggingState extends HUDstate {
             Game.getInstance().getActionManager( ).setElementOver( elementInside );
         }
 				
-        Log.d("LA ACCION ES: "+ Game.getInstance().getFunctionalPlayer( ).getCurrentAction( ).getType(), "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 		if( draggingElement != null  && Game.getInstance().getFunctionalPlayer( ).getCurrentAction( ).getType( ) == Action.DRAG_TO) {
-			Log.d("ENTRA AL PROCESS DRAG TO", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             processDragTo(ev);
         }
         
@@ -138,7 +133,7 @@ public class DraggingState extends HUDstate {
         return true;
     }
     
-    private void clearDraggingElement() {
+    public void clearDraggingElement() {
         if(draggingElement != null) {
         	draggingElement.setDragging(false);
             if (draggingElement.getElement( ) instanceof Item) {

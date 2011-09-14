@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,19 +47,13 @@ import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNode;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNodeView;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.OptionConversationNode;
-import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
-import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionaleffects.FunctionalEffects;
-import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
-import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
-import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
-import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UnPressedEvent;
 import es.eucm.eadandroid.ecore.gui.GUI;
 
 /**

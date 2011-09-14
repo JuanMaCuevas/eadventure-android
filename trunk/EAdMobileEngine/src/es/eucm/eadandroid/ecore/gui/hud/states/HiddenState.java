@@ -26,11 +26,13 @@ public class HiddenState extends HUDstate {
 		this.wave = wave;
 	}
 	
+	@Override
 	public void doDraw(Canvas c) {
 		wave.doDraw(c);
 	}
 	
-    public void update( long elapsedTime ) {   	
+    @Override
+	public void update( long elapsedTime ) {   	
     	wave.update(elapsedTime);
     }
 	
@@ -57,6 +59,7 @@ public class HiddenState extends HUDstate {
 		else stateContext.setState(HUDstate.ShowingInventoryState,null);
 	}
 	
+	@Override
 	public boolean processTap(UIEvent e){
 		
 
@@ -90,12 +93,15 @@ public class HiddenState extends HUDstate {
 		return false;
 	}
 	
+	@Override
 	public boolean processUnPressed(UIEvent e){
 		return false;
 	}
+	@Override
 	public boolean processFling(UIEvent e){
 		return false;
 	}
+	@Override
 	public boolean processOnDown(UIEvent e) {
 		return false;
 	}

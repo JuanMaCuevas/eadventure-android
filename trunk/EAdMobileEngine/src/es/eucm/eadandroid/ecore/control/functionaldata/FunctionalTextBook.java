@@ -178,7 +178,8 @@ public class FunctionalTextBook extends FunctionalBook {
      * @param g
      *            the graphics where the book must be painted
      */
-    public void draw( Canvas c ) {
+    @Override
+	public void draw( Canvas c ) {
         
         super.draw( c );        
 

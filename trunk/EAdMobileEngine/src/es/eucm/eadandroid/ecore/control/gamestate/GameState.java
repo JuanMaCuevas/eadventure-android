@@ -7,7 +7,6 @@ import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.KeyPadListener;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TouchListener;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TrackBallListener;
-import es.eucm.eadandroid.ecore.gui.GUI;
 
 /**
  * A state of the game main loop

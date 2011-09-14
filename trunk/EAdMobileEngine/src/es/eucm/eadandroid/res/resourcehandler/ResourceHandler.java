@@ -13,13 +13,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Debug;
-import android.util.Log;
 import es.eucm.eadandroid.common.loader.InputStreamCreator;
 import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.res.pathdirectory.Paths;

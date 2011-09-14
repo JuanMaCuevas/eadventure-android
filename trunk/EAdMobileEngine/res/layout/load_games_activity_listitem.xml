@@ -21,12 +21,13 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:gravity="center_vertical"
-        android:paddingLeft="12dip" android:textSize="16dip"/>
+        android:paddingLeft="12dip" android:textSize="20dip"/>
         <TextView
+            android:id="@+id/bottomtext"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
-            android:layout_weight="1" 
-            android:id="@+id/bottomtext"
-            android:ellipsize="marquee" android:textColor="@color/Light_Green" android:textSize="12dip" android:paddingLeft="12dip" android:paddingBottom="12dip" android:gravity="bottom"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+        android:paddingLeft="12dip" android:textSize="16dip"/>        
     </LinearLayout>
 </LinearLayout>

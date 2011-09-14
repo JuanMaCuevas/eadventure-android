@@ -5,7 +5,6 @@ import org.xml.sax.Attributes;
 import android.util.Log;
 
 import es.eucm.eadandroid.common.data.chapter.Chapter;
-import es.eucm.eadandroid.common.data.chapter.GpsRule;
 import es.eucm.eadandroid.common.data.chapter.QrcodeRule;
 import es.eucm.eadandroid.common.data.chapter.conditions.Conditions;
 import es.eucm.eadandroid.common.data.chapter.effects.Effects;

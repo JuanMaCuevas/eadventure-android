@@ -7,14 +7,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
-import es.eucm.eadandroid.ecore.gui.GUI;
-import es.eucm.eadandroid.homeapp.ActivityVideoIntro.ActivityHandlerInstalling;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
@@ -30,7 +28,34 @@ public class EngineResInstaller extends Thread {
 		han = handler;
 
 	}
+	
+	public class ActivityHandlerInstalling {
 
+		public static final int FINISHISTALLING = 0;
+
+	}
+	
+	
+	ProgressDialog dialog;
+	public Handler ActivityHandler = new Handler() {
+		@Override
+		/**    * Called when a message is sent to Engines Handler Queue **/
+		public void handleMessage(Message msg) {
+
+			switch (msg.what) {
+
+			case ActivityHandlerInstalling.FINISHISTALLING:
+				dialog.setIndeterminate(false);
+				//startactivity();
+				dialog.dismiss();
+				break;
+			}
+
+		}
+
+	};
+
+	@Override
 	public void run() {
 		this.init();
 

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import es.eucm.eadandroid.common.data.chapter.book.BookParagraph;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 
 
 /**

@@ -36,10 +36,8 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import es.eucm.eadandroid.common.data.chapter.Action;
 import es.eucm.eadandroid.common.data.chapter.CustomAction;

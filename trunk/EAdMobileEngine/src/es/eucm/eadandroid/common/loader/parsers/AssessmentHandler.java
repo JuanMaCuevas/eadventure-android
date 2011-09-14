@@ -211,8 +211,9 @@ public class AssessmentHandler extends DefaultHandler {
 
         else if( sName.equals( "assessment-rule" ) ) {
 
-            String id = null;
+        	String id = null;
             int importance = 0;
+            boolean repeatRule = false;
 
             for( int i = 0; i < attrs.getLength( ); i++ ) {
                 if( attrs.getLocalName( i ).equals( "id" ) )
@@ -222,15 +223,18 @@ public class AssessmentHandler extends DefaultHandler {
                         if( attrs.getValue( i ).equals( AssessmentRule.IMPORTANCE_VALUES[j] ) )
                             importance = j;
                 }
+                if( attrs.getQName( i ).equals( "repeatRule" ) )
+                    repeatRule = attrs.getValue( i ).equals( "yes" );
             }
 
-            currentAssessmentRule = new AssessmentRule( id, importance );
+            currentAssessmentRule = new AssessmentRule( id, importance, repeatRule );
         }
 
         else if( sName.equals( "timed-assessment-rule" ) ) {
 
-            String id = null;
+        	String id = null;
             int importance = 0;
+            boolean repeatRule = false;
             boolean usesEndConditions = false;
             boolean has = false;
 
@@ -242,13 +246,15 @@ public class AssessmentHandler extends DefaultHandler {
                         if( attrs.getValue( i ).equals( AssessmentRule.IMPORTANCE_VALUES[j] ) )
                             importance = j;
                 }
+                if( attrs.getQName( i ).equals( "repeatRule" ) )
+                    repeatRule = attrs.getValue( i ).equals( "yes" );
                 if( attrs.getLocalName( i ).equals( "usesEndConditions" ) ) {
                     has = true;
                     usesEndConditions = attrs.getValue( i ).equals( "yes" );
                 }
             }
 
-            currentAssessmentRule = new TimedAssessmentRule( id, importance );
+            currentAssessmentRule = new TimedAssessmentRule( id, importance, repeatRule );
             if( has )
                 ( (TimedAssessmentRule) currentAssessmentRule ).setUsesEndConditions( usesEndConditions );
         }

@@ -10,6 +10,7 @@ import es.eucm.eadandroid.common.auxiliar.CreateImage;
 
 public class tests extends Activity {
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(new SampleView(this));

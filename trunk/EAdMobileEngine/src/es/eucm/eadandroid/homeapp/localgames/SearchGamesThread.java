@@ -2,13 +2,12 @@ package es.eucm.eadandroid.homeapp.localgames;
 
 import java.io.File;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import es.eucm.eadandroid.homeapp.localgames.LocalGamesActivity.LGAHandlerMessages;
+import es.eucm.eadandroid.homeapp.WorkspaceActivity.LocalGamesListFragment.LGAHandlerMessages;
 import es.eucm.eadandroid.res.filefilters.EADFileFilter;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 

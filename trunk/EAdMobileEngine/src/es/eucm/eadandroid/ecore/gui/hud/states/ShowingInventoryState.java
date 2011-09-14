@@ -23,6 +23,7 @@ public class ShowingInventoryState extends HUDstate {
 		inventory.doDraw(c);
 	}
 
+	@Override
 	public void update(long elapsedTime) {
 		inventory.update(elapsedTime);
 	}

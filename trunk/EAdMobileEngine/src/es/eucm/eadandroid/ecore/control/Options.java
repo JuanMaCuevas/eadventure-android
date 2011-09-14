@@ -33,10 +33,7 @@
  */
 package es.eucm.eadandroid.ecore.control;
 
-import java.util.Iterator;
-
 import android.content.SharedPreferences;
-import android.util.Log;
 import es.eucm.eadandroid.ecore.data.GameText;
 import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 

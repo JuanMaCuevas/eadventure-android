@@ -20,7 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import es.eucm.eadandroid.homeapp.loadsavedgames.InfoExpandabletable;
+import es.eucm.eadandroid.homeapp.loadsavedgames.LoadGamesArray;
 import es.eucm.eadandroid.res.filefilters.EADFileFilter;
 import es.eucm.eadandroid.res.filefilters.PNGFilter;
 import es.eucm.eadandroid.res.filefilters.TxtFilter;
@@ -203,7 +203,7 @@ public class RepoResourceHandler {
 			BufferedOutputStream file;
 
 			while (entries.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry) entries.nextElement();
+				ZipEntry entry = entries.nextElement();
 
 				separator = new StringTokenizer(entry.getName(), "/", true);
 				partial_path = null;
@@ -309,13 +309,12 @@ public class RepoResourceHandler {
 		}
 	}
 
-	public static InfoExpandabletable getexpandablelist() {
+	public static LoadGamesArray getexpandablelist() {
 
-		InfoExpandabletable info = new InfoExpandabletable();
+		LoadGamesArray info = new LoadGamesArray();
 
-		String games[] = null;
-		String[][] finalarray = null;
-		Bitmap[][] screen_shots = null;
+		String[] games = null;
+		Bitmap[] screen_shots = null;
 
 		if (!new File(Paths.eaddirectory.SAVED_GAMES_PATH).exists()) {
 
@@ -328,9 +327,6 @@ public class RepoResourceHandler {
 
 			if (games.length > 0) {
 
-				finalarray = new String[games.length][];
-				screen_shots = new Bitmap[games.length][];
-
 				for (int i = 0; i < games.length; i++) {
 
 					File gamefolder = new File(
@@ -342,33 +338,29 @@ public class RepoResourceHandler {
 					String screen_shots_bitmaps[] = gamefolder
 							.list(new PNGFilter());
 
-					finalarray[i] = new String[files.length];
-					screen_shots[i] = new Bitmap[files.length];
+					screen_shots = new Bitmap[files.length];
 
 					for (int j = 0; j < files.length; j++) {
-						finalarray[i][j] = files[j];
 
 						if (screen_shots_bitmaps.length > j
 								&& screen_shots_bitmaps[j] != null) {
 
 							Log.e("Path", screen_shots_bitmaps[j]);
 
-							screen_shots[i][j] = BitmapFactory.decodeFile(
+							screen_shots[j] = BitmapFactory.decodeFile(
 									Paths.eaddirectory.SAVED_GAMES_PATH
 											+ games[i] + "/"
 											+ screen_shots_bitmaps[j], null);
 
 						}
+						
+						info.addGame(games[i], files[j], screen_shots[j]);
 
 					}
 
 				}
 			}
 		}
-
-		info.setChildren(finalarray);
-		info.setGroup(games);
-		info.setScreenShots(screen_shots);
 
 		return info;
 

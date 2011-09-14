@@ -45,8 +45,6 @@ import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.data.chapter.scenes.Cutscene;
 import es.eucm.eadandroid.common.data.chapter.scenes.Scene;
 import es.eucm.eadandroid.common.data.chapter.scenes.Slidescene;
-import es.eucm.eadandroid.common.gui.JOptionPane;
-import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.animations.Animation;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;

@@ -2,16 +2,11 @@ package es.eucm.eadandroid.ecore.gui.hud.states;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import es.eucm.eadandroid.common.data.chapter.Exit;
 import es.eucm.eadandroid.ecore.control.Game;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalAtrezzo;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
-import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
-import es.eucm.eadandroid.ecore.control.functionaldata.functionalactions.FunctionalExit;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.UIEvent;
-import es.eucm.eadandroid.ecore.gui.GUI;
 import es.eucm.eadandroid.ecore.gui.hud.HUD;
 import es.eucm.eadandroid.ecore.gui.hud.HUDstate;
 import es.eucm.eadandroid.ecore.gui.hud.elements.Magnifier;
@@ -61,6 +56,7 @@ public class MagnifierState extends HUDstate {
 		return false;
 	}
 	
+	@Override
 	public boolean processUnPressed(UIEvent e) {
 		
 		magnifier.hide();
