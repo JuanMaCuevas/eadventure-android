@@ -138,7 +138,8 @@ public class WorkspaceActivity extends FragmentActivity {
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	
-    	if (repository != null && indicator.getFocusedPage() == REPOSITORY) 
+    	if (repository != null && indicator.getFocusedPage() == REPOSITORY 
+    			&& repository.getFlipper() != null && repository.getFlipper().getDisplayedChild() == 1) 
     		return repository.onKeyDown(keyCode, event);       	
     	else return super.onKeyDown(keyCode, event);
 	    
@@ -726,8 +727,9 @@ public class WorkspaceActivity extends FragmentActivity {
     		rs = new RepositoryServices();
     		
     		rs.updateDatabase(this.getActivity(), RAHandler, db);
+    		super.setHasOptionsMenu(true);
 
-    	}
+        }
     	
     		
     	private void databaseUpdated() {
@@ -815,7 +817,7 @@ public class WorkspaceActivity extends FragmentActivity {
     	}
     	
     	public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	    if (keyCode == KeyEvent.KEYCODE_BACK && mFlipper.getDisplayedChild()==1) {
+    	    if (keyCode == KeyEvent.KEYCODE_BACK) {
     	    	mFlipper.showPrevious();
     	        return true;
     	    }
@@ -840,6 +842,10 @@ public class WorkspaceActivity extends FragmentActivity {
     		
     		return true;
 
+    	}
+    	
+    	public ViewFlipper getFlipper(){
+    		return mFlipper;
     	}
     	
     }
