@@ -208,6 +208,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	private void startLoadApplication() {
 		Intent i = new Intent(this, WorkspaceActivity.class);
+		i.putExtra("loadgame", true);
 		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
@@ -229,7 +230,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private void showConversationOptions(Bundle b) {
 
 
-		if(conversationList.getVisibility()!=View.VISIBLE){
+		if (conversationList.getVisibility() != View.VISIBLE){
 			
 		
 			conversationAdapter.clear();
