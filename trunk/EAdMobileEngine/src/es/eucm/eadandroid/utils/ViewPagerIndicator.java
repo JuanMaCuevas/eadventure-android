@@ -46,6 +46,7 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 	}
 	
 	PageInfoProvider mPageInfoProvider;
+	
 	public void setPageInfoProvider(PageInfoProvider pageInfoProvider){
 		this.mPageInfoProvider = pageInfoProvider;
 	}

@@ -689,7 +689,7 @@ public class WorkspaceActivity extends FragmentActivity {
         
     	private void goToLocalGames() {
     		
-    		((PagerAdapter)((WorkspaceActivity)this.getActivity()).mPager.getAdapter()).getItem(0);
+    		((WorkspaceActivity)this.getActivity()).mPager.setCurrentItem(0);
     		
     	}
 
