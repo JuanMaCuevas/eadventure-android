@@ -24,6 +24,8 @@
 
 		<activity android:name=".homeapp.WorkspaceActivity"
 			android:screenOrientation="portrait"></activity>
+			<activity android:name=".homeapp.HomeActivity"
+			android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.localgames.LocalGamesActivity"
 			android:screenOrientation="portrait"></activity>
 		<activity android:name=".homeapp.preferences.PreferencesActivity"
@@ -34,10 +36,7 @@
 
 
 		<activity android:name=".ecore.ECoreActivity"
-			android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>
-		<activity android:name=".homeapp.HomeTabActivity"
-			android:screenOrientation="portrait" android:launchMode="singleTop">				
-		</activity>
+			android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>				
 		<activity android:name=".ecore.EcoreVideo"
 			android:screenOrientation="landscape"></activity>
 		<activity android:name=".homeapp.loadsavedgames.LoadSavedGames"

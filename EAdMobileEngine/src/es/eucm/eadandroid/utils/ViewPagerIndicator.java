@@ -46,6 +46,8 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 	}
 	
 	PageInfoProvider mPageInfoProvider;
+
+	private int startPos;
 	
 	public void setPageInfoProvider(PageInfoProvider pageInfoProvider){
 		this.mPageInfoProvider = pageInfoProvider;
@@ -72,6 +74,7 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 	 */
 	public void init(int startPos, int size, PageInfoProvider pageInfoProvider){
 		setPageInfoProvider(pageInfoProvider);
+		this.startPos = startPos;
 		setText(startPos - 1);
 		this.mSize = size;
 	}
@@ -100,7 +103,8 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 	public void setArrows(Drawable prev, Drawable next){
 		this.mPrevArrow = new ImageView(getContext());
 		this.mPrevArrow.setImageDrawable(prev);
-		this.mPrevArrow.setVisibility(INVISIBLE);
+		if (this.startPos == 0)
+			this.mPrevArrow.setVisibility(INVISIBLE);
 		
 		this.mNextArrow = new ImageView(getContext());
 		this.mNextArrow.setImageDrawable(next);

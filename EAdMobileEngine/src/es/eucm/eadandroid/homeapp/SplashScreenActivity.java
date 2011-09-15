@@ -100,7 +100,7 @@ public class SplashScreenActivity extends Activity{
 
 		public void startEngineHomeActivity() {
 
-			Intent i = new Intent(this, WorkspaceActivity.class);
+			Intent i = new Intent(this, HomeActivity.class);
 			if (data != null)
 				i.setData(data);			
 			startActivity(i);
