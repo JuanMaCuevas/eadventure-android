@@ -102,8 +102,10 @@ public class WorkspaceActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_pager);
         
+        overridePendingTransition(R.anim.fade, R.anim.hold);
+        
         final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        actionBar.setHomeAction(new IntentAction(this, createIntent(this, WorkspaceActivity.class), R.drawable.launcher_icon3));
+        actionBar.setHomeAction(new IntentAction(this, createIntent(this, HomeActivity.class), R.drawable.launcher_icon3));
         actionBar.setTitle("eAdventure Mobile");
         actionBar.addAction(new IntentAction(this, createIntent(this, PreferencesActivity.class), android.R.drawable.ic_menu_preferences));
 
@@ -121,33 +123,61 @@ public class WorkspaceActivity extends FragmentActivity {
         // * What page do we start on.
         // * How many pages are there in total
         // * A callback to get page titles
-		indicator.init(0, NUM_ITEMS, mAdapter);
 		Resources res = getResources();
 		Drawable prev = res.getDrawable(R.drawable.indicator_prev_arrow);
 		Drawable next = res.getDrawable(R.drawable.indicator_next_arrow);
-		
-		// Set images for previous and next arrows.
 		indicator.setArrows(prev, next);
 		
-		if (this.getIntent().getData() != null){
+		Intent i = this.getIntent();
+		
+		if (i.getData() != null){
 			String data = this.getIntent().getData().getPath();
 			installEadGame(data);
+		} 
+		
+		int current = i.getExtras().getInt("Tab");
+		if (current == 1){
+			mPager.setCurrentItem(1);
+			indicator.init(1, NUM_ITEMS, mAdapter);
+			}
+		else if (current == 2){
+			mPager.setCurrentItem(2);
+			indicator.init(2, NUM_ITEMS, mAdapter);
 		}
-
+		else indicator.init(0, NUM_ITEMS, mAdapter);
+		
     }
     
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    protected void onNewIntent(Intent i) {
     	
-    	if (repository != null && indicator.getFocusedPage() == REPOSITORY 
-    			&& repository.getFlipper() != null && repository.getFlipper().getDisplayedChild() == 1) 
-    		return repository.onKeyDown(keyCode, event);       	
-    	else return super.onKeyDown(keyCode, event);
-	    
-	}
+    	setIntent(i);	
+    }
+    
+    @Override
+    protected void onStart() {
+    	
+    	super.onStart();
+    	
+    	Intent i = this.getIntent();
+		
+		int current = i.getExtras().getInt("Tab");
+		if (current == 1){
+			mPager.setCurrentItem(1);
+			indicator.init(1, NUM_ITEMS, mAdapter);
+			}
+		else if (current == 2){
+			mPager.setCurrentItem(2);
+			indicator.init(2, NUM_ITEMS, mAdapter);
+		}
+		else indicator.init(0, NUM_ITEMS, mAdapter);
+		
+		overridePendingTransition(R.anim.fade, R.anim.hold);
+    }    
     
     public static Intent createIntent(Context context, Class<?> c) {
         Intent i = new Intent(context, c);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return i;
     }
 	
@@ -698,6 +728,11 @@ public class WorkspaceActivity extends FragmentActivity {
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             
+            db = new RepositoryDatabase();
+    		rs = new RepositoryServices();
+    		
+    		rs.updateDatabase(this.getActivity(), RAHandler, db);
+            
         }
         
         @Override
@@ -723,10 +758,6 @@ public class WorkspaceActivity extends FragmentActivity {
     		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     		progressDialog.setCancelable(false);
 
-    		db = new RepositoryDatabase();
-    		rs = new RepositoryServices();
-    		
-    		rs.updateDatabase(this.getActivity(), RAHandler, db);
     		super.setHasOptionsMenu(true);
 
         }

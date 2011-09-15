@@ -169,9 +169,9 @@ public class LaunchAndExplorerActivity extends PreferenceActivity {
 	
 	private void startGamesTabActivity() {
 		Intent i = new Intent(this, WorkspaceActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(i);
-//		overridePendingTransition(R.anim.fade, R.anim.hold);
+		overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
 
 	
