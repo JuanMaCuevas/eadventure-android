@@ -1,8 +1,6 @@
 package es.eucm.eadandroid.homeapp;
 
 import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.IntentAction;
-
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 import android.app.Activity;
