@@ -11,45 +11,45 @@ import es.eucm.eadandroid.homeapp.WorkspaceActivity.LocalGamesListFragment.LGAHa
 import es.eucm.eadandroid.res.filefilters.EADFileFilter;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
+/**
+ * A thread to search for existing ead games in the installation folder
+ * 
+ * @author Roberto Tornero
+ */
 public class SearchGamesThread extends Thread {
 
+	/**
+	 * The handler queue to send messages to
+	 */
 	private Handler handler;
 
 	/**
-	 * @param ctx
-	 *            -> contains the system context
-	 * @param ha
-	 *            -> Thread Handle Queue to send messages to.
+	 * Constructor
 	 */
 	public SearchGamesThread(Handler ha) {
 		handler = ha;
 	}
 
 	/**
-	 * Starts the thread and searches for ead games in externalstorage SDCard ,
-	 * when task is finished it sends a GAMES_FOUND message through "ha" handler
-	 * .
+	 * Starts the thread and searches for ead games in the external storage (SDCard).
+	 * When the task is finished, it sends a message through {@link handler}
 	 */
-
 	@Override
 	public void run() {
 
 		Message msg = handler.obtainMessage();
-		
-		
-	//	if (!new File(entry.getName()).exists())
 
 		Log.d("SearchGamesThread", "SDCard state : "
 				+ Environment.getExternalStorageState().toString());
 
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
-			
+
 			String adventures[]=null;
 			File games = new File(Paths.eaddirectory.GAMES_PATH);
-			
+
 			if(games.exists())
-			adventures = games.list(new EADFileFilter());
+				adventures = games.list(new EADFileFilter());
 
 			if (adventures != null && adventures.length > 0) {
 				Log.d("SearchGamesThread", "EAD files in sdCard : "
@@ -62,21 +62,14 @@ public class SearchGamesThread extends Thread {
 
 			}
 
-			else {
-
-				msg.what = LGAHandlerMessages.NO_GAMES_FOUND;
-
-			}
+			else  msg.what = LGAHandlerMessages.NO_GAMES_FOUND;		
 
 		}
 
-		else {
+		else  msg.what = LGAHandlerMessages.NO_SD_CARD;		
 
-			msg.what = LGAHandlerMessages.NO_SD_CARD;
-		}
-		
 		msg.sendToTarget();
 
 	}
-	
+
 }
