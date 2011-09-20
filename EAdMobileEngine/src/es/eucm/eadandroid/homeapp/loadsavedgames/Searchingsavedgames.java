@@ -7,16 +7,30 @@ import es.eucm.eadandroid.homeapp.WorkspaceActivity.LoadGamesListFragment.SavedG
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.utils.ActivityPipe;
 
+/**
+ * Thread to retrieve the information of the saved games from their folder
+ * 
+ * @author Roberto Tornero
+ */
 public class Searchingsavedgames extends Thread {
 
-	Handler handler;
+	/**
+	 * The handler to control the existence of saved games
+	 */
+	private Handler handler;
 
+	/**
+	 * Constructor
+	 */
 	public Searchingsavedgames(Handler han) {
 		super();
-		handler = han;
+		this.handler = han;
 
 	}
 
+	/**
+	 * Retrieve the information of the saved games from their folder, if not empty
+	 */
 	@Override
 	public void run() {
 
@@ -34,7 +48,7 @@ public class Searchingsavedgames extends Thread {
 			msg.what = SavedGamesHandlerMessages.NOGAMES;
 			msg.setData(b);
 			msg.sendToTarget();
-			
+
 		} else {
 
 			String key = ActivityPipe.add(info); 

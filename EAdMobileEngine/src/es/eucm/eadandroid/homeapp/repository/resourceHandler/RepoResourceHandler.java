@@ -26,17 +26,30 @@ import es.eucm.eadandroid.res.filefilters.PNGFilter;
 import es.eucm.eadandroid.res.filefilters.TxtFilter;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
+/**
+ * Collection of methods for managing the repository resources and connections 
+ * 
+ * @author Roberto Tornero
+ */
 public class RepoResourceHandler {
 
+	/**
+	 * Total size of the downloading buffer
+	 */
 	private static final int DOWNLOAD_BUFFER_SIZE = 1048576;
+	/**
+	 * Size of the buffer
+	 */
 	private static final int BUFFER = 2048;	
-	
 
+	/**
+	 * Downloads an image as a Bitmap
+	 */
 	public static Bitmap DownloadImage(String url_from, ProgressNotifier pn) {
 
 		int last = url_from.lastIndexOf("/");
 		String fileName = url_from.substring(last + 1);
-		
+
 		pn.notifyIndeterminate("Downloading "+fileName);
 		Bitmap bitmap = null;
 		InputStream in = null;
@@ -52,22 +65,14 @@ public class RepoResourceHandler {
 		return bitmap;
 	}
 
+	/**
+	 * Downloads any kind of file
+	 */
 	public static void downloadFile(String url_from, String path_to,
 			String fileName, ProgressNotifier pt) {
 
-		//URL u = null;
-
 		try {
 
-			//u = new URL(url_from);
-
-			//HttpURLConnection c = (HttpURLConnection) u.openConnection();
-
-			//pt.notifyProgress(0, "Connection opened");
-
-			/*c.setRequestMethod("GET");
-			c.setDoOutput(true);
-			c.connect();*/
 			HttpGet httpGet = new HttpGet(url_from);
 			HttpClient httpclient = new DefaultHttpClient();
 			// Execute HTTP Get Request
@@ -85,7 +90,6 @@ public class RepoResourceHandler {
 				try {
 
 					float fileSize = response.getEntity().getContentLength();
-					//float fileSize = c.getContentLength();
 
 					Log.d("fileSize", String.valueOf(fileSize));
 
@@ -136,7 +140,10 @@ public class RepoResourceHandler {
 		}
 
 	}
-	
+
+	/**
+	 * Returns the specified input stream from an url
+	 */
 	public static InputStream getInputStreamFromUrl(String url) {
 		InputStream content = null;
 		try {
@@ -145,12 +152,15 @@ public class RepoResourceHandler {
 			// Execute HTTP Get Request
 			HttpResponse response = httpclient.execute(httpGet);
 			content = response.getEntity().getContent();
-                } catch (Exception e) {
-             
+		} catch (Exception e) {
+
 		}
 		return content;
-}
+	}
 
+	/**
+	 * Makes use of the methods for downloading and unzipping files
+	 */
 	public static void downloadFileAndUnzip(String url_from, String path_to,
 			String fileName, ProgressNotifier pn) {
 
@@ -161,13 +171,16 @@ public class RepoResourceHandler {
 
 	}
 
+	/**
+	 * Uncompresses any zip file
+	 */
 	public static void unzip(String path_from,String path_to, String name,boolean deleteZip) {
 
 		StringTokenizer separator = new StringTokenizer(name, ".", true);
 		String file_name = separator.nextToken();
-		
+
 		File f = new File(path_to+file_name);
-		
+
 		if (f.exists())
 			removeDirectory(f);
 
@@ -218,7 +231,7 @@ public class RepoResourceHandler {
 						if (separator.hasMoreElements()) {
 							total_path = total_path + separator.nextToken();
 							(new File(path_to + file_name + "/" + total_path))
-									.mkdir();
+							.mkdir();
 						} else {
 
 							file = new BufferedOutputStream(
@@ -247,8 +260,11 @@ public class RepoResourceHandler {
 
 	}
 
+	/**
+	 * Copies one input stream to an output stream
+	 */
 	public static final void copyInputStream(InputStream in, OutputStream out)
-			throws IOException {
+	throws IOException {
 		byte[] buffer = new byte[1024];
 		int len;
 
@@ -259,35 +275,9 @@ public class RepoResourceHandler {
 		out.close();
 	}
 
-	/*private static InputStream OpenHttpConnection(String urlString)
-
-	throws IOException {
-		InputStream in = null;
-		int response = -1;
-
-		URL url = new URL(urlString);
-		URLConnection conn = url.openConnection();
-
-		if (!(conn instanceof HttpURLConnection))
-			throw new IOException("Not an HTTP connection");
-
-		try {
-			HttpURLConnection httpConn = (HttpURLConnection) conn;
-			httpConn.setAllowUserInteraction(false);
-			httpConn.setInstanceFollowRedirects(true);
-			httpConn.setRequestMethod("GET");
-			httpConn.connect();
-
-			response = httpConn.getResponseCode();
-			if (response == HttpURLConnection.HTTP_OK) {
-				in = httpConn.getInputStream();
-			}
-		} catch (Exception ex) {
-			throw new IOException("Error connecting");
-		}
-		return in;
-	}*/
-
+	/**
+	 * Checks if the eAdventure resources folder exists
+	 */
 	public static boolean checkEadDirectory(String path) {
 		if (new File(path).exists()) {
 			return true;
@@ -295,10 +285,13 @@ public class RepoResourceHandler {
 			return false;
 	}
 
+	/**
+	 * Updates the saved games folder
+	 */
 	public static void updatesavedgames() {
 
 		String[] gameswithsaved = new File(Paths.eaddirectory.SAVED_GAMES_PATH)
-				.list();
+		.list();
 
 		for (int i = 0; i < gameswithsaved.length; i++) {
 
@@ -309,6 +302,9 @@ public class RepoResourceHandler {
 		}
 	}
 
+	/**
+	 * Gets the list of saved games from its folder
+	 */
 	public static LoadGamesArray getexpandablelist() {
 
 		LoadGamesArray info = new LoadGamesArray();
@@ -331,12 +327,12 @@ public class RepoResourceHandler {
 
 					File gamefolder = new File(
 							Paths.eaddirectory.SAVED_GAMES_PATH + games[i]
-									+ "/");
+							                                            + "/");
 
 					String files[] = gamefolder.list(new TxtFilter());
 
 					String screen_shots_bitmaps[] = gamefolder
-							.list(new PNGFilter());
+					.list(new PNGFilter());
 
 					screen_shots = new Bitmap[files.length];
 
@@ -349,11 +345,11 @@ public class RepoResourceHandler {
 
 							screen_shots[j] = BitmapFactory.decodeFile(
 									Paths.eaddirectory.SAVED_GAMES_PATH
-											+ games[i] + "/"
-											+ screen_shots_bitmaps[j], null);
+									+ games[i] + "/"
+									+ screen_shots_bitmaps[j], null);
 
 						}
-						
+
 						info.addGame(games[i], files[j], screen_shots[j]);
 
 					}
@@ -363,9 +359,11 @@ public class RepoResourceHandler {
 		}
 
 		return info;
-
 	}
 
+	/**
+	 * Deletes any kind of file from its path
+	 */
 	public static void deleteFile(String path) {
 
 		File f = new File(path);
@@ -379,6 +377,9 @@ public class RepoResourceHandler {
 
 	}
 
+	/**
+	 * Deletes the specified directory
+	 */
 	public static boolean removeDirectory(File directory) {
 
 		if (directory == null)
@@ -405,80 +406,6 @@ public class RepoResourceHandler {
 		}
 
 		return directory.delete();
-	}
-
-
-//   public static void unzip (String path_from,String path_to,String name,boolean deleteZip) {
-//      try {
-//         BufferedOutputStream dest = null;
-//         FileInputStream fis = new 
-//	   FileInputStream(path_from + name);
-//         ZipInputStream zis = new 
-//	   ZipInputStream(new BufferedInputStream(fis));
-//         ZipEntry entry;
-//         while((entry = zis.getNextEntry()) != null) {
-//            System.out.println("Extracting: " +entry);
-//            int count;
-//            byte data[] = new byte[BUFFER];
-//            // write the files to the disk
-//            FileOutputStream fos = new 
-//	      FileOutputStream(entry.getName());
-//            dest = new 
-//              BufferedOutputStream(fos, BUFFER);
-//            while ((count = zis.read(data, 0, BUFFER)) 
-//              != -1) {
-//               dest.write(data, 0, count);
-//            }
-//            dest.flush();
-//            dest.close();
-//         }
-//         zis.close();
-//         
-// 		if (deleteZip)
-//			(new File(path_from + name)).delete();
-// 		
-//      } catch(Exception e) {
-//         e.printStackTrace();
-//      }    
-//      
-//   }
-
-
-//   public static void unzip(String path_from,String path_to,String name,boolean deleteZip) {
-//      try {
-//         BufferedOutputStream dest = null;
-//         BufferedInputStream is = null;
-//         ZipEntry entry;
-//         ZipFile zipfile = new ZipFile(path_from + name);
-//         Enumeration e = zipfile.entries();
-//         while(e.hasMoreElements()) {
-//            entry = (ZipEntry) e.nextElement();
-//            System.out.println("Extracting: " +entry);
-//            is = new BufferedInputStream
-//              (zipfile.getInputStream(entry));
-//            int count;
-//            byte data[] = new byte[BUFFER];
-//            FileOutputStream fos = new 
-//              FileOutputStream(entry.getName());
-//            dest = new 
-//              BufferedOutputStream(fos, BUFFER);
-//            while ((count = is.read(data, 0, BUFFER)) 
-//              != -1) {
-//               dest.write(data, 0, count);
-//            }
-//            dest.flush();
-//            dest.close();
-//            is.close();
-//            
-//            if (deleteZip)
-//			   (new File(path_from + name)).delete();
-//            
-//         }
-//      } catch(Exception e) {
-//         e.printStackTrace();
-//      }
-//   }
-
-		
+	}		
 
 }

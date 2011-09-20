@@ -16,27 +16,28 @@ import android.os.Message;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
 
+/**
+ * Installs the main resources of EAdventure Mobile
+ * 
+ * @author Roberto Tornero
+ */
 public class EngineResInstaller extends Thread {
 
-	Context con;
-	Handler han;
-
-	public EngineResInstaller(Context con, Handler handler) {
-		super();
-
-		this.con = con;
-		han = handler;
-
-	}
-	
-	public class ActivityHandlerInstalling {
-
-		public static final int FINISHISTALLING = 0;
-
-	}
-	
-	
-	ProgressDialog dialog;
+	/**
+	 * The context from which an instance of this class is called
+	 */
+	private Context con;
+	/**
+	 * The handler to control the installation progress
+	 */
+	private Handler han;
+	/**
+	 * A dialog to show the progress of the installation of the resources
+	 */
+	private ProgressDialog dialog;
+	/**
+	 * The handler to control the appearance and visibility of the dialog
+	 */
 	public Handler ActivityHandler = new Handler() {
 		@Override
 		/**    * Called when a message is sent to Engines Handler Queue **/
@@ -46,7 +47,6 @@ public class EngineResInstaller extends Thread {
 
 			case ActivityHandlerInstalling.FINISHISTALLING:
 				dialog.setIndeterminate(false);
-				//startactivity();
 				dialog.dismiss();
 				break;
 			}
@@ -55,6 +55,20 @@ public class EngineResInstaller extends Thread {
 
 	};
 
+	/**
+	 * Create new instance with parameters
+	 */
+	public EngineResInstaller(Context con, Handler handler) {
+		super();
+
+		this.con = con;
+		this.han = handler;
+
+	}	
+
+	/**
+	 * Use {@link init} to extract the resources and update the dialog 
+	 */
 	@Override
 	public void run() {
 		this.init();
@@ -67,6 +81,9 @@ public class EngineResInstaller extends Thread {
 
 	}
 
+	/**
+	 * Extract the resources to the eAdventure folder
+	 */
 	private void init() {
 		if (!new File(Paths.eaddirectory.ROOT_PATH).exists()) {
 
@@ -74,7 +91,7 @@ public class EngineResInstaller extends Thread {
 				InputStream is = con.getAssets().open("EadAndroid.zip");
 				BufferedOutputStream file;
 				file = new BufferedOutputStream(new FileOutputStream(
-						"/sdcard/EadAndroid.zip"));
+				"/sdcard/EadAndroid.zip"));
 				RepoResourceHandler.copyInputStream(is, file);
 
 			} catch (FileNotFoundException e) {
@@ -88,6 +105,17 @@ public class EngineResInstaller extends Thread {
 			RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,
 					Paths.device.EXTERNAL_STORAGE, "EadAndroid.zip", true);
 		}
+	}
+
+	/**
+	 * Handler messages
+	 * 
+	 * @author Roberto Tornero
+	 */
+	public class ActivityHandlerInstalling {
+
+		public static final int FINISHISTALLING = 0;
+
 	}
 
 }

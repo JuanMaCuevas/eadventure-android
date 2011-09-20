@@ -3,7 +3,11 @@ package es.eucm.eadandroid.homeapp;
 import com.markupartist.android.widget.ActionBar;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,8 +24,27 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * The home menu of eAdventure Mobile. The several icons displayed allow navigating through 
+ * the different screens, preferences included. A link to the eAdventure website is displayed
+ * at the bottom. 
+ * 
+ * @author Roberto Tornero
+ */
 public class HomeActivity extends Activity {
 	
+	/**
+     * The path of the data (game) included with the Intent
+     */
+    private String path_from = null;
+    /**
+     * Id of the installation dialog
+     */
+    static final int DIALOG_INSTALL_ID = 0;
+	
+	/**
+	 * Creation of the grid of icons 
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -65,9 +88,21 @@ public class HomeActivity extends Activity {
 			}
 	    });
 	    
+	    Intent i = this.getIntent();
+		
+		if (i.getData() != null){
+			String data = this.getIntent().getData().getPath();
+			installEadGame(data);
+		} 
+	    
 	    overridePendingTransition(R.anim.fade, R.anim.hold);
 	}
 	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onStart()
+	 */
 	@Override
     protected void onStart() {
     	
@@ -75,6 +110,9 @@ public class HomeActivity extends Activity {
    		overridePendingTransition(R.anim.fade, R.anim.hold);
     } 
 	
+	/**
+	 * If the back key is pressed, ends the application
+	 */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
 	    	this.finish();
@@ -83,31 +121,120 @@ public class HomeActivity extends Activity {
 	    else return false;
 	}
 	
+	/**
+	 * Static method for creating intents to start other activities
+	 */
 	public static Intent createIntent(Context context, Class<?> c) {
         Intent i = new Intent(context, c);
         i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         return i;
     }
 	
+	/**
+	 * Install games in the proper folder
+	 */
+	private void installEadGame(String path_from) {
+		
+		this.path_from = path_from;		
+		this.showDialog(DIALOG_INSTALL_ID);
+		
+		Thread t = new Thread(new Runnable() {
+			public void run()
+			{					
+				String path_from = getPathFrom();
+				int last = path_from.lastIndexOf("/");
+				String gameFileName = path_from.substring(last + 1);
+				path_from= path_from.substring(0, last+1);
+				RepoResourceHandler.unzip(path_from,Paths.eaddirectory.GAMES_PATH,gameFileName,false);
+				dismissDialog(DIALOG_INSTALL_ID);
+			}
+		});
+		
+		t.start();					
+	}
+	
+	/**
+     * Returns the path of the data in the Intent
+     */
+	private String getPathFrom() {
+		return path_from;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onCreateDialog(int)
+	 */
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog = null;
+		switch (id) {
+		case DIALOG_INSTALL_ID:
+			ProgressDialog progressDialog = new ProgressDialog(this);
+			progressDialog.setCancelable(false);		
+			progressDialog.setTitle("Please wait");
+			progressDialog.setIcon(R.drawable.dialog_icon);
+			progressDialog.setMessage("Installing game...");
+			progressDialog.setIndeterminate(true);
+			progressDialog.show();
+			dialog = progressDialog;			
+			break;
+		default:
+			dialog = null;
+		}
+		return dialog;
+	}
+	
+	/**
+	 * An adapter for displaying images with a text below them on the grid
+	 * 
+	 * @author Roberto Tornero
+	 */
 	public class ImageAdapter extends BaseAdapter {
+		
+		/**
+		 * The resources for the icons
+		 */
+	    private Integer[] mThumbIds = {R.drawable.folder2, R.drawable.diskette,
+	            R.drawable.connect_to_network, R.drawable.settings1};	    
+	    /**
+	     * The text to display under each icon
+	     */
+	    private String[] mThumbStrings = {"Installed Games", "Saved Games", "Repository", "Preferences"};
 
+		/**
+		 * Constructor
+		 */
 	    public ImageAdapter() {
 	        super();
 	    }
 
+	    /*
+	     * (non-Javadoc)
+	     * @see android.widget.Adapter#getCount()
+	     */
 	    public int getCount() {
 	        return mThumbIds.length;
 	    }
 
+	    /*
+	     * (non-Javadoc)
+	     * @see android.widget.Adapter#getItem(int)
+	     */
 	    public Object getItem(int position) {
 	        return null;
 	    }
 
+	    /*
+	     * (non-Javadoc)
+	     * @see android.widget.Adapter#getItemId(int)
+	     */
 	    public long getItemId(int position) {
 	        return position;
 	    }
 
-	    // create a new ImageView for each item referenced by the Adapter
+	    /**
+	     * A grid view with the icons and their text
+	     */
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        
 	        View myView = convertView;
@@ -130,14 +257,6 @@ public class HomeActivity extends Activity {
 	        return myView;
 
 	    }
-	    
-
-	    // references to our images
-	    private Integer[] mThumbIds = {R.drawable.folder2, R.drawable.diskette,
-	            R.drawable.connect_to_network, R.drawable.settings1};
-	    
-	 // references to our images
-	    private String[] mThumbStrings = {"Installed Games", "Saved Games", "Repository", "Preferences"};
 	    
 	}
 }

@@ -242,10 +242,10 @@ public class ECoreControl extends Activity{
 	}
 	
 	public void quitGame(){
+		
 		Intent i = new Intent(this, WorkspaceActivity.class);
-		i.putExtra("tabstate", WorkspaceActivity.GAMES);
-		i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
-				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtra("Tab", 0);
+		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade, R.anim.hold);
 		this.finish();
