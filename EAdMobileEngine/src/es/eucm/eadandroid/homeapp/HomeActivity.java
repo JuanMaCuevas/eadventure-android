@@ -113,6 +113,7 @@ public class HomeActivity extends Activity {
 	/**
 	 * If the back key is pressed, ends the application
 	 */
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
 	    	this.finish();

@@ -109,7 +109,7 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 		this.mNextArrow = new ImageView(getContext());
 		this.mNextArrow.setImageDrawable(next);
 		
-		LinearLayout.LayoutParams arrowLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams arrowLayoutParams = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		arrowLayoutParams.gravity = Gravity.CENTER;
 		
 		mPreviousGroup.removeAllViews();
@@ -136,13 +136,13 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 		mCurrent = new TextView(getContext());
 		mNext = new TextView(getContext());
 		
-		RelativeLayout.LayoutParams previousParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams previousParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		previousParams.addRule(RelativeLayout.ALIGN_LEFT);
 		
-		RelativeLayout.LayoutParams currentParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams currentParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		currentParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		
-		RelativeLayout.LayoutParams nextParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams nextParams = new RelativeLayout.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		nextParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		
 		// Groups holding text and arrows
@@ -151,8 +151,8 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 		mNextGroup = new LinearLayout(getContext());
 		mNextGroup.setOrientation(LinearLayout.HORIZONTAL);
 		
-		mPreviousGroup.addView(mPrevious, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		mNextGroup.addView(mNext, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		mPreviousGroup.addView(mPrevious, new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+		mNextGroup.addView(mNext, new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		
 		addView(mPreviousGroup, previousParams);
 		addView(mCurrent, currentParams);
@@ -249,7 +249,7 @@ public class ViewPagerIndicator extends RelativeLayout implements OnPageChangeLi
 	 */
 	void updateColor(int offset){
 		offset = Math.abs(offset);
-		float fraction = offset / ((float)this.getWidth() / 4.0f);
+		float fraction = offset / (this.getWidth() / 4.0f);
 		fraction = Math.min(1, fraction);
 		int r = (int)(mUnfocusedTextColor[0] * fraction + mFocusedTextColor[0] * (1 - fraction));
 		int g = (int)(mUnfocusedTextColor[1] * fraction + mFocusedTextColor[1] * (1 - fraction));

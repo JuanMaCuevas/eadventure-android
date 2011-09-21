@@ -1,6 +1,7 @@
 package es.eucm.eadandroid.ecore;
 
 import java.util.List;
+
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
 import es.eucm.eadandroid.common.loader.Loader;

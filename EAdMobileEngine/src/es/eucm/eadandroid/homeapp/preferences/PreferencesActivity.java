@@ -6,11 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.homeapp.HomeActivity;
-import es.eucm.eadandroid.homeapp.WorkspaceActivity;
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.IntentAction;
 
 /**
  * Preference screen for EAdventure Mobile, built from the file preferences.xml.  
