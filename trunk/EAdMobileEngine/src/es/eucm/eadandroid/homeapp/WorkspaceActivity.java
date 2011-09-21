@@ -1,6 +1,9 @@
 package es.eucm.eadandroid.homeapp;
 
 import java.util.ArrayList;
+
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.IntentAction;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -39,8 +42,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.ecore.ECoreControl;
@@ -197,6 +198,7 @@ public class WorkspaceActivity extends FragmentActivity {
 	 * (non-Javadoc)
 	 * @see android.support.v4.app.FragmentActivity#onDestroy()
 	 */
+	@Override
 	public void onDestroy(){
 		
 		System.gc();
