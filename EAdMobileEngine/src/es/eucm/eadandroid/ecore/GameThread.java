@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -30,29 +31,39 @@ public class GameThread extends Thread {
 	
 	public static final String TAG ="GameThread";
 	
-	private GameThread(SurfaceHolder holder,Context context, Handler handler,String loadingGame)
+	private GameThread(SurfaceHolder holder,Context context, Handler handler,String loadingGame, Display d)
 	{
 		this.handler =handler;
 		this.context = context;
 		Game.create(loadingGame);
 
-		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+		DisplayMetrics dm = new DisplayMetrics(); //= context.getResources().getDisplayMetrics();
 		
-		int landscapeHeight = displayMetrics.heightPixels;
-		int landscapeWidth = displayMetrics.widthPixels;
+		//int landscapeHeight = displayMetrics.heightPixels;
+		//int landscapeWidth = displayMetrics.widthPixels;
 		
-		float scaleDensity = displayMetrics.density;	
+		int width = d.getWidth();
+		int height = d.getHeight();
+		
+		if (width < height){
+			height = d.getWidth();
+			width = d.getHeight();
+		}
+		
+		d.getMetrics(dm);
+		
+		float scaleDensity = dm.density;	
 				
 		GUI.create(holder);
 		ContextServices.create(context);
-		GUI.getInstance().init(landscapeHeight, landscapeWidth, scaleDensity);						
+		GUI.getInstance().init(height, width, scaleDensity);						
 	}
 
 
 
-	public static void create(SurfaceHolder holder,Context context, Handler handler,String loadingGame) 
+	public static void create(SurfaceHolder holder,Context context, Handler handler,String loadingGame, Display d) 
 		{
-	          instance=new GameThread(holder,context,handler,loadingGame);
+	          instance = new GameThread(holder,context,handler,loadingGame,d);
 	
 		}
 	

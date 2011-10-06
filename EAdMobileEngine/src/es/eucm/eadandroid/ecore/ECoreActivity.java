@@ -28,6 +28,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -394,15 +395,15 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			// TODO tengo que descomentar esta linea
 			canvasHolder.addCallback(this);
 			
-			
+			Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();		
 			
 			if (loadingfromsavedgame) {
 				String loadfile = this.getIntent().getExtras().getString(
 						"restoredGame");
 				GameThread
-						.create(canvasHolder, this, ActivityHandler, loadfile);
+						.create(canvasHolder, this, ActivityHandler, loadfile, d);
 			} else
-				GameThread.create(canvasHolder, this, ActivityHandler, null);
+				GameThread.create(canvasHolder, this, ActivityHandler, null, d);
 
 			GameThread.getInstance().setAdventurePath(advPath);
 			GameThread.getInstance().setAdventureName(adventureName);
