@@ -1,5 +1,7 @@
 package es.eucm.eadandroid.res.pathdirectory;
 
+import android.os.Environment;
+
 public final class Paths {
 
 	public static final class repository {
@@ -21,10 +23,8 @@ public final class Paths {
 
 	public static final class device {
 
-//		public static final String EXTERNAL_STORAGE = Environment
-//				.getExternalStorageDirectory().toString() + "/";
-		// FIXME En froyo cambia a /mnt/sdcard/ y no lo lee
-		public static final String EXTERNAL_STORAGE = "/sdcard/";
+		public static final String EXTERNAL_STORAGE = Environment
+		.getExternalStorageDirectory().toString() + "/";
 	}
 
 }
