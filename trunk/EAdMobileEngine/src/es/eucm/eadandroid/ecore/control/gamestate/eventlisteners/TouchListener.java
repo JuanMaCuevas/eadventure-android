@@ -19,13 +19,15 @@ public interface TouchListener {
 				float velocityY) ;
 
 		public boolean onPressed(MotionEvent e);
+		
+		public boolean onLongPressed(MotionEvent e);
 
 		public boolean onScrollPressed(MotionEvent e1, MotionEvent e2,
 				float distanceX, float distanceY) ;
 		
 		public boolean onUnPressed(MotionEvent e) ;
 		
-		public boolean onDown(MotionEvent e) ;
+		public boolean onDown(MotionEvent e);
 				
 	}
 

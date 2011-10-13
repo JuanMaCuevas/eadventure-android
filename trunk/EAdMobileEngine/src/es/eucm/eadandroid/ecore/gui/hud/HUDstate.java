@@ -43,7 +43,9 @@ public class HUDstate {
 	public boolean processOnDown(UIEvent e) {
 		return true;
 	}
-	
+	public boolean processLongPress(UIEvent e) {
+		return true;
+	}
 	
 
 }

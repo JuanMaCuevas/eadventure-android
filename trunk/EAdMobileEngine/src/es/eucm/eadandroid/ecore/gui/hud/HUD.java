@@ -94,6 +94,10 @@ public class HUD {
 	public boolean processOnDown(UIEvent e) {
 		return currentState.processOnDown(e);
 	}
+	
+	public boolean processLongPress(UIEvent e) {
+		return currentState.processLongPress(e);
+	}
 
 	public void setState(int state , Object info) {
 

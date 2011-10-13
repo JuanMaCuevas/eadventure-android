@@ -1101,6 +1101,10 @@ public class GUI {
 		return hud.processFling(e);
 
 	}
+	
+	public boolean processLongPress(UIEvent e) {
+		return hud.processLongPress(e);
+	}
 
 	public boolean processTap(UIEvent e) {
 		return hud.processTap(e);

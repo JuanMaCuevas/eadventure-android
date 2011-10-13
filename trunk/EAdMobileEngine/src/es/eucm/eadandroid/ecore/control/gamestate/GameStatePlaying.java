@@ -184,7 +184,10 @@ public class GameStatePlaying extends GameState {
 				}
 				break;
 			case UIEvent.ON_DOWN_ACTION:				
-				GUI.getInstance().processOnDown(e);		
+				GUI.getInstance().processOnDown(e);	
+				break;
+			case UIEvent.LONG_PRESSED_ACTION:				
+				GUI.getInstance().processLongPress(e);		
 			}
 
 		}
