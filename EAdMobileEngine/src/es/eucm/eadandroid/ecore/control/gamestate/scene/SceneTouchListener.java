@@ -10,6 +10,7 @@ import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.TouchListener;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.FlingEvent;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.LongPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.OnDownEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
@@ -190,7 +191,7 @@ public class SceneTouchListener implements TouchListener , TouchListener.CallBac
     private void dispatchLongPress() {
     	
     	mPressedOrAndMoved=true;
-        this.onPressed(mCurrentDownEvent);
+        this.onLongPressed(mCurrentDownEvent);
         
     }
     
@@ -240,6 +241,12 @@ public class SceneTouchListener implements TouchListener , TouchListener.CallBac
 
 	public boolean onDown(MotionEvent e) {
 		return vEvents.add(new OnDownEvent(e));
+	}
+
+
+	public boolean onLongPressed(MotionEvent e) {
+		vEvents.add(new LongPressedEvent(e));
+		return true;
 	}
 
 }

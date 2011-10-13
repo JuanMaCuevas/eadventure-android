@@ -1,10 +1,13 @@
 package es.eucm.eadandroid.ecore.gui.hud.states;
 
 import android.graphics.Canvas;
+import android.os.Vibrator;
 import android.view.MotionEvent;
+import es.eucm.eadandroid.ecore.control.ContextServices;
 import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalScene;
+import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.LongPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.PressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.ScrollPressedEvent;
 import es.eucm.eadandroid.ecore.control.gamestate.eventlisteners.events.TapEvent;
@@ -104,6 +107,39 @@ public class HiddenState extends HUDstate {
 	@Override
 	public boolean processOnDown(UIEvent e) {
 		return false;
+	}
+	
+	@Override
+	public boolean processLongPress(UIEvent e) {		
+		
+		MotionEvent ev = ((LongPressedEvent)e).event;
+		int srcX = (int) ev.getX();
+		int srcY = (int) ev.getY();
+		
+		FunctionalScene functionalScene = Game.getInstance().getFunctionalScene( );
+        if( functionalScene != null ) {
+        	FunctionalElement elementInside = functionalScene.getElementInside( (int)((srcX - GUI.CENTER_OFFSET) / GUI.SCALE_RATIOX), (int)(srcY / GUI.SCALE_RATIOY), null );
+        	
+        	if (elementInside != null && elementInside.canBeDragged()){
+        		
+        		this.foundedVibration();
+        		Game.getInstance().getActionManager().dragging(elementInside);
+        		stateContext.setState(HUDstate.DraggingState,null);
+        		return false;
+        	}
+        }
+		
+		return false;
+	}	
+	
+	private void foundedVibration() {
+		if (Game.getInstance().getOptions().isVibrationActive()){
+			// Get instance of Vibrator from current Context
+			Vibrator v = ContextServices.getInstance().getServiceVibrator(); 
+			// Vibrate for 300 milliseconds
+			v.vibrate(40);
+		}
+
 	}
 	
 	
