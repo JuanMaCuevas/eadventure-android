@@ -775,15 +775,12 @@ public class FunctionalScene implements Renderable {
         GUI.getInstance( ).addBackgroundToDraw( background, offsetX );
 
         for( FunctionalItem item : items )
-        	if (item.getX()> this.offsetX && item.getX()< GUI.WINDOW_WIDTH + this.offsetX)
         		item.draw( );
 
         for( FunctionalNPC npc : npcs )
-        	if (npc.getX()> this.offsetX && npc.getX()< GUI.WINDOW_WIDTH + this.offsetX)
         		npc.draw( );
 
         for( FunctionalAtrezzo at : atrezzo )
-        	if (at.getX()> this.offsetX && at.getX()< GUI.WINDOW_WIDTH + this.offsetX)
         		at.draw( );
 
         player.draw( );

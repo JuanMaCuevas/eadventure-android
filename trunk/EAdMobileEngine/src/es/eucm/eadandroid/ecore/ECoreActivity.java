@@ -334,6 +334,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				// dialog.setCancelable(false);
 
 			} else {
+				
 				dialog2 = new ProgressDialog(this);
 				dialog2.setTitle("eAdventure");
 				dialog2.setIcon(R.drawable.dialog_icon);
