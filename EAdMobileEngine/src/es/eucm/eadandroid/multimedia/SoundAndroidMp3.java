@@ -28,12 +28,14 @@ public class SoundAndroidMp3 extends Sound {
 		// TODO if the path is not correct I should disable the sound and send
 		// an error
 		
+		if (path == null || path.equals("") || !path.endsWith(".mp3")) return;
+		
 		try {
 
 			// ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
 			if (mMediaPlayer == null) {
 				mMediaPlayer = new MediaPlayer();
-				Log.d("EL PATH ES XXXXXXXXX        ", path + "        XXXXXXXXXXXXXXXXXXX");
+				Log.d("EL PATH ES XXXXXXXXX        ", path);
 				String media = ResourceHandler.getInstance().getMediaPath(path);
 				mMediaPlayer.setDataSource(media);
 				mMediaPlayer.prepare();

@@ -387,7 +387,7 @@ public class WorkspaceActivity extends FragmentActivity {
             
             GameInfo selectedAdventure = (GameInfo) this.getListView()
 			.getItemAtPosition(position);
-            Intent i = new Intent(getActivity(), ECoreControl.class);
+            Intent i = new Intent(getActivity(), ECoreActivity.class);
             i.putExtra("AdventureName", selectedAdventure.getGameTitle());
             this.
             getActivity().startActivity(i);
@@ -413,7 +413,7 @@ public class WorkspaceActivity extends FragmentActivity {
     	@Override
     	public boolean onContextItemSelected(MenuItem item) {
     		
-    		if (tag != GAMES) return super.onContextItemSelected(item);
+    		//if (tag != GAMES) return super.onContextItemSelected(item);
     		
     		AdapterContextMenuInfo information = (AdapterContextMenuInfo) item
     				.getMenuInfo();    		
@@ -425,7 +425,7 @@ public class WorkspaceActivity extends FragmentActivity {
     			GameInfo selectedAdventure = (GameInfo) this.getListView()
     					.getItemAtPosition(information.position);
 
-    			Intent i = new Intent(getActivity(), ECoreControl.class);
+    			Intent i = new Intent(getActivity(), ECoreActivity.class);
     			i.putExtra("AdventureName", selectedAdventure.getGameTitle());
 
     			getActivity().startActivity(i);
@@ -642,7 +642,7 @@ public class WorkspaceActivity extends FragmentActivity {
     	@Override
     	public boolean onContextItemSelected(MenuItem item) {
     		
-    		if (tag != LOAD_GAMES) return super.onContextItemSelected(item);
+    		//if (tag != LOAD_GAMES) return super.onContextItemSelected(item);
     		
     		int position = item.getItemId();
 
