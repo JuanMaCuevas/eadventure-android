@@ -250,9 +250,9 @@ public class DescriptorData implements Cloneable, Described, Titled {
     
     /**
      *  Adventure gps mode
-    */   
-    
+    */       
     protected boolean gpsMode=false;
+    
     /**
      * Stores if the GUI's graphics are customized
      */
@@ -279,6 +279,11 @@ public class DescriptorData implements Cloneable, Described, Titled {
      * This flag tells if the adventure should show automatic commentaries.
      */
     protected boolean commentaries = false;
+    
+    /**
+     * This flag tell if the conversations in this adventure will stop the conversation lines until user skip them
+     */
+    protected boolean keepShowing = false;
 
     /**
      * The name of the player, only used when reports are send by e-mail.
@@ -740,6 +745,18 @@ public class DescriptorData implements Cloneable, Described, Titled {
     public void setProjectName( String projectName ) {
 
         this.projectName = projectName;
+    }
+
+    
+    public Boolean isKeepShowing( ) {
+    
+        return keepShowing;
+    }
+
+    
+    public void setKeepShowing( Boolean keepShowing ) {
+    
+        this.keepShowing = keepShowing;
     }
     
     public boolean isQrCodeMode() {

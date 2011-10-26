@@ -67,13 +67,7 @@ public class NPCTalking extends NPCState {
     /**
      * The time the character will be talking
      */
-    private int timeTalking;
-
-    /**
-     * This is an Voice object of FreeTTS, that is used to synthesize the sound
-     * of a conversation line.
-     */
- //VOICE   private Voice voice; 
+    private int timeTalking; 
 
     /**
      * The speech must be launched in another thread
@@ -84,6 +78,11 @@ public class NPCTalking extends NPCState {
      * Check if tts synthesizer is been used
      */
     private boolean ttsInUse;
+    
+    /**
+     * Keep showing the current line until the user skip it
+     */
+    private boolean keepShowing;
 
     /**
      * Creates a new NPCTalking
@@ -103,10 +102,10 @@ public class NPCTalking extends NPCState {
      * @param text
      *            the text to be displayed
      */
-    public void setText( String text ) {
+    public void setText( String text, boolean keepShowing ) {
 
-        this.text = GUI.getInstance( ).splitText( text );
-
+        this.text = GUI.getInstance( ).splitText( text );        
+        this.keepShowing = keepShowing;
         float multiplier = 1;
         if( Game.getInstance( ).getOptions( ).getTextSpeed( ) == Options.TEXT_SLOW )
             multiplier = 1.5f;
@@ -179,7 +178,7 @@ public class NPCTalking extends NPCState {
     public void update( long elapsedTime ) {
 
         totalTime += elapsedTime;
-        if( totalTime > timeTalking && ( audioId == -1 || !MultimediaManager.getInstance( ).isPlaying( audioId ) ) && ( !ttsInUse ) ) {
+        if( !keepShowing && totalTime > timeTalking && ( audioId == -1 || !MultimediaManager.getInstance( ).isPlaying( audioId ) ) && ( !ttsInUse ) ) {
             npc.setState( FunctionalNPC.IDLE );
             stopTTSTalking( );
         }
@@ -191,9 +190,6 @@ public class NPCTalking extends NPCState {
         super.draw( x, y, scale, depth, fe );
         // If there is a line to speak, draw it
         if( text.length >= 1 && !text[0].equals( "" ) ) {
-        	
-        	double colorletra=npc.getTextFrontColor( );
-        	double colorbordeletra=npc.getTextBorderColor( );
         	
             if( npc.getShowsSpeechBubbles( ) )
                 GUI.getInstance( ).addTextToDraw( text, x - Game.getInstance( ).getFunctionalScene( ).getOffsetX( ), y - Math.round( npc.getHeight( ) * scale ) - 15, npc.getTextFrontColor( ), npc.getTextBorderColor( ), npc.getBubbleBkgColor( ), npc.getBubbleBorderColor( ) );
@@ -233,15 +229,7 @@ public class NPCTalking extends NPCState {
             animations[WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ), true, MultimediaManager.IMAGE_SCENE );
         animations[NORTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_UP ), false, MultimediaManager.IMAGE_SCENE );
         animations[SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_DOWN ), false, MultimediaManager.IMAGE_SCENE );
-
-        //OLD
-        /*animations[EAST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ), false, MultimediaManager.IMAGE_SCENE );
-        if( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_LEFT ) != null && !resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_LEFT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION ) )
-            animations[WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_LEFT ), false, MultimediaManager.IMAGE_SCENE );
-        else
-            animations[WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ), true, MultimediaManager.IMAGE_SCENE );
-        animations[NORTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_UP ), false, MultimediaManager.IMAGE_SCENE );
-        animations[SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_DOWN ), false, MultimediaManager.IMAGE_SCENE );*/
+        
     }
 
     public class TTask extends TimerTask {

@@ -66,6 +66,13 @@ public class FunctionalShowTextEffect extends FunctionalEffect {
      * The timer which controls the time that text is shown
      */
     private Timer timer;
+    
+    private TimerTask task;
+    
+    /**
+     * Value to control when the user skip the text
+     */
+    private boolean skipByUser;
 
     /**
      * Constructor
@@ -91,6 +98,7 @@ public class FunctionalShowTextEffect extends FunctionalEffect {
             timeShown = (int) ( 1400 * multiplier );
 
         this.isStillRunning = false;
+        this.skipByUser = false;
     }
 
     @Override
@@ -112,18 +120,16 @@ public class FunctionalShowTextEffect extends FunctionalEffect {
     	
     	timer = new Timer();
     	
-    	timer.schedule(new TimerTask() {
+    	task = new TimerTask() {
 
 			@Override
-			public void run() {
-			
-                isStillRunning = false;
-                timer.cancel();
-				
+			public void run() {			
+                finish();				
 			}
     		
-    	}, timeShown * 2);
+    	};
     	
+    	timer.schedule(task, timeShown * 2);    	
 
         isStillRunning = true;
 
@@ -135,6 +141,15 @@ public class FunctionalShowTextEffect extends FunctionalEffect {
 
     }
     
+    private void finish() {
+    	
+        if (!Game.getInstance( ).getGameDescriptor( ).isKeepShowing( ) && skipByUser){
+        	isStillRunning = false;
+        	timer.cancel();
+        }
+        
+    }
+    
     @Override
     public boolean canSkip( ) {
         return true;
@@ -142,7 +157,7 @@ public class FunctionalShowTextEffect extends FunctionalEffect {
 
     @Override
     public void skip( ) {
-        isStillRunning=false;
-        timer.cancel();
+       skipByUser = true;
+       finish();
     }
 }

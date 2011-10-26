@@ -33,8 +33,6 @@
  */
 package es.eucm.eadandroid.common.loader.parsers;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.xml.sax.Attributes;
@@ -122,6 +120,13 @@ public class DescriptorHandler extends DefaultHandler {
                 if( attrs.getLocalName( i ).equals( "versionNumber" ) ) {
                     gameDescriptor.setVersionNumber( attrs.getValue( i ) );
                 }
+        }
+        
+        if( qName.equals( "configuration" ) ) {
+            for( int i = 0; i < attrs.getLength( ); i++ ) {
+                if( attrs.getLocalName( i ).equals( "keepShowing" ) )
+                    gameDescriptor.setKeepShowing( attrs.getValue( i ).equals( "yes" ) );
+            }
         }
 
         // If the element is the GUI configuration, store the values
@@ -379,27 +384,9 @@ public class DescriptorHandler extends DefaultHandler {
     @Override
     public InputSource resolveEntity( String publicId, String systemId ) {
 
-        // Take the name of the file SAX is looking for
-        int startFilename = systemId.lastIndexOf( "/" ) + 1;
+    	int startFilename = systemId.lastIndexOf( "/" ) + 1;
         String filename = systemId.substring( startFilename, systemId.length( ) );
-
-        // Build and return a input stream with the file (usually the DTD): 
-        // 1) First try looking at main folder
-        InputStream inputStream = AdaptationHandler.class.getResourceAsStream( filename );
-        if( inputStream == null ) {
-            try {
-                inputStream = new FileInputStream( filename );
-            }
-            catch( FileNotFoundException e ) {
-                inputStream = null;
-            }
-        }
-
-        // 2) Secondly use the inputStreamCreator
-        if( inputStream == null ) {
-            inputStream = isCreator.buildInputStream( filename );
-        }
-        
+        InputStream inputStream = isCreator.buildInputStream( filename );
         return new InputSource( inputStream );
     }
 
