@@ -453,9 +453,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 				((GameStateConversation) Game.getInstance().getCurrentState()).selectDisplayedOption(position);
 				conversationLayout.setVisibility(View.INVISIBLE);
-				conversationList.setVisibility(View.INVISIBLE);
-				
-				//conversationAdapter.clear();			
+				conversationList.setVisibility(View.INVISIBLE);			
 
 		  	    }			
 		});

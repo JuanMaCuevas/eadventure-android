@@ -33,7 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control.functionaldata;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +147,8 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
     private Bitmap oldImage = null;
 
     private Bitmap oldOriginalImage = null;
+    
+    private boolean keepShowingGlobal;
    
 
     /**
@@ -204,6 +205,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
         textBorderColor = generateColor( player.getTextBorderColor( ) );
         bubbleBkgColor = generateColor( player.getBubbleBkgColor( ) );
         bubbleBorderColor = generateColor( player.getBubbleBorderColor( ) );
+        keepShowingGlobal = Game.getInstance( ).getGameDescriptor( ).isKeepShowing( );
         
         
     	/////////////////////////////////////////////////////////
@@ -393,6 +395,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
             addAction( new FunctionalLook( element ) );
             return;
         }
+        
         FunctionalAction nextAction = new FunctionalNullAction( );
         switch( actionSelected ) {
             case ActionManager.ACTION_EXAMINE:
@@ -410,14 +413,14 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                         if( player.isAlwaysSynthesizer( ) )
                             speakWithFreeTTS( GameText.getTextGiveObjectNotInventory( ), player.getVoice( ) );
                         else
-                            speak( GameText.getTextGiveObjectNotInventory( ) );
+                            speak( GameText.getTextGiveObjectNotInventory( ), keepShowingGlobal );
                     }
                 }
                 else {
                     if( player.isAlwaysSynthesizer( ) )
                         speakWithFreeTTS( GameText.getTextGiveNPC( ), player.getVoice( ) );
                     else
-                        speak( GameText.getTextGiveNPC( ) );
+                        speak( GameText.getTextGiveNPC( ), keepShowingGlobal );
                 }
                 break;
             case ActionManager.ACTION_GIVE_TO:
@@ -430,7 +433,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 }
                 else {
                     popAction( );
-                    speak( GameText.getTextGiveCannot( ) );
+                    speak( GameText.getTextGiveCannot( ), keepShowingGlobal );
                 }
                 break;
             case ActionManager.ACTION_GRAB:
@@ -440,10 +443,10 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                         nextAction = new FunctionalGrab( null, element );
                     }
                     else
-                        speak( GameText.getTextGrabObjectInventory( ) );
+                        speak( GameText.getTextGrabObjectInventory( ), keepShowingGlobal );
                 }
                 else
-                    speak( GameText.getTextGrabNPC( ) );
+                    speak( GameText.getTextGrabNPC( ), keepShowingGlobal );
                 break;
             case ActionManager.ACTION_TALK:
                 cancelActions( );
@@ -451,7 +454,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                     nextAction = new FunctionalTalk( null, element );
                 }
                 else
-                    speak( GameText.getTextTalkObject( ) );
+                    speak( GameText.getTextTalkObject( ), keepShowingGlobal );
                 break;
             case ActionManager.ACTION_USE:
                 if( element.canPerform( actionSelected ) ) {
@@ -467,7 +470,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 }
                 else {
                     popAction( );
-                    speak( GameText.getTextUseNPC( ) );
+                    speak( GameText.getTextUseNPC( ), keepShowingGlobal );
                 }
                 break;
             case ActionManager.ACTION_DRAG_TO:
@@ -508,7 +511,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 }
                 else {
                     popAction( );
-                    speak( GameText.getTextUseNPC( ) );
+                    speak( GameText.getTextUseNPC( ), keepShowingGlobal );
                 }
                 break;
         }
@@ -629,36 +632,53 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      *  (non-Javadoc)
      * @see es.eucm.eadventure.engine.core.control.functionaldata.TalkingElement#speak(java.lang.String)
      */
-    public void speak( String text ) {
+    public void speak( String text, boolean keepShowing ) {
 
         if( text != null ) {
             DebugLog.player( "Player says " + text );
-            FunctionalSpeak functionalSpeak = new FunctionalSpeak( null, text );
+            FunctionalSpeak functionalSpeak = new FunctionalSpeak( null, text, keepShowing );
             addAction( functionalSpeak );
         }
     }
+    
+    public void speak( String text){
+        speak( text, false);
+    }
 
-    public void speak( String text, String audioPath ) {
+    public void speak( String text, String audioPath, boolean keepShowing ) {
 
         DebugLog.player( "Player says " + text + " with audio" );
-        FunctionalSpeak functionalSpeak = new FunctionalSpeak( null, text, audioPath );
+        FunctionalSpeak functionalSpeak = new FunctionalSpeak( null, text, audioPath, keepShowing );
         addAction( functionalSpeak );
+    }
+    
+    public void speak( String text, String audioPath) {
+        speak( text, audioPath, false );
     }
 
     /**
      * 
      */
-    public void speakWithFreeTTS( String text, String voice ) {
+    public void speakWithFreeTTS( String text, String voice, boolean keepShowing ) {
 
         if( text != null ) {
             DebugLog.player( "Player speaks with text-to-speech" );
-            FunctionalSpeak functionalSpeak = new FunctionalSpeak( null, text );
+            FunctionalSpeak functionalSpeak = new FunctionalSpeak( null, text, keepShowing );
             if (voice != null && !voice.equals( "" ))
                 functionalSpeak.setSpeakFreeTTS( text, voice );
             
             addAction( functionalSpeak );
             
         }
+    }
+    
+    /**
+     * Speak with TTS without keep showing the line
+     * @param text
+     * @param voice
+     */
+    public void speakWithFreeTTS( String text, String voice ) {
+        speakWithFreeTTS( text, voice, false);
     }
 
     /*

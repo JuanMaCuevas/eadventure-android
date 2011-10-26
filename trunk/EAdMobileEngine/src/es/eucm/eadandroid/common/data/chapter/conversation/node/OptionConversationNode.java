@@ -74,6 +74,16 @@ public class OptionConversationNode extends ConversationNode {
      * Show the options randomly
      */
     private boolean random;
+    
+    /**
+     * Keep the last conversation line showing
+     */
+    private boolean keepShowing;
+    
+    /**
+     * Show the option selected by user
+     */
+    private boolean showUserOption;
 
     /* Methods */
 
@@ -90,11 +100,13 @@ public class OptionConversationNode extends ConversationNode {
     /**
      * Constructor
      */
-    public OptionConversationNode( boolean random ) {
+    public OptionConversationNode( boolean random, boolean keepShowing, boolean showUserOption) {
 
         options = new ArrayList<ConversationLine>( );
         optionNodes = new ArrayList<ConversationNode>( );
         this.random = random;
+        this.keepShowing = keepShowing;
+        this.showUserOption = showUserOption;
         effects = new Effects( );
     }
 
@@ -103,7 +115,7 @@ public class OptionConversationNode extends ConversationNode {
      */
     public OptionConversationNode( ) {
 
-        this( false );
+        this( false , false, false);
     }
 
     /*
@@ -289,6 +301,8 @@ public class OptionConversationNode extends ConversationNode {
                 ocn.options.add( (ConversationLine) cl.clone( ) );
         }
         ocn.random = random;
+        ocn.keepShowing = keepShowing;
+        ocn.showUserOption = showUserOption;
         return ocn;
     }
 
@@ -305,4 +319,28 @@ public class OptionConversationNode extends ConversationNode {
 
         return options.get( index );
     }
+    
+    public Boolean isKeepShowing( ) {
+        
+        return keepShowing;
+    }
+
+    
+    public void setKeepShowing( Boolean keepShowing ) {
+    
+        this.keepShowing = keepShowing;
+    }
+
+    
+    public Boolean isShowUserOption( ) {
+    
+        return showUserOption;
+    }
+
+    
+    public void setShowUserOption( Boolean showUserOption ) {
+    
+        this.showUserOption = showUserOption;
+    }
+    
 }

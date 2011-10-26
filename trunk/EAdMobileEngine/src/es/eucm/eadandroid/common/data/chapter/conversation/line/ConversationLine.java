@@ -33,6 +33,7 @@
  */
 package es.eucm.eadandroid.common.data.chapter.conversation.line;
 
+import es.eucm.eadandroid.common.auxiliar.AllElementsWithAssets;
 import es.eucm.eadandroid.common.data.Named;
 import es.eucm.eadandroid.common.data.chapter.conditions.Conditions;
 import es.eucm.eadandroid.common.data.chapter.elements.Player;
@@ -72,6 +73,11 @@ public class ConversationLine implements Cloneable, Named {
      * Conditions associated to this line
      */
     private Conditions conditions;
+    
+    /**
+     * Keep line showing until user interacts
+     */
+    private boolean keepShowing;
 
     /**
      * Constructor.
@@ -86,6 +92,7 @@ public class ConversationLine implements Cloneable, Named {
         this.name = name;
         this.text = text;
         this.synthesizerVoice = false;
+        this.keepShowing = false;
         conditions = new Conditions( );
     }
 
@@ -156,6 +163,10 @@ public class ConversationLine implements Cloneable, Named {
     public void setAudioPath( String audioPath ) {
 
         this.audioPath = audioPath;
+        
+      //if audioPath is not null, store the conversation line 
+        if (audioPath != null)
+            AllElementsWithAssets.addAsset( this );
     }
 
     /**
@@ -204,6 +215,16 @@ public class ConversationLine implements Cloneable, Named {
 
         this.conditions = conditions;
     }
+    
+    public boolean isKeepShowing( ) {
+
+        return keepShowing;
+    }
+
+    public void setKeepShowing( boolean keepShowing ) {
+
+        this.keepShowing = keepShowing;
+    }
 
     @Override
     public Object clone( ) throws CloneNotSupportedException {
@@ -214,6 +235,7 @@ public class ConversationLine implements Cloneable, Named {
         cl.synthesizerVoice = synthesizerVoice;
         cl.text = ( text != null ? new String( text ) : null );
         cl.conditions = ( conditions != null ? (Conditions) conditions.clone( ) : null );
+        cl.keepShowing = keepShowing;
         return cl;
     }
 

@@ -261,6 +261,15 @@ public class AdventureHandler extends DefaultHandler {
 			    adventureData.setVersionNumber(attrs.getValue(i));
 			}
 		}
+		
+		if( qName.equals( "configuration" ) ) {
+            for( int i = 0; i < attrs.getLength( ); i++ ) {    
+            	
+            	if( attrs.getLocalName( i ).equals( "keepShowing" ) )
+            		adventureData.setKeepShowing( attrs.getValue( i ).equals( "yes" ) );         
+
+            }
+        }
 		    
 	    
 	    	// If reading a title, empty the current string
@@ -395,7 +404,8 @@ public class AdventureHandler extends DefaultHandler {
 
 				// Create a new factory
 				SAXParserFactory factory = SAXParserFactory.newInstance( );
-				factory.setValidating( validate );
+				//factory.setValidating( validate );
+				factory.setValidating( false );
 				SAXParser saxParser = factory.newSAXParser( );
 
 				// Set the input stream with the file
@@ -549,25 +559,10 @@ public class AdventureHandler extends DefaultHandler {
      */
     @Override
 	public InputSource resolveEntity( String publicId, String systemId ) {
-        // Take the name of the file SAX is looking for
-        int startFilename = systemId.lastIndexOf( "/" ) + 1;
+    	
+    	int startFilename = systemId.lastIndexOf( "/" ) + 1;
         String filename = systemId.substring( startFilename, systemId.length( ) );
-        
-        // Build and return a input stream with the file (usually the DTD): 
-        // 1) First try looking at main folder
-        InputStream inputStream = AdventureHandler.class.getResourceAsStream( filename );
-        if ( inputStream==null ){
-        	try {
-				inputStream = new FileInputStream ( filename );
-			} catch (FileNotFoundException e) {
-				inputStream = null;
-			}
-        }
-        
-        // 2) Secondly use the inputStreamCreator
-        if ( inputStream == null)
-        	inputStream = isCreator.buildInputStream( filename );
-        
+        InputStream inputStream = isCreator.buildInputStream( filename );
         return new InputSource( inputStream );
     }
 

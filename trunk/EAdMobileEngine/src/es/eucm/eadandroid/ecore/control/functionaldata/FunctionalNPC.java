@@ -326,7 +326,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
     public void update( long elapsedTime ) {
 
         currentState.update( elapsedTime );
-        currentState.updateAnimation( );
+        //currentState.updateAnimation( );
         currentState.getCurrentAnimation( ).update( elapsedTime );
     }
 
@@ -461,7 +461,9 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
                 currentState = walkingAnimation;
                 break;
         }
+        currentState.setResetAnimation( true );
         currentState.initialize( );
+        
         //if( currentDirection != -1 )
         //    currentState.setCurrentDirection( currentDirection );
         //currentDirection = -1;
@@ -471,35 +473,47 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
      * (non-Javadoc)
      * @see es.eucm.eadventure.engine.engine.control.functionaldata.TalkingElement#speak(java.lang.String)
      */
-    public void speak( String text2 ) {
+    public void speak( String text2, boolean keepShowing ) {
 
         String text = Game.getInstance( ).processText( text2 );
 
         DebugLog.player( "NPC " + npc.getId( ) + " says " + text );
-        talkingAnimation.setText( text );
+        talkingAnimation.setText( text, keepShowing );
         setState( TALK );
     }
+    
+    public void speak( String text2){
+        speak( text2, false);
+    }
 
-    public void speak( String text2, String audioPath ) {
+    public void speak( String text2, String audioPath, boolean keepShowing ) {
 
         String text = Game.getInstance( ).processText( text2 );
 
         DebugLog.player( "NPC " + npc.getId( ) + " says " + text + " with audio" );
         talkingAnimation.setAudio( audioPath );
-        talkingAnimation.setText( text );
+        talkingAnimation.setText( text, keepShowing );
         setState( TALK );
     }
+    
+    public void speak( String text2, String audioPath){
+        speak( text2, audioPath, false);
+    }
 
-    public void speakWithFreeTTS( String text2, String voice ) {
+    public void speakWithFreeTTS( String text2, String voice, boolean keepShowing ) {
 
         String text = Game.getInstance( ).processText( text2 );
 
         DebugLog.player( "NPC " + npc.getId( ) + " speaks with text-to-speech" );
         // Start the voice
-        speak( text );
+        speak( text, keepShowing );
         draw( );
         if (voice!=null && !voice.equals( "" ))
             talkingAnimation.setSpeakFreeTTS( text, voice );
+    }
+    
+    public void speakWithFreeTTS( String text2, String voice){
+        speakWithFreeTTS( text2, voice, false);
     }
 
     public void stopTalking( ) {

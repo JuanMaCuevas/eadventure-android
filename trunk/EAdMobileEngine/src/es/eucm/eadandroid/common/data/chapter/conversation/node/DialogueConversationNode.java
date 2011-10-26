@@ -70,24 +70,34 @@ public class DialogueConversationNode extends ConversationNode {
     private Effects effects;
 
     private boolean effectConsumed = false;
+    
+    /**
+     * Store if stop the line until the user decides.
+     */
+    private boolean keepShowing;
 
     /* Methods */
-
+    
     /**
      * Constructor
      */
-    public DialogueConversationNode( ) {
+    public DialogueConversationNode() {
+        this(false);
+    }
+
+    public DialogueConversationNode(boolean waitUserInteraction) {
 
         dialogue = new ArrayList<ConversationLine>( );
         nextNode = null;
         terminal = true;
         effects = new Effects( );
+        this.keepShowing = waitUserInteraction;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see es.eucm.common.data.chapterdata.conversation.node.ConversationNodeView#getType()
+     * @see es.eucm.eadandroid.common.data.chapterdata.conversation.node.ConversationNodeView#getType()
      */
     public int getType( ) {
 
@@ -97,7 +107,7 @@ public class DialogueConversationNode extends ConversationNode {
     /*
      * (non-Javadoc)
      * 
-     * @see es.eucm.common.data.chapterdata.conversation.node.ConversationNodeView#isTerminal()
+     * @see es.eucm.eadandroid.common.data.chapterdata.conversation.node.ConversationNodeView#isTerminal()
      */
     public boolean isTerminal( ) {
 
@@ -107,7 +117,7 @@ public class DialogueConversationNode extends ConversationNode {
     /*
      * (non-Javadoc)
      * 
-     * @see es.eucm.common.data.chapterdata.conversation.node.ConversationNodeView#getChildCount()
+     * @see es.eucm.eadandroid.common.data.chapterdata.conversation.node.ConversationNodeView#getChildCount()
      */
     public int getChildCount( ) {
 
@@ -167,7 +177,7 @@ public class DialogueConversationNode extends ConversationNode {
     /*
      * (non-Javadoc)
      * 
-     * @see es.eucm.common.data.chapterdata.conversation.node.ConversationNodeView#getLineCount()
+     * @see es.eucm.eadandroid.common.data.chapterdata.conversation.node.ConversationNodeView#getLineCount()
      */
     public int getLineCount( ) {
 
@@ -258,6 +268,7 @@ public class DialogueConversationNode extends ConversationNode {
         //dcn.nextNode = (nextNode != null ? (ConversationNode) nextNode.clone() : null);
         dcn.nextNode = null;
         dcn.terminal = terminal;
+        dcn.keepShowing = keepShowing;
         return dcn;
     }
 
@@ -269,6 +280,16 @@ public class DialogueConversationNode extends ConversationNode {
     public ConversationLine getConversationLine( int index ) {
 
         return dialogue.get( index );
+    }
+    
+    public Boolean isKeepShowing( ) {
+        
+        return keepShowing;
+    }
+    
+    public void setKeepShowing( Boolean keepShowing ) {
+    
+        this.keepShowing = keepShowing;
     }
 
 }

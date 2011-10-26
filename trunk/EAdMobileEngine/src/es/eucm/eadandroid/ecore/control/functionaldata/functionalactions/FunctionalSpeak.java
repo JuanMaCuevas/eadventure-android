@@ -93,6 +93,11 @@ public class FunctionalSpeak extends FunctionalAction {
      * The time the character will be talking
      */
     private int timeTalking;
+    
+    /**
+     * Keep showing the current line until user skip it
+     */
+    private boolean keepShowing;
 
     /**
      * Constructor with the original action and the text to speak
@@ -102,12 +107,13 @@ public class FunctionalSpeak extends FunctionalAction {
      * @param text
      *            The text to speak
      */
-    public FunctionalSpeak( Action action, String text ) {
+    public FunctionalSpeak( Action action, String text, boolean keepShowing ) {
 
         super( action );
         type = ActionManager.ACTION_TALK;
         setText( text );
         ttsInUse = false;
+        this.keepShowing = keepShowing;
     }
 
     /**
@@ -121,13 +127,14 @@ public class FunctionalSpeak extends FunctionalAction {
      * @param audioPath
      *            The path of the audio
      */
-    public FunctionalSpeak( Action action, String text, String audioPath ) {
+    public FunctionalSpeak( Action action, String text, String audioPath, boolean keepShowing ) {
 
         super( action );
         type = ActionManager.ACTION_TALK;
         setText( text );
         setAudio( audioPath );
         ttsInUse = false;
+        this.keepShowing = keepShowing;
     }
 
     @Override
@@ -139,15 +146,6 @@ public class FunctionalSpeak extends FunctionalAction {
         Resources resources = functionalPlayer.getResources( );
         MultimediaManager multimedia = MultimediaManager.getInstance( );
         Animation[] animations = new Animation[ 4 ];
-
-        //OLD code to speak
-        /*animations[AnimationState.EAST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ), false, MultimediaManager.IMAGE_PLAYER );
-        if( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_LEFT ) != null && !resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_LEFT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION ) )
-            animations[AnimationState.WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_LEFT ), false, MultimediaManager.IMAGE_PLAYER );
-        else
-            animations[AnimationState.WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ), true, MultimediaManager.IMAGE_PLAYER );
-        animations[AnimationState.NORTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_UP ), false, MultimediaManager.IMAGE_PLAYER );
-        animations[AnimationState.SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_DOWN ), false, MultimediaManager.IMAGE_PLAYER );*/
         
         if( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ) != null && !resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION )
                 && !resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_RIGHT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION + ".eaa"))
@@ -163,7 +161,6 @@ public class FunctionalSpeak extends FunctionalAction {
         animations[AnimationState.NORTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_UP ), false, MultimediaManager.IMAGE_PLAYER );
         animations[AnimationState.SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_SPEAK_DOWN ), false, MultimediaManager.IMAGE_PLAYER );
 
-
         functionalPlayer.setAnimation( animations, -1 );
     }
 
@@ -172,7 +169,7 @@ public class FunctionalSpeak extends FunctionalAction {
 
         totalTime += elapsedTime;
 
-        if( totalTime > timeTalking && ( audioId == -1 || !MultimediaManager.getInstance( ).isPlaying( audioId ) ) && ( !ttsInUse ) ) {
+        if( !keepShowing && totalTime > timeTalking && ( audioId == -1 || !MultimediaManager.getInstance( ).isPlaying( audioId ) ) && ( !ttsInUse ) ) {
             finished = true;
             functionalPlayer.popAnimation( );
             stopTTSTalking( );
@@ -356,8 +353,11 @@ public class FunctionalSpeak extends FunctionalAction {
     @Override
     public void stop( ) {
 
-        if( this.isStarted( ) )
+        if( this.isStarted( ) ){
             stopTTSTalking( );
+        	if( audioId != -1 ) 
+        		MultimediaManager.getInstance( ).stopPlayingInmediately( audioId );
+        }
     }
 
     @Override

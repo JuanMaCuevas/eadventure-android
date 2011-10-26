@@ -33,9 +33,6 @@
  */
 package es.eucm.eadandroid.ecore.control.gamestate;
 
-
-
-
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -46,9 +43,11 @@ import android.os.Message;
 import es.eucm.eadandroid.common.data.chapter.conversation.line.ConversationLine;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNode;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.ConversationNodeView;
+import es.eucm.eadandroid.common.data.chapter.conversation.node.DialogueConversationNode;
 import es.eucm.eadandroid.common.data.chapter.conversation.node.OptionConversationNode;
 import es.eucm.eadandroid.ecore.GameThread;
 import es.eucm.eadandroid.ecore.ECoreActivity.ActivityHandlerMessages;
+import es.eucm.eadandroid.ecore.control.Game;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalConditions;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalPlayer;
 import es.eucm.eadandroid.ecore.control.functionaldata.TalkingElement;
@@ -60,7 +59,6 @@ import es.eucm.eadandroid.ecore.gui.GUI;
  * A game main loop during a conversation
  */
 public class GameStateConversation extends GameState {
-
 
     /**
      * Height of the text of the responses
@@ -114,11 +112,22 @@ public class GameStateConversation extends GameState {
      * Store only the option which has all conditions OK
      */
     private ArrayList<ConversationLine> optionsToShow;
+    
+    /**
+     * Like keepShowing, but at adventure level
+     */
+    private boolean generalKeepShowing;
 
     /**
      * The name of conversation
      */
     private String convID;
+    
+    /**
+     * Last Conversation line previous to an option node
+     */
+    private ConversationLine lastConversationLine;
+    
 
 	private static boolean skip;
 
@@ -134,7 +143,9 @@ public class GameStateConversation extends GameState {
         currentNode = game.getConversation( ).getRootNode( );
         currentLine = 0;
         optionsToShow = new ArrayList<ConversationLine>( );
-        
+        isOptionSelected = false;
+        lastConversationLine = null;
+        generalKeepShowing = Game.getInstance( ).getGameDescriptor( ).isKeepShowing( );
         skip = false;
         convID = new String( );
 
@@ -142,6 +153,7 @@ public class GameStateConversation extends GameState {
 
     @Override
     public synchronized void mainLoop( long elapsedTime, int fps ) {
+    	
     	handleUIEvents();
 
         Canvas c = setUpGUI( elapsedTime );
@@ -191,8 +203,7 @@ public class GameStateConversation extends GameState {
     	
     	if (skip){
     		playNextLine( );
-    		skip = false;
-    		
+    		skip = false;    		
     	}
 
         firstTime = true;
@@ -208,15 +219,51 @@ public class GameStateConversation extends GameState {
      */
     private void processOptionNode( Canvas c ) {
     	
-    	 if( !isOptionSelected )
+    	 if( !isOptionSelected ){
+    		 showPlayerQuestion( );
              optionNodeNoOptionSelected( c );
+    	 }
          else
-             selectOption();
+        	 optionNodeWithOptionSelected( );
+    }
+    
+    /**
+     * Keep showing in option node the last line in previous dialog node
+     */
+    private void showPlayerQuestion( ) {
+
+        if( ( (OptionConversationNode) currentNode ).isKeepShowing( ) ) {
+            TalkingElement talking = null;
+            
+            if( lastConversationLine.isPlayerLine( ) )
+                talking = game.getFunctionalPlayer( );
+            else {
+                if( lastConversationLine.getName( ).equals( "NPC" ) )
+                    talking = game.getCurrentNPC( );
+                else
+                    talking = game.getFunctionalScene( ).getNPC( lastConversationLine.getName( ) );
+            }
+            
+            if (firstTime){
+
+                if( lastConversationLine.isValidAudio( ))
+                    talking.speak( lastConversationLine.getText( ), lastConversationLine.getAudioPath( ), true );
+                else if( lastConversationLine.getSynthesizerVoice( ) || talking.isAlwaysSynthesizer( ) )
+                    talking.speakWithFreeTTS( lastConversationLine.getText( ), talking.getPlayerVoice( ), true );
+            
+            }else
+                talking.speak( lastConversationLine.getText( ), true );
+            
+            
+            game.setCharacterCurrentlyTalking( talking );
+        }
+
     }
 
 
 	private void optionNodeNoOptionSelected(Canvas  c ){
-        if( firstTime ) {
+        
+		if( firstTime ) {
         	
             ( (OptionConversationNode) currentNode ).doRandom( );
             storeOKConditionsConversationLines( );
@@ -227,13 +274,18 @@ public class GameStateConversation extends GameState {
     		Message msg = handler.obtainMessage();
 
     		Bundle b = new Bundle();
-    		int textColor = game.getCharacterCurrentlyTalking().getTextFrontColor();
+    		
+    		int textColor = 0;
+    		if (game.getCharacterCurrentlyTalking()!= null)
+    			textColor = game.getCharacterCurrentlyTalking().getTextFrontColor();
+    		
     		for( int i = 0; i < optionsToShow.size( ); i++ ) {
     			b.putString(Integer.toString(i), optionsToShow.get( i ).getText( ));
     			b.putInt("color",textColor );
               //  drawLine( c, optionsToShow.get( i ).getText( ), i, i );
                 
             }
+    		
     		numberDisplayedOptions = optionsToShow.size( );
     		b.putInt("size", numberDisplayedOptions);
     		msg.what = ActivityHandlerMessages.CONVERSATION;
@@ -272,7 +324,6 @@ public class GameStateConversation extends GameState {
     }
 
 
-
     /**
      * Finalize the conversation
      */
@@ -281,14 +332,13 @@ public class GameStateConversation extends GameState {
         for( ConversationNode node : game.getConversation( ).getAllNodes( ) ) {
             node.resetEffect( );
         }
-     //HUD   GUI.getInstance( ).toggleHud( true );
         game.endConversation( );
     }
 
     /**
      * If the user chooses a valid option, it is selected and its text show.
      */
-    public void selectOption() {
+    /*public void selectOption() {
 
         if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) ) {
             if (skip){
@@ -315,37 +365,103 @@ public class GameStateConversation extends GameState {
         		isOptionSelected = false;
         	}
         }
-    }	
+    }	*/
     ///////////////
+    
+    /**
+     * In an option node with an option selected: If there is a character
+     * talking, do nothing. If the current node has effects, pile them. If the
+     * current node has consumed it's effects or doesn't have them, finish the
+     * conversation. If the current node isn't terminal, follow the selected
+     * option.
+     */
+    private void optionNodeWithOptionSelected( ) {
+
+        if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) ) {
+        	if (skip) {
+                game.getCharacterCurrentlyTalking( ).stopTalking( );
+                skip = false;            	
+            }
+            return;
+        }
+
+        if( currentNode.hasValidEffect( ) && !currentNode.isEffectConsumed( ) ) {
+            currentNode.consumeEffect( );
+            game.pushCurrentState( this );
+            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );
+        }
+        else if( ( !currentNode.hasValidEffect( ) || currentNode.isEffectConsumed( ) ) && currentNode.isTerminal( ) ) {
+            endConversation( );
+        }
+        else if( !currentNode.isTerminal( ) ) {
+            if( optionSelected >= 0 && optionSelected < currentNode.getChildCount( ) ) {
+                currentNode.resetEffect( );
+                currentNode = currentNode.getChild( correspondingIndex.get( optionSelected ) );
+                isOptionSelected = false;
+            }
+        }
+    }
+    
+    /*public void selectDisplayedOption(int optionChoosed ) {
+
+        this.optionSelected = optionChoosed;
+
+        if( optionSelected >= 0 && optionSelected < optionsToShow.size( ) ) {
+                if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) )
+                        game.getCharacterCurrentlyTalking( ).stopTalking( );
+
+                FunctionalPlayer player = game.getFunctionalPlayer( );
+                ConversationLine line = currentNode.getLine( correspondingIndex.get( optionSelected ) );
+
+                if( line.isValidAudio( ) ) {
+                        player.speak( line.getText( ), line.getAudioPath( ) );
+                }
+                else if( line.getSynthesizerVoice( ) || player.isAlwaysSynthesizer( ) ) {
+                        player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ) );
+                }
+                else {
+                        player.speak( line.getText( ) );
+                }
+
+                game.setCharacterCurrentlyTalking( player );
+                isOptionSelected = true;
+
+        }
+    }*/
 
 
+    /**
+     * If the user chooses a valid option, it is selected and its text show.
+     */
+    public void selectDisplayedOption(int pos) {
 
+    	optionSelected = pos;
+    	
+        if( optionSelected >= 0 && optionSelected < optionsToShow.size( ) ) {
+            if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) )
+                game.getCharacterCurrentlyTalking( ).stopTalking( );
 
-        public void selectDisplayedOption(int optionChoosed ) {
+            FunctionalPlayer player = game.getFunctionalPlayer( );
+            ConversationLine line = currentNode.getLine( correspondingIndex.get( optionSelected ) );
 
-    	this.optionSelected = optionChoosed;
+            if( ( (OptionConversationNode) currentNode ).isShowUserOption( ) ) {
 
-    	if( optionSelected >= 0 && optionSelected < optionsToShow.size( ) ) {
-    		if( game.getCharacterCurrentlyTalking( ) != null && game.getCharacterCurrentlyTalking( ).isTalking( ) )
-    			game.getCharacterCurrentlyTalking( ).stopTalking( );
+                if( line.isValidAudio( ) ) {
+                    player.speak( line.getText( ), line.getAudioPath( ), generalKeepShowing );
+                }
+                else if( line.getSynthesizerVoice( ) || player.isAlwaysSynthesizer( ) ) {
+                    player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ), generalKeepShowing );
+                }
+                else
+                    player.speak( line.getText( ), generalKeepShowing );
 
-    		FunctionalPlayer player = game.getFunctionalPlayer( );
-    		ConversationLine line = currentNode.getLine( correspondingIndex.get( optionSelected ) );
+            }
+            else
+                player.speak( "" );
 
-    		if( line.isValidAudio( ) ) {
-    			player.speak( line.getText( ), line.getAudioPath( ) );
-    		}
-    		else if( line.getSynthesizerVoice( ) || player.isAlwaysSynthesizer( ) ) {
-    			player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ) );
-    		}
-    		else {
-    			player.speak( line.getText( ) );
-    		}
-
-    		game.setCharacterCurrentlyTalking( player );
-    		isOptionSelected = true;
-
-    	}
+            game.setCharacterCurrentlyTalking( player );
+            isOptionSelected = true;
+        }
     }
 
  
@@ -382,9 +498,17 @@ public class GameStateConversation extends GameState {
      */
     private void playNextLineInNode( ) {
 
-        ConversationLine line = currentNode.getLine( currentLine );
-        TalkingElement talking = null;
-
+    	//if the line before the option node is going to be shown, skip it and show directly with the options
+        if (currentLine + 1 == currentNode.getLineCount( ) && !currentNode.isTerminal( ) && 
+                currentNode.getChild( 0 ).getType( ) == ConversationNodeView.OPTION && ((OptionConversationNode)currentNode.getChild( 0 )).isKeepShowing( )){
+            
+            currentLine++;
+            skipToNextNode( );
+            
+        } else {
+            ConversationLine line = currentNode.getLine( currentLine );
+            TalkingElement talking = null;
+        
         // Only talk if all conditions in current line are OK
         if( ( new FunctionalConditions( currentNode.getLine( currentLine ).getConditions( ) ).allConditionsOk( ) ) ) {
 
@@ -398,16 +522,19 @@ public class GameStateConversation extends GameState {
             }
 
             if( talking != null ) {
+                boolean keepShowing = generalKeepShowing ||  ( (DialogueConversationNode) currentNode ).isKeepShowing( ) || line.isKeepShowing( );
+                
                 if( line.isValidAudio( ) )
-                    talking.speak( line.getText( ), line.getAudioPath( ) );
+                    talking.speak( line.getText( ), line.getAudioPath( ), keepShowing );
                 else if( line.getSynthesizerVoice( ) || talking.isAlwaysSynthesizer( ) )
-                    talking.speakWithFreeTTS( line.getText( ), talking.getPlayerVoice( ) );
+                    talking.speakWithFreeTTS( line.getText( ), talking.getPlayerVoice( ), keepShowing );
                 else
-                    talking.speak( line.getText( ) );
+                    talking.speak( line.getText( ), keepShowing );
             }
             game.setCharacterCurrentlyTalking( talking );
         }
         currentLine++;
+        }
     }
 
     /**
@@ -416,19 +543,23 @@ public class GameStateConversation extends GameState {
      */
     private void skipToNextNode( ) {
 
+        if( currentLine != 0 )
+            lastConversationLine = currentNode.getConversationLine( currentLine - 1 );
+        else
+            lastConversationLine = new ConversationLine( "fake", "" );
         if( currentNode.hasValidEffect( ) && !currentNode.isEffectConsumed( ) ) {
             currentNode.consumeEffect( );
             game.pushCurrentState( this );
-            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );}
-       
+            FunctionalEffects.storeAllEffects( currentNode.getEffects( ), true );
+        }
         else if( ( !currentNode.hasValidEffect( ) || currentNode.isEffectConsumed( ) ) && currentNode.isTerminal( ) ) {
             endConversation( );
         }
         else if( !currentNode.isTerminal( ) ) {
+            currentNode.resetEffect( );
             currentNode = currentNode.getChild( 0 );
             currentLine = 0;
         }
-        
     }
     
 
