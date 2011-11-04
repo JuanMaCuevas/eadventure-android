@@ -56,10 +56,28 @@ public class NPCWalking extends NPCState {
     @Override
     public void update( long elapsedTime ) {
 
+    	boolean endX = false;
+        boolean endY = false;
         if( ( npc.getSpeedX( ) > 0 && npc.getX( ) < npc.getDestX( ) ) || ( npc.getSpeedX( ) <= 0 && npc.getX( ) >= npc.getDestX( ) ) ) {
             npc.setX( npc.getX( ) + npc.getSpeedX( ) * elapsedTime / 1000 );
         }
         else {
+            endX = true;
+        }
+        if( ( npc.getSpeedY( ) > 0 && npc.getY( ) < npc.getDestY( ) ) || ( npc.getSpeedY( ) <= 0 && npc.getY( ) >= npc.getDestY( ) ) ) {
+            npc.setY( npc.getY( ) + npc.getSpeedY( ) * elapsedTime / 1000 );
+           
+            if (endX && (npc.getY( ) < npc.getDestY( ))){
+                npc.setDirection( AnimationState.SOUTH );
+            } 
+            else if (endX && (npc.getY( ) >= npc.getDestY( )) ) {
+                npc.setDirection( AnimationState.NORTH );
+            }
+        }
+        else {
+            endY = true;
+        }
+        if( endX && endY ) {
             npc.setState( FunctionalNPC.IDLE );
             if( npc.getDirection( ) == -1 )
                 npc.setDirection( AnimationState.SOUTH );
@@ -76,6 +94,12 @@ public class NPCWalking extends NPCState {
         else {
             setCurrentDirection( WEST );
             npc.setSpeedX( -FunctionalNPC.DEFAULT_SPEED );
+        }
+        if( npc.getY( ) < npc.getDestY( ) ) {
+            npc.setSpeedY( FunctionalNPC.DEFAULT_SPEED );
+        }
+        else {
+            npc.setSpeedY( -FunctionalNPC.DEFAULT_SPEED );
         }
     }
 
@@ -98,15 +122,7 @@ public class NPCWalking extends NPCState {
             animations[WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_RIGHT ), true, MultimediaManager.IMAGE_SCENE );
         animations[NORTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_UP ), false, MultimediaManager.IMAGE_SCENE );
         animations[SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_DOWN ), false, MultimediaManager.IMAGE_SCENE );
-        
-        //OLD
-        /*animations[EAST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_RIGHT ), false, MultimediaManager.IMAGE_SCENE );
-        if( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ) != null && !resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION ) )
-            animations[WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ), false, MultimediaManager.IMAGE_SCENE );
-        else
-            animations[WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_RIGHT ), true, MultimediaManager.IMAGE_SCENE );
-        animations[NORTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_UP ), false, MultimediaManager.IMAGE_SCENE );
-        animations[SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_DOWN ), false, MultimediaManager.IMAGE_SCENE );*/
+ 
     }
 
 }

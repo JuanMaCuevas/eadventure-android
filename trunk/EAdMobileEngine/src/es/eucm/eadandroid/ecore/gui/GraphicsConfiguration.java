@@ -8,7 +8,7 @@ public class GraphicsConfiguration {
 			boolean transparency) {
 		Bitmap bmp = null;
 		if (transparency)
-			bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+			bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 		else
 			bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
 		return bmp;

@@ -143,10 +143,12 @@ public class FunctionalShowTextEffect extends FunctionalEffect {
     
     private void finish() {
     	
-        if (!Game.getInstance( ).getGameDescriptor( ).isKeepShowing( ) && skipByUser){
+        if (!Game.getInstance( ).getGameDescriptor( ).isKeepShowing( ) || skipByUser){
         	isStillRunning = false;
         	timer.cancel();
         }
+        
+        else triggerEffect();
         
     }
     

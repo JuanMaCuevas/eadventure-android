@@ -35,11 +35,11 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import es.eucm.eadandroid.common.data.chapter.InfluenceArea;
 import es.eucm.eadandroid.common.data.chapter.Trajectory;
 import es.eucm.eadandroid.common.data.chapter.Trajectory.Node;
 import es.eucm.eadandroid.common.data.chapter.Trajectory.Side;
+import es.eucm.eadandroid.ecore.control.Game;
 
 /**
  * Functional Trajectory
@@ -52,11 +52,6 @@ public class FunctionalTrajectory {
      * The trajectory
      */
     private Trajectory trajectory;
-
-    /**
-     * The node the player is currently at
-     */
-    private Node currentNode;
 
     /**
      * The side the player is currently at
@@ -137,8 +132,11 @@ public class FunctionalTrajectory {
                 if( !sides.contains( temp ) )
                     sides.add( temp );
             }
-            currentSide = null;
-            currentNode = trajectory.getInitial( );
+            for (FunctionalSide side : sides) {
+                if (side.getStartNode( ) == trajectory.getInitial( )) {
+                    currentSide = side.getSide( );
+                }
+            }
         }
     }
 
@@ -206,16 +204,19 @@ public class FunctionalTrajectory {
         if( bestPath != null ) {
             this.nearestX = (int) bestPath.getDestX( );
             this.nearestY = (int) bestPath.getDestY( );
-            this.currentNode = null;
             this.currentSide = bestPath.getSides( ).get( 0 ).getSide( );
             this.getsTo = bestPath.isGetsTo( );
             return bestPath.getSides( );
         }
         else {
-            this.currentNode = this.trajectory.getInitial( );
-            this.currentSide = null;
+        	Node currentNode = this.trajectory.getInitial( );
             this.nearestX = currentNode.getX( );
             this.nearestY = currentNode.getY( );
+            for (FunctionalSide side : sides) {
+                if (side.getStartNode( ) == currentNode) {
+                    currentSide = side.getSide( );
+                }
+            }
             this.getsTo = false;
             return new ArrayList<FunctionalSide>( );
         }
@@ -471,20 +472,13 @@ public class FunctionalTrajectory {
      */
     private List<FunctionalSide> getCurrentValidSides( ) {
 
-        List<FunctionalSide> tempList = new ArrayList<FunctionalSide>( );
-        if( currentNode != null ) {
-            for( FunctionalSide side : sides ) {
-                if( side.getStartNode( ) == currentNode )
-                    tempList.add( side );
-            }
-        }
-        else {
-            for( FunctionalSide side : sides ) {
-                if( side.getSide( ) == currentSide )
-                    tempList.add( side );
-            }
+    	List<FunctionalSide> tempList = new ArrayList<FunctionalSide>( );
+        for( FunctionalSide side : sides ) {
+            if( side.getSide( ) == currentSide )
+                tempList.add( side );
         }
         return tempList;
+        
     }
 
     /**
@@ -625,26 +619,6 @@ public class FunctionalTrajectory {
     }
 
     /**
-     * Returns the x-axis value of the initial node
-     * 
-     * @return the x-axis value of the initial node
-     */
-    public float getInitialX( ) {
-
-        return trajectory.getInitial( ).getX( );
-    }
-
-    /**
-     * Returns the y-axis value of the initial node
-     * 
-     * @return the y-axis value of the initial node
-     */
-    public float getInitialY( ) {
-
-        return trajectory.getInitial( ).getY( );
-    }
-
-    /**
      * Returns the value of scale
      * 
      * @return the value of scale
@@ -676,13 +650,23 @@ public class FunctionalTrajectory {
      */
     public Node changeInitialNode( int destinyX, int destinyY ) {
 
-        currentSide = null;
+    	currentSide = null;
+        Node currentNode = null;
         float minDist = Float.MAX_VALUE;
         for( Node node : trajectory.getNodes( ) ) {
             float dist = getDistance( node.getX( ), node.getY( ), destinyX, destinyY );
             if( dist < minDist ) {
                 currentNode = node;
                 minDist = dist;
+            }
+        }
+        for (FunctionalSide side : sides) {
+            if (side.getStartNode( ) == currentNode) {
+                currentSide = side.getSide( );
+                Game.getInstance( ).getFunctionalPlayer( ).setX( currentNode.getX( ) + 1);
+                Game.getInstance( ).getFunctionalPlayer( ).setY( currentNode.getY( ) + 1);
+                Game.getInstance( ).getFunctionalPlayer( ).setScale( currentNode.getScale( ) );
+                break;
             }
         }
         return currentNode;

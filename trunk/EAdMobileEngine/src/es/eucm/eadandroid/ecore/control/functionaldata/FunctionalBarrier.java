@@ -50,13 +50,10 @@ public class FunctionalBarrier {
         int finalDestY = destY;
 
         if( !player.isTransparent( ) ) {
-            if( new FunctionalConditions( barrier.getConditions( ) ).allConditionsOk( ) ) {
-                float intersectionX = playerIntersectsBarrier( player, barrier, finalDestX, finalDestY );
+        	if( new FunctionalConditions( barrier.getConditions( ) ).allConditionsOk( ) ) {
+                int intersectionX = playerIntersectsBarrier( player, barrier, finalDestX, finalDestY );
                 if( intersectionX != Integer.MIN_VALUE ) {
-                    if( intersectionX < destX )
-                        finalDestX = (int) ( intersectionX - player.getWidth( ) / 2.0 );
-                    else if( intersectionX > destX )
-                        finalDestX = (int) ( intersectionX + player.getWidth( ) / 2.0 );
+                    finalDestX = intersectionX;
                 }
             }
         }
@@ -91,99 +88,32 @@ public class FunctionalBarrier {
         return false;
     }
 
-    private static final float SEC_GAP = 5;
-
-    private float playerIntersectsBarrier( FunctionalPlayer player, Barrier barrier, int targetX, int targetY ) {
-
-        float returnValue = Integer.MIN_VALUE;
-        float secGap = SEC_GAP;
-
+    private int playerIntersectsBarrier( FunctionalPlayer player, Barrier barrier, int targetX, int targetY ) {
         // Player data
         float px = player.getX( );
-        float py = player.getY( );
-        float w = player.getWidth( );
-        float h = player.getHeight( );
-
-        //secGap = (float)(w/2.0);
+        int w = player.getWidth( );
 
         // Barrier data
-        float bx1 = barrier.getX( );
-        float bx2 = barrier.getX( ) + barrier.getWidth( );
-        float byh = barrier.getY( );
-        float byl = barrier.getY( ) + barrier.getHeight( );
+        int bx1 = barrier.getX( );
+        int bx2 = barrier.getX( ) + barrier.getWidth( );
 
         // Direction vector
         float dx = targetX - px;
 
-        // Determine closer side of the barrier
-        float bx = Integer.MIN_VALUE;
-        if( dx > 0 ) {
+        int bx = Integer.MIN_VALUE;
+        if( dx > 0 ) { // the player is to the right of the barrier
             bx = Math.min( bx1, bx2 );
-        }
-        else if( dx < 0 ) {
+            if (px <= bx && targetX >= bx - w / 2) { // the player has to cross the barrier
+                return bx - w / 2;
+            }
+        } else if( dx < 0 ) { // the player is to the left of the barrier
             bx = Math.max( bx1, bx2 );
-        }
-        //Up corner:
-        float ucx1 = 0;
-        float ucx2 = 0;
-        if( dx >= 0 ) {
-            ucx1 = (float) ( px + w / 2.0 );
-            ucx2 = (float) ( px - w / 2.0 );
-        }
-        else {
-            ucx1 = (float) ( px - w / 2.0 );
-            ucx2 = (float) ( px + w / 2.0 );
-        }
-        float ucy = py + h;
-        float dcy = py;
-
-        // Test up corner:
-        boolean intersectsUp = false;
-        boolean intersectsDown = false;
-        float tx = ( bx - ucx1 ) / dx;
-        if( tx >= 0 && tx <= 1 ) {
-            // Check y
-            if( ucy >= byh && ucy <= byl ) {
-                intersectsUp = true;
-                if( dx >= 0 )
-                    returnValue = ( bx - secGap );
-                else
-                    returnValue = ( bx + secGap );
-            }
-            else {
-                if( dcy >= byh && dcy <= byl ) {
-                    intersectsDown = true;
-                    if( dx >= 0 )
-                        returnValue = ( bx - secGap );
-                    else
-                        returnValue = ( bx + secGap );
-                }
+            if (px >= bx && targetX <= bx + w / 2) { // the player has to cross the barrier
+                return bx + w /2;
             }
         }
-
-        if( !intersectsUp && !intersectsDown ) {
-            tx = ( bx - ucx2 ) / dx;
-            if( tx >= 0 && tx <= 1 ) {
-                // Check y
-                if( ucy >= byh && ucy <= byl ) {
-                    intersectsUp = true;
-                    if( dx >= 0 )
-                        returnValue = ( bx - secGap );
-                    else
-                        returnValue = ( bx + secGap );
-                }
-                else {
-                    if( dcy >= byh && dcy <= byl )
-                        intersectsDown = true;
-                    if( dx >= 0 )
-                        returnValue = ( bx - secGap );
-                    else
-                        returnValue = ( bx + secGap );
-
-                }
-            }
-        }
-        return returnValue;
+        // the player does not cross the barrier.
+        return Integer.MIN_VALUE;
     }
 
 }

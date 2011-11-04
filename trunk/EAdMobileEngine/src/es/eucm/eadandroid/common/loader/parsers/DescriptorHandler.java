@@ -43,6 +43,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
+import es.eucm.eadandroid.common.data.adventure.DescriptorData.Perspective;
 import es.eucm.eadandroid.common.loader.InputStreamCreator;
 
 /**
@@ -126,6 +127,12 @@ public class DescriptorHandler extends DefaultHandler {
             for( int i = 0; i < attrs.getLength( ); i++ ) {
                 if( attrs.getLocalName( i ).equals( "keepShowing" ) )
                     gameDescriptor.setKeepShowing( attrs.getValue( i ).equals( "yes" ) );
+                if ( attrs.getLocalName( i ).equals( "perspective" )) {
+                    if (attrs.getValue( i ).equals( "regular" ))
+                        gameDescriptor.setPerspective( Perspective.REGULAR );
+                    if (attrs.getValue( i ).equals( "isometric" ))
+                        gameDescriptor.setPerspective( Perspective.ISOMETRIC );
+                }
             }
         }
 
