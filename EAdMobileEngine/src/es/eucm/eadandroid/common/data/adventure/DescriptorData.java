@@ -92,6 +92,10 @@ public class DescriptorData implements Cloneable, Described, Titled {
     public static final int INVENTORY_TOP = 2;
 
     public static final int INVENTORY_BOTTOM = 3;
+    
+    public static enum Perspective {
+        REGULAR, ISOMETRIC
+    }
 
     public static String getCursorTypeString( int index ) {
 
@@ -309,6 +313,8 @@ public class DescriptorData implements Cloneable, Described, Titled {
      * Constant for identify when a game is executed from engine
      */
     public static final String ENGINE_EXECUTION = "engine";
+    
+    protected Perspective perspective;
 
     /**
      * Constructor
@@ -322,6 +328,7 @@ public class DescriptorData implements Cloneable, Described, Titled {
         title = null;
         description = null;
         guiType = -1;
+        perspective = Perspective.REGULAR;
         playerMode = MODE_PLAYER_1STPERSON;
         graphicConfig = GRAPHICS_WINDOWED;
         projectName = ENGINE_EXECUTION;
@@ -774,5 +781,13 @@ public class DescriptorData implements Cloneable, Described, Titled {
 	public void setGpsMode(boolean gpsMode) {
 		this.gpsMode = gpsMode;
 	}
+	
+	public void setPerspective( Perspective perspective ) {
+        this.perspective = perspective;
+    }
+    
+    public Perspective getPerspective() {
+        return perspective;
+    }
 
 }

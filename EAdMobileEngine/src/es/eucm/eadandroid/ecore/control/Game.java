@@ -24,6 +24,7 @@ import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
 import es.eucm.eadandroid.common.data.adaptation.AdaptedState;
 import es.eucm.eadandroid.common.data.adventure.ChapterSummary;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
+import es.eucm.eadandroid.common.data.adventure.DescriptorData.Perspective;
 import es.eucm.eadandroid.common.data.assessment.AssessmentProfile;
 import es.eucm.eadandroid.common.data.chapter.Chapter;
 import es.eucm.eadandroid.common.data.chapter.Exit;
@@ -1737,5 +1738,9 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 		((GameStateVideoscene) currentState).setstop(true);
 		
 	}
+	
+	 public boolean isIsometric() {
+	        return gameDescriptor.getPerspective( ) == Perspective.ISOMETRIC;
+	    }
 
 }
