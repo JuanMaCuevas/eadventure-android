@@ -447,13 +447,14 @@ public class GameStateConversation extends GameState {
             if( ( (OptionConversationNode) currentNode ).isShowUserOption( ) ) {
 
                 if( line.isValidAudio( ) ) {
-                    player.speak( line.getText( ), line.getAudioPath( ), generalKeepShowing );
+                    player.speak( line.getText( ), line.getAudioPath( ), false );
                 }
                 else if( line.getSynthesizerVoice( ) || player.isAlwaysSynthesizer( ) ) {
-                    player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ), generalKeepShowing );
+                    player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ), false );
                 }
                 else
-                    player.speak( line.getText( ), generalKeepShowing );
+                	//generalKeepShowing required
+                    player.speak( line.getText( ), false );
 
             }
             else
