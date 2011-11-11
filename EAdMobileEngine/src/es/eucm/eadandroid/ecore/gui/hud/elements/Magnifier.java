@@ -78,7 +78,7 @@ public class Magnifier {
 	public Magnifier(int not_scaled_radius, int not_scaled_frameWidth, float zoom, Bitmap bmp) {
 
 		this.radius = (int) (not_scaled_radius * GUI.DISPLAY_DENSITY_SCALE);
-		CENTER_OFFSET = radius;
+		CENTER_OFFSET = (int) (30 * GUI.DISPLAY_DENSITY_SCALE);
 
 		magBounds = new Rect(0, 0, radius * 2, radius * 2);
 		magBoundsIntersected = new Rect(0, 0, radius * 2, radius * 2);
@@ -222,7 +222,7 @@ public class Magnifier {
 		c.restore();
 
 		c.drawCircle(radius, radius, radius, pFrame);
-		 c.drawPoint(radius, radius, pointPaint);
+		c.drawPoint(radius, radius, pointPaint);
 
 		c.restore();
 	}
@@ -243,8 +243,11 @@ public class Magnifier {
 		//magBounds.set(xfocus - radius, yfocus + 30 - 2 * radius, xfocus
 				//+ radius, yfocus + 30);
 		
-		magBounds.set(xfocus - radius, yfocus + 10 - 2 * radius, xfocus
-				+ radius, yfocus + 10 + radius);
+		//magBounds.set(xfocus - radius, yfocus + 10 - 2 * radius, xfocus
+				//+ radius, yfocus + 10 + radius);
+		
+		magBounds.set(xfocus - radius, yfocus - radius - Magnifier.CENTER_OFFSET, xfocus
+				+ radius, yfocus + radius - Magnifier.CENTER_OFFSET);
 
 		magBoundsIntersected.set(magBounds);
 		magBoundsIntersected.intersect(windowBounds);
