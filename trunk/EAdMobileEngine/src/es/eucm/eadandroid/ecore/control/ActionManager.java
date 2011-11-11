@@ -282,7 +282,7 @@ public class ActionManager {
 			processElementClick();
 		else {				
 			currentCombInterElement=null;
-			Game.getInstance().getFunctionalScene().tap(x, y);
+			Game.getInstance().getFunctionalScene().tap (x, y);
 			}
 		
 	}
