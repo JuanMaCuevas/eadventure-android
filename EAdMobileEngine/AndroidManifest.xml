@@ -22,16 +22,11 @@
             </intent-filter>
 		</activity>
 
-		<activity android:name=".homeapp.WorkspaceActivity"
-			android:screenOrientation="portrait"></activity>
-			<activity android:name=".homeapp.HomeActivity"
-			android:screenOrientation="portrait"></activity>
-		<activity android:name=".homeapp.localgames.LocalGamesActivity"
-			android:screenOrientation="portrait"></activity>
-		<activity android:name=".homeapp.preferences.PreferencesActivity"
-			android:screenOrientation="portrait"></activity>
-		<activity android:name=".homeapp.repository.RepositoryActivity"
-			android:screenOrientation="portrait"></activity>
+		<activity android:name=".homeapp.WorkspaceActivity"></activity>
+			<activity android:name=".homeapp.HomeActivity"></activity>
+		<activity android:name=".homeapp.localgames.LocalGamesActivity"></activity>
+		<activity android:name=".homeapp.preferences.PreferencesActivity"></activity>
+		<activity android:name=".homeapp.repository.RepositoryActivity"></activity>
 
 
 
@@ -39,12 +34,11 @@
 			android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>				
 		<activity android:name=".ecore.EcoreVideo"
 			android:screenOrientation="landscape"></activity>
-		<activity android:name=".homeapp.loadsavedgames.LoadSavedGames"
-			android:screenOrientation="portrait"></activity>
-		<activity android:screenOrientation="portrait"
-			android:name=".homeapp.preferences.LaunchAndExplorerActivity"
-			android:launchMode="singleTask"></activity>
-		<activity android:name=".ecore.ECoreControl"></activity>
+		<activity android:name=".homeapp.loadsavedgames.LoadSavedGames"></activity>
+		<activity
+			android:name=".homeapp.preferences.LaunchAndExplorerActivity"></activity>
+		<activity android:name=".ecore.ECoreControl"
+		android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>
 
 
 	</application>
