@@ -853,9 +853,9 @@ public class WorkspaceActivity extends FragmentActivity {
             super.onActivityCreated(savedInstanceState);
             
             db = new RepositoryDatabase();
-    		rs = new RepositoryServices();
+            rs = new RepositoryServices();
     		
-    		rs.updateDatabase(this.getActivity(), RAHandler, db);
+            rs.updateDatabase(this.getActivity(), RAHandler, db);    			
             
         }
         
@@ -881,6 +881,8 @@ public class WorkspaceActivity extends FragmentActivity {
     		progressDialog.setCancelable(false);
 
     		super.setHasOptionsMenu(true);
+    		
+    		this.setRetainInstance(true);
 
         }
     	
@@ -1014,7 +1016,6 @@ public class WorkspaceActivity extends FragmentActivity {
     		rs.updateDatabase(this.getActivity(), RAHandler, db);
     		
     		return true;
-
     	}
     	
     	/**
@@ -1025,6 +1026,5 @@ public class WorkspaceActivity extends FragmentActivity {
     	}
     	
     }
-    
     
 }
