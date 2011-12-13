@@ -82,6 +82,11 @@ public class FunctionalGoTo extends FunctionalAction {
     private float speedX;
 
     /**
+     * The speed at which the player moves along the y axis
+     */
+    private float speedY;
+
+    /**
      * True if the action has an animation
      */
     private boolean hasAnimation = false;
@@ -121,13 +126,18 @@ public class FunctionalGoTo extends FunctionalAction {
         super( action );
         this.originalPosX = posX;
         this.originalPosY = posY;
-        int[] finalDest = Game.getInstance( ).getFunctionalScene( ).checkPlayerAgainstBarriers( posX, posY );
         this.trajectory = Game.getInstance( ).getFunctionalScene( ).getTrajectory( );
-        this.trajectory.setDestinationElement( null );
+        int[] finalDest = Game.getInstance( ).getFunctionalScene( ).checkPlayerAgainstBarriers( posX, posY );
+        if( trajectory.hasTrajectory( ) ) {
+            this.trajectory.setDestinationElement( null );
+            this.trajectory.updatePathToNearestPoint( Game.getInstance( ).getFunctionalPlayer( ).getX( ), Game.getInstance( ).getFunctionalPlayer( ).getY( ), posX, posY );
+            trajectoryUpdated = true;
+        }
         this.posX = finalDest[0];
         this.posY = finalDest[1];
-        type = ActionManager.ACTION_GOTO;
+
         trajectoryUpdated = false;
+        type = ActionManager.ACTION_GOTO;
         keepDistance = 0;
     }
 
@@ -214,13 +224,18 @@ public class FunctionalGoTo extends FunctionalAction {
     @Override
     public void update( long elapsedTime ) {
 
-        if( !trajectory.hasTrajectory( ) && !finished ) {
+    	if( !trajectory.hasTrajectory( ) && !finished ) {
+            boolean endX = false;
+            boolean endY = true;
             if( ( speedX > 0 && functionalPlayer.getX( ) < posX - keepDistance ) || ( speedX <= 0 && functionalPlayer.getX( ) >= posX + keepDistance ) ) {
                 float oldX = functionalPlayer.getX( );
                 float newX = oldX + speedX * elapsedTime / 1000;
                 functionalPlayer.setX( newX );
             }
             else {
+                endX = true;
+            }
+            if( endX && endY ) {
                 finished = true;
                 functionalPlayer.popAnimation( );
             }
@@ -262,9 +277,10 @@ public class FunctionalGoTo extends FunctionalAction {
      */
     private void setAnimation( float oldSpeedX, float oldSpeedY, float newSpeedX, float newSpeedY ) {
 
-        Animation[] animations = new Animation[ 4 ];
+    	Animation[] animations = new Animation[ 4 ];
         animations[AnimationState.EAST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_RIGHT ), false, MultimediaManager.IMAGE_PLAYER );
-        if( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ) != null && !resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION ) )
+        if( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ) != null && !resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION )
+                && !resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ).equals( SpecialAssetPaths.ASSET_EMPTY_ANIMATION + ".eaa" ))
             animations[AnimationState.WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_LEFT ), false, MultimediaManager.IMAGE_PLAYER );
         else
             animations[AnimationState.WEST] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_RIGHT ), true, MultimediaManager.IMAGE_PLAYER );
@@ -272,19 +288,35 @@ public class FunctionalGoTo extends FunctionalAction {
         animations[AnimationState.SOUTH] = multimedia.loadAnimation( resources.getAssetPath( NPC.RESOURCE_TYPE_WALK_DOWN ), false, MultimediaManager.IMAGE_PLAYER );
 
         int nextDir = AnimationState.EAST;
-        if( Math.abs( newSpeedY ) > Math.abs( newSpeedX ) ) {
-            if( newSpeedY > 0 )
-                nextDir = AnimationState.SOUTH;
-            else
-                nextDir = AnimationState.NORTH;
-        }
-        else {
-            if( newSpeedX > 0 )
-                nextDir = AnimationState.EAST;
-            else
-                nextDir = AnimationState.WEST;
-        }
+        
+        if (Game.getInstance( ).isIsometric( )) {
+            double angle = Math.atan2( newSpeedY, newSpeedX );
 
+            System.out.println(angle);
+            if (angle < -Math.PI / 2) {
+                nextDir = AnimationState.WEST;
+            } else if (angle < 0) {
+                nextDir = AnimationState.NORTH;
+            } else if (angle < Math.PI / 2) {
+                nextDir = AnimationState.EAST;
+            } else {
+                nextDir = AnimationState.SOUTH;
+            }
+        } else {
+            if( Math.abs( newSpeedY ) > Math.abs( newSpeedX ) ) {
+                if( newSpeedY > 0 )
+                    nextDir = AnimationState.SOUTH;
+                else
+                    nextDir = AnimationState.NORTH;
+            }
+            else {
+                if( newSpeedX > 0 )
+                    nextDir = AnimationState.EAST;
+                else
+                    nextDir = AnimationState.WEST;
+            }
+        }
+        
         if( !hasAnimation ) {
             hasAnimation = true;
             functionalPlayer.setDirection( nextDir );

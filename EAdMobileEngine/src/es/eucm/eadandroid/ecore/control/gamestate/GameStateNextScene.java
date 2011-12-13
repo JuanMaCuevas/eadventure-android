@@ -85,7 +85,7 @@ public class GameStateNextScene extends GameState {
                 Scene scene = (Scene) generalScene;
 
                 // Set the loading state
-              //  game.setState( Game.STATE_LOADING );
+                game.setState( Game.STATE_LOADING );
 
 
                 // Create a background music identifier to not replay the music from the start
@@ -124,16 +124,11 @@ public class GameStateNextScene extends GameState {
                         game.getFunctionalPlayer( ).setScale( scene.getPlayerScale( ) );
                     }
                     else {
-                        Node node = game.getFunctionalScene( ).getTrajectory( ).changeInitialNode( nextScene.getDestinyX( ), nextScene.getDestinyY( ) );
-                        game.getFunctionalPlayer( ).setX( node.getX( ) );
-                        game.getFunctionalPlayer( ).setY( node.getY( ) );
-                        game.getFunctionalPlayer( ).setScale( node.getScale( ) );
+                        game.getFunctionalScene( ).getTrajectory( ).changeInitialNode( nextScene.getDestinyX( ), nextScene.getDestinyY( ) );
                     }
                 }
                 else if( scene.getTrajectory( ) != null ) {
-                    game.getFunctionalPlayer( ).setX( scene.getTrajectory( ).getInitial( ).getX( ) );
-                    game.getFunctionalPlayer( ).setY( scene.getTrajectory( ).getInitial( ).getY( ) );
-                    game.getFunctionalPlayer( ).setScale( scene.getTrajectory( ).getInitial( ).getScale( ) );
+                    game.getFunctionalScene( ).getTrajectory( ).changeInitialNode( scene.getTrajectory( ).getInitial( ).getX( ), scene.getTrajectory( ).getInitial( ).getY( ));
                 }
                 else if( scene.hasDefaultPosition( ) ) {
                     // If no next scene position was defined, use the scene default

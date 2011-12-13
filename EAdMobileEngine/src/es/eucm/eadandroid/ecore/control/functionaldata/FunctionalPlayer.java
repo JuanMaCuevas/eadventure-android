@@ -132,10 +132,6 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      */
     private int currentDirection = -1;
 
-    /**
-     * Last player's direction set
-     */
-    //private int lastDirection = -1;
     public List<FunctionalAction> actionPool;
 
     public List<Animation[]> animationPool;
@@ -523,9 +519,9 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 functionalGoTo.setKeepDistance( nextAction.getKeepDistance( ) );
                 addAction( functionalGoTo );
             }
-            else {
-                addAction( functionalGoTo );
-            }
+            /*else {
+                addAction( functionalGoTo ); this avoids a lock of player
+            }*/
             return;
         }
         else

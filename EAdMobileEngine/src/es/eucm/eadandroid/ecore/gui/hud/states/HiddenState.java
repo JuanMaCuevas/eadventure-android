@@ -22,8 +22,6 @@ public class HiddenState extends HUDstate {
 	
 	Wave wave;
 	
-	private long lastTouchTime = -1;
-	
 	public HiddenState(HUD stateContext, Wave wave) {
 		super(stateContext);
 		this.wave = wave;
@@ -63,33 +61,11 @@ public class HiddenState extends HUDstate {
 	}
 	
 	@Override
-	public boolean processTap(UIEvent e){
-		
+	public boolean processTap(UIEvent e){		
 
 		TapEvent ev = (TapEvent) e;
 		int srcX = (int) ev.event.getX();
 		int srcY = (int) ev.event.getY();
-		
-		long thisTime = System.currentTimeMillis();
-		
-		if (thisTime - lastTouchTime < 300) {
-
-			FunctionalScene functionalScene = Game.getInstance().getFunctionalScene( );
-	        if( functionalScene != null ) {
-	        	FunctionalElement elementInside = functionalScene.getElementInside( (int)((srcX - GUI.CENTER_OFFSET) / GUI.SCALE_RATIOX), (int)(srcY / GUI.SCALE_RATIOY), null );
-	        	
-	        	if (elementInside != null && elementInside.canBeDragged()){
-	        		Game.getInstance().getActionManager().dragging(elementInside);
-	        		stateContext.setState(HUDstate.DraggingState,null);
-	        		return false;
-	        	}
-	        }
-	        
-	        lastTouchTime = -1;
-
-	     } else {
-	         lastTouchTime = thisTime;
-	     }
 		
 		wave.updatePosition(srcX,srcY);
 
@@ -136,7 +112,7 @@ public class HiddenState extends HUDstate {
 		if (Game.getInstance().getOptions().isVibrationActive()){
 			// Get instance of Vibrator from current Context
 			Vibrator v = ContextServices.getInstance().getServiceVibrator(); 
-			// Vibrate for 300 milliseconds
+			// Vibrate for 40 milliseconds
 			v.vibrate(40);
 		}
 
