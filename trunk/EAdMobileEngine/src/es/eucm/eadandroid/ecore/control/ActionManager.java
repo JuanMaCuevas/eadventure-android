@@ -208,7 +208,6 @@ public class ActionManager {
 	public void setActionSelected(int actionSelected) {
 
 		this.actionSelected = actionSelected;
-		// GUI.getInstance( ).newActionSelected( );
 	}
 
 	/**
@@ -220,18 +219,6 @@ public class ActionManager {
 
 		return exit;
 	}
-
-	/*
-    *//**
-	 * Returns the current exit cursor.
-	 * 
-	 * @return Current cursor
-	 */
-	/*
-	 * public Cursor getExitCursor( ) {
-	 * 
-	 * return exitCursor; }
-	 */
 
 	/**
 	 * Sets the current exit.
@@ -246,22 +233,6 @@ public class ActionManager {
 		else
 			this.exit = exit;
 	}
-
-	/**
-	 * Sets the current exit cursor.
-	 * 
-	 * @param exit
-	 *            Current exit cursro
-	 */
-	/*
-	 * public void setExitCursor( Cursor cursor ) {
-	 * 
-	 * this.exitCursor = cursor; }
-	 * 
-	 * public void setExitCustomized( String exit, Cursor cursor ) {
-	 * 
-	 * setExit( exit ); setExitCursor( cursor ); }
-	 */
 
 	public void setExitCustomized(String exit) {
 
@@ -309,7 +280,10 @@ public class ActionManager {
 		FunctionalElement elementInside = functionalScene.getElementInside(x, y, dragElement);
 		Exit exit = functionalScene.getExitInside(x, y);
 
-		if (exit != null && actionSelected == ACTION_GOTO) {
+		if( exit == null && elementInside != null ) {
+            setElementOver( elementInside );
+        }
+		else if (exit != null && actionSelected == ACTION_GOTO) {
 			// SET EXIT CURSOR ;
 
 			GeneralScene nextScene = null;
@@ -330,8 +304,6 @@ public class ActionManager {
 			} else if (nextScene != null)
 				setExit(nextScene.getName());
 		}
-		else if (elementInside != null) 
-			setElementOver(elementInside);
 		  
 	}
 

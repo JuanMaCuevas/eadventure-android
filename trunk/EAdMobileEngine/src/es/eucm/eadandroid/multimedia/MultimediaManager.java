@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
 import android.graphics.Bitmap;
-import android.util.Log;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.ecore.control.animations.Animation;
 import es.eucm.eadandroid.ecore.control.animations.FrameAnimation;
@@ -425,72 +423,60 @@ public class MultimediaManager {
 		}
 		sounds.clear();
 	}
-
+	
 	/**
-	 * Returns a animation from a path.
-	 * <p>
-	 * The animation can be generated from an eaa describing the animation or
-	 * with frames animationPath_xy.jpg, with xy from 01 to the last existing
-	 * file with that format (the extension can also be .png).
-	 * <p>
-	 * For example, loadAnimation( "path" ) will return an animation with frames
-	 * path_01.jpg, path_02.jpg, path_03.jpg, if path_04.jpg doesn't exists.
-	 * 
-	 * @param animationPath
-	 *            base path to the animation frames
-	 * @param mirror
-	 *            whether or not the frames must be mirrored
-	 * @param category
-	 *            Category of the animation
-	 * @return an Animation with frames animationPath_xy.jpg
-	 */
+     * Returns a animation from a path.
+     * <p>
+     * The animation can be generated from an eaa describing the animation or
+     * with frames animationPath_xy.jpg, with xy from 01 to the last existing
+     * file with that format (the extension can also be .png).
+     * <p>
+     * For example, loadAnimation( "path" ) will return an animation with frames
+     * path_01.jpg, path_02.jpg, path_03.jpg, if path_04.jpg doesn't exists.
+     * 
+     * @param animationPath
+     *            base path to the animation frames
+     * @param mirror
+     *            whether or not the frames must be mirrored
+     * @param category
+     *            Category of the animation
+     * @return an Animation with frames animationPath_xy.jpg
+     */
+    public Animation loadAnimation( String animationPath, boolean mirror, int category ) {
+        Animation temp = animationCache.get( animationPath + ( mirror ? "t" : "f" ) );
+        if( temp != null )
+            return temp;
 
-	public Animation loadAnimation(String animationPath, boolean mirror,
-			int category) {
+        if( animationPath != null && animationPath.endsWith( ".eaa" ) ) {
+            FrameAnimation animation = new FrameAnimation( Loader.loadAnimation( ResourceHandler.getInstance( ), animationPath, new EngineImageLoader() ) );
+            animation.setMirror( mirror );
+            temp = animation;
+        }
+        else {
+            int i = 1;
+            List<Bitmap> frames = new ArrayList<Bitmap>( );
+            Bitmap currentFrame = null;
+            boolean end = false;
+            while( !end ) {
+                if( mirror )
+                    currentFrame = loadMirroredImage( animationPath + "_" + leadingZeros( i ) + ".png", category );
+                else
+                    currentFrame = loadImage( animationPath + "_" + leadingZeros( i ) + ".png", category );
 
-		Animation temp = animationCache.get(animationPath
-				+ (mirror ? "t" : "f"));
-		if (temp != null)
-			return temp;
-
-		if (animationPath != null && animationPath.endsWith(".eaa")) {
-			//FrameAnimation animation 
-			temp = new FrameAnimation(Loader.loadAnimation(
-					ResourceHandler.getInstance(), animationPath,
-					new EngineImageLoader()));
-			((FrameAnimation)temp).setMirror(mirror);
-			//temp = animation;
-            Log.e("NPC",animationPath+"Variable :"+ temp);
-			
-		} else {
-			int i = 1;
-			List<Bitmap> frames = new ArrayList<Bitmap>();
-			Bitmap currentFrame = null;
-			boolean end = false;
-			while (!end) {
-				if (mirror)
-					currentFrame = loadMirroredImage(animationPath + "_"
-							+ leadingZeros(i) + ".png", category);
-				else
-					currentFrame = loadImage(animationPath + "_"
-							+ leadingZeros(i) + ".png", category);
-
-				if (currentFrame != null) {
-					frames.add(currentFrame);
-					i++;
-					currentFrame = null;
-				} else
-					end = true;
-			}
-			//ImageAnimation animation 
-			temp = new ImageAnimation();
-			((ImageAnimation)temp).setImages(frames.toArray(new Bitmap[] {}));
-			//temp = animation;
-			frames.clear();
-		}
-		animationCache.put(animationPath + (mirror ? "t" : "f"), temp);
-		return temp;
-	}
+                if( currentFrame != null ) {
+                    frames.add( currentFrame );
+                    i++;
+                }
+                else
+                    end = true;
+            }
+            ImageAnimation animation = new ImageAnimation( );
+            animation.setImages( frames.toArray( new Bitmap[] {} ) );
+            temp = animation;
+        }
+        animationCache.put( animationPath + ( mirror ? "t" : "f" ), temp );
+        return temp;
+    }
 
 	/**
 	 * Returns a animation with frames animationPath_xy.jpg, with xy from 01 to

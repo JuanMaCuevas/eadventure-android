@@ -152,7 +152,7 @@ public class GameStateSlidescene extends GameState {
         slides.update( elapsedTime );
         if( !slides.isPlayingForFirstTime( ) )
             finishedSlides( );
-           canvas.drawBitmap( slides.getImage( ), 0, 0, null );
+        canvas.drawBitmap( slides.getImage( ), 0, 0, null );
 
         GUI.getInstance( ).addBackgroundToDraw( bkg, 0 );
         //        GUI.getInstance().addElementToDraw(slides.getImage(), 0, 0, 0, 0);
@@ -182,8 +182,7 @@ public class GameStateSlidescene extends GameState {
         }
         else {
             if( game.getFunctionalScene( ) == null ) {
-  //              JOptionPane.showMessageDialog( null, TC.get( "DesignError.Message" ), TC.get( "DesignError.Title" ), JOptionPane.ERROR_MESSAGE );
-                yetSkipped = true;
+            	yetSkipped = true;
                 game.goToNextChapter( );
             }
             FunctionalEffects.storeAllEffects( new Effects( ) );
@@ -219,7 +218,6 @@ public class GameStateSlidescene extends GameState {
 			case UIEvent.TAP_ACTION: 
 		        // Display the next slide 
 		        boolean endSlides = slides.nextImage( );
-		        //System.gc();
 		        // If the slides have ended
 		        if( endSlides ) {
 		            finishedSlides( );

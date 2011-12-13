@@ -371,6 +371,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
 	public static void delete() {
 		
+		staticStop( );
 		instance = null;
 	}
 
@@ -399,8 +400,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     }
     
     /**
-     * Init the game parameters
-	 * @param loadedGame 
+     * Init the game parameters 
      */
     private void loadCurrentChapter() {
 
@@ -412,7 +412,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         MultimediaManager.getInstance( ).flushImagePool( MultimediaManager.IMAGE_MENU );
         MultimediaManager.getInstance( ).flushAnimationPool( );
         System.gc();
-    	System.runFinalization();
+        System.runFinalization();
 
         // REset game strings
         GameText.reloadStrings( );        
@@ -429,28 +429,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 
         // Init the time manager
         timerManager = TimerManager.getInstance( );
-        timerManager.reset( );
-        
-/* ADAPTATION       if (gameData.getAdaptationName()!="")
-        chapter.setAdaptationName(gameData.getAdaptationName());
- */       
+        timerManager.reset( );     
         
         if (gameData.getAssessmentName()!="")
         chapter.setAssessmentName(gameData.getAssessmentName());
         
-        /* ADAPTATION       AdaptedState initialState=null;
-        // Load the assessment rules and adaptation data 
-        if (gameData.hasAdaptationProfile())
-            initialState = adaptationEngine.init( gameData.getSelectedAdaptationProfile() );
-       */
         if (gameData.hasAssessmentProfile())
         	assessmentEngine.loadAssessmentRules( gameData.getSelectedAssessmentProfile() );
-        
-        	  /* ADAPTATION 
-        // Load the assessment rules and adaptation data (from chapter xml file)
-        if (!gameData.hasAdaptationProfile()&&chapter.hasAdaptationProfile())
-            initialState  = adaptationEngine.init( chapter.getSelectedAdaptationProfile() );
-        */
         	
         if (!gameData.hasAssessmentProfile()&&chapter.hasAssessmentProfile())
             assessmentEngine.loadAssessmentRules( chapter.getSelectedAssessmentProfile() );
@@ -473,21 +458,11 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
         // Initialize the stack of states (used to keep the conversations and can throw its effects)
         stackOfState = new Stack<GameState>( );
 
-
-        //        GUI.getInstance( ).loading(70);
-
-        // Load images to cache
-        //GAMESTATE        new GameStateOptions( );
-
         // By default, set the initial scene taking it from the XML script
         //GeneralScene initialScene = gameData.getInitialGeneralScene( );
         Exit firstScene = new Exit( true, 0, 0, 40, 40 );
         firstScene.setNextSceneId( gameData.getInitialGeneralScene( ).getId( ) );
 
-        /* ADAPTATION     // process the initial adapted state
-        processAdaptedState( firstScene, initialState );
-        // process the adaptedStateOfExecute (this var will has value if any adaptation rule has been achieve)
-        processAdaptedState( firstScene, adaptedStateToExecute );*/
         // Set the next scene
         setNextScene( firstScene );
 
@@ -502,39 +477,15 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
             gameTimers.put( new Integer( id ), timer );
         }
         
-        
-        //TODO todo lo del gps
-        /*		for (int i = 0; i < scene.getGpsRules().size(); i++)
-		GpsManager.getInstance().addgpsrules(scene.getGpsRules().get(i));
-*/
-        if (this.gameData.getGpsRules().size()>0)
-        {	
-		
-        	/*				GpsManager.create();
-
-				Handler handler = GameThread.getInstance().getHandler();
-				Message msg = handler.obtainMessage();
-				Bundle b = new Bundle();
-
-				msg.what = ActivityHandlerMessages.REGISTRATE_GPS;
-				msg.setData(b);
-				msg.sendToTarget();
-			
-	*/	
-        	
-        	
-        if ( GpsManager.getInstance() !=null)	
-		GpsManager.getInstance().addallgpsrules(this.gameData.getGpsRules());
-		
+        if (this.gameData.getGpsRules().size()>0){	
+        	if ( GpsManager.getInstance() !=null)	
+        		GpsManager.getInstance().addallgpsrules(this.gameData.getGpsRules());
 		
 		}
-
         
-        if (this.gameData.getQrrules().size()>0)
-        {
+        if (this.gameData.getQrrules().size()>0){
         	if (QrcodeManager.getInstance()==null)
-        	QrcodeManager.create();
-        	
+        		QrcodeManager.create();        	
         	QrcodeManager.getInstance().addAllQRRules(this.gameData.getQrrules());           	
         }
         currentState = new GameStateNextScene( );
@@ -665,8 +616,7 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 					Thread.sleep(100);
 				}
 
-				if (currentChapter == gameDescriptor.getChapterSummaries()
-						.size())
+				if (currentChapter == gameDescriptor.getChapterSummaries().size())
 					gameOver = true;
 			}
 
@@ -1017,10 +967,13 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
     public void generateItem( String itemId ) {
 
         if( itemSummary.isItemNormal( itemId ) ) {
-            inventory.storeItem( new FunctionalItem( gameData.getItem( itemId ), (InfluenceArea) null ) );
-            itemSummary.grabItem( itemId );
+           // 23/11/2010 the object has to disappear from the scene when it's generated (aba)
+            // inventory.storeItem( new FunctionalItem( gameData.getItem( itemId ), (InfluenceArea) null ) );
+           // itemSummary.grabItem( itemId );
+            grabItem(itemId);
         }
         else if( itemSummary.isItemConsumed( itemId ) ) {
+            // 23/11/2010 in this case it is not necesary because the item is not being showhed in the secene
             itemSummary.regenerateItem( itemId );
             inventory.storeItem( new FunctionalItem( gameData.getItem( itemId ), (InfluenceArea) null ) );
             itemSummary.grabItem( itemId );
@@ -1038,17 +991,26 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
      */
     public void grabItem( String itemId ) {
 
-        // Remove the FunctionalItem from the scene and store it into the inventory
+        // Remove the FunctionalItem from the scene and store it into the inventory,  
         FunctionalItem grabbedItem = null;
 
         for( FunctionalItem currentItem : functionalScene.getItems( ) )
             // If we found the item we wanted
             if( currentItem.getItem( ).getId( ).equals( itemId ) )
                 grabbedItem = currentItem;
+                    
+        // if the element is not in the scene, take it from the data model
+        if (grabbedItem == null){
+            grabbedItem = new FunctionalItem( gameData.getItem( itemId ), (InfluenceArea) null );
+        } 
+        // if the element is in the scene
+        else {
+            
+            // Delete the item from the scene
+            functionalScene.getItems( ).remove( grabbedItem );
+        }
 
-        // Delete the item from the scene
-        functionalScene.getItems( ).remove( grabbedItem );
-
+        
         // Insert the item in the inventory
         inventory.storeItem( grabbedItem );
 
