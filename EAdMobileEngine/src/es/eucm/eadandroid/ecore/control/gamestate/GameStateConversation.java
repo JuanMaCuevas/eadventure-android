@@ -453,9 +453,7 @@ public class GameStateConversation extends GameState {
                     player.speakWithFreeTTS( line.getText( ), player.getPlayerVoice( ), false );
                 }
                 else
-                	//generalKeepShowing required
-                    player.speak( line.getText( ), false );
-
+                    player.speak( line.getText( ), generalKeepShowing );
             }
             else
                 player.speak( "" );
@@ -469,10 +467,10 @@ public class GameStateConversation extends GameState {
 
     public synchronized void mouseClicked( UIEvent e ) {
     	
-        if( currentNode.getType( ) == ConversationNodeView.OPTION ) {
+        if( currentNode.getType( ) == ConversationNodeView.OPTION && !isOptionSelected) {
             skip = false;
         }
-        else if( currentNode.getType( ) == ConversationNodeView.DIALOGUE) {
+        else if( currentNode.getType( ) == ConversationNodeView.DIALOGUE || isOptionSelected) {
         	skip = true;
         }
     }

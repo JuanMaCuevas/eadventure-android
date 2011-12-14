@@ -864,7 +864,6 @@ public class Game implements TimerEventListener , SpecialAssetPaths{
 	// GENERAL METHODS //
 	
     public String processText( String text ) {
-
         return flags.processText( vars.processText( text ) );
     }
     
