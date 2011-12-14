@@ -11,19 +11,9 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-/*
- import javax.xml.transform.Transformer;
- import javax.xml.transform.TransformerConfigurationException;
- import javax.xml.transform.TransformerException;
- import javax.xml.transform.TransformerFactory;
- import javax.xml.transform.dom.DOMSource;
- import javax.xml.transform.stream.StreamResult;
- */
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -76,6 +66,11 @@ public class AssessmentEngine implements TimerEventListener {
 	private List<AssessmentRule> assessmentRules;
 
 	/**
+	 * This list sto 
+	 */
+	private List<AssessmentRule> repeatedRules;
+
+	/**
 	 * List of executed rules
 	 */
 	private List<ProcessedRule> processedRules;
@@ -84,17 +79,11 @@ public class AssessmentEngine implements TimerEventListener {
 	 * Structure of timed rules
 	 */
 	private HashMap<Integer, TimedAssessmentRule> timedRules;
-	
-	/**
-	* This list store the rules which can be executed again, and
-	were executed once
-	*/
-	private List<AssessmentRule> repeatedRules;
 
 	private String playerName;
 
 	private int state;
-	
+
 	private String lastHTMLReport;
 
 	/**
@@ -114,13 +103,10 @@ public class AssessmentEngine implements TimerEventListener {
 	 *            Path of the file containing the assessment data
 	 */
 	public void loadAssessmentRules(AssessmentProfile profile) {
-		// if (assessmentPath != null && !assessmentPath.equals("")) {
-		// assessmentProfile = Loader.loadAssessmentProfile(ResourceHandler
-		// .getInstance(), assessmentPath, new ArrayList<Incidence>());
-		if (profile != null) {
+
+		if (profile!=null){
 			assessmentProfile = profile;
-			assessmentRules = new ArrayList<AssessmentRule>(assessmentProfile
-					.getRules());
+			assessmentRules = new ArrayList<AssessmentRule>(assessmentProfile.getRules());
 
 			FlagSummary flags = Game.getInstance().getFlags();
 			VarSummary vars = Game.getInstance().getVars();
@@ -130,19 +116,13 @@ public class AssessmentEngine implements TimerEventListener {
 			for (String var : assessmentProfile.getVars()) {
 				vars.addVar(var);
 			}
-			// } else {
-			// assessmentRules = new ArrayList<AssessmentRule>();
-			// }
 
-			// Iterate through the rules: those timed add them to the timer
-			// manager
+
+			// Iterate through the rules: those timed add them to the timer manager
 			for (AssessmentRule assessmentRule : assessmentRules) {
 				if (assessmentRule instanceof TimedAssessmentRule) {
 					TimedAssessmentRule tRule = (TimedAssessmentRule) assessmentRule;
-					int id = TimerManager.getInstance().addTimer(
-							tRule.getInitConditions(),
-							tRule.getEndConditions(),
-							tRule.isUsesEndConditions(), this);
+					int id = TimerManager.getInstance().addTimer(tRule.getInitConditions(), tRule.getEndConditions(), tRule.isUsesEndConditions(), this);
 					timedRules.put(new Integer(id), tRule);
 				}
 			}
@@ -165,50 +145,49 @@ public class AssessmentEngine implements TimerEventListener {
 	 */
 	public void processRules() {
 		int i = 0;
-
-		if (assessmentRules != null) {
-			
-			// check if repeated rules have to be executed again
-			for (AssessmentRule repeatRule: repeatedRules){
-				if (isActive(repeatRule))
-					triggerRule(repeatRule);
-
-			}
-			
-			// For every rule
-			while (i < assessmentRules.size()) {
-
-				// If it was activated, execute the rule
-				if (isActive(assessmentRules.get(i))) {
-					AssessmentRule oldRule = null;
-					try {
-						oldRule = (AssessmentRule)(assessmentRules.remove(i) .clone( ));
-					} catch (CloneNotSupportedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		try {
+			if (assessmentRules!=null){
+				// check if repeated rules have to be executed again 
+				for (AssessmentRule repeatRule: repeatedRules){
+					if (isActive(repeatRule)){
+						triggerRule(repeatRule);
 					}
-					// first time that the repeatRule is executed
-					if (oldRule.isRepeatRule( ))
-						repeatedRules.add( oldRule );
-
-					triggerRule(oldRule);
 				}
 
-				// Else, check the next rule
-				else
-					i++;
+				// For every rule
+				while (i < assessmentRules.size()) {
+
+					// If it was activated, execute the rule
+					if (isActive(assessmentRules.get(i))) {
+						AssessmentRule oldRule = (AssessmentRule) (assessmentRules.remove(i).clone( ));
+
+						// first time that the repeatRule is executed
+						if (oldRule.isRepeatRule( ))
+							repeatedRules.add( oldRule );
+
+						triggerRule(oldRule);
+					}
+
+					// Else, check the next rule
+					else
+						i++;
+				}
+
+
 			}
+		} catch( CloneNotSupportedException e ) {
+			
 		}
 	}
-	
-	private void triggerRule(AssessmentRule oldRule){
 
-		oldRule.setConcept( Game.getInstance( ).processText( oldRule.getConcept( )));
+private void triggerRule(AssessmentRule oldRule){
+	    
+        oldRule.setConcept( Game.getInstance( ).processText( oldRule.getConcept( )));
+        oldRule.setText( Game.getInstance( ).processText( oldRule.getText( )));
+        ProcessedRule rule = new ProcessedRule(oldRule, Game
+            .getInstance().getTime());
 
-		oldRule.setText( Game.getInstance( ).processText( oldRule.getText( )));
-		ProcessedRule rule = new ProcessedRule(oldRule, Game.getInstance().getTime());
-
-		processedRules.add(rule);
+        processedRules.add(rule);
 	}
 
 	private static boolean isActive(AssessmentRule rule) {
@@ -227,47 +206,6 @@ public class AssessmentEngine implements TimerEventListener {
 	}
 
 	/**
-	 * Generates a report file, in XML format
-	 * 
-	 * @param filename
-	 *            File name of the report file
-	 */
-	/*
-	 * public void generateXMLReport(String filename) { try { // Create the
-	 * necessary elements for building the DOM DocumentBuilderFactory dbf =
-	 * DocumentBuilderFactory.newInstance(); DocumentBuilder db =
-	 * dbf.newDocumentBuilder(); Document doc = db.newDocument();
-	 * 
-	 * // Create the root element, "report" Element report =
-	 * doc.createElement("report");
-	 * 
-	 * // For each processed rule for (ProcessedRule rule : processedRules) { //
-	 * Create a new "processed-rule" node (DOM element), and link it // to the
-	 * document Element processedRule = rule.getDOMStructure();
-	 * doc.adoptNode(processedRule);
-	 * 
-	 * // Add the node report.appendChild(processedRule); }
-	 * 
-	 * // Add the report structure to the XML file doc.appendChild(report);
-	 * 
-	 * // Indent the DOM indentDOM(report, 0);
-	 * 
-	 * // Create the necessary elements for export the DOM into a XML file
-	 * TransformerFactory tFactory = TransformerFactory.newInstance();
-	 * Transformer transformer = tFactory.newTransformer();
-	 * 
-	 * // Create the output buffer, write the DOM and close it OutputStream fout
-	 * = new FileOutputStream(filename); OutputStreamWriter writeFile = new
-	 * OutputStreamWriter(fout, "UTF-8"); transformer.transform(new
-	 * DOMSource(doc), new StreamResult( writeFile)); writeFile.close();
-	 * 
-	 * } catch (IOException exception) { exception.printStackTrace(); } catch
-	 * (ParserConfigurationException exception) { exception.printStackTrace(); }
-	 * catch (TransformerConfigurationException exception) {
-	 * exception.printStackTrace(); } catch (TransformerException exception) {
-	 * exception.printStackTrace(); } }
-	 */
-	/**
 	 * Generates a report file, in HTML format
 	 * 
 	 * @param filename
@@ -282,7 +220,7 @@ public class AssessmentEngine implements TimerEventListener {
 
 			// HTML tag
 			file.println("<html>");
-			
+
 			// META tag for accents
 			file.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>");
 
@@ -429,8 +367,6 @@ public class AssessmentEngine implements TimerEventListener {
 
 				try {
 					state = STATE_STARTED;
-					
-					Log.d("PASA POR ASSESMENT", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
 					int i = 0;
 					File reportFile = null;
@@ -449,7 +385,7 @@ public class AssessmentEngine implements TimerEventListener {
 
 					reportFile.createNewFile();
 					final String reportAbsoluteFile = reportFile
-							.getAbsolutePath();
+					.getAbsolutePath();
 
 					generateHTMLReport(reportFile.getAbsolutePath(), -5);
 
@@ -459,21 +395,21 @@ public class AssessmentEngine implements TimerEventListener {
 						FileReader fir = new FileReader(report);
 						BufferedReader br = new BufferedReader(fir);
 						String line = br.readLine();
-						
+
 						String text = "";
 						while (line != null) {
 							text += line + "\n\r";
 							line = br.readLine();
 						}
-						
+
 						text = checkUriEscaped(text);
-						
+
 						lastHTMLReport = text;
 
 						Handler handler = GameThread.getInstance().getHandler();
 
 						Message msg = handler.obtainMessage();
-												
+
 						Bundle b = new Bundle();
 						b.putString("html", text);
 						msg.what = ActivityHandlerMessages.ASSESSMENT;
@@ -506,24 +442,24 @@ public class AssessmentEngine implements TimerEventListener {
 		}
 		return true;
 	}
-	
+
 	/** 
 	 * ANDROID WEBVIEW : 
 	 *  The data must be URI-escaped -- '#', '%', '\', '?' 
 	 *  should be replaced by %23, %25, %27, %3f respectively.
-	*/
+	 */
 
 	private String checkUriEscaped(String text) {
-		
-	//	text = text.replace("#", "%23");
+
+		//	text = text.replace("#", "%23");
 		text = text.replace("%", "%25");
 		text = text.replace("\\", "%27");
 		text = text.replace("?", "%3f");
-		
+
 		return text;
-		
+
 	}
-	
+
 
 	public AssessmentProfile getAssessmentProfile() {
 		return assessmentProfile;
@@ -542,11 +478,11 @@ public class AssessmentEngine implements TimerEventListener {
 		state = STATE_DONE;
 
 	}
-	
+
 	public String getLastHTMLReport() {
-		
+
 		return lastHTMLReport;
-		
+
 	}
 
 }
