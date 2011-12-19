@@ -209,7 +209,7 @@ public class FunctionalSpeak extends FunctionalAction {
 
         if( audioPath == null ) {
             if( audioId != -1 ) {
-                MultimediaManager.getInstance( ).stopPlayingInmediately( audioId );
+                MultimediaManager.getInstance( ).stopPlaying( audioId );
                 while( MultimediaManager.getInstance( ).isPlaying( audioId ) ) {
                     try {
                         Thread.sleep( 1 );
@@ -222,7 +222,7 @@ public class FunctionalSpeak extends FunctionalAction {
         }
         else {
             if( audioId != -1 ) {
-                MultimediaManager.getInstance( ).stopPlayingInmediately( audioId );
+                MultimediaManager.getInstance( ).stopPlaying( audioId );
                 while( MultimediaManager.getInstance( ).isPlaying( audioId ) ) {
                     try {
                         Thread.sleep( 1 );
@@ -356,7 +356,7 @@ public class FunctionalSpeak extends FunctionalAction {
         if( this.isStarted( ) ){
             stopTTSTalking( );
         	if( audioId != -1 ) 
-        		MultimediaManager.getInstance( ).stopPlayingInmediately( audioId );
+        		MultimediaManager.getInstance( ).stopPlaying( audioId );
         }
     }
 

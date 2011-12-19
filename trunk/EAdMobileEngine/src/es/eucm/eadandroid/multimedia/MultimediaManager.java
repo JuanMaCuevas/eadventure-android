@@ -1,10 +1,12 @@
 package es.eucm.eadandroid.multimedia;
 
-import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.WeakHashMap;
+
 import android.graphics.Bitmap;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.ecore.control.animations.Animation;
@@ -37,12 +39,12 @@ public class MultimediaManager {
 	 */
 	public static final int IMAGE_PLAYER = 2;
 
-	private static HashMap<String, SoftReference<Bitmap>>[] imageCache;
+	private HashMap<String, WeakReference<Bitmap>>[] imageCache;
 
 	/**
 	 * Mirrored images cache
 	 */
-	private static HashMap<String, SoftReference<Bitmap>>[] mirrorImageCache;
+	private HashMap<String, WeakReference<Bitmap>>[] mirrorImageCache;
 
 	/**
 	 * Sounds cache
@@ -59,7 +61,7 @@ public class MultimediaManager {
 	 */
 	private static MultimediaManager instance = new MultimediaManager();
 
-	private static HashMap<String, Animation> animationCache;
+	private HashMap<String, Animation> animationCache;
 
 	/**
 	 * Returns the MultimediaManager instance. Notice MultimediaManager is a
@@ -80,10 +82,10 @@ public class MultimediaManager {
 
 		imageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
-			imageCache[i] = new HashMap<String, SoftReference<Bitmap>>();
+			imageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
 		mirrorImageCache = new HashMap[3];
 		for (int i = 0; i < 3; i++)
-			mirrorImageCache[i] = new HashMap<String, SoftReference<Bitmap>>();
+			mirrorImageCache[i] = new HashMap<String, WeakReference<Bitmap>>();
 
 		soundCache = new HashMap<Long, Sound>();
 
@@ -103,14 +105,14 @@ public class MultimediaManager {
 	 */
 	public Bitmap loadImage(String bitmapPath, int category) {
 		
-		SoftReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
+		WeakReference<Bitmap> wrImg = imageCache[category].get(bitmapPath);		
 		
 		Bitmap image= (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		
 		if (image == null) {
 			 image = ResourceHandler.getInstance().getResourceAsImage( bitmapPath );
 			 if (image != null) {
-				imageCache[category].put(bitmapPath, new SoftReference<Bitmap>(image));
+				imageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
 			}
 		}
 		
@@ -132,7 +134,7 @@ public class MultimediaManager {
 	 */
 	public Bitmap loadMirroredImage(String bitmapPath, int category) {
 
-		SoftReference<Bitmap> wrImg = mirrorImageCache[category].get(bitmapPath);
+		WeakReference<Bitmap> wrImg = mirrorImageCache[category].get(bitmapPath);
 		
 		Bitmap image = (wrImg!=null ?  (Bitmap) wrImg.get() : null);
 		// If the image is in cache, don't load it
@@ -141,7 +143,7 @@ public class MultimediaManager {
 
 			image = getScaledImage( loadImage( bitmapPath, category ),-1, 1 );
 			if (image != null) {
-				mirrorImageCache[category].put(bitmapPath, new SoftReference<Bitmap>(image));
+				mirrorImageCache[category].put(bitmapPath, new WeakReference<Bitmap>(image));
 			}
 		}
 		
@@ -404,6 +406,8 @@ public class MultimediaManager {
 			}
 			sounds.remove(sound);
 		}
+		sounds.clear();
+		soundsToRemove.clear();
 	}
 
 	/**
@@ -415,6 +419,7 @@ public class MultimediaManager {
 		for (Sound sound : sounds) {
 			if (sound.getId() != musicSoundId) {
 				sound.stopPlaying();
+				sound.finalize();
 				try {
 					sound.join();
 				} catch (InterruptedException e) {
@@ -467,8 +472,10 @@ public class MultimediaManager {
                     frames.add( currentFrame );
                     i++;
                 }
-                else
-                    end = true;
+                
+                else 
+                	end = true;
+              
             }
             ImageAnimation animation = new ImageAnimation( );
             animation.setImages( frames.toArray( new Bitmap[] {} ) );

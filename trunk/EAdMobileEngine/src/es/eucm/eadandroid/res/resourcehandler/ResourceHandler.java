@@ -221,8 +221,9 @@ public class ResourceHandler implements InputStreamCreator {
 		
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPurgeable = true;
+		options.inDither = false;
 		options.inInputShareable = true;
-		options.inTempStorage = new byte [16 * 1024];
+		options.inTempStorage = new byte [32 * 1024];
 		options.inPreferredConfig = Bitmap.Config.RGB_565;
 		
 		try {
@@ -230,6 +231,15 @@ public class ResourceHandler implements InputStreamCreator {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (OutOfMemoryError err){
+			System.gc();
+			
+			try {
+				image = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return image;

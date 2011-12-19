@@ -279,22 +279,19 @@ public class FunctionalItem extends FunctionalElement {
         int y_image = Math.round( (y + y1 * scale) - getHeight( ) * scale );
  
         if( scale != 1 ) {
-        	Bitmap temp;
+        	Bitmap temp = null;
             if( image == oldOriginalImage && scale == oldScale ) {
                 temp = oldImage;
             }
             else {
-//                temp = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
-            	temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+
+            	temp = Bitmap.createScaledBitmap(image, Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true);
+            	/*temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
                 Canvas c = new Canvas(temp);
                 
                 Matrix m = new Matrix();
                 m.setScale(scale,scale);
-                //GRAPHICS
-
-      //          c.translate(100,100);
-                c.drawBitmap(image, m, null);
-
+                c.drawBitmap(image, m, null);*/
                 
                 oldImage = temp;
                 oldOriginalImage = image;

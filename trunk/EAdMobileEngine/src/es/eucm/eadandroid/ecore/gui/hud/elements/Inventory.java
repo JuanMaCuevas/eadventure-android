@@ -108,19 +108,21 @@ public class Inventory {
 	}
 
 	public void doDraw(Canvas c) {
-		c.save();
-		c.clipRect(0, 0, IPANEL_WIDTH, iPanelBottom);
-		c.save();
-		c.translate(0, iPanelBottom - IPANEL_HEIGHT);
-		inventoryPicture.draw(c);
-		c.restore();
-		c.translate(0, iPanelBottom - IPANEL_HEIGHT);
-		c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, TRANSPARENT_PADDING
-				+ RPANEL_PADDING);
-		// FIXME estooo tiene que quitarse de aqui y ponerl en otro sitio ;D!!!
-		gridPanel.setDataSet(Game.getInstance().getInventory());
-		gridPanel.draw(c);
-		c.restore();
+		if (iPanelBottom > 0){
+			c.save();
+			c.clipRect(0, 0, IPANEL_WIDTH, iPanelBottom);
+			c.save();
+			c.translate(0, iPanelBottom - IPANEL_HEIGHT);
+			inventoryPicture.draw(c);
+			c.restore();
+			c.translate(0, iPanelBottom - IPANEL_HEIGHT);
+			c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, TRANSPARENT_PADDING
+					+ RPANEL_PADDING);
+			// FIXME estooo tiene que quitarse de aqui y ponerl en otro sitio ;D!!!
+			gridPanel.setDataSet(Game.getInstance().getInventory());
+			gridPanel.draw(c);
+			c.restore();
+		}
 
 	}
 
@@ -129,7 +131,7 @@ public class Inventory {
 		iPanelBottom = Math.min(IPANEL_HEIGHT, y + drag_offset);
 	}
 
-	public boolean isAnimating(int y) {
+	public boolean isAnimating() {
 		if (iPanelBottom > IPANEL_HEIGHT / 2)
 			animating = true;
 		return animating;
@@ -183,12 +185,12 @@ public class Inventory {
 
 	public void setItemFocus(int posX, int posY) {
 		gridPanel.setItemFocus(posX, posY);
-		
+
 	}
 
 	public void resetItemFocus() {
 		gridPanel.resetItemFocus();
-		
+
 	}
 
 }

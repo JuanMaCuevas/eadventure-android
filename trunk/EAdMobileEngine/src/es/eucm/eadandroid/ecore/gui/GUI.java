@@ -4,7 +4,6 @@ package es.eucm.eadandroid.ecore.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -88,21 +87,18 @@ public class GUI {
 	/** Handle to the surface manager object we interact with */
 	private SurfaceHolder canvasSurfaceHolder;
 
-	/** Context of the activity creating the thread */
-	private Context mContext;
-
 	/**
 	 * BITMAP COPY & ITS CANVAS (VIEW)
 	 */
 
-	private static Bitmap bitmapcpy;
-	private static Canvas canvascpy;
+	private Bitmap bitmapcpy;
+	private Canvas canvascpy;
 
 	/**
 	 * finalbmp bitmap scaled to the device screen size
 	 */
-	private static Bitmap finalBmp;
-	private static Canvas finalCanvas;
+	private Bitmap finalBmp;
+	private Canvas finalCanvas;
 
 	/**
 	 * List of elements to be painted.
