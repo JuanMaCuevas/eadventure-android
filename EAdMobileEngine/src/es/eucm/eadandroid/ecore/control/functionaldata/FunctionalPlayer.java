@@ -35,10 +35,7 @@ package es.eucm.eadandroid.ecore.control.functionaldata;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.os.Debug;
 import android.util.Log;
 import es.eucm.eadandroid.common.auxiliar.SpecialAssetPaths;
@@ -546,13 +543,13 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
                 image = oldImage;
             }
             else if( scale != 1 ) {
-                oldOriginalImage = image;           
-                image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+                oldOriginalImage = image;  
+                image = Bitmap.createScaledBitmap(oldOriginalImage, Math.round( oldOriginalImage.getWidth(  ) * scale ),  Math.round( oldOriginalImage.getHeight(  ) * scale ), true);
+                /*image = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
                 Canvas c = new Canvas(image);
                 Matrix m = new Matrix();
                 m.setScale(scale,scale);
-                c.drawBitmap(oldOriginalImage, m, null);
-                
+                c.drawBitmap(oldOriginalImage, m, null);*/                
             }
             else {
                 oldOriginalImage = image;

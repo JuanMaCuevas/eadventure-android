@@ -236,27 +236,29 @@ public class FunctionalAtrezzo extends FunctionalElement {
 
         int x_image = Math.round( x - ( getWidth( ) * scale / 2 ) ) - Game.getInstance( ).getFunctionalScene( ).getOffsetX( );
         int y_image = Math.round( y - getHeight( ) * scale );
+        
         x_image+=x1;
         y_image+=y1;
+        
         if( scale != 1 ) {
-        	Bitmap temp;
-            if( scale == oldScale && image == oldOriginalImage ) {
+        	Bitmap temp = null;
+            if( image == oldOriginalImage && scale == oldScale ) {
                 temp = oldImage;
             }
             else {
-                //temp = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
-                temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+
+            	temp = Bitmap.createScaledBitmap(image, Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true);
+            	/*temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth( ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
                 Canvas c = new Canvas(temp);
                 
                 Matrix m = new Matrix();
                 m.setScale(scale,scale);
-                //GRAPHICS
-                c.drawBitmap(image, m, null);
-                //((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
+                c.drawBitmap(image, m, null);*/
                 
                 oldImage = temp;
                 oldOriginalImage = image;
                 oldScale = scale;
+                
             }
             if( layer == -1 )
                 GUI.getInstance( ).addElementToDraw( temp, x_image, y_image, Math.round( y ), Math.round( y ), null, null );

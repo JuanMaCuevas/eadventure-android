@@ -69,18 +69,17 @@ public class FrameAnimation implements Animation {
 
     public Bitmap getImage( ) {
 
-        Bitmap temp = animation.getImage( accumulatedTime, es.eucm.eadandroid.common.data.animation.Animation.ENGINE );
         String sound = animation.getNewSound( );
         if( sound != null && sound != "" ) {
             long soundID = MultimediaManager.getInstance( ).loadSound( sound, false );
             MultimediaManager.getInstance( ).startPlaying( soundID );
         }
-        return temp;
+        
+        return animation.getImage( accumulatedTime, es.eucm.eadandroid.common.data.animation.Animation.ENGINE );
     }
 
     public boolean isPlayingForFirstTime( ) {
 
-        //return playingForFirstTime;
         return !animation.finishedFirstTime( accumulatedTime );
     }
 

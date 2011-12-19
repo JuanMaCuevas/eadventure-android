@@ -198,18 +198,19 @@ public abstract class AnimationState {
         }
         else if( scale != 1 ) {
             oldOriginalImage = image;
+            image = Bitmap.createScaledBitmap(oldOriginalImage, Math.round( oldOriginalImage.getWidth(  ) * scale ),  Math.round( oldOriginalImage.getHeight(  ) * scale ), false);
             //image = image.getScaledInstance( Math.round( image.getWidth( null ) * scale ), Math.round( image.getHeight( null ) * scale ), Image.SCALE_SMOOTH );
-            Bitmap temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
+            //Bitmap temp = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( Math.round( image.getWidth(  ) * scale ),  Math.round( image.getHeight(  ) * scale ), true );
           //  ((Graphics2D) temp.getGraphics( )).drawImage( image, AffineTransform.getScaleInstance( scale, scale ), null );
            
-            Canvas c = new Canvas(temp);
+            /*Canvas c = new Canvas(temp);
             
             Matrix m = new Matrix();
             m.setScale(scale,scale);
             
             c.drawBitmap(image, m, null);            
             image = temp;
-            temp = null;
+            temp = null;*/
         }
         else {
             oldOriginalImage = image;

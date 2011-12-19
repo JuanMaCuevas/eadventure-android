@@ -78,7 +78,7 @@ public abstract class Sound extends Thread {
             playOnce( );
             playedAtLeastOnce = true;
         }
-        finalize( );
+        //finalize( );
     }
 
     /**

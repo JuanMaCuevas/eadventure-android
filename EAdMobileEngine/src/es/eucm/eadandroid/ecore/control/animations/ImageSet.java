@@ -128,9 +128,9 @@ public class ImageSet implements Animation {
     public Bitmap getImage( ) {
     	if( imageSet == null ){
     		if (currentFrame == null){
-    			Bitmap temp =  MultimediaManager.getInstance().loadImage(imagePathSet[currentFrameIndex], MultimediaManager.IMAGE_SCENE);
-    			currentFrame=MultimediaManager.getInstance().getFullscreenImage(temp);
-    			temp.recycle();
+    			Bitmap temp = MultimediaManager.getInstance().loadImage(imagePathSet[currentFrameIndex], MultimediaManager.IMAGE_SCENE);
+    			currentFrame = MultimediaManager.getInstance().getFullscreenImage(temp);
+    			temp = null;
     		}
     	}
     	else currentFrame = imageSet[currentFrameIndex];

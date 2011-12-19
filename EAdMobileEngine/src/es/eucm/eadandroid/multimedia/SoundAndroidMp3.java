@@ -32,7 +32,6 @@ public class SoundAndroidMp3 extends Sound {
 		
 		try {
 
-			// ResourceHandler.getInstance( ).getResourceAsStreamFromZip(path);
 			if (mMediaPlayer == null) {
 				mMediaPlayer = new MediaPlayer();
 				Log.d("EL PATH ES XXXXXXXXX        ", path);

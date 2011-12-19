@@ -121,7 +121,7 @@ public class NPCTalking extends NPCState {
 
         if( audioPath == null ) {
             if( audioId != -1 ) {
-                MultimediaManager.getInstance( ).stopPlayingInmediately( audioId );
+                MultimediaManager.getInstance( ).stopPlaying( audioId );
                 while( MultimediaManager.getInstance( ).isPlaying( audioId ) ) {
                     try {
                         Thread.sleep( 1 );
@@ -135,7 +135,7 @@ public class NPCTalking extends NPCState {
         else {
 
             if( audioId != -1 ) {
-                MultimediaManager.getInstance( ).stopPlayingInmediately( audioId );
+                MultimediaManager.getInstance( ).stopPlaying( audioId );
                 while( MultimediaManager.getInstance( ).isPlaying( audioId ) ) {
                     try {
                         Thread.sleep( 1 );

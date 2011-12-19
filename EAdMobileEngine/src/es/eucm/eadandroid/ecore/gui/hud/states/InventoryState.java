@@ -116,7 +116,7 @@ public class InventoryState extends HUDstate {
 	@Override
 	public boolean processUnPressed(UIEvent e) {
 		
-		if (inventory.isAnimating((int) ((UnPressedEvent) e).event.getY())) {
+		if (inventory.isAnimating()) {
 			UnPressedEvent ev = (UnPressedEvent) e;
 			int dstX = (int) ev.event.getX();
 			int dstY = (int) ev.event.getY();

@@ -44,7 +44,7 @@ public class ShowingInventoryState extends HUDstate {
 	@Override
 	public boolean processUnPressed(UIEvent e) {
 
-		if (inventory.isAnimating((int) ((UnPressedEvent) e).event.getY())) {
+		if (inventory.isAnimating()) {
 			stateContext.setState(HUDstate.InventoryState,null);
 		} else {
 			inventory.resetPos();
