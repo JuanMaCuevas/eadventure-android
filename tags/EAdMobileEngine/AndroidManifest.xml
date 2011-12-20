@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="es.eucm.eadandroid" android:versionCode="1"
+	android:versionName="1.0">
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
+	<application android:label="@string/app_name"
+		android:debuggable="true" android:theme="@android:style/Theme.NoTitleBar"
+		android:icon="@drawable/launcher_icon2">
+		
+		<activity android:name=".homeapp.SplashScreenActivity" android:screenOrientation="portrait">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />			
+				<category android:name="android.intent.category.LAUNCHER" />			
+			</intent-filter>
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" android:host="*" android:mimeType="*/*" android:pathPattern=".*\\.ead" />
+            </intent-filter>
+		</activity>
+
+		<activity android:name=".homeapp.WorkspaceActivity"></activity>
+			<activity android:name=".homeapp.HomeActivity"></activity>
+		<activity android:name=".homeapp.localgames.LocalGamesActivity"></activity>
+		<activity android:name=".homeapp.preferences.PreferencesActivity"></activity>
+		<activity android:name=".homeapp.repository.RepositoryActivity"></activity>
+
+
+
+		<activity android:name=".ecore.ECoreActivity"
+			android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>				
+		<activity android:name=".ecore.EcoreVideo"
+			android:screenOrientation="landscape"></activity>
+		<activity android:name=".homeapp.loadsavedgames.LoadSavedGames"></activity>
+		<activity
+			android:name=".homeapp.preferences.LaunchAndExplorerActivity"></activity>
+		<activity android:name=".ecore.ECoreControl"
+		android:alwaysRetainTaskState="true" android:screenOrientation="landscape"></activity>
+
+
+	</application>
+	<uses-sdk android:minSdkVersion="10" />
+
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" />
+	<uses-permission android:name="android.permission.INTERNET" />	
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	
+</manifest> 
