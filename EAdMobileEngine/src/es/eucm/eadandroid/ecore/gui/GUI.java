@@ -4,6 +4,7 @@ package es.eucm.eadandroid.ecore.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.view.SurfaceHolder;
+import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.ecore.control.TimerManager;
 import es.eucm.eadandroid.ecore.control.functionaldata.FunctionalElement;
 import es.eucm.eadandroid.ecore.control.functionaldata.functionalhighlights.FunctionalHighlight;
@@ -135,6 +137,8 @@ public class GUI {
 	public static int CENTER_OFFSET;
 	public final static int OFFSET_ARROW_AREA_RADIUS = 30;
 	
+	private Context context;
+	
 	/**
 	 * Loading paint
 	 */
@@ -150,9 +154,10 @@ public class GUI {
 	
 	private DebugOverlay debugOverlay;
 
-	private GUI(SurfaceHolder mSurfaceHolder) {
+	private GUI(SurfaceHolder mSurfaceHolder, Context context) {
 		
 		this.canvasSurfaceHolder = mSurfaceHolder;
+		this.context = context;
 		elementsToDraw = new ArrayList<ElementImage>();
 		textToDraw = new ArrayList<Text>();
 		debugOverlay = new DebugOverlay();
@@ -166,9 +171,9 @@ public class GUI {
 		this.canvasSurfaceHolder = canvasSurfaceHolder;
 	}
 
-	public static void create(SurfaceHolder mSurfaceHolder) {
+	public static void create(SurfaceHolder mSurfaceHolder, Context context) {
 
-		instance = new GUI(mSurfaceHolder);
+		instance = new GUI(mSurfaceHolder, context);
 
 	}
 
@@ -342,13 +347,8 @@ public class GUI {
 		// we haven't checked every previous element
 		while (!added && i < elementsToDraw.size()) {
 
-			// Insert the element in the correct position
-			// TODO: Hey guys, watch this carefully!! I've changed this line
 			if (depth <= elementsToDraw.get(i).getOriginalY()) {
-				// if (depth <= elementsToDraw.get(i).getDepth()) { //TODO esto
-				// lo entiendo pero me imagino que el euge lo pilota
-				// if( depth <= getRealMinY(elementsToDraw.get( i ),
-				// x)+elementsToDraw.get( i ).y) {
+
 				element.setDepth(i);
 				elementsToDraw.add(i, element);
 				added = true;
@@ -358,7 +358,6 @@ public class GUI {
 
 		// If the element wasn't added, add it in the last position
 		if (!added) {
-			// element.setDepth(elementsToDraw.size() - 1);
 			elementsToDraw.add(element);
 
 		}
@@ -543,14 +542,11 @@ public class GUI {
 			g.drawText(string, realX + 2, realY - 2, mPaint);
 			g.drawText(string, realX + 2, realY + 2, mPaint);
 
-			// FIXME el color CORRECTO
-
 		}
 		// Draw the text
 		mPaint.setColor(textColor);
 
 		g.drawText(string, realX, realY, mPaint);
-		// g.drawText(string, realX, realY,mPaint);
 	}
 
 	/**
@@ -656,26 +652,6 @@ public class GUI {
 		propiedades.setColor(bkgColor);
 		g.drawRoundRect(rectangulo, 20, 20, propiedades);
 
-		/*
-		 * AlphaComposite alphaComposite = AlphaComposite.getInstance(
-		 * AlphaComposite.SRC_OVER, 0.8f); Composite temp = g.getComposite();
-		 * g.setComposite(alphaComposite); g.setColor(bkgColor);
-		 * g.fillRoundRect(tempX - maxWidth / 2 - 5, tempY - textBlockHeight -
-		 * 5, maxWidth + 10, textBlockHeight + 10, 20, 20);
-		 * 
-		 * g.setComposite(temp); g.setColor(bubbleBorder); g.drawRoundRect(tempX
-		 * - maxWidth / 2 - 5, tempY - textBlockHeight - 5, maxWidth + 10,
-		 * textBlockHeight + 10, 20, 20);
-		 * 
-		 * if (showArrow) { g.setComposite(alphaComposite);
-		 * g.setColor(bkgColor); int x_p[] = new int[] { tempX - 10, tempX + 10,
-		 * tempX }; int y_p[] = new int[] { tempY + 5, tempY + 5, tempY + 15 };
-		 * g.fillPolygon(x_p, y_p, 3);
-		 * 
-		 * g.setComposite(temp); g.setColor(bubbleBorder); g.drawLine(x_p[0],
-		 * y_p[0], x_p[2], y_p[2]); g.drawLine(x_p[1], y_p[1], x_p[2], y_p[2]);
-		 * }
-		 */
 		drawStringOnto(g, strings, x, y, textColor, borderColor);
 	}
 
@@ -1030,8 +1006,8 @@ public class GUI {
 		try {
 			canvas = canvasSurfaceHolder.lockCanvas(null);
 			synchronized (canvasSurfaceHolder) {
-				//canvas.drawARGB(150, 0, 0, 0);
-				canvas.drawText("Loading...", 10 * GUI.DISPLAY_DENSITY_SCALE,GUI.FINAL_WINDOW_HEIGHT - 10 * GUI.DISPLAY_DENSITY_SCALE, loadPaint);
+				
+				canvas.drawText(context.getString(R.string.loading), 10 * GUI.DISPLAY_DENSITY_SCALE,GUI.FINAL_WINDOW_HEIGHT - 10 * GUI.DISPLAY_DENSITY_SCALE, loadPaint);
 			}
 		} finally {
 			// do this in a finally so that if an exception is thrown

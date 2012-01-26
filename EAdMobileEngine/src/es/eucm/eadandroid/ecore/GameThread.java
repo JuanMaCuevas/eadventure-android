@@ -31,16 +31,13 @@ public class GameThread extends Thread {
 	
 	public static final String TAG ="GameThread";
 	
-	private GameThread(SurfaceHolder holder,Context context, Handler handler,String loadingGame, Display d)
-	{
+	private GameThread(SurfaceHolder holder,Context context, Handler handler,String loadingGame, Display d) {
+		
 		this.handler =handler;
 		this.context = context;
 		Game.create(loadingGame);
 
-		DisplayMetrics dm = new DisplayMetrics(); //= context.getResources().getDisplayMetrics();
-		
-		//int landscapeHeight = displayMetrics.heightPixels;
-		//int landscapeWidth = displayMetrics.widthPixels;
+		DisplayMetrics dm = new DisplayMetrics();
 		
 		int width = d.getWidth();
 		int height = d.getHeight();
@@ -54,18 +51,17 @@ public class GameThread extends Thread {
 		
 		float scaleDensity = dm.density;	
 				
-		GUI.create(holder);
+		GUI.create(holder, context);
 		ContextServices.create(context);
 		GUI.getInstance().init(height, width, scaleDensity);						
 	}
 
 
 
-	public static void create(SurfaceHolder holder,Context context, Handler handler,String loadingGame, Display d) 
-		{
-	          instance = new GameThread(holder,context,handler,loadingGame,d);
-	
-		}
+	public static void create(SurfaceHolder holder,Context context, Handler handler,String loadingGame, Display d) {
+	          
+		instance = new GameThread(holder,context,handler,loadingGame,d);	
+	}
 	
 	@Override
 	public void run() {
@@ -79,7 +75,6 @@ public class GameThread extends Thread {
 		Game.delete();
 		ResourceHandler.getInstance().closeZipFile();
 		ResourceHandler.delete();
-	//	ConfigData.storeToXML();
 		
 		finishThread();
 		
