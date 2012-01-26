@@ -87,15 +87,15 @@ public class ECoreControl extends Activity{
 		DescriptorData gameDescriptor = Loader
 				.loadDescriptorData(ResourceHandler.getInstance());
 		
-		gpsGame=gameDescriptor.isGpsMode();
-		qrCodeGame=gameDescriptor.isQrCodeMode();
+		gpsGame = gameDescriptor.isGpsMode();
+		qrCodeGame = gameDescriptor.isQrCodeMode();
 		
 		if (!gpsGame && !qrCodeGame)
 				changeActivity();
 			
-		if (qrCodeGame)
-		chekingBarCode();
-		else	chekingGps();
+		else if (qrCodeGame)
+			chekingBarCode();
+		else chekingGps();
 		
 	}
 
@@ -141,25 +141,23 @@ public class ECoreControl extends Activity{
 	
 	private void showQRCodeDialog() {
 		new AlertDialog.Builder(this)
-				.setTitle("eAdventure QRCode game")
+				.setTitle(getString(R.string.qr_game))
 				.setIcon(R.drawable.dialog_icon)
-				.setMessage(
-						"You are about to start a QRCode-based game. You should install BarcodeScanner app in order to play it")
-				.setPositiveButton("Install",
+				.setMessage(getString(R.string.qr_message_app))
+				.setPositiveButton(getString(R.string.install_app),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
-								// TODO hacer algo
+				
 								Intent i = new Intent(
 										Intent.ACTION_VIEW,
 										Uri
 												.parse("market://search?q=pname:com.google.zxing.client.android"));
 														
-								startActivityForResult(i, REQUEST_QRCODE);
-																		
+								startActivityForResult(i, REQUEST_QRCODE);	
 								
 							}
-						}).setNeutralButton("Quit Game",
+						}).setNeutralButton(getString(R.string.option_quit),
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
@@ -173,18 +171,18 @@ public class ECoreControl extends Activity{
 	
 	private void showGPSDialog(){  
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);  
-		builder.setMessage("You are about to start a geolocated game. GPS is currently disabled")  
+		builder.setMessage(getString(R.string.gps_message))  
 		     .setCancelable(false) 
-		     .setTitle("eAdventure Geolocated Game")
+		     .setTitle(getString(R.string.gps_game))
 		     .setIcon(R.drawable.dialog_icon)
-		     .setPositiveButton("Enable GPS",  
+		     .setPositiveButton(getString(R.string.gps_enabling),  
 		          new DialogInterface.OnClickListener(){  
 		          public void onClick(DialogInterface dialog, int id){  
 		        	  Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 		      		startActivityForResult(intent, REQUEST_GPS);  
 		          }  
 		     });  
-		     builder.setNegativeButton("Quit game",  
+		     builder.setNegativeButton(getString(R.string.option_quit),  
 		          new DialogInterface.OnClickListener(){  
 		          public void onClick(DialogInterface dialog, int id){  
 		               dialog.cancel(); 
@@ -248,7 +246,7 @@ public class ECoreControl extends Activity{
 		i.putExtra("Tab", 0);
 		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(i);
-		overridePendingTransition(R.anim.fade, R.anim.hold);
+		overridePendingTransition(R.anim.fade_in, R.anim.hold);
 		this.finish();
 	}
 

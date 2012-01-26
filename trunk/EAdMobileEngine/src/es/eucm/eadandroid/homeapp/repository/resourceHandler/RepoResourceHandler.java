@@ -16,6 +16,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -74,7 +77,10 @@ public class RepoResourceHandler {
 		try {
 
 			HttpGet httpGet = new HttpGet(url_from);
-			HttpClient httpclient = new DefaultHttpClient();
+			HttpParams httpParameters = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParameters, 20000);
+			HttpConnectionParams.setSoTimeout(httpParameters, 42000);
+			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			// Execute HTTP Get Request
 			HttpResponse response = httpclient.execute(httpGet);
 
@@ -83,6 +89,7 @@ public class RepoResourceHandler {
 			File file = new File(path_to, fileName);
 
 			FileOutputStream fos;
+			
 			try {
 				fos = new FileOutputStream(file);
 
@@ -148,7 +155,10 @@ public class RepoResourceHandler {
 		InputStream content = null;
 		try {
 			HttpGet httpGet = new HttpGet(url);
-			HttpClient httpclient = new DefaultHttpClient();
+			HttpParams httpParameters = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParameters, 20000);
+			HttpConnectionParams.setSoTimeout(httpParameters, 42000);
+			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			// Execute HTTP Get Request
 			HttpResponse response = httpclient.execute(httpGet);
 			content = response.getEntity().getContent();

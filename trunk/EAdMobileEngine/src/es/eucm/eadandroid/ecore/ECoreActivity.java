@@ -3,9 +3,8 @@ package es.eucm.eadandroid.ecore;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,10 +12,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Picture;
-import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
@@ -35,20 +34,20 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import es.eucm.eadandroid.R;
 import es.eucm.eadandroid.common.auxiliar.ReleaseFolders;
 import es.eucm.eadandroid.common.data.adventure.DescriptorData;
-import es.eucm.eadandroid.common.data.chapter.scenes.Videoscene;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.common.loader.Loader;
 import es.eucm.eadandroid.ecore.control.Game;
@@ -80,8 +79,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 	private ArrayAdapter<String> conversationAdapter;
 	private String adventureName;
 	private boolean fromvideo = false;
-	
-	private Videoscene videoscene;
 
 	ProgressDialog dialog;
 	ProgressDialog dialog2;
@@ -212,7 +209,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		i.putExtra("Tab", 1);
 		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(i);
-		overridePendingTransition(R.anim.fade, R.anim.hold);
+		overridePendingTransition(R.anim.fade_in, R.anim.hold);
 	}
 
 /*	
@@ -250,7 +247,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		
 		Intent i = new Intent(this, EcoreVideo.class);
 		startActivity(i);
-		overridePendingTransition(R.anim.fade, R.anim.hold);	
+		overridePendingTransition(R.anim.fade_in, R.anim.hold);	
 	}	
 
 	private void finishapplication() {
@@ -259,7 +256,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		i.putExtra("Tab",0);
 		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(i);
-		overridePendingTransition(R.anim.fade, R.anim.hold);
+		overridePendingTransition(R.anim.fade_in, R.anim.hold);
 	}
 
 	/** Called when the activity is first created. */
@@ -313,7 +310,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			this.qrCodeGame=gameDescriptor.isQrCodeMode();
 			
 			if (qrCodeGame)
-			QrcodeManager.create();	
+				QrcodeManager.create();	
 			
 			if (gpsGame) {
 				GpsManager.create();
@@ -326,9 +323,9 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				GpsManager.getInstance().setLocationManager(locationManager);
 
 				dialog = new ProgressDialog(this);
-				dialog.setTitle("eAdventure Geolocated Game");
+				dialog.setTitle(getString(R.string.gps_game));
 				dialog.setIcon(R.drawable.dialog_icon);
-				dialog.setMessage("Waiting for GPS signal...");
+				dialog.setMessage(getString(R.string.wait_signal));
 				dialog.setIndeterminate(true);
 				dialog.show();
 				// dialog.setCancelable(false);
@@ -336,58 +333,33 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			} else {
 				
 				dialog2 = new ProgressDialog(this);
-				dialog2.setTitle("eAdventure");
+				dialog2.setTitle(getString(R.string.app_name));
 				dialog2.setIcon(R.drawable.dialog_icon);
-				dialog2.setMessage("Loading game...");
+				dialog2.setMessage(getString(R.string.loading));
 				dialog2.setIndeterminate(true);
 				dialog2.show();
 				
 			}
 			
 			
-			if (qrCodeGame)
-			{
-				
-				
+			if (qrCodeGame){
 				
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("You are about to start a QRcode-based game \n Press the magnifier button on the options menu to capture QRCodes")
-				       .setCancelable(false)
-				       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				builder.setMessage(getString(R.string.qr_message)).setCancelable(false)
+				       .setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
 				           public void onClick(DialogInterface dialog, int id) {
 				               
 				           }
 				       });
 				
-				builder.setTitle("eAdventure");
+				builder.setTitle(getString(R.string.app_name));
 				builder.setIcon(R.drawable.dialog_icon);
 				      
 				       
 				AlertDialog alert = builder.create();
 				
 				alert.show();
-				
-				
-				
-				
-				
-				/*
-				
-				
-				
-				AlertDialog dialog3 = new AlertDialog(this);
-				dialog3.setTitle("eAdventure");
-				dialog3.setIcon(R.drawable.dialog_icon);
-				dialog3.setMessage("You are about to start a QRcode game ");
-				//dialog3.setIndeterminate(true);
-				dialog3.setButton("Continue", new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			                
-			           }
-			       });
-				dialog3.show();
-				*/
 			}
 
 			gameSurfaceView = (GameSurfaceView) findViewById(R.id.canvas_surface);
@@ -399,17 +371,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 			Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();		
 			
 			if (loadingfromsavedgame) {
-				String loadfile = this.getIntent().getExtras().getString(
-						"restoredGame");
-				GameThread
-						.create(canvasHolder, this, ActivityHandler, loadfile, d);
+				String loadfile = this.getIntent().getExtras().getString("restoredGame");
+				GameThread.create(canvasHolder, this, ActivityHandler, loadfile, d);
 			} else
 				GameThread.create(canvasHolder, this, ActivityHandler, null, d);
 
 			GameThread.getInstance().setAdventurePath(advPath);
 			GameThread.getInstance().setAdventureName(adventureName);
-			
-			
 
 		} else {		
 			this.fromvideo = this.getIntent().getExtras().getBoolean("before_video");
@@ -424,7 +392,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		webview.setVerticalScrollbarOverlay(true);
 		webview.setMinimumHeight(GUI.FINAL_WINDOW_HEIGHT / 2);
 		assesmentLayout.setBackgroundColor(Color.BLACK);
-		// webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		close_button.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -458,6 +426,15 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		  	    }			
 		});
 		
+		conversationList.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+		  	        int position, long id) {
+				// TODO Meter texto en movimiento
+				return false;
+			}
+			
+		});		
 		
 		
 		report_button.setOnClickListener(new OnClickListener() {
@@ -661,7 +638,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		if (requestCode == 0)
 			if (resultCode == RESULT_OK) {
 				String contents = data.getStringExtra("SCAN_RESULT");
-				String format = data.getStringExtra("SCAN_RESULT_FORMAT");
 				QrcodeManager.getInstance().updateQRcode(contents);
 			}
 
@@ -727,26 +703,26 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 				menu.removeItem(6);
 
 			if (Game.getInstance().getCurrentState() instanceof GameStatePlaying) {
-				menu.add(0, 0, 0, "Save").setIcon(
+				menu.add(0, 0, 0, getString(R.string.option_save)).setIcon(
 						android.R.drawable.ic_menu_save);
 			}
 
 			if (Game.getInstance().getFunctionalScene() != null)
 				if (options.isMusicActive())
-					menu.add(0, 1, 0, "Music off").setIcon(
+					menu.add(0, 1, 0, getString(R.string.option_music_off)).setIcon(
 							android.R.drawable.ic_lock_silent_mode);
 				else
-					menu.add(0, 1, 0, "Music on").setIcon(
+					menu.add(0, 1, 0, getString(R.string.option_music_on)).setIcon(
 							android.R.drawable.ic_lock_silent_mode_off);
 
-			menu.add(0, 3, 0, "Quit Game").setIcon(
+			menu.add(0, 3, 0, getString(R.string.option_quit)).setIcon(
 					android.R.drawable.ic_menu_close_clear_cancel);
-			menu.add(0, 4, 0, "Load game").setIcon(
+			menu.add(0, 4, 0, getString(R.string.option_load)).setIcon(
 					android.R.drawable.ic_menu_directions);
-			menu.add(0, 5, 0, "Resize").setIcon(
+			menu.add(0, 5, 0, getString(R.string.option_resize)).setIcon(
 					android.R.drawable.ic_menu_directions);
 			if (this.qrCodeGame)
-				menu.add(0, 6, 0, "Scan QRCode").setIcon(
+				menu.add(0, 6, 0, getString(R.string.option_scan)).setIcon(
 						android.R.drawable.ic_menu_search);
 
 		}
@@ -817,19 +793,19 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		final boolean aux_quit = quit;
 		final boolean aux_load = load;
 
-		new AlertDialog.Builder(this).setTitle("Save game").setIcon(R.drawable.dialog_icon).setMessage(
-				"Set slot name").setView(input).setPositiveButton("Ok",
-				new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(this).setTitle(getString(R.string.option_save))
+		.setIcon(R.drawable.dialog_icon).setMessage(getString(R.string.slot_name)).setView(input)
+		.setPositiveButton(getString(R.string.button_ok),new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						Editable value = input.getText();
 						if (saveGame(value.toString())) {
-							showToast("Game saved");
+							showToast(getString(R.string.confirm_saved));
 							if (aux_quit)
 								finishthread(aux_load);
 						} else
-							showToast("Error saving game");
+							showToast(getString(R.string.confirm_saved_error));
 					}
-				}).setNegativeButton("Cancel",
+				}).setNegativeButton(getString(R.string.button_cancel),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 					}
@@ -841,18 +817,18 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		final boolean aux_load = load;
 
-		new AlertDialog.Builder(this).setTitle("Quit game").setIcon(R.drawable.dialog_icon).setMessage(
-				"Do you want to save the game?").setPositiveButton("OK",
+		new AlertDialog.Builder(this).setTitle(getString(R.string.option_quit)).setIcon(R.drawable.dialog_icon)
+		.setMessage(getString(R.string.confirm_saving)).setPositiveButton(getString(R.string.button_ok),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						showSaveDialog(true, aux_load);
 					}
-				}).setNeutralButton("No",
+				}).setNeutralButton(getString(R.string.button_no),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						finishthread(aux_load);
 					}
-				}).setNegativeButton("Cancel",
+				}).setNegativeButton(getString(R.string.button_cancel),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 					}
@@ -927,14 +903,6 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 		}
 		
 		return true;
-	}
-
-	private String currentDate() {
-
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ssdd-MM-yyyy");
-
-		return formatter.format(new Date());
-
 	}
 
 	public void finishthread(boolean loadactivitygames) {
