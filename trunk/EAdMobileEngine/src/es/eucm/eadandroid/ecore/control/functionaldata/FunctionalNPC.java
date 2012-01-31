@@ -1,3 +1,43 @@
+/*******************************************************************************
+ * <e-Adventure> Mobile for Android is a port of the <e-Adventure> research project to 	the Android platform.
+ *     
+ *      Copyright 2009-2012 <e-UCM> research group.
+ *    
+ *       <e-UCM> is a research group of the Department of Software Engineering
+ *            and Artificial Intelligence at the Complutense University of Madrid
+ *            (School of Computer Science).
+ *    
+ *            C Profesor Jose Garcia Santesmases sn,
+ *            28040 Madrid (Madrid), Spain.
+ *    
+ *            For more info please visit:  <http://e-adventure.e-ucm.es/android> or
+ *            <http://www.e-ucm.es>
+ *    
+ *    ****************************************************************************
+ * 	This file is part of <e-Adventure> Mobile, version 1.0.
+ * 
+ * 	Main contributors - Roberto Tornero
+ * 
+ * 	Former contributors - Alvaro Villoria 
+ * 						    Juan Manuel de las Cuevas
+ * 						    Guillermo Martín 	
+ * 
+ *     	You can access a list of all the contributors to <e-Adventure> Mobile at:
+ *            	http://e-adventure.e-ucm.es/contributors
+ *    
+ *    ****************************************************************************
+ *         <e-Adventure> Mobile is free software: you can redistribute it and/or modify
+ *        it under the terms of the GNU Lesser General Public License as published by
+ *        the Free Software Foundation, either version 3 of the License, or
+ *        (at your option) any later version.
+ *    
+ *        <e-Adventure> Mobile is distributed in the hope that it will be useful,
+ *        but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *        GNU Lesser General Public License for more details.
+ *    
+ *        See <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 /**
  * <e-Adventure> is an <e-UCM> research project. <e-UCM>, Department of Software
  * Engineering and Artificial Intelligence. Faculty of Informatics, Complutense
@@ -475,6 +515,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
      */
     public void speak( String text2, boolean keepShowing ) {
 
+    	text2 = processName(text2);
         String text = Game.getInstance( ).processText( text2 );
 
         DebugLog.player( "NPC " + npc.getId( ) + " says " + text );
@@ -488,6 +529,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
 
     public void speak( String text2, String audioPath, boolean keepShowing ) {
 
+    	text2 = processName(text2);
         String text = Game.getInstance( ).processText( text2 );
 
         DebugLog.player( "NPC " + npc.getId( ) + " says " + text + " with audio" );
@@ -502,6 +544,7 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
 
     public void speakWithFreeTTS( String text2, String voice, boolean keepShowing ) {
 
+    	text2 = processName(text2);
         String text = Game.getInstance( ).processText( text2 );
 
         DebugLog.player( "NPC " + npc.getId( ) + " speaks with text-to-speech" );
@@ -514,6 +557,19 @@ public class FunctionalNPC extends FunctionalElement implements TalkingElement {
     
     public void speakWithFreeTTS( String text2, String voice){
         speakWithFreeTTS( text2, voice, false);
+    }
+    
+    /**
+     * Look for [] tag to add the name of the speaker
+     * 
+     * @param text
+     * @return
+     */
+    private String  processName(String text){
+       
+       if (text!= null && text.startsWith( "[]" ))
+           text = text.replaceFirst( "\\[\\]",  "[ " + npc.getName( ) + " ]");
+       return text;
     }
 
     public void stopTalking( ) {

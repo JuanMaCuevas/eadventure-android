@@ -1,3 +1,43 @@
+/*******************************************************************************
+ * <e-Adventure> Mobile for Android is a port of the <e-Adventure> research project to 	the Android platform.
+ *     
+ *      Copyright 2009-2012 <e-UCM> research group.
+ *    
+ *       <e-UCM> is a research group of the Department of Software Engineering
+ *            and Artificial Intelligence at the Complutense University of Madrid
+ *            (School of Computer Science).
+ *    
+ *            C Profesor Jose Garcia Santesmases sn,
+ *            28040 Madrid (Madrid), Spain.
+ *    
+ *            For more info please visit:  <http://e-adventure.e-ucm.es/android> or
+ *            <http://www.e-ucm.es>
+ *    
+ *    ****************************************************************************
+ * 	This file is part of <e-Adventure> Mobile, version 1.0.
+ * 
+ * 	Main contributors - Roberto Tornero
+ * 
+ * 	Former contributors - Alvaro Villoria 
+ * 						    Juan Manuel de las Cuevas
+ * 						    Guillermo Martín 	
+ * 
+ *     	You can access a list of all the contributors to <e-Adventure> Mobile at:
+ *            	http://e-adventure.e-ucm.es/contributors
+ *    
+ *    ****************************************************************************
+ *         <e-Adventure> Mobile is free software: you can redistribute it and/or modify
+ *        it under the terms of the GNU Lesser General Public License as published by
+ *        the Free Software Foundation, either version 3 of the License, or
+ *        (at your option) any later version.
+ *    
+ *        <e-Adventure> Mobile is distributed in the hope that it will be useful,
+ *        but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *        GNU Lesser General Public License for more details.
+ *    
+ *        See <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package es.eucm.eadandroid.homeapp;
 
 import java.util.ArrayList;
@@ -108,7 +148,6 @@ public class WorkspaceActivity extends FragmentActivity {
      * The indicator attached to the pager
      */
     private ViewPagerIndicator indicator;
-    
 
     /**
      * Instantiation of the action bar, view pager and the other components of the activity 
@@ -119,14 +158,14 @@ public class WorkspaceActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_pager);
         
-        overridePendingTransition(R.anim.fade, R.anim.hold);
-        
+        overridePendingTransition(R.anim.fade_in, R.anim.hold);
+        	
         final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setHomeAction(new IntentAction(this, createIntent(this, HomeActivity.class), R.drawable.launcher_icon3));
-        actionBar.setTitle("eAdventure Mobile");
+        actionBar.setTitle(getString(R.string.app_name));
         actionBar.addAction(new IntentAction(this, createIntent(this, PreferencesActivity.class), android.R.drawable.ic_menu_preferences));
 
-        mAdapter = new PagerAdapter(getSupportFragmentManager());
+        mAdapter = new PagerAdapter(getSupportFragmentManager(), this.getApplicationContext());
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);        
@@ -182,7 +221,7 @@ public class WorkspaceActivity extends FragmentActivity {
 		}
 		else indicator.init(0, NUM_ITEMS, mAdapter);
 		
-		overridePendingTransition(R.anim.fade, R.anim.hold);
+		overridePendingTransition(R.anim.fade_in, R.anim.hold);
     }    
     
     /**
@@ -213,11 +252,15 @@ public class WorkspaceActivity extends FragmentActivity {
 	 */
     public static class PagerAdapter extends FragmentPagerAdapter implements ViewPagerIndicator.PageInfoProvider {
     	
+    	private Context context;
+    	
     	/**
     	 * Constructor
+    	 * @param context 
     	 */
-        public PagerAdapter(FragmentManager fm) {
+        public PagerAdapter(FragmentManager fm, Context context) {
             super(fm);
+            this.context = context;
         }
 
         /*
@@ -252,11 +295,11 @@ public class WorkspaceActivity extends FragmentActivity {
 		public String getTitle(int position) {
 			String title = null;
 			switch (position){
-        	case GAMES: title = "Installed games";
+        	case GAMES: title = context.getString(R.string.installed_games);
         			break;
-        	case LOAD_GAMES: title = "Saved games";
+        	case LOAD_GAMES: title = context.getString(R.string.saved_games);
 					break;
-        	case REPOSITORY: title = "Games repository";
+        	case REPOSITORY: title = context.getString(R.string.games_repository);
 					break;      
 			}
 			return title;
@@ -325,7 +368,7 @@ public class WorkspaceActivity extends FragmentActivity {
     			case LGAHandlerMessages.NO_GAMES_FOUND:
     				break;
     			case LGAHandlerMessages.NO_SD_CARD:
-    				showAlert("No SD card mounted");
+    				showAlert(getString(R.string.no_sd));
     				break;
     			case LGAHandlerMessages.DELETING_GAME:
     				dialog.setIndeterminate(false);
@@ -387,10 +430,9 @@ public class WorkspaceActivity extends FragmentActivity {
             
             GameInfo selectedAdventure = (GameInfo) this.getListView()
 			.getItemAtPosition(position);
-            Intent i = new Intent(getActivity(), ECoreActivity.class);
+            Intent i = new Intent(getActivity(), ECoreControl.class);
             i.putExtra("AdventureName", selectedAdventure.getGameTitle());
-            this.
-            getActivity().startActivity(i);
+            this.getActivity().startActivity(i);
         }
         
         /*
@@ -401,10 +443,10 @@ public class WorkspaceActivity extends FragmentActivity {
     	public void onCreateContextMenu(ContextMenu menu, View v,
     			ContextMenuInfo menuInfo) {
         	tag = GAMES;
-    		menu.setHeaderTitle("Options");
+    		menu.setHeaderTitle(getString(R.string.options));
     		menu.setHeaderIcon(R.drawable.dialog_icon);
-    		menu.add(0, 0, 0, "Play Game");
-    		menu.add(0, 1, 0, "Uninstall Game");
+    		menu.add(0, 0, 0, getString(R.string.option_play));
+    		menu.add(0, 1, 0, getString(R.string.option_uninstall));
     	}
 
         /**
@@ -412,8 +454,6 @@ public class WorkspaceActivity extends FragmentActivity {
          */
     	@Override
     	public boolean onContextItemSelected(MenuItem item) {
-    		
-    		//if (tag != GAMES) return super.onContextItemSelected(item);
     		
     		AdapterContextMenuInfo information = (AdapterContextMenuInfo) item
     				.getMenuInfo();    		
@@ -425,7 +465,7 @@ public class WorkspaceActivity extends FragmentActivity {
     			GameInfo selectedAdventure = (GameInfo) this.getListView()
     					.getItemAtPosition(information.position);
 
-    			Intent i = new Intent(getActivity(), ECoreActivity.class);
+    			Intent i = new Intent(getActivity(), ECoreControl.class);
     			i.putExtra("AdventureName", selectedAdventure.getGameTitle());
 
     			getActivity().startActivity(i);
@@ -441,9 +481,9 @@ public class WorkspaceActivity extends FragmentActivity {
     			instance.start();
     			
     			dialog = new ProgressDialog(getActivity());
-    			dialog.setTitle("eAdventure");
+    			dialog.setTitle(getString(R.string.app_name));
     			dialog.setIcon(R.drawable.dialog_icon);
-    			dialog.setMessage("Removing game...");
+    			dialog.setMessage(getString(R.string.removing));
     			dialog.setIndeterminate(true);
     			dialog.show();
 
@@ -484,8 +524,9 @@ public class WorkspaceActivity extends FragmentActivity {
     	 */
     	private void showAlert(String msg) {
 
-    		new AlertDialog.Builder(this.getActivity()).setMessage(msg).setNeutralButton("OK",
-    				null).setIcon(R.drawable.dialog_icon).setTitle("External Storage").show();
+    		new AlertDialog.Builder(
+    				this.getActivity()).setMessage(msg).setNeutralButton(getString(R.string.button_ok),
+    				null).setIcon(R.drawable.dialog_icon).setTitle(getString(R.string.external_storage)).show();
 
     	}
         
@@ -630,10 +671,10 @@ public class WorkspaceActivity extends FragmentActivity {
     			ContextMenuInfo menuInfo) {
     		
     		tag = LOAD_GAMES;    		
-    		menu.setHeaderTitle("Options");
+    		menu.setHeaderTitle(getString(R.string.options));
     		menu.setHeaderIcon(R.drawable.dialog_icon);
-    		menu.add(0, 0, 0, "Load");
-    		menu.add(0, 1, 0, "Delete");
+    		menu.add(0, 0, 0, getString(R.string.option_load));
+    		menu.add(0, 1, 0, getString(R.string.option_delete));
     	}
 
     	/**
@@ -641,8 +682,6 @@ public class WorkspaceActivity extends FragmentActivity {
     	 */
     	@Override
     	public boolean onContextItemSelected(MenuItem item) {
-    		
-    		//if (tag != LOAD_GAMES) return super.onContextItemSelected(item);
     		
     		int position = item.getItemId();
 
@@ -670,7 +709,7 @@ public class WorkspaceActivity extends FragmentActivity {
     								+ info.getSavedGames().get(position).getSaved()
     								+ ".png");
 
-    				Toast.makeText(this.getActivity(), "Saved game suscesfully removed",
+    				Toast.makeText(this.getActivity(), getString(R.string.success_removing),
     						Toast.LENGTH_SHORT).show();
 
     				refresh();
@@ -800,8 +839,6 @@ public class WorkspaceActivity extends FragmentActivity {
     				p.setIndeterminate(true);
     				m = msg.getData().getString("msg");
     				p.setMessage(m);
-
-
     				break;
     				
     			case ProgressMessage.GAME_INSTALLED:
@@ -854,7 +891,7 @@ public class WorkspaceActivity extends FragmentActivity {
             
             db = new RepositoryDatabase();
             rs = new RepositoryServices();
-    		
+    	
             rs.updateDatabase(this.getActivity(), RAHandler, db);    			
             
         }
@@ -868,14 +905,14 @@ public class WorkspaceActivity extends FragmentActivity {
     		super.onCreate(savedInstanceState);
     		
     		pd = new ProgressDialog(this.getActivity());
-    		pd.setTitle("eAdventure Repository");
+    		pd.setTitle(getString(R.string.repository));
     		pd.setIcon(R.drawable.dialog_icon);
-    		pd.setMessage("Retrieving data...");
+    		pd.setMessage(getString(R.string.retrieving_data));
     		pd.setCancelable(false);
     		pd.show();
     		
     		progressDialog = new ProgressDialog(this.getActivity());
-    		progressDialog.setTitle("eAdventure Repository");
+    		progressDialog.setTitle(getString(R.string.repository));
     		progressDialog.setIcon(R.drawable.dialog_icon);
     		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     		progressDialog.setCancelable(false);
@@ -949,8 +986,8 @@ public class WorkspaceActivity extends FragmentActivity {
     	private void downloadGame() {
     		
 
-    		progressDialog.setTitle("Please wait");
-    		progressDialog.setMessage("Starting download");
+    		progressDialog.setTitle(getString(R.string.wait));
+    		progressDialog.setMessage(getString(R.string.start_download));
     		progressDialog.show();
     		
     		RepositoryServices rs = new RepositoryServices() ;
@@ -1011,7 +1048,7 @@ public class WorkspaceActivity extends FragmentActivity {
     	public boolean onOptionsItemSelected(MenuItem item) {
 
     		db.clear();
-    		pd = ProgressDialog.show(this.getActivity(), "Please wait...", "Retrieving data ...",
+    		pd = ProgressDialog.show(this.getActivity(), getString(R.string.wait), getString(R.string.retrieving_data),
     				true);
     		rs.updateDatabase(this.getActivity(), RAHandler, db);
     		

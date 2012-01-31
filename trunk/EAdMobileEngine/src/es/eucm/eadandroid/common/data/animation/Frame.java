@@ -1,3 +1,43 @@
+/*******************************************************************************
+ * <e-Adventure> Mobile for Android is a port of the <e-Adventure> research project to 	the Android platform.
+ *     
+ *      Copyright 2009-2012 <e-UCM> research group.
+ *    
+ *       <e-UCM> is a research group of the Department of Software Engineering
+ *            and Artificial Intelligence at the Complutense University of Madrid
+ *            (School of Computer Science).
+ *    
+ *            C Profesor Jose Garcia Santesmases sn,
+ *            28040 Madrid (Madrid), Spain.
+ *    
+ *            For more info please visit:  <http://e-adventure.e-ucm.es/android> or
+ *            <http://www.e-ucm.es>
+ *    
+ *    ****************************************************************************
+ * 	This file is part of <e-Adventure> Mobile, version 1.0.
+ * 
+ * 	Main contributors - Roberto Tornero
+ * 
+ * 	Former contributors - Alvaro Villoria 
+ * 						    Juan Manuel de las Cuevas
+ * 						    Guillermo Martín 	
+ * 
+ *     	You can access a list of all the contributors to <e-Adventure> Mobile at:
+ *            	http://e-adventure.e-ucm.es/contributors
+ *    
+ *    ****************************************************************************
+ *         <e-Adventure> Mobile is free software: you can redistribute it and/or modify
+ *        it under the terms of the GNU Lesser General Public License as published by
+ *        the Free Software Foundation, either version 3 of the License, or
+ *        (at your option) any later version.
+ *    
+ *        <e-Adventure> Mobile is distributed in the hope that it will be useful,
+ *        but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *        GNU Lesser General Public License for more details.
+ *    
+ *        See <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 /**
  * <e-Adventure> is an <e-UCM> research project. <e-UCM>, Department of Software
  * Engineering and Artificial Intelligence. Faculty of Informatics, Complutense
@@ -32,7 +72,7 @@
  */
  
 package es.eucm.eadandroid.common.data.animation;
-//PORT
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,6 +87,7 @@ import es.eucm.eadandroid.common.data.chapter.resources.Resources;
 import es.eucm.eadandroid.common.gui.TC;
 import es.eucm.eadandroid.debug.ReportDialog;
 import es.eucm.eadandroid.ecore.gui.GUI;
+import es.eucm.eadandroid.res.resourcehandler.ResourceHandler;
 
 /**
  * This class holds the information for an animation frame
@@ -295,17 +336,10 @@ public class Frame implements Cloneable, Timed {
             image = getFullscreenImage( image );
         if( image == null ) {
          
-        	image = BitmapFactory.decodeFile("img/icons/noImageFrame.png");
+        	image = ResourceHandler.getInstance().getResourceAsImage("img/icons/noImageFrame.png");
         	
         	if (image==null)
-        	image = CreateImage.createImage(200, 200, "No image Frame");
-        	
-        //PORTCOMMENT	Esta guarro que te cagainsx
-       /* 	ImageIcon icon = new ImageIcon( "img/icons/noImageFrame.png" );
-            if( icon != null && icon.getImage( ) != null )
-                return icon.getImage( );
-            else
-                return new BufferedImage( 100, 120, BufferedImage.TYPE_3BYTE_BGR );*/
+        		image = CreateImage.createImage(200, 200, "No image Frame");
         }
 
         return image;
@@ -331,11 +365,11 @@ public class Frame implements Cloneable, Timed {
             filename += temp[temp.length - 1];
             if( new File( filename ).exists( ) )
                 inputStream = new FileInputStream( filename );
-//PORTCOMMENT
+
             if( inputStream != null ) {
             	
-            	image = BitmapFactory.decodeStream(inputStream);
-             //   image = ImageIO.read( inputStream ); // hago cambios en la linea de abajo...
+            	image = ResourceHandler.getInstance().getInputStreamAsImage(inputStream);
+
                 if( image == null || image.getHeight() == -1 || image.getWidth() == -1 ) {
                     factory.showErrorDialog( TC.get( "Error.Title") , TC.get( "Error.ImageTypeNotSupported" ) );
                 }
@@ -383,24 +417,8 @@ public class Frame implements Cloneable, Timed {
      */
     private Bitmap getFullscreenImage( Bitmap image ) {
 
-    	Bitmap newImage = null;
-    	
-    	newImage = Bitmap.createScaledBitmap(image, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, true);
-    	
-// PORTCOMMENT
-  /*  	
-        // set up the transform
-        AffineTransform transform = new AffineTransform( );
-        transform.scale( GUI.WINDOW_WIDTH / (double) image.getWidth( null ), GUI.WINDOW_HEIGHT / (double) image.getHeight( null ) );
+    	Bitmap newImage = Bitmap.createScaledBitmap(image, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, true);
 
-        // create a transparent (not translucent) image
-        Image newImage = GUI.getInstance( ).getGraphicsConfiguration( ).createCompatibleImage( GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT, Transparency.BITMASK );
-
-        // draw the transformed image
-        Graphics2D g = (Graphics2D) newImage.getGraphics( );
-        g.drawImage( image, transform, null );
-        g.dispose( );
-*/
         return newImage;
     }
 
