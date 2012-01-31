@@ -1,15 +1,55 @@
+/*******************************************************************************
+ * <e-Adventure> Mobile for Android is a port of the <e-Adventure> research project to 	the Android platform.
+ *     
+ *      Copyright 2009-2012 <e-UCM> research group.
+ *    
+ *       <e-UCM> is a research group of the Department of Software Engineering
+ *            and Artificial Intelligence at the Complutense University of Madrid
+ *            (School of Computer Science).
+ *    
+ *            C Profesor Jose Garcia Santesmases sn,
+ *            28040 Madrid (Madrid), Spain.
+ *    
+ *            For more info please visit:  <http://e-adventure.e-ucm.es/android> or
+ *            <http://www.e-ucm.es>
+ *    
+ *    ****************************************************************************
+ * 	This file is part of <e-Adventure> Mobile, version 1.0.
+ * 
+ * 	Main contributors - Roberto Tornero
+ * 
+ * 	Former contributors - Alvaro Villoria 
+ * 						    Juan Manuel de las Cuevas
+ * 						    Guillermo Martín 	
+ * 
+ *     	You can access a list of all the contributors to <e-Adventure> Mobile at:
+ *            	http://e-adventure.e-ucm.es/contributors
+ *    
+ *    ****************************************************************************
+ *         <e-Adventure> Mobile is free software: you can redistribute it and/or modify
+ *        it under the terms of the GNU Lesser General Public License as published by
+ *        the Free Software Foundation, either version 3 of the License, or
+ *        (at your option) any later version.
+ *    
+ *        <e-Adventure> Mobile is distributed in the hope that it will be useful,
+ *        but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *        GNU Lesser General Public License for more details.
+ *    
+ *        See <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package es.eucm.eadandroid.homeapp;
 
-import com.markupartist.android.widget.ActionBar;
-import es.eucm.eadandroid.R;
-import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
-import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
-import es.eucm.eadandroid.res.pathdirectory.Paths;
+import java.util.List;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -23,6 +63,13 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.markupartist.android.widget.ActionBar;
+
+import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
+import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
 /**
  * The home menu of eAdventure Mobile. The several icons displayed allow navigating through 
@@ -94,8 +141,10 @@ public class HomeActivity extends Activity {
 			String data = this.getIntent().getData().getPath();
 			installEadGame(data);
 		} 
+		
+		checkRockPlayer();
 	    
-	    overridePendingTransition(R.anim.fade, R.anim.hold);
+	    overridePendingTransition(R.anim.fade_in, R.anim.hold);
 	}
 	
 	
@@ -107,7 +156,7 @@ public class HomeActivity extends Activity {
     protected void onStart() {
     	
     	super.onStart();
-   		overridePendingTransition(R.anim.fade, R.anim.hold);
+   		overridePendingTransition(R.anim.fade_in, R.anim.hold);
     } 
 	
 	/**
@@ -172,9 +221,9 @@ public class HomeActivity extends Activity {
 		case DIALOG_INSTALL_ID:
 			ProgressDialog progressDialog = new ProgressDialog(this);
 			progressDialog.setCancelable(false);		
-			progressDialog.setTitle("Please wait");
+			progressDialog.setTitle(getString(R.string.wait));
 			progressDialog.setIcon(R.drawable.dialog_icon);
-			progressDialog.setMessage("Installing game...");
+			progressDialog.setMessage(getString(R.string.installing));
 			progressDialog.setIndeterminate(true);
 			progressDialog.show();
 			dialog = progressDialog;			
@@ -183,6 +232,61 @@ public class HomeActivity extends Activity {
 			dialog = null;
 		}
 		return dialog;
+	}
+	
+	/**
+	 * Checks if RockPlayer Lite app is installed on the device
+	 */
+	private void checkRockPlayer() {
+		
+		final boolean appAvailable = isInstalled("com.redirectin.rockplayer.android.unified.lite");
+		
+		if (!appAvailable)
+			showRockPlayerDialog();
+	}
+	
+	/**
+	 * Shows an alert dialog to notify the absence of RockPlayer Lite app in system, and suggests the download
+	 */
+	private void showRockPlayerDialog() {
+		new AlertDialog.Builder(this)
+				.setTitle(getString(R.string.app_name))
+				.setIcon(R.drawable.dialog_icon)
+				.setMessage(getString(R.string.video_message))
+				.setPositiveButton(getString(R.string.install_app),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								Intent i = new Intent(
+									Intent.ACTION_VIEW,
+									Uri.parse("market://search?q=pname:com.redirectin.rockplayer.android.unified.lite"));
+														
+								startActivity(i);						
+							}
+						}).setNeutralButton(getString(R.string.skip_app),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								dialog.dismiss();
+							}
+						}).show();
+
+	}
+	
+	private boolean isInstalled(String packageName){
+		
+		boolean found = false;
+		int i = 0;
+		List<PackageInfo> packs = getPackageManager().getInstalledPackages(0);
+		
+		while (!found && i < packs.size()){
+			PackageInfo p = packs.get(i);
+			if (p.packageName.equals(packageName))
+				found = true;
+			else i++;
+		}
+		
+		return found;
 	}
 	
 	/**
@@ -195,12 +299,13 @@ public class HomeActivity extends Activity {
 		/**
 		 * The resources for the icons
 		 */
-	    private Integer[] mThumbIds = {R.drawable.folder2, R.drawable.diskette,
+	    private Integer[] mThumbIds = {R.drawable.preferences_desktop_gaming, R.drawable.kde_folder_games,
 	            R.drawable.connect_to_network, R.drawable.settings1};	    
 	    /**
 	     * The text to display under each icon
 	     */
-	    private String[] mThumbStrings = {"Installed Games", "Saved Games", "Repository", "Preferences"};
+	    private String[] mThumbStrings = {getString(R.string.installed_games), getString(R.string.saved_games), 
+	    		getString(R.string.games_repository), getString(R.string.preferences)};
 
 		/**
 		 * Constructor

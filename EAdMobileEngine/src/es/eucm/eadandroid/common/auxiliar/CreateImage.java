@@ -1,3 +1,43 @@
+/*******************************************************************************
+ * <e-Adventure> Mobile for Android is a port of the <e-Adventure> research project to 	the Android platform.
+ *     
+ *      Copyright 2009-2012 <e-UCM> research group.
+ *    
+ *       <e-UCM> is a research group of the Department of Software Engineering
+ *            and Artificial Intelligence at the Complutense University of Madrid
+ *            (School of Computer Science).
+ *    
+ *            C Profesor Jose Garcia Santesmases sn,
+ *            28040 Madrid (Madrid), Spain.
+ *    
+ *            For more info please visit:  <http://e-adventure.e-ucm.es/android> or
+ *            <http://www.e-ucm.es>
+ *    
+ *    ****************************************************************************
+ * 	This file is part of <e-Adventure> Mobile, version 1.0.
+ * 
+ * 	Main contributors - Roberto Tornero
+ * 
+ * 	Former contributors - Alvaro Villoria 
+ * 						    Juan Manuel de las Cuevas
+ * 						    Guillermo MartÌn 	
+ * 
+ *     	You can access a list of all the contributors to <e-Adventure> Mobile at:
+ *            	http://e-adventure.e-ucm.es/contributors
+ *    
+ *    ****************************************************************************
+ *         <e-Adventure> Mobile is free software: you can redistribute it and/or modify
+ *        it under the terms of the GNU Lesser General Public License as published by
+ *        the Free Software Foundation, either version 3 of the License, or
+ *        (at your option) any later version.
+ *    
+ *        <e-Adventure> Mobile is distributed in the hope that it will be useful,
+ *        but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *        GNU Lesser General Public License for more details.
+ *    
+ *        See <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 /**
  * <e-Adventure> is an <e-UCM> research project. <e-UCM>, Department of Software
  * Engineering and Artificial Intelligence. Faculty of Informatics, Complutense
@@ -60,9 +100,6 @@ public class CreateImage {
 
 	public static Bitmap createImage(int width, int height, String text) {
 
-		// PORTCOMMENT Aqui tenia puesto a 12 el tamaño de la fuente ... en typeface no se
-		// puede especificar tamaño
-
 		return createImage(width, height, text, Typeface.SANS_SERIF,Typeface.NORMAL);
 	}
 
@@ -77,8 +114,7 @@ public class CreateImage {
 			int backgroundColor, int borderThickness, int borderColor,
 			String text, int textColor, int alignX, int alignY, Typeface typeface , int style) {
 
-		Bitmap im = Bitmap
-		.createBitmap(width, height, Bitmap.Config.ARGB_4444);	
+		Bitmap im = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);	
 		Canvas canvas = new Canvas(im);
 		
 		int textThickness = 1;
@@ -132,58 +168,4 @@ public class CreateImage {
 		return im;
         
 	}
-
-
-
-	// HELPCODE
-
-	/*
-	 * //
-	 * http://dev.android.com/guide/samples/ApiDemos/src/com/example/android/apis
-	 * /graphics/TextAlign.html
-	 * 
-	 * 
-	 * draw some text using STROKE style
-	 * 
-	 * paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(1);
-	 * paint.setColor(Color.MAGENTA); paint.setTextSize(30);
-	 * canvas.drawText(”Text”, 75, 75, paint);
-	 * 
-	 * // draw some text using FILL style paint.setStyle(Paint.Style.FILL);
-	 * //turn antialiasing on paint.setAntiAlias(true); paint.setTextSize(30);
-	 * canvas.drawText(”More Text”, 75, 110, paint);
-	 * 
-	 * / draw bounding rect before rotating text Rect rect = new Rect();
-	 * paint.getTextBounds(str2rotate, 0, str2rotate.length(), rect);
-	 * canvas.translate(x, y); paint.setStyle(Paint.Style.FILL); // draw
-	 * unrotated text canvas.drawText(”!Rotated”, 0, 0, paint);
-	 * paint.setStyle(Paint.Style.STROKE); canvas.drawRect(rect, paint); // undo
-	 * the translate canvas.translate(-x, -y);
-	 * 
-	 * // rotate the canvas on center of the text to draw canvas.rotate(-45, x +
-	 * rect.exactCenterX(), y + rect.exactCenterY()); // draw the rotated text
-	 * paint.setStyle(Paint.Style.FILL); canvas.drawText(str2rotate, x, y,
-	 * paint);
-	 * 
-	 * //undo the rotate canvas.restore(); canvas.drawText(”After
-	 * canvas.restore()”, 50, 300, paint);
-	 * 
-	 * }
-	 * 
-	 * // draw some rotated text // get text width and height // set desired
-	 * drawing location x = 75; y = 135; paint.setColor(Color.GRAY);
-	 * paint.setTextSize(25); String str2rotate = “Rotated!”;
-	 */
-
-	// PORTCOMMENT
-	/*
-	 * public static void main( String[] args ) {
-	 * 
-	 * JFrame frame = new JFrame( ); Image image = CreateImage.createImage( 400,
-	 * 300, "Marihuanhell" ); ImageIcon ic = new ImageIcon( image ); JLabel
-	 * label = new JLabel( ic ); frame.setLayout( new BorderLayout( ) );
-	 * frame.add( label, BorderLayout.CENTER ); frame.pack( );
-	 * frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); frame.setVisible(
-	 * true ); }
-	 */
 }
