@@ -320,17 +320,14 @@ public class GameStateConversation extends GameState {
     			textColor = game.getCharacterCurrentlyTalking().getTextFrontColor();
     		
     		for( int i = 0; i < optionsToShow.size( ); i++ ) {
-    			b.putString(Integer.toString(i), optionsToShow.get( i ).getText( ));
-    			b.putInt("color",textColor );
-              //  drawLine( c, optionsToShow.get( i ).getText( ), i, i );
-                
+    			b.putString(Integer.toString(i), game.getFunctionalPlayer().processName(optionsToShow.get( i ).getText( )));
+    			b.putInt("color",textColor );                
             }
     		
     		numberDisplayedOptions = optionsToShow.size( );
     		b.putInt("size", numberDisplayedOptions);
     		msg.what = ActivityHandlerMessages.CONVERSATION;
     		msg.setData(b);
-
     		msg.sendToTarget();
     		
             firstTime = false;
