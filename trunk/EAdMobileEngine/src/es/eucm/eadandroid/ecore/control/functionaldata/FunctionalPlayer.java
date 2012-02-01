@@ -723,7 +723,7 @@ public class FunctionalPlayer extends FunctionalElement implements TalkingElemen
      * @param text
      * @return
      */
-    private String processName(String text){
+    public String processName(String text){
         
         if (text!= null && text.startsWith( "[]" ))
            text = text.replaceFirst( "\\[\\]", "[ " + Player.IDENTIFIER + " ]");
