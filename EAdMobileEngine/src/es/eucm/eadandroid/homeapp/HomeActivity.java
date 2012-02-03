@@ -135,7 +135,7 @@ public class HomeActivity extends Activity {
 	    	
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent i= new Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse("http://e-adventure.e-ucm.es/"));
+				Intent i= new Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse("http://e-adventure.e-ucm.es/android"));
 				startActivity(i);
 			}
 	    });
