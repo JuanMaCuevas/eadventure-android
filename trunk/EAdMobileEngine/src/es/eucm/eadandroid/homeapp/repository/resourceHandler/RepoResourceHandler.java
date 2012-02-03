@@ -88,7 +88,7 @@ public class RepoResourceHandler {
 	/**
 	 * Size of the buffer
 	 */
-	private static final int BUFFER = 2048;	
+	//private static final int BUFFER = 2048;	
 
 	/**
 	 * Downloads an image as a Bitmap
@@ -426,7 +426,7 @@ public class RepoResourceHandler {
 		if (f.exists())
 
 			if (!f.isDirectory())
-				f.delete();
+				Log.d("FILE IS DELETED?  ","" + f.delete());
 			else
 				removeDirectory(f);
 

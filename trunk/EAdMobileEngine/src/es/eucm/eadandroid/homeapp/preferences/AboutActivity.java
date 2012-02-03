@@ -43,40 +43,47 @@
  *        
  *            See <http://www.gnu.org/licenses/>
  ******************************************************************************/
-package es.eucm.eadandroid.res.pathdirectory;
+package es.eucm.eadandroid.homeapp.preferences;
 
-import android.os.Environment;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.res.pathdirectory.Paths;
 
-public final class Paths {
-
-	public static final class repository {
+public class AboutActivity extends Activity {
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState){
 		
-		public static final String DEFAULT_PATH = "http://eadventure-android.googlecode.com/files/";
-		public static final String SOURCE_XML = "gamesrepository.xml";
-
-	}
-
-	public static final class eaddirectory {
+		super.onCreate(savedInstanceState);		
+		setContentView(R.layout.about_screen);
 		
-		public static final String ROOT_PATH = Paths.device.EXTERNAL_STORAGE + "EadAndroid/";
-		public static final String GAMES_PATH = ROOT_PATH + "games/" ;
-		public static final String REPORTS_PATH = ROOT_PATH + "reports/" ;
-		public static final String SAVED_GAMES_PATH = ROOT_PATH + "saved_games/" ;
-		public static final String PREFERENCES = "preferences/";
+		Button contact = (Button) findViewById(R.id.contactButton);
+		contact.setOnClickListener(new OnClickListener() {
 
-	}
+			public void onClick(View v) {
 
-	public static final class device {
-
-		public static final String EXTERNAL_STORAGE = Environment
-		.getExternalStorageDirectory().toString() + "/";
+				final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+				
+				emailIntent.setType("message/rfc822") ; 
+				emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {Paths.contact.DEFAULT_EMAIL});
+				emailIntent.putExtra(Intent.EXTRA_SUBJECT, Paths.contact.DEFAULT_SUBJECT);
+				AboutActivity.this.startActivity(emailIntent);
+					
+			}
+		});
+		
 	}
 	
-	public static final class contact {
-		
-		public static final String DEFAULT_EMAIL = "android@e-ucm.es";
-		public static final String DEFAULT_SUBJECT = "eAdventure Mobile contact";
+	@Override
+	protected void onStart() {
 
-	}
+		super.onStart();
+		overridePendingTransition(R.anim.fade_in, R.anim.hold);
+	} 
 
 }

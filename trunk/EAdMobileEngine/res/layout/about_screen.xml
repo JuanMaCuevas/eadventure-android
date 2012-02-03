@@ -44,48 +44,39 @@
          
              See <http://www.gnu.org/licenses/>
 -->
-<FrameLayout android:id="@+id/detailed_game_f_layout"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:background="@drawable/about_screen" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent">
+ 
+ <TextView android:id="@+id/textTitle" 
+     android:layout_width="fill_parent" 
+     android:layout_height="wrap_content" 
+     android:layout_marginTop="20sp" 
+     android:layout_alignParentLeft="true" 
+     android:gravity="center" 
+     android:text="@string/app_full_name" 
+     android:textSize="25sp" 
+     android:textStyle="bold"/> 
+  
+ <TextView android:id="@+id/textDescription" 
+     android:layout_width="fill_parent" 
+     android:layout_height="wrap_content" 
+     android:layout_alignParentLeft="true" 
+     android:layout_centerVertical="true" 
+     android:gravity="center" 
+     android:text="@string/app_description" 
+     android:textColor="#000" 
+     android:textSize="15sp"
+     android:autoLink="web"/>
+ 
+ <Button android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:id="@+id/contactButton" 
+     android:text="@string/button_contact"
+     android:layout_alignParentBottom="true"/>
 
-		<FrameLayout android:id="@+id/FrameLayout01"
-			android:layout_width="fill_parent" android:layout_gravity="top"
-			android:layout_height="fill_parent">
-			
-			<LinearLayout android:id="@+id/LinearLayout02"
-				android:orientation="vertical" android:layout_width="fill_parent"
-				android:layout_height="fill_parent">
-				<LinearLayout android:id="@+id/detailed_game_linear_layout"
-					android:layout_gravity="top" android:layout_width="fill_parent"
-					android:layout_height="fill_parent" android:paddingBottom="20dip"
-					android:paddingTop="20dip" android:paddingRight="20dip"
-					android:paddingLeft="20dip">
-					<ImageView android:id="@+id/detailed_game_image_icon"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:src="@drawable/icon">
-					</ImageView>
-					<LinearLayout android:id="@+id/LinearLayout01"
-						android:layout_height="fill_parent" android:layout_width="fill_parent"
-						android:layout_marginLeft="20dip">
-
-						<TextView android:text="No title" android:id="@+id/detailed_game_title"
-							android:layout_width="fill_parent" android:layout_height="fill_parent"
-							android:gravity="center_horizontal" android:layout_gravity="center_vertical"
-							android:textSize="20dip"/>
-
-					</LinearLayout>
-				</LinearLayout>
-				<TextView android:id="@+id/detailed_game_description"
-					android:layout_width="fill_parent" android:text="No description"
-					android:layout_height="fill_parent" android:layout_marginLeft="20dip"
-					android:layout_marginRight="20dip">
-				</TextView>
-
-			</LinearLayout>
-		</FrameLayout >			
-		
-		<Button android:text="Download" android:id="@+id/detailed_game_download_button"
-			android:layout_height="wrap_content" android:layout_gravity="bottom"
-			android:layout_width="fill_parent"/>
-
-</FrameLayout>
+    
+</RelativeLayout>

@@ -47,7 +47,6 @@ package es.eucm.eadandroid.homeapp.preferences;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
@@ -96,7 +95,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		intentPref.setIntent(intent);
 
 		PreferenceScreen websitePref = (PreferenceScreen) this.findPreference("WebPref");
-		websitePref.setIntent(new Intent().setAction(Intent.ACTION_VIEW).setData(Uri.parse("http://e-adventure.e-ucm.es/")));
+		websitePref.setIntent(new Intent(this, AboutActivity.class));
 
 		overridePendingTransition(R.anim.fade_in, R.anim.hold);
 
