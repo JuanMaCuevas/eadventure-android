@@ -48,17 +48,27 @@
     <string name="no_sd">No SDCard mounted</string>
     <string name="external_storage">External storage</string>
     <string name="app_name">eAdventure Mobile</string>
+    <string name="app_full_name">&lt;e-Adventure&gt; Mobile for Android&#8482;</string>
+    <string name="app_description">Copyright 2009-2012 &lt;e-UCM&gt; research group.
+        \n&lt;e-UCM&gt; is a research group of the Department of Software Engineering
+        and Artificial Intelligence at the Complutense University of Madrid.
+        \n\nThe &lt;e-Adventure&gt; Mobile logo has been inspired by the Android&#8482; 
+        Robot logo, created by Google&#8482; Inc and released under the Creative Commons 3.0 license. 
+        (creativecommons.org/licenses/by/3.0)
+        \nAndroid is a trademark of Google Inc.</string>        
     <string name="install_app">Install</string>
     <string name="skip_app">Skip</string>
-	<string name="no_connection">No internet connection</string>
+    
+	<string name="no_connection">No Wifi connection</string>
 	<string name="no_games">No games installed</string>
 	<string name="no_saved_games">No saved games</string>
-    <string name="actionbar_activity_not_found">Failed to open intent...</string>
+    <string name="actionbar_activity_not_found">Failed to open intent&#8230;</string>
     <string name="installed_games">Installed games</string>
     <string name="saved_games">Saved games</string>
     <string name="games_repository">Games repository</string>
     <string name="preferences">Preferences</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading&#8230;</string>
+    
     <string name="options">Options</string>
     <string name="option_play">Play game</string>
     <string name="option_uninstall">Uninstall game</string>
@@ -70,22 +80,26 @@
     <string name="option_quit">Quit game</string>
     <string name="option_resize">Resize</string>
     <string name="option_scan">Scan QRcode</string>
-    <string name="removing">Removing game...</string>
+    
+    <string name="removing">Removing game&#8230;</string>
     <string name="success_removing">Saved game removed successfully</string>
-    <string name="installing">Insatlling game...</string>
+    <string name="installing">Installing game&#8230;</string>
     <string name="repository">eAdventure repository</string>
-    <string name="retrieving_data">Retrieving data...</string>
-    <string name="wait">Please wait...</string>
+    <string name="retrieving_data">Retrieving data&#8230;</string>
+    <string name="wait">Please wait&#8230;</string>
     <string name="start_download">Starting download</string>
+    
     <string name="button_ok">Ok</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_yes">Yes</string>
     <string name="button_no">No</string>
-    <string name="gps_game">eAdventure geolocated game</string>
+    <string name="button_contact">Contact us</string>
+    
+    <string name="gps_game">&lt;e-Adventure&gt; geolocated game</string>
     <string name="gps_message">You are about to start a geolocated game. GPS is currently disabled</string>
     <string name="gps_enabling">Enable GPS</string>
-    <string name="wait_signal">Waiting for GPS signal...</string>    
-    <string name="qr_game">eAdventure QRcode game</string>
+    <string name="wait_signal">Waiting for GPS signal&#8230;</string>    
+    <string name="qr_game">&lt;e-Adventure&gt; QRcode game</string>
     <string name="qr_message">You are about to start a QRcode-based game. 
     Press the magnifier button on the options menu to capture QRcodes</string>
     <string name="qr_message_app">You are about to start a QRcode-based game. 
@@ -94,5 +108,5 @@
     <string name="confirm_saved">Game saved</string>
     <string name="confirm_saved_error">Error saving game</string>
     <string name="confirm_saving">Do you want to save the game?</string>
-    <string name="video_message">You need to install RockPlayer Lite in order to play video assets. Video playback will crash if not installed. </string>
+    <string name="video_message">You need to install RockPlayer Lite in order to play video assets. Video playback will crash if not installed.</string>
 </resources>
