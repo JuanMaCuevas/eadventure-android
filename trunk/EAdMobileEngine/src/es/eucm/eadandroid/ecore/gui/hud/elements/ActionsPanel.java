@@ -53,6 +53,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -81,9 +82,6 @@ public class ActionsPanel {
 
 	/** Actions panel **/
 
-	private static final int APANEL_WIDTH = GUI.FINAL_WINDOW_WIDTH;
-	private static final int APANEL_HEIGHT = GUI.FINAL_WINDOW_HEIGHT;
-
 	private static final int TRANSPARENT_PADDING = (int) (50 * GUI.DISPLAY_DENSITY_SCALE);
 
 	/** Rounded rect panel */
@@ -93,6 +91,9 @@ public class ActionsPanel {
 
 	private static final int RPANEL_PADDING = (int) (10 * GUI.DISPLAY_DENSITY_SCALE);
 
+	private int aPanelWidth = GUI.FINAL_WINDOW_WIDTH;
+	private int aPanelHeight = GUI.FINAL_WINDOW_HEIGHT;
+	
 	private RectF r;
 	private Paint p;
 	private Paint paintBorder;
@@ -130,8 +131,8 @@ public class ActionsPanel {
 
 	private final static int closeButtonWidth = (int) (20 * GUI.DISPLAY_DENSITY_SCALE);
 
-	private static final int CLOSE_X = TRANSPARENT_PADDING;
-	private static int CLOSE_Y;
+	private int closeX = TRANSPARENT_PADDING;
+	private int closeY;
 	private static final int CLOSE_WIDTH = closeButtonWidth * 2;
 	private static final int CLOSE_BOUNDS_OFFSET = (int) (5 * GUI.DISPLAY_DENSITY_SCALE);
 
@@ -162,9 +163,11 @@ public class ActionsPanel {
 
 	private Paint closeP;
 
+	private int hasIcon;
+
 	public ActionsPanel() {
 
-		aPanelBottom = APANEL_HEIGHT;
+		aPanelBottom = aPanelHeight;
 
 		p = new Paint();
 		p.setColor(Color.BLACK);
@@ -177,8 +180,7 @@ public class ActionsPanel {
 		paintBorder.setStrokeWidth(ROUNDED_RECT_STROKE_WIDTH);
 		paintBorder.setAntiAlias(true);
 
-		int roundRectWidth = APANEL_WIDTH - 2 * TRANSPARENT_PADDING;
-		 int roundRectHeight = APANEL_HEIGHT - 2 * TRANSPARENT_PADDING;
+		
 
 		//int roundRectHeight = 2 * gridPanelHeight;
 		 
@@ -186,14 +188,15 @@ public class ActionsPanel {
 		int buttonWidth = 96;
 		 
 		gridPanelHeight = 150 ;
-		
+		int roundRectWidth = aPanelWidth - 2 * TRANSPARENT_PADDING;
+		 int roundRectHeight = aPanelHeight - 2 * TRANSPARENT_PADDING;
 
 		r = new RectF(0, 0, roundRectWidth, roundRectHeight);
 
 		Rect gridPanelBounds = new Rect(TRANSPARENT_PADDING + RPANEL_PADDING,
-				APANEL_HEIGHT - TRANSPARENT_PADDING - RPANEL_PADDING
-						- gridPanelHeight, APANEL_WIDTH - TRANSPARENT_PADDING
-						- RPANEL_PADDING, APANEL_HEIGHT - TRANSPARENT_PADDING
+				aPanelHeight - TRANSPARENT_PADDING - RPANEL_PADDING
+						- gridPanelHeight, aPanelWidth - TRANSPARENT_PADDING
+						- RPANEL_PADDING, aPanelHeight - TRANSPARENT_PADDING
 						- RPANEL_PADDING);		
 		
 		gridPanel = new GridPanel(gridPanelBounds,buttonHeight,buttonWidth);
@@ -221,7 +224,7 @@ public class ActionsPanel {
 		closeP.setStyle(Style.STROKE);
 		closeP.setStrokeWidth(ROUNDED_RECT_STROKE_WIDTH);
 
-		CLOSE_Y = APANEL_HEIGHT - TRANSPARENT_PADDING - RPANEL_PADDING
+		closeY = aPanelHeight - TRANSPARENT_PADDING - RPANEL_PADDING
 				- (int) r.height();
 
 		Bitmap auxCloseButton = MultimediaManager.getInstance().loadImage(
@@ -230,9 +233,9 @@ public class ActionsPanel {
 		closeButton = Bitmap.createScaledBitmap(auxCloseButton,
 				closeButtonWidth * 2, closeButtonWidth * 2, false);
 
-		closeBounds = new Rect(CLOSE_X - CLOSE_BOUNDS_OFFSET, CLOSE_Y
-				- CLOSE_BOUNDS_OFFSET, CLOSE_X + CLOSE_WIDTH
-				+ CLOSE_BOUNDS_OFFSET, CLOSE_Y + CLOSE_WIDTH
+		closeBounds = new Rect(closeX - CLOSE_BOUNDS_OFFSET, closeY
+				- CLOSE_BOUNDS_OFFSET, closeX + CLOSE_WIDTH
+				+ CLOSE_BOUNDS_OFFSET, closeY + CLOSE_WIDTH
 				+ CLOSE_BOUNDS_OFFSET);
 		
 		iconRect = new Rect(0,0,ICON_WIDTH,ICON_HEIGHT);
@@ -257,6 +260,7 @@ public class ActionsPanel {
 					.getActions(), functionalElement);
 		}
 
+		pack();
 		doPanelPicture();
 
 	}
@@ -327,6 +331,14 @@ public class ActionsPanel {
 
 		buttons.add(examineButton);
 		buttons.add(talkButton);
+		
+		/*buttons.add(dragButton);
+		buttons.add(grabButton);
+		buttons.add(talkButton);
+		buttons.add(giveToButton);
+		buttons.add(useWithButton);
+		buttons.add(useButton);*/
+		
 		boolean use = functionalNPC.getFirstValidAction(Action.USE) != null;
 		if (use) {
 			useButton.setName(TC.get("ActionButton.Use"));
@@ -376,10 +388,13 @@ public class ActionsPanel {
 
 		actionsPicture = new Picture();
 
-		Canvas c = actionsPicture.beginRecording(APANEL_WIDTH, APANEL_HEIGHT);
+		Canvas c = actionsPicture.beginRecording(GUI.FINAL_WINDOW_WIDTH, GUI.FINAL_WINDOW_HEIGHT);
 
 		c.drawARGB(150, 0, 0, 0);
-		c.translate(TRANSPARENT_PADDING, TRANSPARENT_PADDING);
+		int left=(GUI.FINAL_WINDOW_WIDTH-aPanelWidth)/2;
+		int top=(GUI.FINAL_WINDOW_HEIGHT-aPanelHeight)/2;
+		//c.translate(TRANSPARENT_PADDING, TRANSPARENT_PADDING);
+		c.translate(left, top);
 		c.drawRoundRect(r, ROUNDED_RECT_ROUND_RADIO, ROUNDED_RECT_ROUND_RADIO,
 				p);
 		c.drawRoundRect(r, ROUNDED_RECT_ROUND_RADIO, ROUNDED_RECT_ROUND_RADIO,
@@ -391,15 +406,19 @@ public class ActionsPanel {
 		c.translate(35 * GUI.DISPLAY_DENSITY_SCALE,
 				30 * GUI.DISPLAY_DENSITY_SCALE);
 
-		if (functionalElement instanceof FunctionalItem) {
-
+		if (hasIcon>0&&functionalElement instanceof FunctionalItem) {
 			Bitmap image = ((FunctionalItem) functionalElement).getIconImage();
-			if (image != null)
+			if (image != null){
 				c.drawBitmap(image, null, iconRect, null);
+			}
 		}
 
-		c.translate(iconRect.width() + 20 * GUI.DISPLAY_DENSITY_SCALE,
-				iconRect.height()/2 + textP.getTextSize()/2);
+		if (hasIcon>0){
+			c.translate(iconRect.width() + 20 * GUI.DISPLAY_DENSITY_SCALE,
+					iconRect.height()/2 );
+		} else{
+			c.translate(20 * GUI.DISPLAY_DENSITY_SCALE,textP.getTextSize()/*/2*/);
+		}
 
 		new AnimText(350,functionalElement.getElement().getName(),textP).draw(c);
 		
@@ -415,9 +434,14 @@ public class ActionsPanel {
 		c.save();
 		actionsPicture.draw(c);
 		c.restore();
-		c.translate(0, aPanelBottom - APANEL_HEIGHT);
-		c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, APANEL_HEIGHT
-				- TRANSPARENT_PADDING - RPANEL_PADDING - gridPanelHeight);
+		int left=(GUI.FINAL_WINDOW_WIDTH-aPanelWidth)/2;
+		int top=(GUI.FINAL_WINDOW_HEIGHT-aPanelHeight)/2;
+		c.translate(left,top);
+		//c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, aPanelHeight
+		//		- TRANSPARENT_PADDING - RPANEL_PADDING - gridPanelHeight);
+		//c.translate(TRANSPARENT_PADDING + RPANEL_PADDING, TRANSPARENT_PADDING + RPANEL_PADDING);
+		c.translate(TRANSPARENT_PADDING, TRANSPARENT_PADDING + RPANEL_PADDING+(hasIcon>0?hasIcon:0));
+		//c.translate(gridPanel.getBounds().left, gridPanel.getBounds().top);
 		gridPanel.draw(c);
 		c.restore();
 
@@ -471,5 +495,42 @@ public class ActionsPanel {
 		
 	}
 	
+	public void pack(){
+		
+		hasIcon=Integer.MIN_VALUE;
+		if (functionalElement!=null && functionalElement instanceof FunctionalItem) {
+			Bitmap image = ((FunctionalItem) functionalElement).getIconImage();
+			if (image != null){
+				hasIcon=image.getHeight();
+			}
+		}
+		
+		Point buttonDimensions = gridPanel.pack();
+		int btnWidth = buttonDimensions.x;
+		int btnHeight = buttonDimensions.y;
+		int nApanelWidth=Math.min(GUI.FINAL_WINDOW_WIDTH, btnWidth+2*RPANEL_PADDING*2+TRANSPARENT_PADDING*2);
+		int nApanelHeight=Math.min(GUI.FINAL_WINDOW_HEIGHT, btnHeight+2*RPANEL_PADDING*2+TRANSPARENT_PADDING*2+(hasIcon>0?hasIcon:0));
+		if (nApanelWidth!=aPanelWidth || nApanelHeight!=aPanelHeight){
+			aPanelWidth=nApanelWidth;
+			aPanelHeight=nApanelHeight;
+			aPanelBottom=aPanelHeight;
+			int roundRectWidth = aPanelWidth - 2 * TRANSPARENT_PADDING;
+			 int roundRectHeight = aPanelHeight - 2 * TRANSPARENT_PADDING;
 
+			r = new RectF(0, 0, roundRectWidth, roundRectHeight);
+			
+			closeX = (GUI.FINAL_WINDOW_WIDTH-aPanelWidth)/2;//+TRANSPARENT_PADDING;
+			closeY = (GUI.FINAL_WINDOW_HEIGHT-aPanelHeight)/2;//aPanelHeight - TRANSPARENT_PADDING - RPANEL_PADDING
+					//- (int) r.height();
+
+			closeBounds = new Rect(closeX - CLOSE_BOUNDS_OFFSET, closeY
+					- CLOSE_BOUNDS_OFFSET, closeX + CLOSE_WIDTH
+					+ CLOSE_BOUNDS_OFFSET, closeY + CLOSE_WIDTH
+					+ CLOSE_BOUNDS_OFFSET);
+			int left=(GUI.FINAL_WINDOW_WIDTH-aPanelWidth)/2+TRANSPARENT_PADDING + RPANEL_PADDING;
+			int top=(GUI.FINAL_WINDOW_HEIGHT-aPanelHeight)/2+TRANSPARENT_PADDING + RPANEL_PADDING;
+			gridPanel.setLeftTop(left, top);
+		}
+		
+	}
 }
