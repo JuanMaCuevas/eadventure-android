@@ -72,6 +72,7 @@ import android.widget.TextView;
 import com.markupartist.android.widget.ActionBar;
 
 import es.eucm.eadandroid.R;
+import es.eucm.eadandroid.ecore.ECoreActivity;
 import es.eucm.eadandroid.homeapp.preferences.PreferencesActivity;
 import es.eucm.eadandroid.homeapp.repository.resourceHandler.RepoResourceHandler;
 import es.eucm.eadandroid.res.pathdirectory.Paths;
