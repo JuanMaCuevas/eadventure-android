@@ -70,8 +70,8 @@ public class ECoreControl extends Activity{
 	
 	private boolean gpsGame=false;
 	private boolean qrCodeGame=false;
-	private String adventureName;
-	private boolean loadingfromsavedgame=false;
+	protected String adventureName;
+	protected boolean loadingfromsavedgame=false;
 	public static final int REQUEST_QRCODE=0;
 	public static final int REQUEST_GPS=1;
 	
@@ -174,7 +174,7 @@ public class ECoreControl extends Activity{
 
 
 
-	private void changeActivity() {
+	protected void changeActivity() {
 		Intent i = new Intent(this, ECoreActivity.class);
 		i.putExtra("AdventureName", adventureName);
 		if (loadingfromsavedgame)
