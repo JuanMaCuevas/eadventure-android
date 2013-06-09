@@ -54,9 +54,9 @@
 
 	<RelativeLayout android:id="@+id/hidecontainer"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:visibility="gone" xmlns:android="http://schemas.android.com/apk/res/android">
+		android:visibility="gone">
 
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		<LinearLayout 
         	android:orientation="horizontal" android:layout_width="fill_parent"
         	android:layout_height="wrap_content" android:layout_alignParentBottom="true"
         	android:id="@+id/buttonLayout" android:gravity = "center">

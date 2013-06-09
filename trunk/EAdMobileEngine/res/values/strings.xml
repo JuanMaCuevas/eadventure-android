@@ -45,14 +45,16 @@
              See <http://www.gnu.org/licenses/>
 -->
 <resources>
+    <string name="package_launchgame">La Dama Boba</string>
+    
     <string name="no_sd">No SDCard mounted</string>
     <string name="external_storage">External storage</string>
     <string name="app_name">eAdventure Mobile</string>
-    <string name="app_full_name">&lt;e-Adventure&gt; Mobile for Android&#8482;</string>
-    <string name="app_description">Copyright 2009-2012 &lt;e-UCM&gt; research group.
-        \n&lt;e-UCM&gt; is a research group of the Department of Software Engineering
+    <string name="app_full_name">eAdventure Mobile for Android&#8482;</string>
+    <string name="app_description">Copyright 2009-2013 e-UCM research group.
+        e-UCM is a research group of the Department of Software Engineering
         and Artificial Intelligence at the Complutense University of Madrid.
-        \n\nThe &lt;e-Adventure&gt; Mobile logo has been inspired by the Android&#8482; 
+        \n\nThe eAdventure Mobile logo has been inspired by the Android&#8482; 
         Robot logo, created by Google&#8482; Inc and released under the Creative Commons 3.0 license. 
         (creativecommons.org/licenses/by/3.0)
         \nAndroid is a trademark of Google Inc.</string>        
@@ -89,17 +91,17 @@
     <string name="wait">Please wait&#8230;</string>
     <string name="start_download">Starting download</string>
     
-    <string name="button_ok">Ok</string>
+    <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_yes">Yes</string>
     <string name="button_no">No</string>
     <string name="button_contact">Contact us</string>
     
-    <string name="gps_game">&lt;e-Adventure&gt; geolocated game</string>
+    <string name="gps_game">eAdventure geolocated game</string>
     <string name="gps_message">You are about to start a geolocated game. GPS is currently disabled</string>
     <string name="gps_enabling">Enable GPS</string>
     <string name="wait_signal">Waiting for GPS signal&#8230;</string>    
-    <string name="qr_game">&lt;e-Adventure&gt; QRcode game</string>
+    <string name="qr_game">eAdventure QRcode game</string>
     <string name="qr_message">You are about to start a QRcode-based game. 
     Press the magnifier button on the options menu to capture QRcodes</string>
     <string name="qr_message_app">You are about to start a QRcode-based game. 
@@ -109,4 +111,10 @@
     <string name="confirm_saved_error">Error saving game</string>
     <string name="confirm_saving">Do you want to save the game?</string>
     <string name="video_message">You need to install RockPlayer Lite in order to play video assets. Video playback will crash if not installed.</string>
+    
+    <!-- SplashScreen -->
+    <string name="standalone_splash_title">Welcome to </string>
+    <string name="splash_title">Welcome to eAdventure</string>
+    <string name="splash_message">Please wait&#8230;
+    Setting up engine resources</string>
 </resources>
