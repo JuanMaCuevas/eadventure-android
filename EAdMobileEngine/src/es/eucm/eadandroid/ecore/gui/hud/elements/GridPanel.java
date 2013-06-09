@@ -48,6 +48,7 @@ package es.eucm.eadandroid.ecore.gui.hud.elements;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -219,7 +220,8 @@ public class GridPanel {
 	
 	private void calculateGrid() {
 		leftLimit = 0;
-		numRows = (height / VERTICAL_ICON_SPACE);
+		//XXX For some reason, numRows takes value 0 on Nexus 10. It should always be >=1 Iguess
+		numRows = Math.max(height / VERTICAL_ICON_SPACE, 1);
 		centerOffset = (height - numRows * VERTICAL_ICON_SPACE) / 2;
 		rightLimit = 0;
 	}
@@ -237,13 +239,29 @@ public class GridPanel {
 		if (dataSet != null && dataSet.getItemCount() > 0) {
 
 			c.clipRect(0, 0, width, height);
+			if (Game.getInstance().getOptions().isDebugActive()){
+				Paint boundsPaint = new Paint();
+				boundsPaint.setColor(Color.MAGENTA);
+				c.drawRect(0, 0, width, height, boundsPaint);
+			}
 //			c.drawARGB(250,244,250,88);
 //			c.drawRoundRect(selectedItem, ROUNDED_SELECT_ITEM_RADIO,
 //					ROUNDED_SELECT_ITEM_RADIO, pSelItem);
 			c.save();
 			c.translate(leftLimit, 0);
+			if (Game.getInstance().getOptions().isDebugActive()){
+				Paint leftLimitPaint = new Paint();
+				leftLimitPaint.setColor(Color.CYAN);
+				c.drawLine(0, -3000, 0, 3000, leftLimitPaint);
+				c.drawLine(rightLimit-leftLimit, -3000, rightLimit-leftLimit, 3000, leftLimitPaint);
+			}
 			c.save();
 			c.translate(0, centerOffset);
+			if (Game.getInstance().getOptions().isDebugActive()){
+				Paint leftLimitPaint = new Paint();
+				leftLimitPaint.setColor(Color.CYAN);
+				c.drawLine(-3000, 0, 3000, 0, leftLimitPaint);
+			}
 			c.save();
 
 			numColums = (dataSet.getItemCount() / numRows) + 1;
@@ -283,11 +301,22 @@ public class GridPanel {
 			c.restore();
 			c.restore();
 			c.restore();
-
+			if (Game.getInstance().getOptions().isDebugActive()){
+				Paint boundsPaint = new Paint();
+				boundsPaint.setColor(Color.YELLOW);
+				
+				c.drawRect(leftGrad.getBounds(), boundsPaint);
+			}
 			leftGrad.draw(c);
 			c.translate(width - GRADIENT_TRANSPARENCY_WIDTH, 0);
-			rightGrad.draw(c);
+			if (Game.getInstance().getOptions().isDebugActive()){
+				Paint boundsPaint2 = new Paint();
+				boundsPaint2.setColor(Color.WHITE);
 
+				c.drawRect(rightGrad.getBounds(), boundsPaint2);
+			}
+			rightGrad.draw(c);
+			//c.restore();
 		}
 
 	}
@@ -312,6 +341,8 @@ public class GridPanel {
 			leftLimit += x;
 		}
 
+		System.out.println("LEFT LIMIT="+leftLimit);
+		
 		updateSelectedItem();
 
 	}
@@ -365,7 +396,7 @@ public class GridPanel {
 					swipeAnimating = false;
 				} else
 					leftLimit = swipeCorner + distance;
-
+			System.out.println("LEFT LIMIT="+leftLimit);
 			lastDistance = distance;
 
 			updateSelectedItem();
@@ -476,5 +507,43 @@ public class GridPanel {
 	public void resetItemFocus() {
 		itemFocusIndex = -1;		
 	}
+
+	
+	public Point pack(){
+		//Get the number of buttons/items
+		int nItems = this.dataSet.getItemCount();
+		// Calculate the number of rows and columns
+		this.numColums = nItems;
+		this.numRows=1;
+		if (nItems>4){
+			this.numColums=4;
+			this.numRows=(int)Math.ceil(nItems/4F);
+		}
+		int totalRowWidth= HORIZONTAL_ICON_SPACE*numColums;//+2*HORIZONTAL_ICON_SEPARATION;
+		while (GUI.FINAL_WINDOW_WIDTH<totalRowWidth) {
+			this.numColums=(int)Math.ceil(numColums/2F);
+			//this.numColums/=2;
+			this.numRows*=2;
+			totalRowWidth= HORIZONTAL_ICON_SPACE*numColums;//+2*HORIZONTAL_ICON_SEPARATION;
+			
+		} 
+		width = totalRowWidth;
+		height = numRows*(VERTICAL_ICON_SPACE+TEXT_HEIGHT);
+		centerOffset = (height - numRows * VERTICAL_ICON_SPACE) / 2;
+		leftGrad.setBounds(0, 0, GRADIENT_TRANSPARENCY_WIDTH, height-VERTICAL_ICON_SEPARATION);
+		rightGrad.setBounds(0, 0, GRADIENT_TRANSPARENCY_WIDTH, height-VERTICAL_ICON_SEPARATION);
+		leftLimit=0;
+		rightLimit=0;
+		//leftLimit=x;
+		//rightLimit=x+totalRowWidth;
+		
+		return new Point(width+HORIZONTAL_ICON_SEPARATION*2,height+VERTICAL_ICON_SEPARATION*2);
+		
+	}
+	
+	public void setLeftTop(int x, int y){
+		bounds = new Rect(x,y,width+x,height+y);
+	}
+	
 
 }
