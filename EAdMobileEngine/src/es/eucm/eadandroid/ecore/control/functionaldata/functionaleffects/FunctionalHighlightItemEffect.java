@@ -71,7 +71,7 @@ public class FunctionalHighlightItemEffect extends FunctionalEffect {
 
     /*
      * (non-Javadoc)
-     * @see es.eucm.eadandroid.engine.engine.data.effects.Effect#triggerEffect()
+     * @see es.eucm.eadandroid.data.effects.Effect#triggerEffect()
      */
     @Override
     public void triggerEffect( ) {
