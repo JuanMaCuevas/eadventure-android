@@ -139,9 +139,9 @@ public class SplashScreenActivity extends Activity{
 			is.start();
 
 			dialog = new ProgressDialog(this);
-			dialog.setTitle("Welcome to eAdventure");
+			dialog.setTitle(getDialogTitle());
 			dialog.setIcon(R.drawable.dialog_icon);
-			dialog.setMessage("Please wait...\nSetting up engine resources");
+			dialog.setMessage(getString(R.string.splash_message));
 			dialog.setIndeterminate(true);
 			dialog.show();
 
@@ -186,4 +186,7 @@ public class SplashScreenActivity extends Activity{
 
 	}
 
+	protected String getDialogTitle(){
+		return getString(R.string.splash_title);
+	}
 }

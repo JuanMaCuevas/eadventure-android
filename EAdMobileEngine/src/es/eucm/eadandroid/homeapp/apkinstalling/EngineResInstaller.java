@@ -149,6 +149,23 @@ public class EngineResInstaller extends Thread {
 
 			RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,
 					Paths.device.EXTERNAL_STORAGE, "EadAndroid.zip", true);
+			
+			try {
+				for (String gameFile:con.getAssets().list("")){
+					if (!gameFile.toLowerCase().endsWith(".ead"))
+						continue;
+					InputStream is = con.getAssets().open(gameFile);
+					BufferedOutputStream file;
+					file = new BufferedOutputStream(new FileOutputStream(
+					"/sdcard/"+gameFile));
+					RepoResourceHandler.copyInputStream(is, file);
+					
+					RepoResourceHandler.unzip(Paths.device.EXTERNAL_STORAGE,
+							Paths.eaddirectory.GAMES_PATH, gameFile, true);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
