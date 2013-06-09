@@ -65,7 +65,6 @@
 		android:icon="@drawable/launcher_icon2">
 		
 		<activity android:name=".homeapp.SplashScreenActivity" android:screenOrientation="portrait">
-		    <meta-data android:name="es.eucm.eadandroid.launchgame" android:value="@string/package_launchgame" />
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />			
 				<category android:name="android.intent.category.LAUNCHER" />			
