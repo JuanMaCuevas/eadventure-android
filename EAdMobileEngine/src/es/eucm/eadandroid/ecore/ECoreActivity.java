@@ -247,7 +247,7 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	};
 
-	private void startLoadApplication() {
+	protected void startLoadApplication() {
 		Intent i = new Intent(this, WorkspaceActivity.class);
 		i.putExtra("Tab", 1);
 		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -273,14 +273,14 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 	}
 
-	private void activityvideo() {
+	protected void activityvideo() {
 		
 		Intent i = new Intent(this, EcoreVideo.class);
 		startActivity(i);
 		overridePendingTransition(R.anim.fade_in, R.anim.hold);	
 	}	
 
-	private void finishapplication() {
+	protected void finishapplication() {
 		
 		Intent i = new Intent(this, WorkspaceActivity.class);
 		i.putExtra("Tab",0);
@@ -508,10 +508,13 @@ public class ECoreActivity extends Activity implements SurfaceHolder.Callback {
 
 		// Load the configuration
 		ConfigData.loadFromXML(ReleaseFolders.configFileEngineRelativePath());
-
+		String locale = getResources().getConfiguration().locale.getLanguage();
+		String eadLocale="en_EN";
+		if (locale.toLowerCase().contains("es")){
+			eadLocale="es_ES";
+		}
 		/* We«e got to set the language from the device locale ;D */
-		setLanguage(ReleaseFolders.getLanguageFromPath(ConfigData
-				.getLanguangeFile()));
+		setLanguage(eadLocale);
 
 		// DEBUG
 		Log.e("Inicio core2", String
